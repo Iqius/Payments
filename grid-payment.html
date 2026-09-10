@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Pencairan Anggaran</title>
+    <!-- Assuming FontAwesome for icons as in your reference -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-popup.css">
+</head>
+
+<body>
+    <main class="main-content" id="main-menu-grid">
+        <!-- Header Section -->
+        <div class="header-section">
+            <h1 class="page-title">Daftar Pencairan Anggaran</h1>
+            <button type="button" id="btnPencairanBaru" class="main-button primary-btn">
+                <i class="fas fa-plus" style="font-size: 16px;"></i>
+                <span>Pencairan Baru</span>
+            </button>
+        </div>
+        <div class="page-banner">
+            <!-- Filter & Navigation Section -->
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <!-- Format must be YYYY-MM-DD for the value to render on page load -->
+                    <input id="start-date" class="base-textbox" type="date">
+                    <input id="end-date" class="base-textbox" type="date">
+                    <select id="filter-status" class="base-dropbox status-select">
+                        <option value="all" selected>Semua Status</option>
+                        <option value="draft">Draft</option>
+                        <option value="submitted">Submitted</option>
+                        <option value="approved">Approved</option>
+                        <option value="revise">Revisi</option>
+                        <option value="unrealized">Unrealized</option>
+                        <option value="done">Selesai</option>
+                    </select>
+                    <div class="banner">
+                        <div class="tab-group" id="kategoriTabs">
+                            <button type="button" class="tab-btn active" data-tab="operasional">Operasional
+                                Rutin</button>
+                            <button type="button" class="tab-btn" data-tab="perjalanan-dinas">Perjalanan Dinas</button>
+                            <button type="button" class="tab-btn" data-tab="pengadaan">Pengadaan</button>
+                            <button type="button" class="tab-btn" data-tab="remunerasi">Remunerasi</button>
+                            <button type="button" class="tab-btn" data-tab="pelatihan">Pelatihan</button>
+                        </div>
+                    </div>
+                    <div class="search-group">
+                        <input id="search-input" class="base-textbox search-box" type="text" placeholder="Cari...">
+                    </div>
+                </div>
+
+                <!-- Data Table -->
+                <div class="base-card table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th width="3%"><input type="checkbox" class="row-checkbox" id="check-all"></th>
+                                <th width="10%">ID Dokumen</th>
+                                <th width="8%">Tanggal Pengajuan</th>
+                                <th width="5%">Kantor</th>
+                                <th width="12%">Metode Pencairan</th>
+                                <th width="15%">Anggaran Kegiatan</th>
+                                <th width="10%">Nominal Pengajuan</th>
+                                <th width="20%">Keperluan</th>
+                                <th width="7%">Status</th>
+                                <th width="8%">Verifikator</th>
+                                <th width="2%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <!-- Baris data di-render dinamis oleh script.js -->
+                        </tbody>
+                    </table>
+                    <!-- Pagination -->
+                    <div class="table-footer outline">
+                        <div class="pagination-info">
+                            Menampilkan
+                            <select class="base-dropbox mini-select" id="page-size-select">
+                                <option value="5" selected>5</option>
+                                <option value="10">10</option>
+                                <option value="20" >20</option>
+                                <option value="50">50</option>
+                            </select>
+                            items per halaman dari <strong id="total-doc-items">0</strong> items
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="page-btn" id="btn-first-page"><i class="fas fa-step-backward"></i></button>
+                            <button class="page-btn" id="btn-prev-page"><i class="fas fa-chevron-left"></i></button>
+                            <button class="page-btn active-page" id="current-page-num">1</button>
+                            <span class="page-text" id="total-pages-text">of 1</span>
+                            <button class="page-btn" id="btn-next-page"><i class="fas fa-chevron-right"></i></button>
+                            <button class="page-btn" id="btn-last-page"><i class="fas fa-step-forward"></i></button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+    </main>
+
+    <!-- Modal Overlay -->
+    <div id="pengajuanModal" class="modal-overlay hidden">
+        <!-- Modal Content -->
+        <div class="modal-content">
+
+            <!-- Header -->
+            <div class="modal-header">
+                <div class="header-text">
+                    <h2>Pengajuan</h2>
+                    <p>Pilih jenis pencairan yang sesuai dengan kebutuhan anda.</p>
+                </div>
+                <button type="button" class="close-modal-btn" id="closeModalBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Cards Container -->
+            <div class="modal-cards-container">
+
+                <!-- Card 1 -->
+                <div class="pengajuan-card" onclick="selectPengajuan('operasional')">
+                    <div class="card-icon">
+                        <i class="far fa-building" style="font-size: 40px;"></i>
+                    </div>
+                    <h3>Operasional<br>Rutin</h3>
+                    <p>Pengajuan kebutuhan operasional rutin dan non-rutin untuk mendukung kegiatan organisasi, termasuk
+                        pembayaran barang, jasa, utilitas, administrasi perkantoran, serta pengeluaran operasional
+                        lainnya.</p>
+                    <div class="card-action">Pilih <i class="fas fa-chevron-right"></i></div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="pengajuan-card" onclick="selectPengajuan('perjalanan')">
+                    <div class="card-icon">
+                        <i class="fas fa-suitcase" style="font-size: 40px;"></i>
+                    </div>
+                    <h3>Perjalanan<br>Dinas</h3>
+                    <p>Pengajuan biaya perjalanan dinas dalam negeri maupun luar negeri, termasuk transportasi,
+                        akomodasi, uang saku, bantuan transportasi, serta biaya terkait kegiatan kedinasan lainnya.</p>
+                    <div class="card-action">Pilih <i class="fas fa-chevron-right"></i></div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="pengajuan-card" onclick="selectPengajuan('pengadaan')">
+                    <div class="card-icon">
+                        <i class="fas fa-handshake" style="font-size: 40px;"></i>
+                    </div>
+                    <h3>Pengadaan<br>Barang / Jasa</h3>
+                    <p>Pengajuan pengadaan barang dan/atau jasa yang dilaksanakan melalui penyedia atau swakelola sesuai
+                        ketentuan pengadaan yang berlaku di lingkungan BPJS Ketenagakerjaan.</p>
+                    <div class="card-action">Pilih <i class="fas fa-chevron-right"></i></div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="pengajuan-card" onclick="selectPengajuan('remunerasi')">
+                    <div class="card-icon">
+                        <i class="fas fa-money-check-alt" style="font-size: 40px;"></i>
+                    </div>
+                    <h3>Remunerasi</h3>
+                    <p>Pengajuan pembayaran yang berkaitan dengan remunerasi, honorarium, insentif, penghargaan, dan
+                        pembayaran lain yang menjadi hak penerima sesuai ketentuan yang berlaku.</p>
+                    <div class="card-action">Pilih <i class="fas fa-chevron-right"></i></div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="pengajuan-card" onclick="selectPengajuan('pelatihan')">
+                    <div class="card-icon">
+                        <i class="fas fa-certificate" style="font-size: 40px;"></i>
+                    </div>
+                    <h3>Pelatihan &<br>Pengembangan</h3>
+                    <p>Pengajuan kegiatan pengembangan kompetensi dan pembelajaran, meliputi pelatihan, sertifikasi,
+                        seminar, workshop, assessment, program kepemimpinan, dan kegiatan pengembangan SDM lainnya.</p>
+                    <div class="card-action">Pilih <i class="fas fa-chevron-right"></i></div>
+                </div>
+
+            </div>
+
+            <!-- Footer Help Banner -->
+            <div class="modal-help-banner">
+                <div class="help-info">
+                    <i class="fas fa-info-circle info-icon"></i>
+                    <div class="help-text">
+                        <strong>Perlu bantuan menentukan jenis pencairan?</strong>
+                        <span>Pastikan Anda memilih jenis pencairan yang paling sesuai agar proses persetujuan dan
+                            pembayaran dapat berjalan lebih cepat.</span>
+                    </div>
+                </div>
+                <button type="button" class="panduan-btn">
+                    Lihat Panduan <i class="fas fa-book-open"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Select elements
+            const triggerBtn = document.getElementById('btnPencairanBaru'); // Add this ID to your button
+            const modal = document.getElementById('pengajuanModal');
+            const closeBtn = document.getElementById('closeModalBtn');
+
+            // Open modal
+            if (triggerBtn) {
+                triggerBtn.addEventListener('click', function () {
+                    modal.classList.remove('hidden');
+                });
+            }
+
+            // Close modal via X button
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function () {
+                    modal.classList.add('hidden');
+                });
+            }
+
+            // Close modal when clicking outside the content box
+            window.addEventListener('click', function (event) {
+                if (event.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+        });
+
+        // Function to handle card selection
+        function selectPengajuan(type) {
+            if (type === 'operasional') {
+                window.location.href = 'form-operasional.html?type=operasional';
+            } else if (type === 'perjalanan') {
+                window.location.href = 'form-operasional.html?type=perjalanan_dinas';
+            } else {
+                document.getElementById('pengajuanModal').classList.add('hidden');
+            }
+        }
+    </script>
+    <script src="script-grid.js"></script>
+</body>
+
+</html>
