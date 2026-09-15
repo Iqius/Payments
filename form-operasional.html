@@ -117,20 +117,9 @@
                         <input type="text" id="search-anggaran" class="base-textbox full-width search-input"
                             placeholder="Cari kode, nama kegiatan...">
                         <div class="list-container" id="anggaran-list-container">
-                            <!-- EMPTY STATE -->
-                            <!-- <div id="empty-state-anggaran" class="empty-state-container"
-                                style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 320px; text-align: center; color: #8c8c8c;">
-                                <div style="font-size: 42px; margin-bottom: 12px; color: #b0c4de;">
-                                    <i class="fas fa-folder-open"></i>
-                                </div>
-                                <strong style="font-size: 15px; color: #333; margin-bottom: 4px;">Belum ada
-                                    data</strong>
-                                <span style="font-size: 13px; color: #8c8c8c;">Silakan pilih Sumber Anggaran terlebih
-                                    dahulu.</span>
-                            </div> -->
-
                             <!-- Kontainer Daftar Item Anggaran -->
-                            <div id="list-anggaran-container" style="display: block; width: 100%;"></div>
+                            <div id="list-anggaran-container" style="display: block; width: 100%;">
+                            </div>
                         </div>
 
                         <div class="table-footer list-pagination">
@@ -239,14 +228,23 @@
                         </div>
                     </div>
 
-                    <div class="step3-summary-card flex-grow">
-                        <h4>Keperluan Pencairan</h4>
-                        <div class="keperluan-text-box">
-                            BEBAN PEMBINAAN ADMINISTRASI UNTUK PEMBAYARAN SPPD NOMOR: SPPD/70297/112025 AN AMRI
-                            IRWANSYAH, ELVINA SARI, M ZAKI YAMANI PERIHAL CEK KASUS KARYAWAN PUSKESMAS LADANG TUHA,
-                            KOORDINASI KEMENAG DAN BAITUL MAL KAB ACEH SELATAN TERKAIT..
-                        </div>
-                    </div>
+<div class="keperluan-wrapper">
+  <h4>Keperluan Pencairan</h4>
+  
+  <div id="keperluanText" class="keperluan-text-box clamp-3">
+    BEBAN PEMBINAAN ADMINISTRASI UNTUK PEMBAYARAN SPPD NOMOR: SPPD/70297/112025 AN AMRI
+    IRWANSYAH, ELVINA SARI, M ZAKI YAMANI PERIHAL CEK KASUS KARYAWAN PUSKESMAS LADANG TUHA,
+    KOORDINASI KEMENAG DAN BAITUL MAL KAB ACEH SELATAN TERKAIT BEBERAPA HAL PENTING LAINNYA.
+  </div>
+
+  <button 
+    type="button" 
+    id="btnToggleKeperluan" 
+    class="btn-selengkapnya" 
+    onclick="toggleKeperluan()">
+    Lihat Selengkapnya
+  </button>
+</div>
                 </div>
 
                 <!-- Middle Panel: Uploaded Files & Upload Dropzone -->

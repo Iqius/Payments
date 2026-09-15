@@ -1,15 +1,15 @@
 /* ADDITIONAL CSS: Document Checklist Dialog */
 .doc-checklist-modal {
-  max-width: 400px;
-  padding: 25px 30px;
+  max-width: 320px;
+  padding: 20px 24px;
 }
 
 .checklist-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 15px;
-  max-height: 350px;
+  gap: 8px;
+  margin-top: 12px;
+  max-height: 280px;
   overflow-y: auto;
 }
 
@@ -17,10 +17,10 @@
 .custom-checkbox-row {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
+  gap: 9.6px;
+  padding: 9.6px 12.8px;
   border: 1px solid #dcdfe6;
-  border-radius: 8px;
+  border-radius: 6.4px;
   cursor: pointer;
   background-color: #ffffff;
   transition: all 0.2s ease;
@@ -33,10 +33,10 @@
 
 /* Checkbox Visual Box */
 .checkbox-box {
-  width: 20px;
-  height: 20px;
-  border: 2px solid #c0c4cc;
-  border-radius: 4px;
+  width: 16px;
+  height: 16px;
+  border: 1.6px solid #c0c4cc;
+  border-radius: 3.2px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,12 +47,12 @@
 
 .checkbox-box i {
   color: transparent;
-  font-size: 12px;
+  font-size: 9.6px;
   transition: color 0.2s ease;
 }
 
 .checkbox-text {
-  font-size: 13px;
+  font-size: 10.4px;
   color: #333;
   font-weight: 500;
   transition: color 0.2s ease;
@@ -115,9 +115,9 @@
 
 .step4-main-grid {
   display: grid;
-  grid-template-columns: 280px 64px 1fr;
-  gap: 15px;
-  padding: 15px 20px;
+  grid-template-columns: 224px 51.2px 1fr;
+  gap: 12px;
+  padding: 12px 16px;
   flex-grow: 1;
   overflow-y: auto;
   background-color: #f9fbfd;
@@ -131,7 +131,7 @@
 }
 
 .s5-left-panel {
-  gap: 12px;
+  gap: 9.6px;
 }
 
 /* Part A: Scrollable Verifikasi */
@@ -140,14 +140,14 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  max-height: 350px;
+  max-height: 280px;
 }
 
 .s5-verifikasi-card h4 {
-  font-size: 14px;
+  font-size: 11.2px;
   background-color: white;
-  border-radius: 6px;
-  padding: 5px;
+  border-radius: 4.8px;
+  padding: 4px;
 }
 
 .s5-verifikasi-list {
@@ -155,31 +155,31 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding-right: 5px;
+  gap: 8px;
+  padding-right: 4px;
 }
 
 .s5-verif-item {
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  padding: 10px;
+  border-radius: 4.8px;
+  padding: 8px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3.2px;
 }
 
 .s5-verif-item .v-date {
-  font-size: 10px;
+  font-size: 8px;
   color: #888;
 }
 .s5-verif-item .v-name {
-  font-size: 11px;
+  font-size: 8.8px;
   color: #1e6bb8;
   font-weight: 600;
 }
 .s5-verif-item .v-note {
-  font-size: 11px;
+  font-size: 8.8px;
   color: #555;
   margin: 0;
   line-height: 1.4;
@@ -188,63 +188,60 @@
 /* Part C: Right Panel */
 .s5-right-panel {
   background-color: #eef5fc;
-  border-radius: 8px;
-  /* background-color: #ffffff; */
-  /* border: 1px solid #dcdfe6;
-    border-radius: 8px; */
+  border-radius: 6.4px;
   overflow: hidden;
   height: 100%;
 }
 
 .s5-right-header {
-  padding: 15px 20px;
-  padding-top: 5px;
+  padding: 12px 16px;
+  padding-top: 4px;
   border-bottom: 1px solid #e2e8f0;
   background-color: #f8fafc;
 }
 
 .s5-right-header h3 {
   margin: 0;
-  font-size: 14px;
+  font-size: 11.2px;
   color: #333;
 }
 
 .s5-right-content {
-  padding: 15px 20px;
-  padding-top: 5px;
+  padding: 12px 16px;
+  padding-top: 4px;
   flex-grow: 1;
   overflow-y: auto;
 }
 
 /* Reused Accordion customized for Step 4 List */
 .s5-acc-item {
-  margin-bottom: 8px;
+  margin-bottom: 6.4px;
 }
 .s5-acc-header {
-  padding: 14px 15px;
+  padding: 11.2px 12px;
 }
 .s5-acc-title {
   background: transparent;
   font-weight: 600;
   color: #333;
-  font-size: 13px;
+  font-size: 10.4px;
   padding: 0;
 }
 
 .s5-acc-detail {
   background-color: #fafbfc;
   border-top: 1px dashed #dcdfe6;
-  padding: 15px 20px;
+  padding: 12px 16px;
   justify-content: flex-start;
 }
 .s5-acc-detail .kw-detail-form {
   width: 100%;
-  max-width: 500px;
+  max-width: 400px;
 }
 .s5-acc-detail .kw-row {
   border-bottom: 1px solid #f0f0f0;
-  padding-bottom: 8px;
-  margin-bottom: 8px;
+  padding-bottom: 6.4px;
+  margin-bottom: 6.4px;
 }
 .s5-acc-detail .kw-row:last-child {
   border-bottom: none;
@@ -252,7 +249,7 @@
   margin-bottom: 0;
 }
 .s5-acc-detail .kw-row strong {
-  font-size: 12px;
+  font-size: 9.6px;
   color: #333;
   text-align: right;
 }
@@ -262,10 +259,10 @@
   background-color: #27a844;
   color: #ffffff;
   border: none;
-  border-radius: 20px;
-  padding: 8px 24px;
+  border-radius: 16px;
+  padding: 6.4px 19.2px;
   font-weight: 600;
-  font-size: 13px;
+  font-size: 10.4px;
   cursor: pointer;
   transition:
     background-color 0.2s,
@@ -274,47 +271,46 @@
 
 .btn-submit-primary:hover {
   background-color: #218c38;
-  box-shadow: 0 4px 12px rgba(39, 168, 68, 0.2);
+  box-shadow: 0 3.2px 9.6px rgba(39, 168, 68, 0.2);
 }
 
 /* Center icons vertically and horizontally */
 .s5-middle-panel {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Vertical alignment */
-  align-items: center; /* Horizontal alignment */
-  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 9.6px;
   height: 100%;
 }
 
 /* Icon Buttons Style matching Pic 2 */
 .s5-icon-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
+  width: 35.2px;
+  height: 35.2px;
+  border-radius: 8px;
   border: 1px solid transparent;
-  background-color: #2b78c5; /* Inactive solid blue */
+  background-color: #2b78c5;
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 14.4px;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1.6px 4.8px rgba(0, 0, 0, 0.15);
   transition: all 0.2s ease;
 }
 
 .s5-icon-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transform: translateY(-0.8px);
+  box-shadow: 0 3.2px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Active Icon Button Style */
 .s5-icon-btn.active {
   background-color: #ffffff;
   color: #2b78c5;
-  border: 2px solid #2b78c5;
-  box-shadow: 0 3px 8px rgba(43, 120, 197, 0.25);
+  border: 1.6px solid #2b78c5;
+  box-shadow: 0 2.4px 6.4px rgba(43, 120, 197, 0.25);
 }
 
 /* ========================================================= */
@@ -322,18 +318,18 @@
 /* ========================================================= */
 
 .s5-info-card {
-  background-color: white; /* Light blueish background */
+  background-color: white;
   border: 1px solid #e1e8f0;
-  border-radius: 8px;
-  padding: 15px;
+  border-radius: 6.4px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 9.6px;
 }
 
 .s5-info-card h4 {
   margin: 0;
-  font-size: 14px;
+  font-size: 11.2px;
   color: #475569;
   font-weight: 600;
 }
@@ -347,57 +343,57 @@
 .info-row-stacked {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4.8px;
 }
 
 .s5-info-label {
-  font-size: 11px;
-  color: #8c98a4; /* Muted gray for labels */
+  font-size: 8.8px;
+  color: #8c98a4;
   flex-shrink: 0;
 }
 
 .info-desc {
-  font-size: 10px;
+  font-size: 8px;
   color: #64748b;
   line-height: 1.5;
   margin: 0;
   text-transform: uppercase;
-  text-align: justify; /* Aligns text neatly on both sides like the image */
+  text-align: justify;
 }
 
 /* Main Container */
 .verification-wrapper {
   background-color: #f0f4f9;
   border: 1px solid #d4e2f3;
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: 9.6px;
+  padding: 16px;
   width: 100%;
-  max-width: 450px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  max-width: 360px;
+  box-shadow: 0 1.6px 3.2px rgba(0, 0, 0, 0.02);
 }
 
 .section-title {
-  font-size: 16px;
+  font-size: 12.8px;
   font-weight: 600;
   color: #333;
-  margin-bottom: 12px;
+  margin-bottom: 9.6px;
 }
 
 /* Info Card */
 .info-card {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  padding: 10px 10px;
-  margin-bottom: 16px;
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 12.8px;
 }
 
 .info-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 12px;
-  padding: 6px 0;
+  font-size: 9.6px;
+  padding: 4.8px 0;
 }
 
 .info-row:not(:last-child) {
@@ -412,34 +408,34 @@
 
 /* Catatan Section */
 .catatan-label {
-  font-size: 13px;
+  font-size: 10.4px;
   color: #64748b;
-  margin-bottom: 8px;
+  margin-bottom: 6.4px;
   font-weight: 500;
 }
 
 .return-notes-container {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  padding: 10px;
+  border-radius: 8px;
+  padding: 8px;
   overflow-y: auto;
 }
 
 .return-notes-title {
-  font-size: 13px;
+  font-size: 10.4px;
   font-weight: 600;
   color: #1e293b;
-  margin-bottom: 12px;
+  margin-bottom: 9.6px;
 }
 
 /* Sub Card Item */
 .note-card {
   background-color: #fcf8f8;
   border: 1px solid #f3dede;
-  border-radius: 8px;
-  padding: 12px 14px;
-  margin-bottom: 12px;
+  border-radius: 6.4px;
+  padding: 9.6px 11.2px;
+  margin-bottom: 9.6px;
 }
 
 .note-card:last-child {
@@ -450,40 +446,40 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 6px;
+  margin-bottom: 4.8px;
 }
 
 .note-badge {
   background-color: #d93838;
   color: #ffffff;
-  font-size: 10px;
+  font-size: 8px;
   font-weight: 600;
-  padding: 3px 8px;
-  border-radius: 4px;
-  letter-spacing: 0.3px;
+  padding: 2.4px 6.4px;
+  border-radius: 3.2px;
+  letter-spacing: 0.24px;
 }
 
 .note-date {
-  font-size: 11px;
+  font-size: 8.8px;
   color: #94a3b8;
   text-align: right;
 }
 
 .note-name {
-  font-size: 12px;
+  font-size: 9.6px;
   font-weight: 600;
   color: #1e293b;
-  margin-bottom: 4px;
+  margin-bottom: 3.2px;
 }
 
 .note-desc {
-  font-size: 12px;
+  font-size: 9.6px;
   color: #64748b;
   line-height: 1.4;
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 960px;
   margin: 0 auto;
   background-color: transparent;
 }
@@ -492,57 +488,57 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 15px 5px 15px;
-  gap: 12px;
+  padding: 12px 12px 4px 12px;
+  gap: 9.6px;
 }
 
 .header-info {
   flex: 1;
   background-color: #ffffff;
-  border-radius: 8px;
-  padding: 14px 20px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  border-radius: 6.4px;
+  padding: 11.2px 16px;
+  box-shadow: 0 0.8px 2.4px rgba(0, 0, 0, 0.04);
 }
 
 .header-info h1 {
-  margin: 0 0 4px 0;
-  font-size: 13px;
+  margin: 0 0 3.2px 0;
+  font-size: 10.4px;
   font-weight: 700;
   color: #334e68;
 }
 
 .header-info p {
   margin: 0;
-  font-size: 10px;
+  font-size: 8px;
   color: #829ab1;
 }
 
 .header-summary {
   display: flex;
-  gap: 12px;
+  gap: 9.6px;
 }
 
 .step4-summary-box {
   background-color: #ffffff;
   border: 1px solid #c8d9e6;
-  border-radius: 8px;
-  padding: 12px 20px;
+  border-radius: 6.4px;
+  padding: 9.6px 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-width: 210px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  min-width: 168px;
+  box-shadow: 0 0.8px 2.4px rgba(0, 0, 0, 0.04);
 }
 
 .summary-title {
-  font-size: 8px;
+  font-size: 6.4px;
   color: #627d98;
-  margin-bottom: 6px;
+  margin-bottom: 4.8px;
   white-space: nowrap;
 }
 
 .summary-amount {
-  font-size: 14px;
+  font-size: 11.2px;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -554,10 +550,11 @@
 .text-green {
   color: #059669;
 }
+
 /* Section Title */
 .s5-section-title {
   text-align: center;
-  font-size: 13px;
+  font-size: 10.4px;
   font-weight: 600;
   color: #4b5563;
   margin-top: 0px;
@@ -568,31 +565,29 @@
   display: flex;
   flex-direction: column;
   background-color: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.03);
-  /* height: 400px; */
-  min-height: 400px;
-  max-height: 600px;
-
-  /* Tambahkan dua properti ini */
+  padding: 16px;
+  border-radius: 9.6px;
+  box-shadow: 0 0.8px 4px rgba(0, 0, 0, 0.03);
+  min-height: 320px;
+  max-height: 480px;
   overflow-y: auto;
   overflow-x: hidden;
 }
+
 .s5-header-container {
   display: flex;
   flex-direction: column;
   background-color: #fff;
-  padding: 5px;
-  border-radius: 10px;
-  margin-bottom: 5px;
+  padding: 4px;
+  border-radius: 8px;
+  margin-bottom: 4px;
 }
+
 .s5-list-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   cursor: pointer;
-  /* user-select: none; */
 }
 
 .s5-list-row :hover {
@@ -601,9 +596,9 @@
 
 /* Cards General */
 .card {
-  padding: 5px 5px;
-  border-radius: 6px;
-  font-size: 12px;
+  padding: 4px;
+  border-radius: 4.8px;
+  font-size: 9.6px;
 }
 
 /* Person Card */
@@ -611,7 +606,7 @@
   flex: 2;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4.8px;
 }
 
 .person-name {
@@ -622,26 +617,26 @@
 .person-meta {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 11px;
+  gap: 6.4px;
+  font-size: 8.8px;
   color: #6b7280;
 }
 
 .icon-verified {
   color: #3ac462;
-  font-size: 12px;
+  font-size: 9.6px;
 }
 
 /* Person Background Colors */
 .bg-orange {
   background-color: #fef3c7;
-} /* KTP background */
+}
 .bg-green-light {
   background-color: #dcfce7;
-} /* NPWP background */
+}
 .bg-gray {
   background-color: #e5e7eb;
-} /* Perusahaan background */
+}
 
 /* Component Card */
 .component-card {
@@ -659,35 +654,35 @@
   border: 1px solid #93c5fd;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 9.6px;
 }
 
 .bank-icon-placeholder {
   color: #2563eb;
-  font-size: 16px;
+  font-size: 12.8px;
 }
 
 .bank-info {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3.2px;
 }
 
 .bank-name {
   color: #6b7280;
-  font-size: 11px;
+  font-size: 8.8px;
 }
 
 .bank-acc {
   font-weight: 600;
   color: #374151;
-  font-size: 11px;
+  font-size: 8.8px;
 }
 
 .acc-name {
   font-weight: 400;
   color: #6b7280;
-  margin-left: 5px;
+  margin-left: 4px;
 }
 
 /* Amount Card */
@@ -697,11 +692,11 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 5px;
+  gap: 4px;
 }
 
 .amount-label {
-  font-size: 10px;
+  font-size: 8px;
   color: #9ca3af;
 }
 
@@ -714,15 +709,17 @@
 
 /* Status Button */
 .status-btn {
-  width: 32px;
-  height: 32px;
-  display: flex;
+  width: 25.6px;
+  height: 25.6px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
-  font-size: 16px;
+  border-radius: 4.8px;
+  font-size: 12.8px;
   flex-shrink: 0;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.8px 1.6px rgba(0, 0, 0, 0.1);
+  user-select: none;
+  transition: all 0.2s ease;
 }
 
 .status-success {
@@ -743,15 +740,13 @@
   border: 1px solid #fecaca;
 }
 
-/* s5 potongan pajak */
-
 /* Judul Halaman */
 .page-title {
   text-align: center;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 600;
   color: #4b5563;
-  margin-bottom: 24px;
+  margin-bottom: 19.2px;
 }
 
 /* Header Kolom */
@@ -759,8 +754,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 0 0 36px;
-  font-size: 11px;
+  padding: 0 0 0 28.8px;
+  font-size: 8.8px;
   font-weight: 500;
   color: #374151;
 }
@@ -770,7 +765,7 @@
 }
 
 .s5-header-right {
-  width: 240px;
+  width: 192px;
   text-align: left;
 }
 
@@ -778,64 +773,63 @@
 .s5-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 9.6px;
 }
 
-/* Kartu Utama (Jenis Pajak + Objek Pajak) */
+/* Kartu Utama */
 .tax-card {
   flex: 1;
   background-color: #ffffff;
-  border-radius: 10px;
-  padding: 12px 20px;
+  border-radius: 8px;
+  padding: 9.6px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1.6px 6.4px rgba(0, 0, 0, 0.06);
   border: 1px solid #f0f0f0;
 }
 
 .tax-name {
-  font-size: 13px;
+  font-size: 10.4px;
   font-weight: 700;
   color: #374151;
 }
 
-/* Pill Badge "3 Objek Pajak" */
 .tax-badge {
   background-color: #f0f7ff;
   color: #6b7280;
-  font-size: 12px;
+  font-size: 9.6px;
   font-weight: 500;
-  padding: 8px 20px;
-  border-radius: 8px;
+  padding: 6.4px 16px;
+  border-radius: 6.4px;
   width: 45%;
-  max-width: 340px;
+  max-width: 272px;
   text-align: left;
 }
 
-/* Kartu Total Potongan (Kanan) */
+/* Kartu Total Potongan */
 .total-card {
-  width: 240px;
+  width: 192px;
   background-color: #ffffff;
-  border-radius: 10px;
-  padding: 10px 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+  padding: 8px 12.8px;
+  box-shadow: 0 1.6px 6.4px rgba(0, 0, 0, 0.06);
   border: 1px solid #e2e8f0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3.2px;
 }
 
 .total-label {
-  font-size: 11px;
+  font-size: 8.8px;
   color: #9ca3af;
   font-weight: 400;
 }
 
 .total-amount {
-  font-size: 13px;
+  font-size: 10.4px;
   font-weight: 700;
-  color: #e11d48; /* Warna merah sesuai desain */
+  color: #e11d48;
   text-align: right;
 }
 
@@ -845,11 +839,10 @@
   align-items: flex-start;
   justify-content: space-between;
   position: relative;
-  margin-bottom: 35px;
-  padding: 0 20px;
+  margin-bottom: 28px;
+  padding: 0 16px;
 }
 
-/* Item pada Stepper */
 .step-item {
   display: flex;
   flex-direction: column;
@@ -860,17 +853,15 @@
   text-align: center;
 }
 
-/* Titik / Node Stepper */
 .step-node {
-  width: 12px;
-  height: 12px;
+  width: 9.6px;
+  height: 9.6px;
   border-radius: 50%;
-  margin-bottom: 12px;
+  margin-bottom: 9.6px;
   position: relative;
   z-index: 2;
 }
 
-/* Warna Titik */
 .node-gray {
   background-color: #64748b;
 }
@@ -882,15 +873,14 @@
 }
 .node-blue {
   background-color: #0284c7;
-  width: 16px;
-  height: 16px;
-  margin-bottom: 10px;
+  width: 12.8px;
+  height: 12.8px;
+  margin-bottom: 8px;
 }
 
-/* Garis Penghubung Stepper */
 .step-line-container {
   position: absolute;
-  top: 5px;
+  top: 4px;
   left: 10%;
   right: 10%;
   display: flex;
@@ -898,7 +888,7 @@
 }
 
 .step-line {
-  height: 2px;
+  height: 1.6px;
   flex: 1;
   background-color: #e2e8f0;
 }
@@ -907,16 +897,15 @@
   background-color: #0284c7;
 }
 
-/* Teks Stepper */
 .step-info {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: 1.6px;
 }
 
 .step-date {
-  font-size: 11px;
+  font-size: 8.8px;
   font-weight: 700;
   color: #374151;
 }
@@ -926,7 +915,7 @@
 }
 
 .step-title {
-  font-size: 11px;
+  font-size: 8.8px;
   font-weight: 700;
   color: #374151;
 }
@@ -936,7 +925,7 @@
 }
 
 .step-status {
-  font-size: 10px;
+  font-size: 8px;
   font-weight: 500;
 }
 
@@ -956,29 +945,29 @@
 /* Kartu Detail Jurnal */
 .detail-card {
   background-color: #eef5fc;
-  border: 1.5px solid #eef6fc;
-  outline: 6px solid #f7fbff;
-  border-radius: 12px;
-  padding: 14px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  border: 1.2px solid #eef6fc;
+  outline: 4.8px solid #f7fbff;
+  border-radius: 9.6px;
+  padding: 11.2px;
+  box-shadow: 0 1.6px 8px rgba(0, 0, 0, 0.02);
 }
 
 .card-header {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   background-color: #ffffff;
-  border-radius: 8px;
-  padding: 5px;
+  border-radius: 6.4px;
+  padding: 4px;
 }
 
 .card-title {
-  font-size: 13px;
+  font-size: 10.4px;
   font-weight: 700;
   color: #374151;
-  margin-bottom: 4px;
+  margin-bottom: 3.2px;
 }
 
 .card-subtitle {
-  font-size: 9.5px;
+  font-size: 7.6px;
   color: #9ca3af;
   font-weight: 500;
 }
@@ -992,36 +981,33 @@
 .journal-table th {
   background-color: #eef5fc;
   color: #4b5563;
-  font-size: 12px;
+  font-size: 9.6px;
   font-weight: 700;
-  padding: 10px 16px;
+  padding: 8px 12.8px;
   text-align: left;
 }
 
 .journal-table td {
   background-color: #ffffff;
+  padding: 11.2px 12.8px;
+  font-size: 9.6px;
+  color: #4b5563;
+  border-bottom: 1px solid #f1f5f9;
 }
 
 .journal-table th:first-child {
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
+  border-top-left-radius: 6.4px;
+  border-bottom-left-radius: 6.4px;
 }
 
 .journal-table th:last-child {
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-top-right-radius: 6.4px;
+  border-bottom-right-radius: 6.4px;
 }
 
 .journal-table th.text-right,
 .journal-table td.text-right {
   text-align: right;
-}
-
-.journal-table td {
-  padding: 14px 16px;
-  font-size: 12px;
-  color: #4b5563;
-  border-bottom: 1px solid #f1f5f9;
 }
 
 .dash-symbol {
@@ -1033,24 +1019,25 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 16px 4px 16px;
-  font-size: 13px;
+  padding: 12.8px 12.8px 3.2px 12.8px;
+  font-size: 10.4px;
 }
 
 .total-title {
   font-weight: 700;
   color: #374151;
+  font-size: 8.8px;
 }
 
 .total-amounts {
   display: flex;
-  gap: 40px;
+  gap: 32px;
 }
 
 .total-val {
   font-weight: 700;
   color: #0284c7;
-  font-size: 13px;
+  font-size: 10.4px;
 }
 
 .s5-accordion-item {
@@ -1058,65 +1045,13 @@
   flex-direction: column;
 }
 
-/* Rotasi Panah ketika dibuka */
 .s5-accordion-item.active .chevron-icon {
   transform: rotate(90deg);
 }
-/* .person-card { flex: 1.3; } */
-/* .bank-card { flex: 1.4; display: flex; align-items: center; gap: 10px; } */
-/* .amount-card { flex: 0.9; display: flex; flex-direction: column; } */
-
-/* Warna Background Person Card */
-/* .bg-orange { background-color: #fff7ed; border-color: #ffedd5; }
-.bg-green-light { background-color: #f0fdf4; border-color: #dcfce7; }
-.bg-gray { background-color: #f1f5f9; border-color: #e2e8f0; } */
-
-/* .person-name {
-    font-weight: 700;
-    color: #334155;
-    font-size: 13px;
-    margin-bottom: 3px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-} */
-
-/* .person-meta {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 11px;
-    color: #64748b;
-} */
-
-/* .icon-verified { color: #10b981; }
-.grade { margin-left: auto; font-weight: 600; }
-
-.bank-icon-placeholder { font-size: 18px; color: #0284c7; }
-.bank-name { font-size: 11px; font-weight: 600; color: #334155; }
-.bank-acc { font-size: 11px; color: #64748b; }
-.amount-label { font-size: 10px; color: #64748b; }
-.amount-value { display: flex; justify-content: space-between; font-weight: 700; color: #334155; } */
-
-/* Tombol Status Kanan */
-/* .status-btn {
-    width: 38px;
-    height: 38px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    flex-shrink: 0;
-} */
-
-/* .status-success { background: #dcfce7; border: 1px solid #bbf7d0; color: #16a34a; }
-.status-warning { background: #fef9c3; border: 1px solid #fef08a; color: #ca8a04; }
-.status-error { background: #fee2e2; border: 1px solid #fecaca; color: #dc2626; } */
 
 .accordion-content {
   display: none;
-  padding-top: 8px;
+  padding-top: 6.4px;
 }
 
 .s5-accordion-item.active .accordion-content {
@@ -1126,9 +1061,9 @@
 .detail-container {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  padding-left: 35px;
-  padding-right: 40px;
+  gap: 8px;
+  padding-left: 28px;
+  padding-right: 32px;
 }
 
 .detail-table {
@@ -1136,68 +1071,68 @@
   display: flex;
   flex-direction: column;
   background: #f0f9ff;
-  border-radius: 8px;
+  border-radius: 6.4px;
 }
 
 .detail-tableTujuan {
   flex: 1;
   display: flex;
   flex-direction: column;
-  border-radius: 8px;
+  border-radius: 6.4px;
 }
 
 .detail-header {
   display: flex;
-  font-size: 11px;
+  font-size: 8.8px;
   color: #64748b;
-  padding: 0 8px;
+  padding: 0 6.4px;
   font-weight: 600;
 }
 
 .detail-row {
   display: flex;
   align-items: center;
-  font-size: 12px;
+  font-size: 9.6px;
 }
 
 .col-name {
   flex: 1.5;
-  padding-top: 10px;
-  padding-left: 10px;
+  padding-top: 8px;
+  padding-left: 8px;
 }
 .col-nominalHome {
   flex: 0.7;
   text-align: center;
-  padding-top: 10px;
+  padding-top: 8px;
 }
 .col-pph {
   flex: 1.2;
-  padding-top: 10px;
+  padding-top: 8px;
   text-align: center;
-  margin-left: 20px;
+  margin-left: 16px;
 }
 .col-transfer {
   flex: 1.2;
-  padding-top: 10px;
+  padding-top: 8px;
   text-align: center;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 16px;
+  margin-right: 16px;
 }
 
 .sub-card {
-  flex: 1.5; /* Ikut flex rasio */
+  flex: 1.5;
   background-color: #ffffff;
   border: 1px solid #cbd5e1;
   border-right: none;
-  border-radius: 8px 0 0 8px;
-  padding: 10px 14px;
-  padding-left: 16px; /* Memberi jarak teks dari border kiri kotak */
-  margin-left: 10px; /* GUNAKAN INI jika ingin menggeser seluruh kotaknya ke kanan */
+  border-radius: 6.4px 0 0 6.4px;
+  padding: 8px 11.2px;
+  padding-left: 12.8px;
+  margin-left: 8px;
   color: #334155;
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  min-height: 42px;
+  min-height: 33.6px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1206,16 +1141,16 @@
 .detail-row .col-nominalHome {
   background-color: #ffffff;
   border: 1px solid #cbd5e1;
-  border-left: none; /* Hilangkan garis batas kiri */
-  border-radius: 0 8px 8px 0; /* Hanya bulatkan sudut kanan */
-  padding: 10px 16px;
+  border-left: none;
+  border-radius: 0 6.4px 6.4px 0;
+  padding: 8px 12.8px;
   color: #1e293b;
   font-weight: 500;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  min-height: 42px;
+  min-height: 33.6px;
   white-space: nowrap;
 }
 
@@ -1224,18 +1159,17 @@
   border-color: #94a3b8;
 }
 
-
 .badge-pph,
 .badge-transfer {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: 42px;
-  padding: 10px 14px;
-  border-radius: 8px;
+  min-height: 33.6px;
+  padding: 8px 11.2px;
+  border-radius: 6.4px;
   font-weight: 700;
-  font-size: 13px;
+  font-size: 10.4px;
   box-sizing: border-box;
 }
 
@@ -1251,19 +1185,19 @@
 
 .header-title {
   text-align: center;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 700;
   color: #3b4e61;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .table-header-2 {
   display: flex;
   align-items: center;
-  font-size: 11px;
+  font-size: 8.8px;
   color: #718395ee;
   font-weight: 500;
-  padding: 0 16px 10px 45px;
+  padding: 0 12.8px 8px 36px;
 }
 
 .col-target {
@@ -1271,30 +1205,31 @@
 }
 
 .col-nominal {
-  width: 180px;
+  width: 144px;
   text-align: right;
-  margin-right: 40px;
+  margin-right: 32px;
 }
 
 .col-status {
-  width: 110px;
+  width: 88px;
   text-align: center;
 }
 
 .col-code {
-  width: 110px;
+  width: 88px;
   text-align: center;
-  margin-left: 10px;
+  margin-left: 8px;
 }
-/* Ikon Panah Biru */
+
 .chevron-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
+  width: 16px;
   cursor: pointer;
   color: #1d4ed8;
-  font-size: 14px;
+  font-size: 11.2px;
+  transition: transform 0.2s ease;
 }
 
 .chevron-icon svg {
@@ -1306,40 +1241,40 @@
   flex: 1;
   background: linear-gradient(180deg, #f7faff 0%, #edf4fc 100%);
   border: 1px solid #e1ebf5;
-  border-radius: 8px;
-  padding: 5px 10px;
+  border-radius: 6.4px;
+  padding: 4px 8px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 4px 10px rgba(0, 30, 80, 0.05);
+  box-shadow: 0 3.2px 8px rgba(0, 30, 80, 0.05);
 }
 
 .bank-info-2 {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 9.6px;
 }
 
 .bank-logo {
-  width: 35px;
-  height: 35px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1.6px 4px rgba(0, 0, 0, 0.08);
   flex-shrink: 0;
 }
 
 .bank-details {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1.6px;
 }
 
 .bank-name {
-  font-size: 10px;
+  font-size: 8px;
   color: #6a7e91;
   font-weight: 500;
 }
@@ -1347,60 +1282,60 @@
 .account-row {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4.8px;
 }
 
 .account-number {
-  font-size: 11px;
+  font-size: 8.8px;
   font-weight: 600;
   color: #425567;
 }
 
 .account-holder {
-  font-size: 10px;
+  font-size: 8px;
   color: #7b8e9f;
 }
 
 .recipient-tag {
   background-color: #ffffff;
   border: 1px solid #e2eaf2;
-  border-radius: 8px;
-  padding: 9px 16px;
-  font-size: 11px;
+  border-radius: 6.4px;
+  padding: 7.2px 12.8px;
+  font-size: 8.8px;
   color: #5d7184;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+  box-shadow: inset 0 0.8px 1.6px rgba(0, 0, 0, 0.02);
 }
 
 .nominal-box {
   background-color: #ffffff;
   border: 1px solid #e2eaf2;
-  border-radius: 8px;
-  padding: 9px 16px;
-  font-size: 10px;
+  border-radius: 6.4px;
+  padding: 7.2px 12.8px;
+  font-size: 8px;
   color: #5d7184;
-  width: 100px;
+  width: 80px;
   display: flex;
   justify-content: space-between;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+  box-shadow: inset 0 0.8px 1.6px rgba(0, 0, 0, 0.02);
 }
 
 /* Right Action Card */
 .status-card {
   background: linear-gradient(180deg, #f7faff 0%, #edf4fc 100%);
   border: 1px solid #e1ebf5;
-  border-radius: 8px;
-  padding: 10px 14px;
+  border-radius: 6.4px;
+  padding: 8px 11.2px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  box-shadow: 0 4px 10px rgba(0, 30, 80, 0.05);
-  font-size: 10px;
+  gap: 8px;
+  box-shadow: 0 3.2px 8px rgba(0, 30, 80, 0.05);
+  font-size: 8px;
 }
 
 .status-badge {
-  width: 80px;
-  padding: 5px;
-  border-radius: 8px;
+  width: 64px;
+  padding: 4px;
+  border-radius: 6.4px;
   font-weight: 500;
   text-align: center;
 }
@@ -1426,43 +1361,43 @@
 .code-box {
   background-color: #ffffff;
   border: 1px solid #e2eaf2;
-  border-radius: 8px;
-  padding: 8px 0;
-  width: 80px;
+  border-radius: 6.4px;
+  padding: 6.4px 0;
+  width: 64px;
   text-align: center;
   color: #94a3b8;
-  letter-spacing: 1px;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+  letter-spacing: 0.8px;
+  box-shadow: inset 0 0.8px 1.6px rgba(0, 0, 0, 0.02);
 }
 
 .sidebar {
   background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  border-radius: 9.6px;
+  box-shadow: 0 0.8px 2.4px rgba(0, 0, 0, 0.04);
   flex-shrink: 0;
 }
 
 .sidebar-title {
-  font-size: 13px;
+  font-size: 10.4px;
   font-weight: 700;
   color: #334155;
-  margin-bottom: 16px;
+  margin-bottom: 12.8px;
 }
 
 .flow-wrapper {
   background-color: #edf4fa;
-  border-radius: 10px;
-  padding: 10px;
+  border-radius: 8px;
+  padding: 8px;
   position: relative;
 }
 
 .flow-wrapper::before {
   content: "";
   position: absolute;
-  top: 24px;
-  bottom: 24px;
-  left: 21px;
-  width: 2px;
+  top: 19.2px;
+  bottom: 19.2px;
+  left: 16.8px;
+  width: 1.6px;
   background-color: #cbd5e1;
   z-index: 0;
 }
@@ -1470,35 +1405,35 @@
 .flow-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6.4px;
   position: relative;
   z-index: 1;
 }
 
 .flow-item {
   background-color: #ffffff;
-  border-radius: 8px;
-  padding: 8px 12px;
+  border-radius: 6.4px;
+  padding: 6.4px 9.6px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border: 1px solid transparent;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 0.8px 1.6px rgba(0, 0, 0, 0.02);
 }
 
 .flow-item.active {
-  border-left: 4px solid #0284c7;
+  border-left: 3.2px solid #0284c7;
 }
 
 .flow-item-left {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6.4px;
 }
 
 .dot {
-  width: 8px;
-  height: 8px;
+  width: 6.4px;
+  height: 6.4px;
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -1522,16 +1457,16 @@
 }
 
 .flow-title {
-  font-size: 11px;
+  font-size: 8.8px;
   font-weight: 700;
   color: #334155;
   line-height: 1.3;
 }
 
 .flow-subtitle {
-  font-size: 10px;
+  font-size: 8px;
   font-weight: 500;
-  margin-top: 1px;
+  margin-top: 0.8px;
 }
 
 .sub-blue {
@@ -1548,55 +1483,54 @@
 }
 
 .flow-number {
-  font-size: 14px;
+  font-size: 11.2px;
   font-weight: 700;
   color: #334155;
-  margin-left: 10px;
+  margin-left: 8px;
 }
 
 .content-panel {
   flex: 1;
   background-color: #ffffff;
-  border-radius: 12px;
-  /* padding: 24px; */
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  border-radius: 9.6px;
+  box-shadow: 0 0.8px 2.4px rgba(0, 0, 0, 0.04);
 }
 
 .content-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .header-title-group {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1.6px;
 }
 
 .panel-title {
-  font-size: 12px;
+  font-size: 9.6px;
   font-weight: 700;
   color: #334155;
 }
 
 .panel-subtitle {
-  font-size: 8.75px;
+  font-size: 7px;
   color: #64748b;
 }
 
 .sort-btn {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  padding: 5px 12px;
-  font-size: 9px;
+  border-radius: 4.8px;
+  padding: 4px 9.6px;
+  font-size: 7.2px;
   color: #64748b;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3.2px;
 }
 
 .sort-btn:hover {
@@ -1606,15 +1540,15 @@
 .activity-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 9.6px;
 }
 
 .activity-card {
-  border-radius: 8px;
-  padding: 12px 16px;
+  border-radius: 6.4px;
+  padding: 9.6px 12.8px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 9.6px;
   border: 1px solid #e2e8f0;
   background-color: #ffffff;
 }
@@ -1632,22 +1566,22 @@
 .activity-content {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3.2px;
 }
 
 .activity-main-text {
-  font-size: 10.5px;
+  font-size: 8.4px;
   font-weight: 700;
   color: #1e293b;
 }
 
 .activity-meta {
-  font-size: 8.5px;
+  font-size: 6.8px;
   color: #64748b;
 }
 
 .activity-note {
-  font-size: 9.25px;
+  font-size: 7.4px;
   color: #475569;
   margin: 0px;
   line-height: 1.4;
@@ -1655,8 +1589,8 @@
 
 .main-container {
   display: flex;
-  gap: 20px;
-  max-width: 1280px;
+  gap: 16px;
+  max-width: 1024px;
   margin: 0 auto;
   align-items: flex-start;
 }
@@ -1678,23 +1612,16 @@
 .tax-accordion-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 9.6px;
   font-family: inherit;
 }
 
 .tax-header-row {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 9.6px;
   cursor: pointer;
   user-select: none;
-}
-
-.chevron-icon {
-  font-size: 14px;
-  color: #0284c7;
-  transition: transform 0.2s ease;
-  width: 14px;
 }
 
 .tax-item.active > .tax-header-row > .chevron-icon,
@@ -1709,47 +1636,36 @@
   align-items: center;
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  padding: 12px 20px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  border-radius: 8px;
+  padding: 9.6px 16px;
+  box-shadow: 0 0.8px 1.6px rgba(0, 0, 0, 0.03);
 }
 
 .tax-title {
   font-weight: 700;
   color: #1e293b;
-  font-size: 14px;
+  font-size: 11.2px;
 }
 
 .tax-badge {
   background: #f8fafc;
   border: 1px solid #e2e8f0;
   color: #64748b;
-  font-size: 12px;
-  padding: 4px 16px;
-  border-radius: 6px;
+  font-size: 9.6px;
+  padding: 3.2px 12.8px;
+  border-radius: 4.8px;
 }
 
 .tax-total-card {
-  width: 220px;
+  width: 176px;
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  padding: 8px 18px;
+  border-radius: 8px;
+  padding: 6.4px 14.4px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
-}
-
-.total-title {
-  font-size: 11px;
-  color: #64748b;
-}
-
-.total-value {
-  font-size: 14px;
-  font-weight: 700;
-  color: #e11d48;
+  box-shadow: 0 0.8px 1.6px rgba(0, 0, 0, 0.03);
 }
 
 .tax-content-panel,
@@ -1763,69 +1679,69 @@
 }
 
 .pegawai-content-panel {
-  padding-left: 30px;
+  padding-left: 24px;
 }
 
 .tree-container {
   display: flex;
-  margin-top: 8px;
-  margin-left: 6px;
-  gap: 8px;
-  padding-left: 30px;
+  margin-top: 6.4px;
+  margin-left: 4.8px;
+  gap: 6.4px;
+  padding-left: 24px;
 }
 
 .tree-line-branch {
-  width: 24px;
+  width: 19.2px;
   flex-shrink: 0;
 }
 
 .inner-branch {
-  width: 24px;
+  width: 19.2px;
 }
 
 .objek-table {
   flex: 1;
   background: #f0f9ff;
-  border-radius: 10px;
-  padding: 12px 16px;
+  border-radius: 8px;
+  padding: 9.6px 12.8px;
 }
 
 .grid-header {
   display: flex;
   align-items: center;
-  font-size: 11px;
+  font-size: 8.8px;
   font-weight: 600;
   color: #64748b;
-  margin-bottom: 6px;
-  padding-left: 26px; 
+  margin-bottom: 4.8px;
+  padding-left: 20.8px;
 }
 
 .grid-header-pegawai {
   display: flex;
   align-items: center;
-  font-size: 11px;
+  font-size: 8.8px;
   font-weight: 600;
   color: #64748b;
-  margin-bottom: 6px;
-  padding-left: 32px; 
+  margin-bottom: 4.8px;
+  padding-left: 25.6px;
 }
 
 .col-name-head {
   flex: 1;
 }
 .col-dpp-head {
-  width: 140px;
-  margin-left: 10px;
+  width: 112px;
+  margin-left: 8px;
 }
 .col-potongan-head {
-  width: 140px;
-  margin-left: 10px;
+  width: 112px;
+  margin-left: 8px;
 }
 
 .objek-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   cursor: pointer;
 }
 
@@ -1833,9 +1749,9 @@
   flex: 1;
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 9px 14px;
-  font-size: 12px;
+  border-radius: 6.4px;
+  padding: 7.2px 11.2px;
+  font-size: 9.6px;
   font-weight: 600;
   color: #334155;
 }
@@ -1843,89 +1759,64 @@
 .pegawai-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 6px;
+  gap: 8px;
+  margin-top: 4.8px;
 }
 
 .pegawai-card {
   flex: 1;
   background: #fffbeb;
   border: 1px solid #fff1dd;
-  border-radius: 8px;
-  padding: 9px 14px;
-  font-size: 12px;
+  border-radius: 6.4px;
+  padding: 7.2px 11.2px;
+  font-size: 9.6px;
   font-weight: 600;
   color: #451a03;
 }
 
 .badge-dpp {
-  width: 140px;
-  min-height: 38px;
+  width: 112px;
+  min-height: 30.4px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: #f8fafc;
   border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 0 12px;
-  font-size: 12px;
+  border-radius: 6.4px;
+  padding: 0 9.6px;
+  font-size: 9.6px;
   font-weight: 600;
   color: #475569;
   box-sizing: border-box;
 }
 
 .badge-potongan {
-  width: 140px;
-  min-height: 38px;
+  width: 112px;
+  min-height: 30.4px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: #fef2f2;
-  border-radius: 8px;
-  padding: 0 12px;
-  font-size: 12px;
+  border-radius: 6.4px;
+  padding: 0 9.6px;
+  font-size: 9.6px;
   font-weight: 700;
   color: #f02957;
   box-sizing: border-box;
 }
 
-.status-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 6px;
-    user-select: none;
-    transition: all 0.2s ease;
-}
-
-.status-success {
-    background-color: #e6f4ea;
-    color: #1e7e34;
-}
-
-.status-warning {
-    background-color: #fef7e0;
-    color: #d97706;
-}
-
-.status-error {
-    background-color: #fce8e6;
-    color: #d93025;
-}
 .doc-header-inline {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Teks di kiri, icon di kanan */
-  width: 100%;                    /* Lebar penuh sama rata dengan kotak bawah */
-  box-sizing: border-box;         /* Agar padding tidak membuat elemen melebar keluar */
-  margin-bottom: 12px;            /* Memberikan gap/jarak dengan kotak di bawahnya */
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 9.6px;
   background-color: #ffffff;
-  padding: 2px 2px;
-  border-radius: 12px;
+  padding: 1.6px 1.6px;
+  border-radius: 9.6px;
   border: 1px solid #e2e8f0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0.8px 2.4px rgba(0, 0, 0, 0.05);
   cursor: pointer;
   user-select: none;
   transition: all 0.2s ease;
@@ -1934,12 +1825,12 @@
 .doc-header-inline:hover {
   background-color: #f8fafc;
   border-color: #cbd5e1;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1.6px 4.8px rgba(0, 0, 0, 0.08);
 }
 
 .doc-header-inline h4 {
   margin: 0;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 600;
   color: #1e293b;
 }
@@ -1949,7 +1840,7 @@
   background: transparent;
   padding: 0;
   color: #2563eb;
-  font-size: 15px;
+  font-size: 12px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -1958,73 +1849,71 @@
 }
 
 .doc-header-inline:hover .pt-zoom {
-  transform: translate(1px, -1px);
+  transform: translate(0.8px, -0.8px);
 }
 
 .custom-modal-overlay {
-  position: fixed !important; /* Wajib fixed agar melayang keluar dari layout form */
+  position: fixed ;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(15, 23, 42, 0.5); /* Layar belakang redup */
-  backdrop-filter: blur(4px);
-  z-index: 99999;                    /* Supaya selalu di atas form */
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(3.2px);
+  z-index: 99999;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 16px;
   box-sizing: border-box;
 }
 
 .custom-modal-container {
   background: #ffffff;
-  border-radius: 16px;
-  max-width: 1200px;
+  border-radius: 12.8px;
+  max-width: 960px;
   width: 95%;
   max-height: 90vh;
   display: flex;
   flex-direction: column;
-  padding: 24px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+  padding: 19.2px;
+  box-shadow: 0 16px 20px -4px rgba(0, 0, 0, 0.2);
   overflow: hidden;
 }
 
 .custom-modal-body {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
-  gap: 20px;
+  gap: 16px;
   overflow-y: auto;
 }
 
-/* Footer Modal (Wadah tombol di bawah) */
 .custom-modal-footer {
   display: flex;
-  justify-content: center; /* Menempatkan tombol tepat di tengah horizontal */
+  justify-content: center;
   align-items: center;
   width: 100%;
-  padding-top: 20px;
-  margin-top: 12px;
-  border-top: 1px solid #f1f5f9; /* Garis pemisah tipis opsional */
+  padding-top: 16px;
+  margin-top: 9.6px;
+  border-top: 1px solid #f1f5f9;
 }
 
-/* Tombol Tutup */
 .btn-modal-close {
-  background-color: #1e6091; /* Biru sesuai tema */
+  background-color: #1e6091;
   color: #ffffff;
   border: none;
-  padding: 10px 48px;
-  font-size: 14px;
+  padding: 8px 38.4px;
+  font-size: 11.2px;
   font-weight: 600;
-  border-radius: 24px;       /* Bentuk kapsul melengkung */
+  border-radius: 19.2px;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 6px rgba(30, 96, 145, 0.25);
+  box-shadow: 0 1.6px 4.8px rgba(30, 96, 145, 0.25);
 }
 
 .btn-modal-close:hover {
   background-color: #164e75;
-  box-shadow: 0 4px 10px rgba(30, 96, 145, 0.35);
-  transform: translateY(-1px);
+  box-shadow: 0 3.2px 8px rgba(30, 96, 145, 0.35);
+  transform: translateY(-0.8px);
 }
 
 .btn-modal-close:active {
@@ -2034,47 +1923,30 @@
 .doc-panel-container {
   background-color: #f3f8fd;
   border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 16px;
+  border-radius: 6.4px;
+  padding: 12.8px;
   display: flex;
   flex-direction: column;
-  min-height: 480px;
+  min-height: 384px;
   box-sizing: border-box;
-}
-
-/* Header */
-.doc-header-inline {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  margin-bottom: 12px;
-}
-
-.doc-header-inline h4 {
-  margin: 0;
-  font-size: 15px;
-  font-weight: 600;
-  color: #475569;
 }
 
 .pt-zoom {
   color: #0284c7;
-  font-size: 18px;
+  font-size: 14.4px;
 }
 
-/* Summary Card */
 .doc-summary-card {
   background: #ffffff;
   border: 1px solid #dbeafe;
-  border-radius: 10px;
-  padding: 14px 16px;
+  border-radius: 8px;
+  padding: 11.2px 12.8px;
 }
 
 .summary-stats {
   display: flex;
   justify-content: space-around;
-  margin-bottom: 12px;
+  margin-bottom: 9.6px;
 }
 
 .stat-item {
@@ -2083,51 +1955,48 @@
 
 .stat-value {
   display: block;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 700;
   color: #0369a1;
-  margin-bottom: 2px;
+  margin-bottom: 1.6px;
 }
 
 .stat-label {
-  font-size: 12px;
+  font-size: 9.6px;
   color: #64748b;
 }
 
-/* Progress Bar */
 .progress-wrapper {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .progress-wrapper .progress-bar-fill {
   flex-grow: 1;
-  height: 8px;
+  height: 6.4px;
   background-color: #0284c7;
   border-radius: 999px;
 }
 
 .progress-percent {
-  font-size: 12px;
+  font-size: 9.6px;
   font-weight: 600;
   color: #0369a1;
 }
 
-/* Spacer */
 .doc-body-spacer {
   flex: 1;
 }
 
-/* Bottom Button */
 .btn-preview-merged {
   width: 100%;
-  padding: 10px 16px;
+  padding: 8px 12.8px;
   background-color: #f0f7ff;
   color: #0284c7;
-  border: 1.5px solid #bae6fd;
-  border-radius: 8px;
-  font-size: 13.5px;
+  border: 1.2px solid #bae6fd;
+  border-radius: 6.4px;
+  font-size: 10.8px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -2138,6 +2007,48 @@
   border-color: #7dd3fc;
 }
 
-.doc-footer-action{
-  padding-top: 12px 
+.doc-footer-action {
+  padding-top: 9.6px;
 }
+
+.keperluan-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  /* Style dasar box keperluan */
+  .keperluan-text-box {
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-family: monospace;
+    font-size: 13px;
+    color: #1e293b;
+    background-color: #ffffff;
+    line-height: 1.5;
+  }
+
+  /* Batas maksimal 3 baris dengan elipsis (...) */
+.clamp-3 {
+  line-height: 1.4em;
+  max-height: calc(1.4em * 3); /* Tepat 3 baris */
+  overflow: hidden;
+  position: relative;
+}
+
+  /* Tombol Lihat Selengkapnya */
+  .btn-selengkapnya {
+    background: none;
+    border: none;
+    color: #0284c7;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    align-self: flex-start;
+  }
+
+  .btn-selengkapnya:hover {
+    text-decoration: underline;
+  }

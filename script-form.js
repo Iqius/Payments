@@ -1779,178 +1779,39 @@ function formatRupiah(val) {
   return "Rp. " + new Intl.NumberFormat("id-ID").format(val) + ",00";
 }
 
-// Fungsi render list anggaran (bisa difilter berdasarkan kategori tab aktif)
-function renderAnggaranList(data, filterKategori = "ALL") {
-  const container = document.getElementById("list-anggaran-container");
-  if (!container) return;
-
-  // Filter jika memilih tab spesifik (BPJS/SKP), atau tampilkan semua jika "ALL"
-  const listToRender =
-    filterKategori === "ALL"
-      ? data
-      : data.filter(
-          (item) =>
-            item.kategori.toUpperCase() === filterKategori.toUpperCase(),
-        );
-
-  if (listToRender.length === 0) {
-    container.innerHTML = `<div style="text-align:center; padding: 20px; color: #94a3b8;">Tidak ada data anggaran.</div>`;
-    return;
-  }
-
-  container.innerHTML = listToRender
-    .map((item) => {
-      const isBpjs = item.kategori.toUpperCase() === "BPJS";
-      const itemClass = isBpjs ? "bpjs-item" : "skp-item";
-      const badgeClass = isBpjs ? "badge-bpjs" : "badge-skp";
-      const selectedClass = item.terpilih ? "selected" : "";
-
-      return `
-      <div class="list-item ${itemClass} ${selectedClass}" data-id="${item.id}" onclick="selectAnggaranItem(this)">
-          <div class="check-area"><i class="fas fa-check"></i></div>
-          <div class="item-content">
-              <div class="item-header">
-                  <span class="kode">${item.id}</span>
-                  <span class="badge-mini ${badgeClass}">${item.kategori}</span>
-              </div>
-              <div class="item-title">${item.judul}</div>
-          </div>
-          <div class="item-amount">
-              <span class="label">Saldo Dapat Digunakan</span>
-              <strong class="val text-green">${formatRupiah(item.saldo)}</strong>
-          </div>
-          <div class="chevron"><i class="fas fa-chevron-right"></i></div>
-      </div>
-    `;
-    })
-    .join("");
-}
-
-// Handler pemilihan item (Radio behavior)
-function selectAnggaranItem(element) {
-  const itemId = element.getAttribute("data-id");
-
-  // Update status state data
-  anggaranData.forEach((item) => {
-    item.terpilih = item.id === itemId;
-  });
-
-  // Hapus class selected dari item lain dan tambahkan ke item aktif
-  document
-    .querySelectorAll("#list-anggaran-container .list-item")
-    .forEach((el) => {
-      el.classList.remove("selected");
-    });
-  element.classList.add("selected");
-}
-
-// Inisialisasi awal saat halaman selesai dimuat
-document.addEventListener("DOMContentLoaded", () => {
-  selectSumberAnggaran("bpjs"); // Default aktif langsung menyaring BPJS
-});
-
-function renderAnggaranList(data, filterKategori = "ALL") {
-  const container = document.getElementById("list-anggaran-container");
-  if (!container) return;
-
-  // 1. Filter data sesuai kategori yang dipilih
-  const listToRender =
-    filterKategori.toUpperCase() === "ALL"
-      ? data
-      : data.filter(
-          (item) =>
-            item.kategori.toUpperCase() === filterKategori.toUpperCase(),
-        );
-
-  // 2. UPDATE TOTAL ANGGARAN OTOMATIS SESUAI JUMLAH HASIL FILTER
-  const totalCountEl = document.getElementById("total-anggaran-count");
-  if (totalCountEl) {
-    totalCountEl.innerText = listToRender.length;
-  }
-
-  // 3. Render Empty State jika data kosong
-  if (listToRender.length === 0) {
-    container.innerHTML = `<div style="text-align:center; padding: 20px; color: #94a3b8;">Tidak ada data anggaran.</div>`;
-    return;
-  }
-
-  // 4. Render item ke HTML
-  container.innerHTML = listToRender
-    .map((item) => {
-      const isBpjs = item.kategori.toUpperCase() === "BPJS";
-      const itemClass = isBpjs ? "bpjs-item" : "skp-item";
-      const badgeClass = isBpjs ? "badge-bpjs" : "badge-skp";
-      const selectedClass = item.terpilih ? "selected" : "";
-
-      return `
-      <div class="list-item ${itemClass} ${selectedClass}" data-id="${item.id}" onclick="selectAnggaranItem(this)">
-          <div class="check-area"><i class="fas fa-check"></i></div>
-          <div class="item-content">
-              <div class="item-header">
-                  <span class="kode">${item.id}</span>
-                  <span class="badge-mini ${badgeClass}">${item.kategori.toUpperCase()}</span>
-              </div>
-              <div class="item-title">${item.judul}</div>
-          </div>
-          <div class="item-amount">
-              <span class="label">Saldo Dapat Digunakan</span>
-              <strong class="val text-green">${formatRupiah(item.saldo)}</strong>
-          </div>
-          <div class="chevron"><i class="fas fa-chevron-right"></i></div>
-      </div>
-    `;
-    })
-    .join("");
-}
-
-// State kategori yang sedang aktif
+// State aplikasi
 let activeKategori = "bpjs";
+let currentPage = 1;
+const itemsPerPage = 10;
 
 // Helper format Rupiah
 function formatRupiah(val) {
   return "Rp. " + new Intl.NumberFormat("id-ID").format(val) + ",00";
 }
 
-// 1. Fungsi Render & Filter (Kategori + Kata Kunci Pencarian)
-function filterAndRenderAnggaran() {
+// 1. Fungsi Render List (Hanya menampilkan data halaman aktif)
+function renderAnggaranList(data, totalItems) {
   const container = document.getElementById("list-anggaran-container");
-  const searchInput = document.getElementById("search-anggaran");
   const countElement = document.getElementById("total-anggaran-count");
 
   if (!container) return;
 
-  const keyword = searchInput ? searchInput.value.toLowerCase().trim() : "";
-
-  // Filter gabungan: Kategori aktif AND (Cocok ID ATAU Cocok Judul)
-  const filteredData = anggaranData.filter((item) => {
-    const matchCategory =
-      item.kategori.toLowerCase() === activeKategori.toLowerCase();
-    const matchSearch =
-      item.id.toLowerCase().includes(keyword) ||
-      item.judul.toLowerCase().includes(keyword);
-
-    return matchCategory && matchSearch;
-  });
-
-  // Update total count
   if (countElement) {
-    countElement.innerText = filteredData.length;
+    countElement.innerText = totalItems;
   }
 
-  // Tampilan jika data tidak ditemukan
-  if (filteredData.length === 0) {
+  if (data.length === 0) {
     container.innerHTML = `
       <div style="text-align: center; padding: 24px; color: #94a3b8; font-size: 14px;">
         Kegiatan anggaran tidak ditemukan.
-      </div>
-    `;
+      </div>`;
+    renderPagination(0);
     return;
   }
 
-  // Render HTML hasil pencarian
-  container.innerHTML = filteredData
+  container.innerHTML = data
     .map((item) => {
-      const isBpjs = item.kategori.toLowerCase() === "bpjs";
+      const isBpjs = item.kategori.toUpperCase() === "BPJS";
       const itemClass = isBpjs ? "bpjs-item" : "skp-item";
       const badgeClass = isBpjs ? "badge-bpjs" : "badge-skp";
       const selectedClass = item.terpilih ? "selected" : "";
@@ -1970,10 +1831,98 @@ function filterAndRenderAnggaran() {
             <strong class="val text-green">${formatRupiah(item.saldo)}</strong>
           </div>
           <div class="chevron"><i class="fas fa-chevron-right"></i></div>
-        </div>
-      `;
+        </div>`;
     })
     .join("");
+
+  renderPagination(totalItems);
+}
+
+// 2. Kontrol Tombol Pagination (Next / Prev / Page Number)
+function renderPagination(totalItems) {
+  const paginationContainer = document.getElementById("pagination-container");
+  if (!paginationContainer) return;
+
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  // Sembunyikan pagination jika data hanya 1 halaman atau kosong
+  if (totalPages <= 1) {
+    paginationContainer.innerHTML = "";
+    return;
+  }
+
+  paginationContainer.innerHTML = `
+    <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 16px;">
+      <button 
+        onclick="goToPage(${currentPage - 1})" 
+        ${currentPage === 1 ? "disabled" : ""}
+        style="padding: 6px 12px; cursor: pointer; border-radius: 4px; border: 1px solid #cbd5e1; background: #fff;">
+        &laquo; Prev
+      </button>
+
+      <span style="font-size: 14px; color: #64748b;">
+        Halaman <strong>${currentPage}</strong> dari <strong>${totalPages}</strong>
+      </span>
+
+      <button 
+        onclick="goToPage(${currentPage + 1})" 
+        ${currentPage === totalPages ? "disabled" : ""}
+        style="padding: 6px 12px; cursor: pointer; border-radius: 4px; border: 1px solid #cbd5e1; background: #fff;">
+        Next &raquo;
+      </button>
+    </div>
+  `;
+}
+
+// 3. Fungsi Pindah Halaman
+function goToPage(page) {
+  currentPage = page;
+  filterAndRenderAnggaran(false); // false agar tidak mereset page kembali ke 1
+}
+
+// 4. Filter, Potong 10 Item (Slice), lalu Render
+function filterAndRenderAnggaran(resetPage = true) {
+  if (resetPage) {
+    currentPage = 1; // Kembali ke halaman 1 saat user ganti kategori atau mengetik pencarian
+  }
+
+  const searchInput = document.getElementById("search-anggaran");
+  const keyword = searchInput ? searchInput.value.toLowerCase().trim() : "";
+
+  // Filter data
+  const filteredData = anggaranData.filter((item) => {
+    const matchCategory =
+      activeKategori.toUpperCase() === "ALL" ||
+      item.kategori.toUpperCase() === activeKategori.toUpperCase();
+
+    const matchSearch =
+      item.id.toLowerCase().includes(keyword) ||
+      item.judul.toLowerCase().includes(keyword);
+
+    return matchCategory && matchSearch;
+  });
+
+  // Ambil hanya 10 item untuk halaman aktif
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedData = filteredData.slice(startIndex, endIndex);
+
+  renderAnggaranList(paginatedData, filteredData.length);
+}
+
+// 5. Handler Seleksi Item
+function selectAnggaranItem(element) {
+  const itemId = element.getAttribute("data-id");
+
+  anggaranData.forEach((item) => {
+    item.terpilih = item.id === itemId;
+  });
+
+  document
+    .querySelectorAll("#list-anggaran-container .list-item")
+    .forEach((el) => el.classList.remove("selected"));
+
+  element.classList.add("selected");
 }
 
 // 2. Handler Ganti Tab (BPJS / SKP)
@@ -2147,4 +2096,13 @@ function openFilePreviewModal() {
 function closeFilePreviewModal() {
   const modal = document.getElementById("filePreviewModal");
   if (modal) modal.style.display = "none";
+}
+
+function toggleKeperluan() {
+  const textBox = document.getElementById("keperluanText");
+  const btn = document.getElementById("btnToggleKeperluan");
+
+  const isCollapsed = textBox.classList.toggle("clamp-3");
+
+  btn.innerText = isCollapsed ? "Lihat Selengkapnya" : "Lihat Lebih Sedikit";
 }
