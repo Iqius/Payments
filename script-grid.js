@@ -314,7 +314,14 @@ function renderTable(data) {
 
   tbody.innerHTML = data
     .map((item) => {
-      // Logika khusus badge status (apakah ada tanggal di bawahnya)
+      const idDok = item.id || "-";
+      const statusText = item.statusText || item.status || "Draft";
+      
+      // Validasi status draft
+      const isDraft =
+        String(statusText).toLowerCase().trim() === "draft" ||
+        String(item.status).toLowerCase().trim() === "draft";
+
       const statusHtml = item.statusDate
         ? `<div class="status-container">
              <span class="badge badge-${item.status}">${item.statusText}</span>
@@ -324,8 +331,14 @@ function renderTable(data) {
 
       return `
         <tr>
-            <td><input type="checkbox" class="row-checkbox"></td>
-            <td><a href="#" class="doc-link">${item.id}</a></td>
+            <td>
+              <input type="checkbox" 
+                     class="row-checkbox" 
+                     value="${idDok}" 
+                     data-status="${statusText}" 
+                     ${!isDraft ? "disabled" : ""}>
+            </td>
+            <td><a href="#" class="doc-link">${idDok}</a></td>
             <td>${item.tanggal}</td>
             <td>${item.kantor}</td>
             <td>${item.metode}</td>
@@ -339,6 +352,9 @@ function renderTable(data) {
       `;
     })
     .join("");
+
+  // Sinkronkan kembali tombol dan master checkbox
+  updateButtonAndCheckAllState();
 }
 
 // 3. Inisialisasi saat DOM siap
@@ -436,8 +452,12 @@ function updateButtonAndCheckAllState() {
   const btnAction = document.getElementById("btnPencairanBaru");
   const checkAll = document.getElementById("check-all");
 
-  const enabledCheckboxes = document.querySelectorAll("#table-body .row-checkbox:not(:disabled)");
-  const checkedBoxes = document.querySelectorAll("#table-body .row-checkbox:checked");
+  const enabledCheckboxes = document.querySelectorAll(
+    "#table-body .row-checkbox:not(:disabled)",
+  );
+  const checkedBoxes = document.querySelectorAll(
+    "#table-body .row-checkbox:checked",
+  );
   const checkedCount = checkedBoxes.length;
 
   // Toggle mode tombol (Hapus / Pencairan Baru)
@@ -461,7 +481,9 @@ function updateButtonAndCheckAllState() {
 
   // Sinkronisasi status check-all
   if (checkAll) {
-    checkAll.checked = enabledCheckboxes.length > 0 && checkedBoxes.length === enabledCheckboxes.length;
+    checkAll.checked =
+      enabledCheckboxes.length > 0 &&
+      checkedBoxes.length === enabledCheckboxes.length;
   }
 }
 
@@ -526,31 +548,33 @@ function renderDocumentTable() {
       const tgl = item.tanggal || "-";
       const kantor = item.kantor || "-";
       const metode = item.metode || "-";
-      const nominal = typeof formatRupiah === "function" ? formatRupiah(item.nominal) : item.nominal;
+      const nominal =
+        typeof formatRupiah === "function"
+          ? formatRupiah(item.nominal)
+          : item.nominal;
       const verifikator = item.verifikator || "-";
 
       // Pemotongan Anggaran
       const anggaran = item.anggaran || "-";
-      const anggaranDisplay = anggaran.length > 32 
-        ? anggaran.substring(0, 32) + "..." 
-        : anggaran;
+      const anggaranDisplay =
+        anggaran.length > 32 ? anggaran.substring(0, 32) + "..." : anggaran;
 
       // Pemotongan Keperluan
       const keperluan = item.keperluan || "-";
-      const keperluanDisplay = keperluan.length > 36 
-        ? keperluan.substring(0, 36) + "..." 
-        : keperluan;
+      const keperluanDisplay =
+        keperluan.length > 36 ? keperluan.substring(0, 36) + "..." : keperluan;
 
       // Format status & tanggal
       const statusClass = (item.status || "draft").toLowerCase().trim();
       const statusText = item.statusText || item.status || "Draft";
-      const statusDate = item.statusDate 
-        ? `<span class="status-date">${item.statusDate}</span>` 
+      const statusDate = item.statusDate
+        ? `<span class="status-date">${item.statusDate}</span>`
         : "";
 
       // Validasi ketat: Hanya Draft yang aktif
-      const isDraft = String(statusText).toLowerCase().trim() === "draft" ||
-                      String(item.status).toLowerCase().trim() === "draft";
+      const isDraft =
+        String(statusText).toLowerCase().trim() === "draft" ||
+        String(item.status).toLowerCase().trim() === "draft";
 
       return `
         <tr>
@@ -650,7 +674,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const checkAll = document.getElementById("check-all");
   if (checkAll) {
     checkAll.addEventListener("change", function () {
-      const enabledCheckboxes = document.querySelectorAll("#table-body .row-checkbox:not(:disabled)");
+      const enabledCheckboxes = document.querySelectorAll(
+        "#table-body .row-checkbox:not(:disabled)",
+      );
       enabledCheckboxes.forEach((cb) => {
         cb.checked = checkAll.checked;
       });
@@ -672,7 +698,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnAction = document.getElementById("btnPencairanBaru");
   if (btnAction) {
     btnAction.addEventListener("click", function () {
-      const checkedBoxes = document.querySelectorAll("#table-body .row-checkbox:checked");
+      const checkedBoxes = document.querySelectorAll(
+        "#table-body .row-checkbox:checked",
+      );
       const selectedIds = Array.from(checkedBoxes).map((cb) => cb.value);
 
       if (selectedIds.length > 0) {
@@ -705,7 +733,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   tabGroup.addEventListener("click", (e) => {
     const clickedBtn = e.target.closest(".tab-btn");
-    
+
     // Abaikan jika yang diklik bukan tombol tab
     if (!clickedBtn) return;
 
@@ -720,8 +748,5 @@ document.addEventListener("DOMContentLoaded", () => {
     // 3. Ambil data kategori yang dipilih (opsional untuk filter tabel)
     const selectedCategory = clickedBtn.dataset.tab;
     console.log("Kategori dipilih:", selectedCategory);
-
-    // Panggil fungsi filter tabel Anda di sini jika ada:
-    // filterTabelByKategori(selectedCategory);
   });
 });

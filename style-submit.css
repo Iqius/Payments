@@ -1,4 +1,3 @@
-/* ADDITIONAL CSS: Document Checklist Dialog */
 .doc-checklist-modal {
   max-width: 320px;
   padding: 20px 24px;
@@ -13,7 +12,6 @@
   overflow-y: auto;
 }
 
-/* Base Row Styling */
 .custom-checkbox-row {
   display: flex;
   align-items: center;
@@ -26,12 +24,10 @@
   transition: all 0.2s ease;
 }
 
-/* Hide actual checkbox input */
 .custom-checkbox-row input[type="checkbox"] {
   display: none;
 }
 
-/* Checkbox Visual Box */
 .checkbox-box {
   width: 16px;
   height: 16px;
@@ -58,7 +54,6 @@
   transition: color 0.2s ease;
 }
 
-/* 1. HOVER STATE */
 .custom-checkbox-row:not(.disabled):hover {
   border-color: #1565c0;
   background-color: #f4f8fc;
@@ -67,7 +62,6 @@
   border-color: #1565c0;
 }
 
-/* 2. CHECKED STATE */
 .custom-checkbox-row:has(input[type="checkbox"]:checked) {
   background-color: #f0f7ff;
   border-color: #1565c0;
@@ -87,7 +81,6 @@
   font-weight: 600;
 }
 
-/* 3. DISABLED UNCHECKED STATE */
 .custom-checkbox-row.disabled {
   cursor: not-allowed;
   background-color: #f9fbfd;
@@ -115,7 +108,7 @@
 
 .step4-main-grid {
   display: grid;
-  grid-template-columns: 224px 51.2px 1fr;
+  grid-template-columns: 255px 51.2px 1fr;
   gap: 12px;
   padding: 12px 16px;
   flex-grow: 1;
@@ -134,7 +127,6 @@
   gap: 9.6px;
 }
 
-/* Part A: Scrollable Verifikasi */
 .s5-verifikasi-card {
   flex-grow: 1;
   display: flex;
@@ -144,10 +136,11 @@
 }
 
 .s5-verifikasi-card h4 {
-  font-size: 11.2px;
+  font-size: 11px;
   background-color: white;
-  border-radius: 4.8px;
+  border-radius: 4px;
   padding: 4px;
+  margin-bottom: 5px;
 }
 
 .s5-verifikasi-list {
@@ -185,9 +178,8 @@
   line-height: 1.4;
 }
 
-/* Part C: Right Panel */
 .s5-right-panel {
-  background-color: #eef5fc;
+  background-color: #F0F9FF;
   border-radius: 6.4px;
   overflow: hidden;
   height: 100%;
@@ -213,7 +205,6 @@
   overflow-y: auto;
 }
 
-/* Reused Accordion customized for Step 4 List */
 .s5-acc-item {
   margin-bottom: 6.4px;
 }
@@ -254,7 +245,6 @@
   text-align: right;
 }
 
-/* Step 4 Submit Button Styles */
 .btn-submit-primary {
   background-color: #27a844;
   color: #ffffff;
@@ -274,7 +264,6 @@
   box-shadow: 0 3.2px 9.6px rgba(39, 168, 68, 0.2);
 }
 
-/* Center icons vertically and horizontally */
 .s5-middle-panel {
   display: flex;
   flex-direction: column;
@@ -284,13 +273,12 @@
   height: 100%;
 }
 
-/* Icon Buttons Style matching Pic 2 */
 .s5-icon-btn {
   width: 35.2px;
   height: 35.2px;
   border-radius: 8px;
   border: 1px solid transparent;
-  background-color: #2b78c5;
+  background-color: #226DA8;
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -309,7 +297,7 @@
 .s5-icon-btn.active {
   background-color: #ffffff;
   color: #2b78c5;
-  border: 1.6px solid #2b78c5;
+  border: 1.6px solid #226DA8;
   box-shadow: 0 2.4px 6.4px rgba(43, 120, 197, 0.25);
 }
 
@@ -361,7 +349,6 @@
   text-align: justify;
 }
 
-/* Main Container */
 .verification-wrapper {
   background-color: #f0f4f9;
   border: 1px solid #d4e2f3;
@@ -379,7 +366,6 @@
   margin-bottom: 9.6px;
 }
 
-/* Info Card */
 .info-card {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
@@ -404,9 +390,9 @@
   color: #1e293b;
   font-weight: 600;
   text-align: right;
+  font-size: 10px;
 }
 
-/* Catatan Section */
 .catatan-label {
   font-size: 10.4px;
   color: #64748b;
@@ -429,7 +415,6 @@
   margin-bottom: 9.6px;
 }
 
-/* Sub Card Item */
 .note-card {
   background-color: #fcf8f8;
   border: 1px solid #f3dede;
@@ -515,19 +500,28 @@
 
 .header-summary {
   display: flex;
-  gap: 9.6px;
+  /* gap: 9px; */
+  background-color: #ffffff;
+  flex: 1;
+  border-radius: 8px;
+  margin-bottom: 3px;
+  justify-content: flex-end;
+}
+.header-summary > div:not(:last-child) {
+  border-right: 1px solid #e0e0e0; /* Divider line color and thickness */
+  /* padding: 8px; */
+  border-radius: 0;            /* Space between text and divider line */
 }
 
 .step4-summary-box {
   background-color: #ffffff;
-  border: 1px solid #c8d9e6;
-  border-radius: 6.4px;
-  padding: 9.6px 16px;
+  /* border: 1px solid #c8d9e6; */
+  border-radius: 6px;
+  padding: 8px 16px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  min-width: 168px;
-  box-shadow: 0 0.8px 2.4px rgba(0, 0, 0, 0.04);
+  min-width: 120px;
+  /* box-shadow: 0 0.8px 2.4px rgba(0, 0, 0, 0.04); */
 }
 
 .summary-title {
@@ -541,6 +535,7 @@
   font-size: 11.2px;
   font-weight: 700;
   white-space: nowrap;
+  text-align: end;
 }
 
 .text-red {
@@ -551,7 +546,6 @@
   color: #059669;
 }
 
-/* Section Title */
 .s5-section-title {
   text-align: center;
   font-size: 10.4px;
@@ -560,7 +554,6 @@
   margin-top: 0px;
 }
 
-/* List Container & Row */
 .s5-list-container {
   display: flex;
   flex-direction: column;
@@ -572,6 +565,10 @@
   max-height: 480px;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.s5-aktivitas {
+  flex: 1;
 }
 
 .s5-header-container {
@@ -594,14 +591,12 @@
   opacity: 0.9;
 }
 
-/* Cards General */
 .card {
   padding: 4px;
   border-radius: 4.8px;
   font-size: 9.6px;
 }
 
-/* Person Card */
 .person-card {
   flex: 2;
   display: flex;
@@ -627,7 +622,6 @@
   font-size: 9.6px;
 }
 
-/* Person Background Colors */
 .bg-orange {
   background-color: #fef3c7;
 }
@@ -638,7 +632,6 @@
   background-color: #e5e7eb;
 }
 
-/* Component Card */
 .component-card {
   flex: 1.5;
   background-color: #f0f9ff;
@@ -647,7 +640,6 @@
   align-items: center;
 }
 
-/* Bank Card */
 .bank-card {
   flex: 1.7;
   background-color: #fff;
@@ -685,7 +677,6 @@
   margin-left: 4px;
 }
 
-/* Amount Card */
 .amount-card {
   flex: 1;
   background-color: #f3f4f6;
@@ -707,7 +698,6 @@
   color: #374151;
 }
 
-/* Status Button */
 .status-btn {
   width: 25.6px;
   height: 25.6px;
@@ -740,7 +730,6 @@
   border: 1px solid #fecaca;
 }
 
-/* Judul Halaman */
 .page-title {
   text-align: center;
   font-size: 12px;
@@ -749,7 +738,6 @@
   margin-bottom: 19.2px;
 }
 
-/* Header Kolom */
 .table-header {
   display: flex;
   justify-content: space-between;
@@ -769,14 +757,12 @@
   text-align: left;
 }
 
-/* List & Baris */
 .s5-list {
   display: flex;
   flex-direction: column;
   gap: 9.6px;
 }
 
-/* Kartu Utama */
 .tax-card {
   flex: 1;
   background-color: #ffffff;
@@ -807,7 +793,6 @@
   text-align: left;
 }
 
-/* Kartu Total Potongan */
 .total-card {
   width: 192px;
   background-color: #ffffff;
@@ -833,7 +818,6 @@
   text-align: right;
 }
 
-/* Timeline Stepper Container */
 .stepper-container {
   display: flex;
   align-items: flex-start;
@@ -942,7 +926,6 @@
   color: #0284c7;
 }
 
-/* Kartu Detail Jurnal */
 .detail-card {
   background-color: #eef5fc;
   border: 1.2px solid #eef6fc;
@@ -972,7 +955,6 @@
   font-weight: 500;
 }
 
-/* Tabel Jurnal */
 .journal-table {
   width: 100%;
   border-collapse: collapse;
@@ -1014,7 +996,6 @@
   color: #9ca3af;
 }
 
-/* Row Total (Footer Tabel) */
 .table-footer {
   display: flex;
   justify-content: space-between;
@@ -1026,7 +1007,12 @@
 .total-title {
   font-weight: 700;
   color: #374151;
-  font-size: 8.8px;
+  font-size: 9px;
+}
+.total-value {
+    font-size: 12px;
+    font-weight: 700;
+    color: #e11d48;
 }
 
 .total-amounts {
@@ -1319,7 +1305,6 @@
   box-shadow: inset 0 0.8px 1.6px rgba(0, 0, 0, 0.02);
 }
 
-/* Right Action Card */
 .status-card {
   background: linear-gradient(180deg, #f7faff 0%, #edf4fc 100%);
   border: 1px solid #e1ebf5;
@@ -1811,11 +1796,11 @@
   justify-content: space-between;
   width: 100%;
   box-sizing: border-box;
-  margin-bottom: 9.6px;
+  margin-bottom: 5px;
   background-color: #ffffff;
   padding: 1.6px 1.6px;
   border-radius: 9.6px;
-  border: 1px solid #e2e8f0;
+  /* border: 1px solid #e2e8f0; */
   box-shadow: 0 0.8px 2.4px rgba(0, 0, 0, 0.05);
   cursor: pointer;
   user-select: none;
@@ -1830,7 +1815,7 @@
 
 .doc-header-inline h4 {
   margin: 0;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   color: #1e293b;
 }
@@ -1838,7 +1823,7 @@
 .doc-header-inline .pt-zoom {
   border: none;
   background: transparent;
-  padding: 0;
+  padding: 5px;
   color: #2563eb;
   font-size: 12px;
   cursor: pointer;
@@ -1853,7 +1838,7 @@
 }
 
 .custom-modal-overlay {
-  position: fixed ;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
@@ -1955,7 +1940,7 @@
 
 .stat-value {
   display: block;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 700;
   color: #0369a1;
   margin-bottom: 1.6px;
@@ -2012,43 +1997,40 @@
 }
 
 .keperluan-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 
-  /* Style dasar box keperluan */
-  .keperluan-text-box {
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    padding: 10px 12px;
-    font-family: monospace;
-    font-size: 13px;
-    color: #1e293b;
-    background-color: #ffffff;
-    line-height: 1.5;
-  }
+/* .keperluan-text-box {
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-family: monospace;
+  font-size: 13px;
+  color: #1e293b;
+  background-color: #ffffff;
+  line-height: 1.5;
+} */
 
-  /* Batas maksimal 3 baris dengan elipsis (...) */
 .clamp-3 {
   line-height: 1.4em;
-  max-height: calc(1.4em * 3); /* Tepat 3 baris */
+  max-height: calc(1.4em * 3);
   overflow: hidden;
   position: relative;
 }
 
-  /* Tombol Lihat Selengkapnya */
-  .btn-selengkapnya {
-    background: none;
-    border: none;
-    color: #0284c7;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 0;
-    align-self: flex-start;
-  }
+.btn-selengkapnya {
+  background: none;
+  border: none;
+  color: #0284c7;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  align-self: flex-start;
+}
 
-  .btn-selengkapnya:hover {
-    text-decoration: underline;
-  }
+.btn-selengkapnya:hover {
+  text-decoration: underline;
+}

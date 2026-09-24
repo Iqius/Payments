@@ -35,7 +35,7 @@
                 </div>
                 <div class="info-pill">
                     <span class="label">Tanggal Pengajuan</span>
-                    <span class="value">21 Desember 2026</span>
+                    <span class="value" id="doc-date" data-status="draft" data-date=""></span>
                 </div>
             </div>
 
@@ -51,7 +51,7 @@
         <!-- ========================================== -->
         <!-- WRAPPER STEP 1: SUMBER ANGGARAN & KEGIATAN -->
         <!-- ========================================== -->
-        <div id="step-1-wrapper" style="display: flex; flex-direction: column; flex-grow: 1; overflow: hidden;">
+        <div id="step-1-wrapper" class="step-content" style="display: flex; flex-direction: column; flex-grow: 1; overflow: hidden;">
             <!-- [EXISTING STEP 1 CODE UNCHANGED - KEPT AS IS IN ORIGINAL FILE] -->
             <main class="form-content-grid">
                 <!-- Left Panel -->
@@ -77,11 +77,11 @@
                         <p class="subtitle">Pilih pemilik anggaran yang akan digunakan</p>
                         <div class="card-grid-2">
                             <div class="select-card plain-card">
-                                <strong>Unit Kerja Pengaju</strong>
+                                <strong>Unit Kerja</strong>
                                 <span>33A - Deputi Bidang Keuangan</span>
                             </div>
                             <div class="select-card plain-card" id="trigger-sentralisasi">
-                                <strong>Sentralisasi Anggaran</strong>
+                                <strong>Sentralisasi</strong>
                                 <span>Unit Kerja Kantor Pusat</span>
                                 <div class="badge-mini badge-green">Perlu Persetujuan Pemilik Anggaran</div>
                             </div>
@@ -117,9 +117,7 @@
                         <input type="text" id="search-anggaran" class="base-textbox full-width search-input"
                             placeholder="Cari kode, nama kegiatan...">
                         <div class="list-container" id="anggaran-list-container">
-                            <!-- Kontainer Daftar Item Anggaran -->
-                            <div id="list-anggaran-container" style="display: block; width: 100%;">
-                            </div>
+                            <div id="list-anggaran-container" style="display: block; width: 100%;"></div>
                         </div>
 
                         <div class="table-footer list-pagination">
@@ -127,12 +125,12 @@
                                 Jumlah Daftar Kegiatan Anggaran : <strong id="total-anggaran-count">0</strong>
                             </div>
                             <div class="pagination-controls">
-                                <button class="page-btn"><i class="fas fa-step-backward"></i></button>
-                                <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
-                                <button class="page-btn active-page">1</button>
-                                <span class="page-text">of 5</span>
-                                <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
-                                <button class="page-btn"><i class="fas fa-step-forward"></i></button>
+                                <button class="page-btn" id="btn-first"><i class="fas fa-step-backward"></i></button>
+                                <button class="page-btn" id="btn-prev"><i class="fas fa-chevron-left"></i></button>
+                                <button class="page-btn active-page" id="current-page-num">1</button>
+                                <span class="page-text" id="total-pages-text">of 1</span>
+                                <button class="page-btn" id="btn-next"><i class="fas fa-chevron-right"></i></button>
+                                <button class="page-btn" id="btn-last"><i class="fas fa-step-forward"></i></button>
                             </div>
                         </div>
                     </div>
@@ -172,12 +170,11 @@
 
                 <div class="keperluan-container">
                     <h3>Keperluan Pencairan</h3>
-                    <textarea
-                        class="base-textarea full-width">BEBAN PEMBINAAN ADMINISTRASI UNTUK PEMBAYARAN SPPD NOMOR: SPPD/70297/112025...</textarea>
+                    <textarea class="base-textarea full-width" placeholder="Masukkan keperluan pencairan..."></textarea>
                 </div>
             </section>
 
-            <footer class="form-footer">
+            <!-- <footer class="form-footer">
                 <button class="base-button secondary-btn" onclick="simpanDraft()">Simpan Draf</button>
                 <div class="right-actions">
                     <button class="base-button primary-btn outline-blue"
@@ -185,13 +182,13 @@
                     <button type="button" class="base-button primary-btn outline-blue"
                         onclick="nextStep()">Berikutnya</button>
                 </div>
-            </footer>
+            </footer> -->
         </div>
 
         <!-- ========================================== -->
         <!-- WRAPPER STEP 2: DOKUMEN PENDUKUNG          -->
         <!-- ========================================== -->
-        <div id="step-2-wrapper" style="display: none; flex-direction: column; flex-grow: 1; overflow: hidden;">
+        <div id="step-2-wrapper" class="step-content" style="display: none; flex-direction: column; flex-grow: 1; overflow: hidden;">
             <main class="step3-main-grid">
                 <!-- Left Panel: Context & Summary -->
                 <div class="step3-left-panel">
@@ -219,32 +216,23 @@
                             <strong class="val amount text-green" id="step3-summary-saldo">Rp. 0,00</strong>
                         </div>
                     </div>
+                    
+                    <div class="section-block">
+                        <h3>Skema Pencairan dipilih</h3>
+                    </div>
                     <div class="step3-summary-card">
-                        <h4>Skema Pencairan dipilih</h4>
                         <div class="radio-card selected">
                             <div class="radio-indicator"><i class="fas fa-check"></i></div>
                             <strong>Klaim Langsung</strong>
                             <span>Pembayaran reimburse, tagihan, dan biaya kegiatan</span>
                         </div>
+                        <div class="keperluan-wrapper">
+                            <h4>Keperluan Pencairan</h4>
+                            <div class="keperluan-text-box"></div>
+                        </div>
                     </div>
 
-<div class="keperluan-wrapper">
-  <h4>Keperluan Pencairan</h4>
-  
-  <div id="keperluanText" class="keperluan-text-box clamp-3">
-    BEBAN PEMBINAAN ADMINISTRASI UNTUK PEMBAYARAN SPPD NOMOR: SPPD/70297/112025 AN AMRI
-    IRWANSYAH, ELVINA SARI, M ZAKI YAMANI PERIHAL CEK KASUS KARYAWAN PUSKESMAS LADANG TUHA,
-    KOORDINASI KEMENAG DAN BAITUL MAL KAB ACEH SELATAN TERKAIT BEBERAPA HAL PENTING LAINNYA.
-  </div>
-
-  <button 
-    type="button" 
-    id="btnToggleKeperluan" 
-    class="btn-selengkapnya" 
-    onclick="toggleKeperluan()">
-    Lihat Selengkapnya
-  </button>
-</div>
+                    
                 </div>
 
                 <!-- Middle Panel: Uploaded Files & Upload Dropzone -->
@@ -396,13 +384,17 @@
                         </ul>
                     </div>
 
-                    <div class="upload-area-dashed compact-upload">
+                    <div class="upload-area-dashed compact-upload" id="dropArea">
+                        <!-- Input file disembunyikan -->
+                        <input type="file" id="fileInput" style="display: none;" multiple
+                            accept=".pdf,.jpg,.jpeg,.png" />
+
                         <div class="upload-icon">
                             <i class="fas fa-cloud-upload-alt"></i>
                         </div>
                         <h4>Tarik file & lepaskan di area ini</h4>
                         <p>atau klik untuk memilih file</p>
-                        <span class="format-text">Format: PDF, JPG, JPEG, PNG, IMG | Max: 10Mb per file</span>
+                        <span class="format-text">Format: PDF, JPG, JPEG, PNG | Max: 10Mb per file</span>
                     </div>
                 </div>
 
@@ -422,23 +414,22 @@
                 </div>
             </main>
 
-            <footer class="form-footer">
+            <!-- <footer class="form-footer">
                 <button class="base-button secondary-btn" onclick="simpanDraft()">Simpan Draf</button>
                 <div class="right-actions">
                     <button type="button" class="base-button primary-btn outline-blue"
                         onclick="prevStep()">Kembali</button>
                     <button type="button" class="base-button primary-btn outline-blue"
                         onclick="nextStep()">Berikutnya</button>
-
                 </div>
-            </footer>
+            </footer> -->
         </div>
 
         <!-- ========================================== -->
         <!-- WRAPPER STEP 3: Detil Perjalanan             -->
         <!-- ========================================== -->
         <!-- STEP 3 WRAPPER LENGKAP -->
-        <div id="step-3-wrapper" class="s3-step-wrapper" style="display: none;">
+        <div id="step-3-wrapper" class="step-content s3-step-wrapper" style="display: none;">
             <!-- Header Banner Anggaran -->
             <div class="step2-info-bar">
                 <!-- Blok Kiri (Biru Muda Utuh) -->
@@ -880,7 +871,7 @@
             </div>
 
             <!-- Footer Aksi -->
-            <footer class="form-footer">
+            <!-- <footer class="form-footer">
                 <button class="base-button secondary-btn" onclick="simpanDraft()">Simpan Draf</button>
                 <div class="right-actions">
                     <button type="button" class="base-button primary-btn outline-blue"
@@ -889,14 +880,14 @@
                         onclick="nextStep()">Berikutnya</button>
 
                 </div>
-            </footer>
+            </footer> -->
 
         </div>
 
         <!-- ========================================== -->
         <!-- WRAPPER STEP 4: RINCIAN BIAYA              -->
         <!-- ========================================== -->
-        <div id="step-4-wrapper" style="display: none; flex-direction: column; flex-grow: 1; overflow: hidden;">
+        <div id="step-4-wrapper" class="step-content" style="display: none; flex-direction: column; flex-grow: 1; overflow: hidden;">
             <div class="step2-info-bar">
                 <!-- Blok Kiri (Biru Muda Utuh) -->
                 <div class="info-item">
@@ -1051,13 +1042,79 @@
 
 
 
-                        <!-- Kwitansi List Area -->
-                        <div class="s4-kwitansi-area">
+                        <!-- kuitansi List Area -->
+                        <div class="s4-kuitansi-area">
+                            <div id="cardDetilPerjalananDinas" class="detil-perjalanan-card">
+                            <div class="detil-perjalanan-title">Detil perjalanan dinas</div>
+                            
+                            <div class="detil-perjalanan-body">
+                                <!-- Kolom 1: Jenis & Transportasi -->
+                                <div class="detil-perjalanan-col">
+                                <div class="detil-row">
+                                    <span class="detil-label">Jenis Perjalanan</span>
+                                    <span class="detil-val-bold">Luar kota</span>
+                                </div>
+                                <div class="detil-row">
+                                    <span class="detil-label">Transportasi</span>
+                                    <div class="transport-badge">
+                                    <i class="fas fa-train"></i>
+                                    <span>Kereta Api</span>
+                                    <i class="fas fa-check-circle check-icon"></i>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <!-- BOX PUTIH TENGAH (TANGGAL + HIGHLIGHT DURASI) -->
+                                <div class="detil-box-white">
+                                <!-- Info Tanggal -->
+                                <div class="detil-perjalanan-col detil-col-gap">
+                                    <div class="detil-row">
+                                    <span class="detil-label detil-label-date">Tanggal Berangkat</span>
+                                    <span class="detil-val">01 Agustus 2026</span>
+                                    </div>
+                                    <div class="detil-row">
+                                    <span class="detil-label detil-label-date">Tanggal Kembali</span>
+                                    <span class="detil-val">05 Agustus 2026</span>
+                                    </div>
+                                    <div class="detil-row">
+                                    <span class="detil-label detil-label-date">Durasi Perjalanan</span>
+                                    <span class="detil-val">5 Hari</span>
+                                    </div>
+                                </div>
+
+                                <!-- Durasi Perjalanan Besar -->
+                                <div class="detil-highlight-box">
+                                    <div class="highlight-label">Durasi Perjalanan</div>
+                                    <div class="highlight-val">5 Hari</div>
+                                </div>
+                                </div>
+
+                                <!-- Kolom 4: Rute Kota -->
+                                <div class="detil-perjalanan-col detil-col-gap">
+                                <div class="detil-row">
+                                    <span class="detil-label detil-label-city">Kota Asal</span>
+                                    <span class="detil-val">Jakarta</span>
+                                </div>
+                                <div class="detil-row">
+                                    <span class="detil-label detil-label-city">Kota Tujuan</span>
+                                    <span class="detil-val">Denpasar</span>
+                                </div>
+                                <div class="detil-row">
+                                    <span class="detil-label detil-label-city">Kota Kembali</span>
+                                    <span class="detil-val">Jakarta</span>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
                             <div class="kw-area-header">
+                                
                                 <!-- Sisi Kiri (Title / Dropdown) -->
                                 <div class="header-left-slot">
-                                    <!-- Tampilan Default / Badan Usaha -->
-                                    <h4 id="titleBadanUsaha" class="kw-title">Daftar Kwitansi</h4>
+                                        <!-- Container judul di luar list -->
+                                    <div class="kw-header-wrapper" style="display: flex; align-items: center; gap: 8px;">
+                                        <h4 id="titleBadanUsaha" class="kw-title" style="margin: 0;">Kuitansi / Invoice</h4>
+                                        <div id="container-extra-badge" class="kw-total"></div> <!-- Wadah kosong untuk badge dinamis -->
+                                    </div>
 
                                     <!-- Tampilan Khusus Perorangan (Dropdown) -->
                                     <div id="dropdownPerorangan" class="kw-select-group" style="display: none;">
@@ -1074,14 +1131,14 @@
                                 </div>
 
                                 <!-- Sisi Kanan (Tombol Tambah Dinamis) -->
-                                <button type="button" id="btnAddHeader" class="btn-add-kwitansi"
+                                <button type="button" id="btnAddHeader" class="btn-add-kuitansi"
                                     onclick="handleTambah()">
-                                    <i class="fas fa-plus"></i> <span id="btnAddText">Tambah Kwitansi / Invoice</span>
+                                    <i class="fas fa-plus"></i> <span id="btnAddText">Tambah kuitansi / Invoice</span>
                                 </button>
                             </div>
 
-                            <!-- Kwitansi Items Container -->
-                            <div class="kw-list" id="kwitansi-list-container">
+                            <!-- kuitansi Items Container -->
+                            <div class="kw-list" id="kuitansi-list-container">
                                 <!-- Generated by JS based on selection -->
                             </div>
                         </div>
@@ -1090,19 +1147,19 @@
                 </div>
             </main>
 
-            <footer class="form-footer">
+            <!-- <footer class="form-footer">
                 <button class="base-button secondary-btn" onclick="simpanDraft()">Simpan Draf</button>
                 <div class="right-actions">
                     <button class="base-button primary-btn outline-blue" onclick="prevStep()">Kembali</button>
                     <button class="base-button primary-btn outline-blue" onclick="nextStep()">Berikutnya</button>
                 </div>
-            </footer>
+            </footer> -->
         </div>
 
         <!-- ========================================== -->
         <!-- WRAPPER STEP 5: REVIEW & SUBMIT (ADD AT THE END) -->
         <!-- ========================================== -->
-        <div id="step-5-wrapper" style="display: none; flex-direction: column; flex-grow: 1; overflow: hidden;">
+        <div id="step-5-wrapper" class="step-content" style="display: none; flex-direction: column; flex-grow: 1; overflow: hidden;">
             <div class="step2-info-bar">
                 <!-- Blok Kiri (Biru Muda Utuh) -->
                 <div class="info-item">
@@ -1133,7 +1190,7 @@
                             <span class="s5-info-label">Nama Pengaju</span>
                             <strong class="s5-info-value">Satria Arindra</strong>
                         </div>
-                                                <div class="info-row-inline">
+                        <div class="info-row-inline">
                             <span class="s5-info-label">Sub Unit Kerja</span>
                             <strong class="s5-info-value">Asisten Deputi Bidang Treasury</strong>
                         </div>
@@ -1141,11 +1198,6 @@
                         <div class="info-row-stacked">
                             <span class="s5-info-label">Keperluan</span>
                             <p class="info-desc">
-                                BEBAN PEMBINAAN ADMINISTRASI UNTUK PEMBAYARAN SPPD NOMOR: SPPD/70297/112025 AN AMRI
-                                IRAWANSYAH, ELVINA SARI, M ZAKI YAMANI PERIHAL CEK KASUS KARYAWAN PUSKESMAS LADANG TUHA,
-                                KOORDINASI KEMENAG DAN BAITUL MAL KAB ACEH SELATAN TERKAIT PROGRAM BPJS KETENAGAKERJAAN
-                                SESUAI DENGAN BUKTI TERLAMPIR KOORDINASI KEMENAG DAN BAITUL MAL KAB ACEH SELATAN
-                            </p>
                         </div>
                     </div>
 
@@ -1164,99 +1216,45 @@
                             </div>
                         </div>
 
-  <!-- Header -->
-  <div class="doc-header-inline" onclick="openFilePreviewModal()" role="button" title="Perbesar / Lihat Pop-up">
-    <h4>Dokumen Pendukung</h4>
-    <span class="pt-zoom">
-      <i class="fas fa-up-right-from-square"></i>
-    </span>
-  </div>
+                        <!-- Header -->
+                        <div class="doc-header-inline" onclick="openFilePreviewModal()" role="button"
+                            title="Perbesar / Lihat Pop-up">
+                            <h4>Dokumen Pendukung</h4>
+                            <span class="pt-zoom">
+                                <i class="fas fa-up-right-from-square"></i>
+                            </span>
+                        </div>
 
-  <!-- Summary Card -->
-  <div class="doc-summary-card">
-    <div class="summary-stats">
-      <div class="stat-item">
-        <span class="stat-value">7</span>
-        <span class="stat-label">Dokumen diunggah</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-value">8/8</span>
-        <span class="stat-label">Wajib Lengkap</span>
-      </div>
-    </div>
-    
-    <!-- Progress Bar -->
-    <div class="progress-wrapper">
-      <div class="progress-bar-fill" style="width: 100%;"></div>
-      <span class="progress-percent">100%</span>
-    </div>
-  </div>
-
-  <!-- Spacer Area (Area Kosong) -->
-  <div class="doc-body-spacer"></div>
-
-  <!-- Footer Button -->
-  <div class="doc-footer-action">
-    <button type="button" class="btn-preview-merged" onclick="openMergedPreview()">
-      Buka pratinjau gabungan
-    </button>
-  </div>
-
-                        <!-- <div class="catatan-label">Catatan</div> -->
-
-                        <!-- Catatan Pengembalian Wrapper -->
-                        <!-- <div class="return-notes-container">
-                            <div class="return-notes-title">Catatan Pengembalian</div>
-
-                            <div class="note-card">
-                                <div class="note-header">
-                                    <span class="note-badge">Verifikator Keuangan</span>
-                                    <span class="note-date">12 Februari 2026</span>
+                        <!-- Summary Card -->
+                        <div class="doc-summary-card">
+                            <div class="summary-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">7</span>
+                                    <span class="stat-label">Dokumen diunggah</span>
                                 </div>
-                                <div class="note-name">Siti Aminah, S.E.</div>
-                                <div class="note-desc">
-                                    Dokumen pendukung tidak lengkap. Kuitansi pembayaran belum dilampirkan dan kode akun belanja tidak sesuai dengan jenis pengeluaran.
+                                <div class="stat-item">
+                                    <span class="stat-value">8/8</span>
+                                    <span class="stat-label">Wajib Lengkap</span>
                                 </div>
                             </div>
 
-                            <div class="note-card">
-                                <div class="note-header">
-                                    <span class="note-badge">Pejabat Pembuat Komitmen</span>
-                                    <span class="note-date">15 Februari 2026</span>
-                                </div>
-                                <div class="note-name">Ir. Budi Santoso, M.M.</div>
-                                <div class="note-desc">
-                                    Nominal pengajuan melebihi pagu anggaran triwulan III. Mohon disesuaikan dengan sisa alokasi yang tersedia.
-                                </div>
+                            <!-- Progress Bar -->
+                            <div class="progress-wrapper">
+                                <div class="progress-bar-fill" style="width: 100%;"></div>
+                                <span class="progress-percent">100%</span>
                             </div>
+                        </div>
 
-                            <div class="note-card">
-                                <div class="note-header">
-                                    <span class="note-badge">Verifikator Keuangan</span>
-                                    <span class="note-date">20 Maret 2026</span>
-                                </div>
-                                <div class="note-name">Ahmad Fauzi, S.Ak.</div>
-                                <div class="note-desc">
-                                    Mohon melampirkan lembar pengesahan...
-                                </div>
-                            </div>
+                        <!-- Spacer Area (Area Kosong) -->
+                        <div class="doc-body-spacer"></div>
 
-                            <div class="panel-pagination">
-                                <span class="total-rincian"></span>
-                                <div class="pagination-controls mini-pagination">
-                                    <button class="page-btn"><i class="fas fa-step-backward"></i></button>
-                                    <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
-                                    <button class="page-btn active-page">1</button>
-                                    <span class="page-text">of 5</span>
-                                    <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
-                                    <button class="page-btn"><i class="fas fa-step-forward"></i></button>
-                                </div>
-                            </div>
-
-                        </div> -->
-
+                        <!-- Footer Button -->
+                        <footer class="doc-footer-action">
+                            <button type="button" class="btn-preview-merged" onclick="openMergedPreview()">
+                                Buka pratinjau gabungan
+                            </button>
+                        </footer>
                     </div>
-
                 </div>
 
                 <!-- Part B: Middle Side (Icon Buttons Centered Vertically) -->
@@ -1284,16 +1282,6 @@
                         <div class="header-info">
                             <h1>Rincian Biaya</h1>
                             <p>Rincian biaya penggunaan anggaran yang diajukan.</p>
-                        </div>
-                        <div class="header-summary">
-                            <div class="step4-summary-box">
-                                <span class="summary-title">Total Potongan Pajak Penghasilan (PPh)</span>
-                                <span class="summary-amount text-red">Rp. 10.000.000,00</span>
-                            </div>
-                            <div class="step4-summary-box">
-                                <span class="summary-title">Total Nilai transfer</span>
-                                <span class="summary-amount text-green">Rp. 1.000.000.000,00</span>
-                            </div>
                         </div>
                     </header>
 
@@ -2675,7 +2663,7 @@
                                 </div>
 
                             </div>
-                            <div class="s5-list-container">
+                            <div class="s5-list-container s5-aktivitas">
                                 <!-- Right Content: Aktivitas Dokumen -->
                                 <div class="content-panel">
                                     <div class="content-header">
@@ -2706,7 +2694,7 @@
                                                 <span class="activity-meta">Budi Santoso · Deputi Unit Kerja · 20 Mar
                                                     2026, 10:42</span>
                                                 <p class="activity-note">Dokumen pendukung belum sesuai dengan kegiatan
-                                                    yang diajukan. Mohon perbarui kwitansi dan rincian biaya.</p>
+                                                    yang diajukan. Mohon perbarui kuitansi dan rincian biaya.</p>
                                             </div>
                                         </div>
 
@@ -2751,18 +2739,48 @@
                         </div>
                     </div>
 
+                    <footer class="s5-header">
+                        <div class="header-summary">
+                            <div class="step4-summary-box">
+                                <span class="summary-title">Total Pengajuan</span>
+                                <span class="summary-amount">Rp. 10.000.000,00</span>
+                            </div>
+                            <div class="step4-summary-box">
+                                <span class="summary-title">Total Pajak Penghasilan (PPh)</span>
+                                <span class="summary-amount text-red">Rp. 10.000.000,00</span>
+                            </div>
+                            <div class="step4-summary-box">
+                                <span class="summary-title">Total transfer</span>
+                                <span class="summary-amount text-green">Rp. 1.000.000.000,00</span>
+                            </div>
+                        </div>
+                    </footer>
+
             </main>
 
             <!-- Specific Footer for Step 4 with "Submit" button -->
-            <footer class="form-footer">
+            <!-- <footer class="form-footer">
                 <button class="base-button secondary-btn" onclick="simpanDraft()">Simpan Draf</button>
                 <div class="right-actions">
                     <button type="button" class="base-button primary-btn outline-blue"
                         onclick="prevStep()">Kembali</button>
                     <button class="btn-submit-primary" onclick="submitPengajuan()">Submit</button>
                 </div>
-            </footer>
+            </footer> -->
         </div>
+
+        
+        <!-- ========================================== -->
+        <!-- FOOTER -->
+        <!-- ========================================== -->
+        <footer class="form-footer">
+            <button class="base-button secondary-btn" onclick="simpanDraft()">Simpan Draf</button>
+            <div class="right-actions">
+                <button class="base-button primary-btn outline-blue" onclick="prevStep()">Kembali</button>
+                <button id="btn-nextstep" style="display: none" class="base-button primary-btn outline-blue" onclick="nextStep()">Berikutnya</button>
+                <button id="btn-submit" style="display: none" class="btn-submit-primary"  onclick="submitPengajuan()">Submit</button>
+            </div>
+        </footer> 
 
     </div>
 
@@ -2801,7 +2819,7 @@
                 <label class="custom-checkbox-row">
                     <input type="checkbox">
                     <span class="checkbox-box"><i class="fas fa-check"></i></span>
-                    <span class="checkbox-text">Kwitansi / Invoice</span>
+                    <span class="checkbox-text">kuitansi / Invoice</span>
                 </label>
 
                 <!-- Disabled Unchecked State (As referenced in image_f90c26.png) -->
@@ -2919,25 +2937,7 @@
                     </div>
                 </div>
 
-                <!-- Card 2: Perorangan (Rudi Hartono) -->
-                <!-- <div class="person-card card-perorangan">
-                    <div class="pc-header">
-                        <div class="pc-title-area">
-                            <h4>Rudi Hartono</h4>
-                            <span>Kementrian Perdagangan</span>
-                        </div>
-                        <div class="pc-badge">Perorangan</div>
-                    </div>
-                    <div class="pc-body">
-                        <div class="detail-item"><span>Kode</span><strong>EJ15000157</strong></div>
-                        <div class="detail-item"><span>NPWP <i class="fas fa-eye-slash text-red"></i></span><strong>12-34.39843.883026</strong></div>
-                        <div class="detail-item"><span>KTP <i class="fas fa-check-circle text-green"></i></span><strong>1234567890123459</strong></div>
-                        <div class="detail-item"><span>PTKP</span><strong>K/3</strong></div>
-                        <div class="detail-item"><span>Unit Kerja</span><strong>J16 - Jakarta Pusat</strong></div>
-                    </div>
-                </div> -->
-
-                <!-- Card 3: Badan Usaha (PT Toyota) - CLICKABLE TO OPEN MODAL -->
+                <!-- Card 2: Badan Usaha (PT Toyota) - CLICKABLE TO OPEN MODAL -->
                 <div class="person-card card-badan" onclick="openRekeningModal()">
                     <div class="pc-header">
                         <div class="pc-title-area">
@@ -2958,23 +2958,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Card 4: Badan Usaha (Jungle Trekking Tours) -->
-                <!-- <div class="person-card card-badan">
-                    <div class="pc-header">
-                        <div class="pc-title-area">
-                            <h4>Jungle Trekking Tours</h4>
-                            <span>Siti Nurhaliza Putri</span>
-                        </div>
-                        <div class="pc-badge">Badan Usaha</div>
-                    </div>
-                    <div class="pc-body">
-                        <div class="detail-item"><span>Kode</span><strong>RC100000471</strong></div>
-                        <div class="detail-item"><span>NPWP <i class="fas fa-eye-slash text-red"></i></span><strong>12-34.39843.883024</strong></div>
-                        <div class="detail-item"><span>KTP <i class="fas fa-check-circle text-green"></i></span><strong>1234567890123457</strong></div>
-                        <div class="detail-item"><span>Unit Kerja</span><strong>C11 - Pasaman Padang</strong></div>
-                    </div>
-                </div> -->
 
             </div>
 
@@ -3064,14 +3047,6 @@
 
                 <!-- Right: Dynamic Content -->
                 <div class="rek-split-right">
-
-                    <!-- View 0: Empty (Default) -->
-                    <!-- <div id="rek-view-empty" class="rek-view-panel active">
-                        <div class="rek-empty-state">
-                            <i class="fas fa-folder-open"></i>
-                            <p>Belum ada data</p>
-                        </div>
-                    </div> -->
 
                     <!-- View 1: Terdaftar -->
                     <div id="rek-view-terdaftar" class="rek-view-panel active">
@@ -3366,11 +3341,11 @@
                     </div>
                 </div>
 
-                <!-- Row 2: No Kwitansi & ID Dokumen -->
+                <!-- Row 2: No kuitansi & ID Dokumen -->
                 <div class="ppn-grid-row">
-                    <div class="ppn-col-label">No Kwitansi / Invoice</div>
+                    <div class="ppn-col-label">No kuitansi / Invoice</div>
                     <div class="ppn-col-input">
-                        <input type="text" id="ppnNoKwitansi" class="ppn-input" value="123/567/901/345/789/" />
+                        <input type="text" id="ppnNokuitansi" class="ppn-input" value="123/567/901/345/789/" />
                     </div>
                     <div class="ppn-col-label-right">ID Dokumen</div>
                     <div class="ppn-col-input-right">

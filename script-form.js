@@ -32,6 +32,71 @@ function selectAnggaranItem(element) {
   element.classList.add("selected");
 }
 
+function renderDetilPerjalananHTML() {
+  return `
+        <!-- Card Detil Perjalanan Dinas -->
+        <div class="detil-perjalanan-card" style="background-color: #eaf5fc; border-radius: 12px; padding: 16px 20px; margin-bottom: 16px; border: 1px solid #d0e7f7;">
+            <div style="font-weight: 700; font-size: 14px; color: #2d3748; margin-bottom: 12px;">Detil perjalanan dinas</div>
+            
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; font-size: 12px; color: #4a5568;">
+                <!-- Kolom 1: Jenis & Transportasi -->
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="width: 100px; color: #718096;">Jenis Perjalanan</span>
+                        <span style="font-weight: 600; color: #2d3748;">Luar kota</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="width: 100px; color: #718096;">Transportasi</span>
+                        <div style="display: inline-flex; align-items: center; gap: 8px; background: #ffffff; border: 1.5px solid #1d6fbf; color: #1d6fbf; padding: 4px 12px; border-radius: 8px; font-weight: 600;">
+                            <i class="fas fa-train"></i>
+                            <span>Kereta Api</span>
+                            <i class="fas fa-check-circle" style="color: #1d6fbf; font-size: 12px;"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kolom 2: Tanggal -->
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <div style="display: flex; gap: 8px;">
+                        <span style="color: #718096; width: 110px;">Tanggal Berangkat</span>
+                        <span style="font-weight: 500;">01 Agustus 2026</span>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <span style="color: #718096; width: 110px;">Tanggal Kembali</span>
+                        <span style="font-weight: 500;">05 Agustus 2026</span>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <span style="color: #718096; width: 110px;">Durasi Perjalanan</span>
+                        <span style="font-weight: 500;">5 Hari</span>
+                    </div>
+                </div>
+
+                <!-- Kolom 3: Highlight Durasi -->
+                <div style="text-align: center; padding: 0 16px;">
+                    <div style="color: #718096; font-size: 11px; margin-bottom: 4px;">Durasi Perjalanan</div>
+                    <div style="font-size: 20px; font-weight: 700; color: #1a202c;">5 Hari</div>
+                </div>
+
+                <!-- Kolom 4: Rute Kota -->
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <div style="display: flex; gap: 8px;">
+                        <span style="color: #718096; width: 80px;">Kota Asal</span>
+                        <span style="font-weight: 500;">Jakarta</span>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <span style="color: #718096; width: 80px;">Kota Tujuan</span>
+                        <span style="font-weight: 500;">Denpasar</span>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <span style="color: #718096; width: 80px;">Kota Kembali</span>
+                        <span style="font-weight: 500;">Jakarta</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
 function selectSkema(type) {
   document.getElementById("skema-pembayaran").classList.remove("selected");
   document.getElementById("skema-persekot").classList.remove("selected");
@@ -87,6 +152,7 @@ function nextStep() {
   if (currentIndex < activeFlow.length - 1) {
     currentIndex++;
     render();
+    updateFooter();
   }
 }
 
@@ -94,6 +160,7 @@ function prevStep() {
   if (currentIndex > 0) {
     currentIndex--;
     render();
+    updateFooter();
   }
 }
 
@@ -234,7 +301,7 @@ function switchStep3Tab(type, el) {
     .forEach((item) => item.classList.remove("active"));
   if (el) el.classList.add("active");
 
-  const kwList = document.getElementById("kwitansi-list-container");
+  const kwList = document.getElementById("kuitansi-list-container");
   kwList.innerHTML = ""; // clear
   setTipePenerima(type);
 
@@ -244,7 +311,15 @@ function switchStep3Tab(type, el) {
     const kode = document.getElementById("dyn-kode");
     const badge = document.getElementById("dyn-badge");
     const bannerCard = document.querySelector(".sdh-banner-card");
-
+    const extraBadge = document.getElementById("container-extra-badge");
+    const cardDetil = document.getElementById("cardDetilPerjalananDinas");
+    if (cardDetil) {
+      cardDetil.style.display = "none";
+    }
+    if (extraBadge) {
+      // Tipe Toyota mengambil badge ini
+      extraBadge.innerHTML = `<span class="kw-badge-count" >10 Kuitansi</span>`;
+    }
     if (title) title.innerText = "PT Toyota Motor Manufacturing Indonesia";
     if (subtitle) subtitle.innerText = "Ahmad Rizki Pratama";
     if (kode) kode.innerText = "RC100000470";
@@ -255,37 +330,46 @@ function switchStep3Tab(type, el) {
     if (bannerCard) {
       bannerCard.className = "sdh-banner-card theme-badan-usaha";
     }
-    // Add dummy kwitansi
+
     kwList.innerHTML = `
-           <!-- Container Kwitansi -->
-  <div class="kwitansi-wrapper">
+
+  <!-- HEADER ROW LABEL KOLOM -->
+<div class="kw-table-columns-header" >
+  <div style="width: 24px;"></div>
+  <div style="flex: 1.5;">No kuitansi / Invoice</div>
+  <div style="width: 130px;">Tanggal</div>
+  <div style="width: 150px;">Nominal Invoice + PPN</div>
+  <div style="width: 20px;"></div>
+  <div style="width: 130px;">PPN</div>
+  <div style="width: 130px;">Potongan PPh</div>
+</div>
+<div class="kw-scroll-list-area" style="max-height: 420px; overflow-y: auto; overflow-x: hidden; padding-right: 6px; display: flex; flex-direction: column; gap: 8px;">
+  <!-- Container kuitansi (HTML ASLI DIBIARKAN) -->
+  <div class="kuitansi-wrapper">
     
-    <div class="kwitansi-row-container">
+    <div class="kuitansi-row-container">
       <!-- Card Utama (Default Tertutup / Collapsed) -->
-      <div class="kwitansi-item">
+      <div class="kuitansi-item">
         
-        <!-- Header Row Baris Kwitansi -->
-        <div class="kw-header" onclick="toggleKwitansi(event, this)">
+        <!-- Header Row Baris kuitansi -->
+        <div class="kw-header" onclick="togglekuitansi(event, this)">
           <button type="button" class="btn-toggle-arrow">
             <i class="fas fa-chevron-right kw-arrow"></i>
           </button>
 
           <div class="kw-field kw-field-no">
-            <label>No Kwitansi / Invoice</label>
             <div class="input-container">
-              <input type="text" placeholder="Masukkan nomor kuitan..." />
+              <input type="text" placeholder="Masukkan nomor kuitansi..." />
             </div>
           </div>
 
           <div class="kw-field kw-field-date">
-            <label>Tanggal</label>
             <div class="input-container">
               <input type="date" value="2026-08-13" class="input-date-custom" />
             </div>
           </div>
 
           <div class="kw-field kw-field-nominal">
-            <label>Nominal Invoice + PPN</label>
             <div class="input-container prefix-rp">
               <span class="prefix">Rp.</span>
               <input type="text" value="0,00" class="text-right" />
@@ -297,7 +381,6 @@ function switchStep3Tab(type, el) {
           </div>
 
           <div class="kw-field kw-field-ppn">
-            <label>PPN</label>
             <div class="input-container prefix-rp readonly">
               <span class="prefix">Rp.</span>
               <input type="text" value="0,00" class="text-right" readonly />
@@ -305,7 +388,6 @@ function switchStep3Tab(type, el) {
           </div>
 
           <div class="kw-field kw-field-pph">
-            <label>Potongan PPh</label>
             <div class="input-container prefix-rp danger readonly">
               <span class="prefix">Rp.</span>
               <input type="text" value="0,00" class="text-right text-danger" readonly />
@@ -316,11 +398,11 @@ function switchStep3Tab(type, el) {
         <!-- Detail Box (Disembunyikan di awal lewat CSS/inline style) -->
         <div class="kw-detail" style="display: none;">
           <div class="kw-detail-inner">
-                                        <div class="branch-icon">
-                                            <i class="branch-connector"></i>
-                                        </div>
+            <div class="branch-icon">
+              <i class="branch-connector"></i>
+            </div>
 
-            <div class="kw-detail-table">
+            <div class="biaya-detail-table">
               <!-- Row Sub 1 -->
               <div class="kw-sub-row">
                 <div class="sub-col sub-col-code">
@@ -397,41 +479,36 @@ function switchStep3Tab(type, el) {
       </div>
 
       <!-- Tombol Hapus Baris -->
-      <button type="button" class="btn-remove-row" title="Hapus Kwitansi">
+      <button type="button" class="btn-remove-row" title="Hapus kuitansi">
         <i class="fas fa-times"></i>
       </button>
     </div>
-
   </div>
-
-  <div class="kwitansi-wrapper">
+  <div class="kuitansi-wrapper">
     
-    <div class="kwitansi-row-container">
+    <div class="kuitansi-row-container">
       <!-- Card Utama (Default Tertutup / Collapsed) -->
-      <div class="kwitansi-item">
+      <div class="kuitansi-item">
         
-        <!-- Header Row Baris Kwitansi -->
-        <div class="kw-header" onclick="toggleKwitansi(event, this)">
+        <!-- Header Row Baris kuitansi -->
+        <div class="kw-header" onclick="togglekuitansi(event, this)">
           <button type="button" class="btn-toggle-arrow">
             <i class="fas fa-chevron-right kw-arrow"></i>
           </button>
 
           <div class="kw-field kw-field-no">
-            <label>No Kwitansi / Invoice</label>
             <div class="input-container">
-              <input type="text" placeholder="Masukkan nomor kuitan..." />
+              <input type="text" placeholder="Masukkan nomor kuitansi..." />
             </div>
           </div>
 
           <div class="kw-field kw-field-date">
-            <label>Tanggal</label>
             <div class="input-container">
               <input type="date" value="2026-08-13" class="input-date-custom" />
             </div>
           </div>
 
           <div class="kw-field kw-field-nominal">
-            <label>Nominal Invoice + PPN</label>
             <div class="input-container prefix-rp">
               <span class="prefix">Rp.</span>
               <input type="text" value="0,00" class="text-right" />
@@ -443,7 +520,6 @@ function switchStep3Tab(type, el) {
           </div>
 
           <div class="kw-field kw-field-ppn">
-            <label>PPN</label>
             <div class="input-container prefix-rp readonly">
               <span class="prefix">Rp.</span>
               <input type="text" value="0,00" class="text-right" readonly />
@@ -451,7 +527,6 @@ function switchStep3Tab(type, el) {
           </div>
 
           <div class="kw-field kw-field-pph">
-            <label>Potongan PPh</label>
             <div class="input-container prefix-rp danger readonly">
               <span class="prefix">Rp.</span>
               <input type="text" value="0,00" class="text-right text-danger" readonly />
@@ -462,11 +537,11 @@ function switchStep3Tab(type, el) {
         <!-- Detail Box (Disembunyikan di awal lewat CSS/inline style) -->
         <div class="kw-detail" style="display: none;">
           <div class="kw-detail-inner">
-                                        <div class="branch-icon">
-                                            <i class="branch-connector"></i>
-                                        </div>
+            <div class="branch-icon">
+              <i class="branch-connector"></i>
+            </div>
 
-            <div class="kw-detail-table">
+            <div class="biaya-detail-table">
               <!-- Row Sub 1 -->
               <div class="kw-sub-row">
                 <div class="sub-col sub-col-code">
@@ -543,41 +618,36 @@ function switchStep3Tab(type, el) {
       </div>
 
       <!-- Tombol Hapus Baris -->
-      <button type="button" class="btn-remove-row" title="Hapus Kwitansi">
+      <button type="button" class="btn-remove-row" title="Hapus kuitansi">
         <i class="fas fa-times"></i>
       </button>
     </div>
-
   </div>
-
-  <div class="kwitansi-wrapper">
+    <div class="kuitansi-wrapper">
     
-    <div class="kwitansi-row-container">
+    <div class="kuitansi-row-container">
       <!-- Card Utama (Default Tertutup / Collapsed) -->
-      <div class="kwitansi-item">
+      <div class="kuitansi-item">
         
-        <!-- Header Row Baris Kwitansi -->
-        <div class="kw-header" onclick="toggleKwitansi(event, this)">
+        <!-- Header Row Baris kuitansi -->
+        <div class="kw-header" onclick="togglekuitansi(event, this)">
           <button type="button" class="btn-toggle-arrow">
             <i class="fas fa-chevron-right kw-arrow"></i>
           </button>
 
           <div class="kw-field kw-field-no">
-            <label>No Kwitansi / Invoice</label>
             <div class="input-container">
-              <input type="text" placeholder="Masukkan nomor kuitan..." />
+              <input type="text" placeholder="Masukkan nomor kuitansi..." />
             </div>
           </div>
 
           <div class="kw-field kw-field-date">
-            <label>Tanggal</label>
             <div class="input-container">
               <input type="date" value="2026-08-13" class="input-date-custom" />
             </div>
           </div>
 
           <div class="kw-field kw-field-nominal">
-            <label>Nominal Invoice + PPN</label>
             <div class="input-container prefix-rp">
               <span class="prefix">Rp.</span>
               <input type="text" value="0,00" class="text-right" />
@@ -589,7 +659,6 @@ function switchStep3Tab(type, el) {
           </div>
 
           <div class="kw-field kw-field-ppn">
-            <label>PPN</label>
             <div class="input-container prefix-rp readonly">
               <span class="prefix">Rp.</span>
               <input type="text" value="0,00" class="text-right" readonly />
@@ -597,7 +666,6 @@ function switchStep3Tab(type, el) {
           </div>
 
           <div class="kw-field kw-field-pph">
-            <label>Potongan PPh</label>
             <div class="input-container prefix-rp danger readonly">
               <span class="prefix">Rp.</span>
               <input type="text" value="0,00" class="text-right text-danger" readonly />
@@ -608,11 +676,11 @@ function switchStep3Tab(type, el) {
         <!-- Detail Box (Disembunyikan di awal lewat CSS/inline style) -->
         <div class="kw-detail" style="display: none;">
           <div class="kw-detail-inner">
-            <div class="tree-branch-icon">
-              <i class="fas fa-code-branch fa-rotate-90"></i>
+            <div class="branch-icon">
+              <i class="branch-connector"></i>
             </div>
 
-            <div class="kw-detail-table">
+            <div class="biaya-detail-table">
               <!-- Row Sub 1 -->
               <div class="kw-sub-row">
                 <div class="sub-col sub-col-code">
@@ -689,20 +757,1153 @@ function switchStep3Tab(type, el) {
       </div>
 
       <!-- Tombol Hapus Baris -->
-      <button type="button" class="btn-remove-row" title="Hapus Kwitansi">
+      <button type="button" class="btn-remove-row" title="Hapus kuitansi">
         <i class="fas fa-times"></i>
       </button>
     </div>
-
   </div>
-        `;
+    <div class="kuitansi-wrapper">
+    
+    <div class="kuitansi-row-container">
+      <!-- Card Utama (Default Tertutup / Collapsed) -->
+      <div class="kuitansi-item">
+        
+        <!-- Header Row Baris kuitansi -->
+        <div class="kw-header" onclick="togglekuitansi(event, this)">
+          <button type="button" class="btn-toggle-arrow">
+            <i class="fas fa-chevron-right kw-arrow"></i>
+          </button>
+
+          <div class="kw-field kw-field-no">
+            <div class="input-container">
+              <input type="text" placeholder="Masukkan nomor kuitansi..." />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-date">
+            <div class="input-container">
+              <input type="date" value="2026-08-13" class="input-date-custom" />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-nominal">
+            <div class="input-container prefix-rp">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right" />
+            </div>
+          </div>
+
+          <div class="kw-icon-doc" onclick="openFakturPPNModal(this)">
+            <i class="fas fa-file-alt"></i>
+          </div>
+
+          <div class="kw-field kw-field-ppn">
+            <div class="input-container prefix-rp readonly">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right" readonly />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-pph">
+            <div class="input-container prefix-rp danger readonly">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right text-danger" readonly />
+            </div>
+          </div>
+        </div>
+
+        <!-- Detail Box (Disembunyikan di awal lewat CSS/inline style) -->
+        <div class="kw-detail" style="display: none;">
+          <div class="kw-detail-inner">
+            <div class="branch-icon">
+              <i class="branch-connector"></i>
+            </div>
+
+            <div class="biaya-detail-table">
+              <!-- Row Sub 1 -->
+              <div class="kw-sub-row">
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+                <div class="sub-col sub-col-name">
+                  <input type="text" placeholder="Nama objek pajak..." class="input-sub" />
+                </div>
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+
+                <div class="sub-col sub-col-dpp">
+                  <span class="sub-label-head">DPP PPh</span>
+                  <div class="input-sub-wrapper">
+                    <span>Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right" />
+                  </div>
+                </div>
+
+                <div class="sub-col sub-col-tarif">
+                  <span class="sub-label-head">Tarif</span>
+                  <input type="text" value="0 %" class="input-sub text-center font-bold" />
+                </div>
+
+                <div class="sub-col sub-col-potongan">
+                  <span class="sub-label-head">Potongan PPh</span>
+                  <div class="input-sub-wrapper danger">
+                    <span class="text-danger">Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right text-danger" />
+                  </div>
+                </div>
+
+                <div class="sub-col sub-col-action">
+                  <button type="button" class="btn-sub-remove"><i class="fas fa-minus-circle"></i></button>
+                </div>
+              </div>
+
+              <!-- Row Sub 2 -->
+              <div class="kw-sub-row">
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+                <div class="sub-col sub-col-name">
+                  <input type="text" placeholder="Nama objek pajak..." class="input-sub" />
+                </div>
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+
+                <div class="sub-col sub-col-dpp">
+                  <div class="input-sub-wrapper">
+                    <span>Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right" />
+                  </div>
+                </div>
+                <div class="sub-col sub-col-tarif"></div>
+                <div class="sub-col sub-col-potongan"></div>
+
+                <div class="sub-col sub-col-action">
+                  <button type="button" class="btn-sub-remove"><i class="fas fa-minus-circle"></i></button>
+                </div>
+              </div>
+
+              <!-- Add Row Button -->
+              <div class="kw-add-action">
+                <button type="button" class="btn-add-sub" onclick="openObjekPajakModal(this)">
+                  <i class="far fa-plus-square"></i> Objek pajak
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tombol Hapus Baris -->
+      <button type="button" class="btn-remove-row" title="Hapus kuitansi">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+    <div class="kuitansi-wrapper">
+    
+    <div class="kuitansi-row-container">
+      <!-- Card Utama (Default Tertutup / Collapsed) -->
+      <div class="kuitansi-item">
+        
+        <!-- Header Row Baris kuitansi -->
+        <div class="kw-header" onclick="togglekuitansi(event, this)">
+          <button type="button" class="btn-toggle-arrow">
+            <i class="fas fa-chevron-right kw-arrow"></i>
+          </button>
+
+          <div class="kw-field kw-field-no">
+            <div class="input-container">
+              <input type="text" placeholder="Masukkan nomor kuitansi..." />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-date">
+            <div class="input-container">
+              <input type="date" value="2026-08-13" class="input-date-custom" />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-nominal">
+            <div class="input-container prefix-rp">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right" />
+            </div>
+          </div>
+
+          <div class="kw-icon-doc" onclick="openFakturPPNModal(this)">
+            <i class="fas fa-file-alt"></i>
+          </div>
+
+          <div class="kw-field kw-field-ppn">
+            <div class="input-container prefix-rp readonly">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right" readonly />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-pph">
+            <div class="input-container prefix-rp danger readonly">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right text-danger" readonly />
+            </div>
+          </div>
+        </div>
+
+        <!-- Detail Box (Disembunyikan di awal lewat CSS/inline style) -->
+        <div class="kw-detail" style="display: none;">
+          <div class="kw-detail-inner">
+            <div class="branch-icon">
+              <i class="branch-connector"></i>
+            </div>
+
+            <div class="biaya-detail-table">
+              <!-- Row Sub 1 -->
+              <div class="kw-sub-row">
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+                <div class="sub-col sub-col-name">
+                  <input type="text" placeholder="Nama objek pajak..." class="input-sub" />
+                </div>
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+
+                <div class="sub-col sub-col-dpp">
+                  <span class="sub-label-head">DPP PPh</span>
+                  <div class="input-sub-wrapper">
+                    <span>Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right" />
+                  </div>
+                </div>
+
+                <div class="sub-col sub-col-tarif">
+                  <span class="sub-label-head">Tarif</span>
+                  <input type="text" value="0 %" class="input-sub text-center font-bold" />
+                </div>
+
+                <div class="sub-col sub-col-potongan">
+                  <span class="sub-label-head">Potongan PPh</span>
+                  <div class="input-sub-wrapper danger">
+                    <span class="text-danger">Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right text-danger" />
+                  </div>
+                </div>
+
+                <div class="sub-col sub-col-action">
+                  <button type="button" class="btn-sub-remove"><i class="fas fa-minus-circle"></i></button>
+                </div>
+              </div>
+
+              <!-- Row Sub 2 -->
+              <div class="kw-sub-row">
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+                <div class="sub-col sub-col-name">
+                  <input type="text" placeholder="Nama objek pajak..." class="input-sub" />
+                </div>
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+
+                <div class="sub-col sub-col-dpp">
+                  <div class="input-sub-wrapper">
+                    <span>Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right" />
+                  </div>
+                </div>
+                <div class="sub-col sub-col-tarif"></div>
+                <div class="sub-col sub-col-potongan"></div>
+
+                <div class="sub-col sub-col-action">
+                  <button type="button" class="btn-sub-remove"><i class="fas fa-minus-circle"></i></button>
+                </div>
+              </div>
+
+              <!-- Add Row Button -->
+              <div class="kw-add-action">
+                <button type="button" class="btn-add-sub" onclick="openObjekPajakModal(this)">
+                  <i class="far fa-plus-square"></i> Objek pajak
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tombol Hapus Baris -->
+      <button type="button" class="btn-remove-row" title="Hapus kuitansi">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+    <div class="kuitansi-wrapper">
+    
+    <div class="kuitansi-row-container">
+      <!-- Card Utama (Default Tertutup / Collapsed) -->
+      <div class="kuitansi-item">
+        
+        <!-- Header Row Baris kuitansi -->
+        <div class="kw-header" onclick="togglekuitansi(event, this)">
+          <button type="button" class="btn-toggle-arrow">
+            <i class="fas fa-chevron-right kw-arrow"></i>
+          </button>
+
+          <div class="kw-field kw-field-no">
+            <div class="input-container">
+              <input type="text" placeholder="Masukkan nomor kuitansi..." />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-date">
+            <div class="input-container">
+              <input type="date" value="2026-08-13" class="input-date-custom" />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-nominal">
+            <div class="input-container prefix-rp">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right" />
+            </div>
+          </div>
+
+          <div class="kw-icon-doc" onclick="openFakturPPNModal(this)">
+            <i class="fas fa-file-alt"></i>
+          </div>
+
+          <div class="kw-field kw-field-ppn">
+            <div class="input-container prefix-rp readonly">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right" readonly />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-pph">
+            <div class="input-container prefix-rp danger readonly">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right text-danger" readonly />
+            </div>
+          </div>
+        </div>
+
+        <!-- Detail Box (Disembunyikan di awal lewat CSS/inline style) -->
+        <div class="kw-detail" style="display: none;">
+          <div class="kw-detail-inner">
+            <div class="branch-icon">
+              <i class="branch-connector"></i>
+            </div>
+
+            <div class="biaya-detail-table">
+              <!-- Row Sub 1 -->
+              <div class="kw-sub-row">
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+                <div class="sub-col sub-col-name">
+                  <input type="text" placeholder="Nama objek pajak..." class="input-sub" />
+                </div>
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+
+                <div class="sub-col sub-col-dpp">
+                  <span class="sub-label-head">DPP PPh</span>
+                  <div class="input-sub-wrapper">
+                    <span>Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right" />
+                  </div>
+                </div>
+
+                <div class="sub-col sub-col-tarif">
+                  <span class="sub-label-head">Tarif</span>
+                  <input type="text" value="0 %" class="input-sub text-center font-bold" />
+                </div>
+
+                <div class="sub-col sub-col-potongan">
+                  <span class="sub-label-head">Potongan PPh</span>
+                  <div class="input-sub-wrapper danger">
+                    <span class="text-danger">Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right text-danger" />
+                  </div>
+                </div>
+
+                <div class="sub-col sub-col-action">
+                  <button type="button" class="btn-sub-remove"><i class="fas fa-minus-circle"></i></button>
+                </div>
+              </div>
+
+              <!-- Row Sub 2 -->
+              <div class="kw-sub-row">
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+                <div class="sub-col sub-col-name">
+                  <input type="text" placeholder="Nama objek pajak..." class="input-sub" />
+                </div>
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+
+                <div class="sub-col sub-col-dpp">
+                  <div class="input-sub-wrapper">
+                    <span>Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right" />
+                  </div>
+                </div>
+                <div class="sub-col sub-col-tarif"></div>
+                <div class="sub-col sub-col-potongan"></div>
+
+                <div class="sub-col sub-col-action">
+                  <button type="button" class="btn-sub-remove"><i class="fas fa-minus-circle"></i></button>
+                </div>
+              </div>
+
+              <!-- Add Row Button -->
+              <div class="kw-add-action">
+                <button type="button" class="btn-add-sub" onclick="openObjekPajakModal(this)">
+                  <i class="far fa-plus-square"></i> Objek pajak
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tombol Hapus Baris -->
+      <button type="button" class="btn-remove-row" title="Hapus kuitansi">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+    <div class="kuitansi-wrapper">
+    
+    <div class="kuitansi-row-container">
+      <!-- Card Utama (Default Tertutup / Collapsed) -->
+      <div class="kuitansi-item">
+        
+        <!-- Header Row Baris kuitansi -->
+        <div class="kw-header" onclick="togglekuitansi(event, this)">
+          <button type="button" class="btn-toggle-arrow">
+            <i class="fas fa-chevron-right kw-arrow"></i>
+          </button>
+
+          <div class="kw-field kw-field-no">
+            <div class="input-container">
+              <input type="text" placeholder="Masukkan nomor kuitansi..." />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-date">
+            <div class="input-container">
+              <input type="date" value="2026-08-13" class="input-date-custom" />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-nominal">
+            <div class="input-container prefix-rp">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right" />
+            </div>
+          </div>
+
+          <div class="kw-icon-doc" onclick="openFakturPPNModal(this)">
+            <i class="fas fa-file-alt"></i>
+          </div>
+
+          <div class="kw-field kw-field-ppn">
+            <div class="input-container prefix-rp readonly">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right" readonly />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-pph">
+            <div class="input-container prefix-rp danger readonly">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right text-danger" readonly />
+            </div>
+          </div>
+        </div>
+
+        <!-- Detail Box (Disembunyikan di awal lewat CSS/inline style) -->
+        <div class="kw-detail" style="display: none;">
+          <div class="kw-detail-inner">
+            <div class="branch-icon">
+              <i class="branch-connector"></i>
+            </div>
+
+            <div class="biaya-detail-table">
+              <!-- Row Sub 1 -->
+              <div class="kw-sub-row">
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+                <div class="sub-col sub-col-name">
+                  <input type="text" placeholder="Nama objek pajak..." class="input-sub" />
+                </div>
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+
+                <div class="sub-col sub-col-dpp">
+                  <span class="sub-label-head">DPP PPh</span>
+                  <div class="input-sub-wrapper">
+                    <span>Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right" />
+                  </div>
+                </div>
+
+                <div class="sub-col sub-col-tarif">
+                  <span class="sub-label-head">Tarif</span>
+                  <input type="text" value="0 %" class="input-sub text-center font-bold" />
+                </div>
+
+                <div class="sub-col sub-col-potongan">
+                  <span class="sub-label-head">Potongan PPh</span>
+                  <div class="input-sub-wrapper danger">
+                    <span class="text-danger">Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right text-danger" />
+                  </div>
+                </div>
+
+                <div class="sub-col sub-col-action">
+                  <button type="button" class="btn-sub-remove"><i class="fas fa-minus-circle"></i></button>
+                </div>
+              </div>
+
+              <!-- Row Sub 2 -->
+              <div class="kw-sub-row">
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+                <div class="sub-col sub-col-name">
+                  <input type="text" placeholder="Nama objek pajak..." class="input-sub" />
+                </div>
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+
+                <div class="sub-col sub-col-dpp">
+                  <div class="input-sub-wrapper">
+                    <span>Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right" />
+                  </div>
+                </div>
+                <div class="sub-col sub-col-tarif"></div>
+                <div class="sub-col sub-col-potongan"></div>
+
+                <div class="sub-col sub-col-action">
+                  <button type="button" class="btn-sub-remove"><i class="fas fa-minus-circle"></i></button>
+                </div>
+              </div>
+
+              <!-- Add Row Button -->
+              <div class="kw-add-action">
+                <button type="button" class="btn-add-sub" onclick="openObjekPajakModal(this)">
+                  <i class="far fa-plus-square"></i> Objek pajak
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tombol Hapus Baris -->
+      <button type="button" class="btn-remove-row" title="Hapus kuitansi">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+    <div class="kuitansi-wrapper">
+    
+    <div class="kuitansi-row-container">
+      <!-- Card Utama (Default Tertutup / Collapsed) -->
+      <div class="kuitansi-item">
+        
+        <!-- Header Row Baris kuitansi -->
+        <div class="kw-header" onclick="togglekuitansi(event, this)">
+          <button type="button" class="btn-toggle-arrow">
+            <i class="fas fa-chevron-right kw-arrow"></i>
+          </button>
+
+          <div class="kw-field kw-field-no">
+            <div class="input-container">
+              <input type="text" placeholder="Masukkan nomor kuitansi..." />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-date">
+            <div class="input-container">
+              <input type="date" value="2026-08-13" class="input-date-custom" />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-nominal">
+            <div class="input-container prefix-rp">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right" />
+            </div>
+          </div>
+
+          <div class="kw-icon-doc" onclick="openFakturPPNModal(this)">
+            <i class="fas fa-file-alt"></i>
+          </div>
+
+          <div class="kw-field kw-field-ppn">
+            <div class="input-container prefix-rp readonly">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right" readonly />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-pph">
+            <div class="input-container prefix-rp danger readonly">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right text-danger" readonly />
+            </div>
+          </div>
+        </div>
+
+        <!-- Detail Box (Disembunyikan di awal lewat CSS/inline style) -->
+        <div class="kw-detail" style="display: none;">
+          <div class="kw-detail-inner">
+            <div class="branch-icon">
+              <i class="branch-connector"></i>
+            </div>
+
+            <div class="biaya-detail-table">
+              <!-- Row Sub 1 -->
+              <div class="kw-sub-row">
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+                <div class="sub-col sub-col-name">
+                  <input type="text" placeholder="Nama objek pajak..." class="input-sub" />
+                </div>
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+
+                <div class="sub-col sub-col-dpp">
+                  <span class="sub-label-head">DPP PPh</span>
+                  <div class="input-sub-wrapper">
+                    <span>Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right" />
+                  </div>
+                </div>
+
+                <div class="sub-col sub-col-tarif">
+                  <span class="sub-label-head">Tarif</span>
+                  <input type="text" value="0 %" class="input-sub text-center font-bold" />
+                </div>
+
+                <div class="sub-col sub-col-potongan">
+                  <span class="sub-label-head">Potongan PPh</span>
+                  <div class="input-sub-wrapper danger">
+                    <span class="text-danger">Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right text-danger" />
+                  </div>
+                </div>
+
+                <div class="sub-col sub-col-action">
+                  <button type="button" class="btn-sub-remove"><i class="fas fa-minus-circle"></i></button>
+                </div>
+              </div>
+
+              <!-- Row Sub 2 -->
+              <div class="kw-sub-row">
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+                <div class="sub-col sub-col-name">
+                  <input type="text" placeholder="Nama objek pajak..." class="input-sub" />
+                </div>
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+
+                <div class="sub-col sub-col-dpp">
+                  <div class="input-sub-wrapper">
+                    <span>Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right" />
+                  </div>
+                </div>
+                <div class="sub-col sub-col-tarif"></div>
+                <div class="sub-col sub-col-potongan"></div>
+
+                <div class="sub-col sub-col-action">
+                  <button type="button" class="btn-sub-remove"><i class="fas fa-minus-circle"></i></button>
+                </div>
+              </div>
+
+              <!-- Add Row Button -->
+              <div class="kw-add-action">
+                <button type="button" class="btn-add-sub" onclick="openObjekPajakModal(this)">
+                  <i class="far fa-plus-square"></i> Objek pajak
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tombol Hapus Baris -->
+      <button type="button" class="btn-remove-row" title="Hapus kuitansi">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+    <div class="kuitansi-wrapper">
+    
+    <div class="kuitansi-row-container">
+      <!-- Card Utama (Default Tertutup / Collapsed) -->
+      <div class="kuitansi-item">
+        
+        <!-- Header Row Baris kuitansi -->
+        <div class="kw-header" onclick="togglekuitansi(event, this)">
+          <button type="button" class="btn-toggle-arrow">
+            <i class="fas fa-chevron-right kw-arrow"></i>
+          </button>
+
+          <div class="kw-field kw-field-no">
+            <div class="input-container">
+              <input type="text" placeholder="Masukkan nomor kuitansi..." />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-date">
+            <div class="input-container">
+              <input type="date" value="2026-08-13" class="input-date-custom" />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-nominal">
+            <div class="input-container prefix-rp">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right" />
+            </div>
+          </div>
+
+          <div class="kw-icon-doc" onclick="openFakturPPNModal(this)">
+            <i class="fas fa-file-alt"></i>
+          </div>
+
+          <div class="kw-field kw-field-ppn">
+            <div class="input-container prefix-rp readonly">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right" readonly />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-pph">
+            <div class="input-container prefix-rp danger readonly">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right text-danger" readonly />
+            </div>
+          </div>
+        </div>
+
+        <!-- Detail Box (Disembunyikan di awal lewat CSS/inline style) -->
+        <div class="kw-detail" style="display: none;">
+          <div class="kw-detail-inner">
+            <div class="branch-icon">
+              <i class="branch-connector"></i>
+            </div>
+
+            <div class="biaya-detail-table">
+              <!-- Row Sub 1 -->
+              <div class="kw-sub-row">
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+                <div class="sub-col sub-col-name">
+                  <input type="text" placeholder="Nama objek pajak..." class="input-sub" />
+                </div>
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+
+                <div class="sub-col sub-col-dpp">
+                  <span class="sub-label-head">DPP PPh</span>
+                  <div class="input-sub-wrapper">
+                    <span>Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right" />
+                  </div>
+                </div>
+
+                <div class="sub-col sub-col-tarif">
+                  <span class="sub-label-head">Tarif</span>
+                  <input type="text" value="0 %" class="input-sub text-center font-bold" />
+                </div>
+
+                <div class="sub-col sub-col-potongan">
+                  <span class="sub-label-head">Potongan PPh</span>
+                  <div class="input-sub-wrapper danger">
+                    <span class="text-danger">Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right text-danger" />
+                  </div>
+                </div>
+
+                <div class="sub-col sub-col-action">
+                  <button type="button" class="btn-sub-remove"><i class="fas fa-minus-circle"></i></button>
+                </div>
+              </div>
+
+              <!-- Row Sub 2 -->
+              <div class="kw-sub-row">
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+                <div class="sub-col sub-col-name">
+                  <input type="text" placeholder="Nama objek pajak..." class="input-sub" />
+                </div>
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+
+                <div class="sub-col sub-col-dpp">
+                  <div class="input-sub-wrapper">
+                    <span>Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right" />
+                  </div>
+                </div>
+                <div class="sub-col sub-col-tarif"></div>
+                <div class="sub-col sub-col-potongan"></div>
+
+                <div class="sub-col sub-col-action">
+                  <button type="button" class="btn-sub-remove"><i class="fas fa-minus-circle"></i></button>
+                </div>
+              </div>
+
+              <!-- Add Row Button -->
+              <div class="kw-add-action">
+                <button type="button" class="btn-add-sub" onclick="openObjekPajakModal(this)">
+                  <i class="far fa-plus-square"></i> Objek pajak
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tombol Hapus Baris -->
+      <button type="button" class="btn-remove-row" title="Hapus kuitansi">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+    <div class="kuitansi-wrapper">
+    
+    <div class="kuitansi-row-container">
+      <!-- Card Utama (Default Tertutup / Collapsed) -->
+      <div class="kuitansi-item">
+        
+        <!-- Header Row Baris kuitansi -->
+        <div class="kw-header" onclick="togglekuitansi(event, this)">
+          <button type="button" class="btn-toggle-arrow">
+            <i class="fas fa-chevron-right kw-arrow"></i>
+          </button>
+
+          <div class="kw-field kw-field-no">
+            <div class="input-container">
+              <input type="text" placeholder="Masukkan nomor kuitansi..." />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-date">
+            <div class="input-container">
+              <input type="date" value="2026-08-13" class="input-date-custom" />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-nominal">
+            <div class="input-container prefix-rp">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right" />
+            </div>
+          </div>
+
+          <div class="kw-icon-doc" onclick="openFakturPPNModal(this)">
+            <i class="fas fa-file-alt"></i>
+          </div>
+
+          <div class="kw-field kw-field-ppn">
+            <div class="input-container prefix-rp readonly">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right" readonly />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-pph">
+            <div class="input-container prefix-rp danger readonly">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right text-danger" readonly />
+            </div>
+          </div>
+        </div>
+
+        <!-- Detail Box (Disembunyikan di awal lewat CSS/inline style) -->
+        <div class="kw-detail" style="display: none;">
+          <div class="kw-detail-inner">
+            <div class="branch-icon">
+              <i class="branch-connector"></i>
+            </div>
+
+            <div class="biaya-detail-table">
+              <!-- Row Sub 1 -->
+              <div class="kw-sub-row">
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+                <div class="sub-col sub-col-name">
+                  <input type="text" placeholder="Nama objek pajak..." class="input-sub" />
+                </div>
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+
+                <div class="sub-col sub-col-dpp">
+                  <span class="sub-label-head">DPP PPh</span>
+                  <div class="input-sub-wrapper">
+                    <span>Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right" />
+                  </div>
+                </div>
+
+                <div class="sub-col sub-col-tarif">
+                  <span class="sub-label-head">Tarif</span>
+                  <input type="text" value="0 %" class="input-sub text-center font-bold" />
+                </div>
+
+                <div class="sub-col sub-col-potongan">
+                  <span class="sub-label-head">Potongan PPh</span>
+                  <div class="input-sub-wrapper danger">
+                    <span class="text-danger">Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right text-danger" />
+                  </div>
+                </div>
+
+                <div class="sub-col sub-col-action">
+                  <button type="button" class="btn-sub-remove"><i class="fas fa-minus-circle"></i></button>
+                </div>
+              </div>
+
+              <!-- Row Sub 2 -->
+              <div class="kw-sub-row">
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+                <div class="sub-col sub-col-name">
+                  <input type="text" placeholder="Nama objek pajak..." class="input-sub" />
+                </div>
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+
+                <div class="sub-col sub-col-dpp">
+                  <div class="input-sub-wrapper">
+                    <span>Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right" />
+                  </div>
+                </div>
+                <div class="sub-col sub-col-tarif"></div>
+                <div class="sub-col sub-col-potongan"></div>
+
+                <div class="sub-col sub-col-action">
+                  <button type="button" class="btn-sub-remove"><i class="fas fa-minus-circle"></i></button>
+                </div>
+              </div>
+
+              <!-- Add Row Button -->
+              <div class="kw-add-action">
+                <button type="button" class="btn-add-sub" onclick="openObjekPajakModal(this)">
+                  <i class="far fa-plus-square"></i> Objek pajak
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tombol Hapus Baris -->
+      <button type="button" class="btn-remove-row" title="Hapus kuitansi">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+    <div class="kuitansi-wrapper">
+    
+    <div class="kuitansi-row-container">
+      <!-- Card Utama (Default Tertutup / Collapsed) -->
+      <div class="kuitansi-item">
+        
+        <!-- Header Row Baris kuitansi -->
+        <div class="kw-header" onclick="togglekuitansi(event, this)">
+          <button type="button" class="btn-toggle-arrow">
+            <i class="fas fa-chevron-right kw-arrow"></i>
+          </button>
+
+          <div class="kw-field kw-field-no">
+            <div class="input-container">
+              <input type="text" placeholder="Masukkan nomor kuitansi..." />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-date">
+            <div class="input-container">
+              <input type="date" value="2026-08-13" class="input-date-custom" />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-nominal">
+            <div class="input-container prefix-rp">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right" />
+            </div>
+          </div>
+
+          <div class="kw-icon-doc" onclick="openFakturPPNModal(this)">
+            <i class="fas fa-file-alt"></i>
+          </div>
+
+          <div class="kw-field kw-field-ppn">
+            <div class="input-container prefix-rp readonly">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right" readonly />
+            </div>
+          </div>
+
+          <div class="kw-field kw-field-pph">
+            <div class="input-container prefix-rp danger readonly">
+              <span class="prefix">Rp.</span>
+              <input type="text" value="0,00" class="text-right text-danger" readonly />
+            </div>
+          </div>
+        </div>
+
+        <!-- Detail Box (Disembunyikan di awal lewat CSS/inline style) -->
+        <div class="kw-detail" style="display: none;">
+          <div class="kw-detail-inner">
+            <div class="branch-icon">
+              <i class="branch-connector"></i>
+            </div>
+
+            <div class="biaya-detail-table">
+              <!-- Row Sub 1 -->
+              <div class="kw-sub-row">
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+                <div class="sub-col sub-col-name">
+                  <input type="text" placeholder="Nama objek pajak..." class="input-sub" />
+                </div>
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+
+                <div class="sub-col sub-col-dpp">
+                  <span class="sub-label-head">DPP PPh</span>
+                  <div class="input-sub-wrapper">
+                    <span>Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right" />
+                  </div>
+                </div>
+
+                <div class="sub-col sub-col-tarif">
+                  <span class="sub-label-head">Tarif</span>
+                  <input type="text" value="0 %" class="input-sub text-center font-bold" />
+                </div>
+
+                <div class="sub-col sub-col-potongan">
+                  <span class="sub-label-head">Potongan PPh</span>
+                  <div class="input-sub-wrapper danger">
+                    <span class="text-danger">Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right text-danger" />
+                  </div>
+                </div>
+
+                <div class="sub-col sub-col-action">
+                  <button type="button" class="btn-sub-remove"><i class="fas fa-minus-circle"></i></button>
+                </div>
+              </div>
+
+              <!-- Row Sub 2 -->
+              <div class="kw-sub-row">
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+                <div class="sub-col sub-col-name">
+                  <input type="text" placeholder="Nama objek pajak..." class="input-sub" />
+                </div>
+                <div class="sub-col sub-col-code">
+                  <input type="text" value="-" class="input-sub text-center" />
+                </div>
+
+                <div class="sub-col sub-col-dpp">
+                  <div class="input-sub-wrapper">
+                    <span>Rp.</span>
+                    <input type="text" value="0,00" class="input-sub text-right" />
+                  </div>
+                </div>
+                <div class="sub-col sub-col-tarif"></div>
+                <div class="sub-col sub-col-potongan"></div>
+
+                <div class="sub-col sub-col-action">
+                  <button type="button" class="btn-sub-remove"><i class="fas fa-minus-circle"></i></button>
+                </div>
+              </div>
+
+              <!-- Add Row Button -->
+              <div class="kw-add-action">
+                <button type="button" class="btn-add-sub" onclick="openObjekPajakModal(this)">
+                  <i class="far fa-plus-square"></i> Objek pajak
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tombol Hapus Baris -->
+      <button type="button" class="btn-remove-row" title="Hapus kuitansi">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+  </div>
+    `;
+
+    // MENGHITUNG OTOMATIS JUMLAH ROW kuitansi
+    const totalkuitansi = kwList.querySelectorAll(
+      ".kuitansi-row-container",
+    ).length;
+    const badgeEl = document.getElementById("kw-total-badge");
+    if (badgeEl) {
+      badgeEl.innerText = `${totalkuitansi} Kuitansi`;
+    }
   } else if (type === "siti") {
     const title = document.getElementById("dyn-title");
     const subtitle = document.getElementById("dyn-subtitle");
     const kode = document.getElementById("dyn-kode");
     const badge = document.getElementById("dyn-badge");
     const bannerCard = document.querySelector(".sdh-banner-card");
+    const extraBadge = document.getElementById("container-extra-badge");
+    const urlParams = new URLSearchParams(window.location.search);
+    const flowType = urlParams.get("type");
+    const isPerjalananDinas = flowType === "perjalanan_dinas";
+    const cardDetil = document.getElementById("cardDetilPerjalananDinas");
 
+    // Tampilkan kartu jika alur perjalanan dinas, sembunyikan jika bukan
+    if (cardDetil) {
+      cardDetil.style.display = isPerjalananDinas ? "block" : "none";
+    }
+    if (extraBadge) {
+      extraBadge.innerHTML = "";
+    }
     if (title) title.innerText = "Siti Rahmawati";
     if (subtitle) subtitle.innerText = "Kementrian Sosial";
     if (kode) kode.innerText = "EJ15000156";
@@ -714,305 +1915,144 @@ function switchStep3Tab(type, el) {
       bannerCard.className = "sdh-banner-card theme-perorangan";
     }
 
-    kwList.innerHTML = `
-            <div class="biaya-wrapper">
-  
-  <!-- ITEM 1: OPEN (Honor dan Jasa Perorangan) -->
-  <div class="biaya-item">
-    <div class="biaya-header" onclick="toggleBiaya(this)">
-      <div class="biaya-header-left">
-        <i class="fas fa-chevron-right biaya-arrow"></i>
-        <span class="biaya-title">Honor dan Jasa Perorangan</span>
-      </div>
-      <div class="biaya-header-right">
-        <div class="biaya-field">
-          <label>Nominal</label>
-          <div class="biaya-input-box readonly">
-            <span class="prefix">Rp.</span>
-            <input type="text" value="0,00" readonly class="text-right" />
-          </div>
-        </div>
-        <div class="biaya-field">
-          <label>Potongan PPh</label>
-          <div class="biaya-input-box danger readonly">
-            <span class="prefix text-danger">Rp.</span>
-            <input type="text" value="0,00" readonly class="text-right text-danger" />
-          </div>
-        </div>
-      </div>
-    </div>
+    // Pastikan container utama tidak scroll dan menjadi layout flex kolom
+    if (kwList) {
+      kwList.style.overflow = "hidden";
+      kwList.style.display = "flex";
+      kwList.style.flexDirection = "column";
+    }
 
-    <!-- Detail Box Component -->
-    <div class="biaya-detail">
-      <div class="biaya-detail-inner">
-                                        <div class="branch-icon">
-                                            <i class="branch-connector"></i>
-                                        </div>
+    // Data 7 kelompok biaya
+    const kelompokBiayaData = [
+      { title: "Honor dan Jasa Perorangan" },
+      { title: "Hadiah Royalti dan Sewa" },
+      { title: "Pendapatan Bunga Deposito" },
+      { title: "Penghasilan Usaha Perseorangan" },
+      { title: "Penghasilan dari Jasa Profesional" },
+      { title: "Pendapatan Sewa Properti" },
+      { title: "Nama Kelompok Biaya" },
+    ];
 
-        <div class="biaya-detail-table">
-          <!-- Row 1 -->
-          <div class="biaya-sub-row">
-            <div class="sub-col sub-col-nama">
-              <span class="sub-label-head">Nama Komponen</span>
-              <input type="text" placeholder="Nama Komponen" class="sub-input" />
+    // Render HTML: Header di luar area scroll
+    kwList.innerHTML = `    
+        <div class="biaya-wrapper" style="display: flex; flex-direction: column; height: 100%; max-height: 100%; overflow: hidden; gap: 8px;">
+            <!-- 1. HEADER TETAP DI LUAR (TIDAK AKAN TERTEMBUS KARENA BUKAN AREA SCROLL) -->
+            <div class="biaya-global-header" >
+                <div style="flex: 1;"></div>
+                <div style="display: flex; gap: 12px;">
+                    <div style="width: 100px; text-align: left; padding-left: 2px;">Nominal</div>
+                    <div style="width: 100px; text-align: left; padding-left: 2px;">Potongan PPh</div>
+                </div>
             </div>
-
-            <div class="sub-col sub-col-formula">
-              <span class="sub-label-head">Formula</span>
-              <input type="text" placeholder="Formula" class="sub-input" />
-            </div>
-
-            <div class="sub-col sub-col-nominal">
-              <span class="sub-label-head">Nominal</span>
-              <div class="sub-input-box">
-                <span class="prefix">Rp.</span>
-                <input type="text" value="0,00" class="sub-input-field text-right" />
-              </div>
-            </div>
-
-            <div class="sub-col sub-col-pph">
-              <span class="sub-label-head">Potongan PPh</span>
-              <div class="sub-input-box danger">
-                <span class="prefix text-danger">Rp.</span>
-                <input type="text" value="0,00" class="sub-input-field text-right text-danger" />
-              </div>
-            </div>
-
-            <div class="sub-col sub-col-btn">
-              <button type="button" class="btn-sub-del"><i class="fas fa-minus-circle"></i></button>
-            </div>
-          </div>
-
-          <!-- Row 2 -->
-          <div class="biaya-sub-row">
-            <div class="sub-col sub-col-nama">
-              <input type="text" placeholder="Nama Komponen" class="sub-input" />
-            </div>
-            <div class="sub-col sub-col-formula"></div>
             
-            <div class="sub-col sub-col-nominal">
-              <div class="sub-input-box">
-                <span class="prefix">Rp.</span>
-                <input type="text" value="0,00" class="sub-input-field text-right" />
-              </div>
-            </div>
+            <!-- 2. HANYA AREA INI YANG MENJADI SCROLL (TIDAK AKAN LEWAT KE ATAS HEADER) -->
+            <div class="kw-scroll-list-area" style="flex: 1; overflow-y: auto; overflow-x: hidden; padding-right: 4px; display: flex; flex-direction: column; gap: 8px;">
+                ${kelompokBiayaData
+                  .map(
+                    (item) => `
+                    <div class="biaya-item">
+                        <div class="biaya-header" onclick="toggleBiaya(this)">
+                            <div class="biaya-header-left">
+                                <i class="fas fa-chevron-right biaya-arrow"></i>
+                                <span class="biaya-title">${item.title}</span>
+                            </div>
+                            <div class="biaya-header-right">
+                                <div class="biaya-field">
+                                    <div class="biaya-input-box readonly">
+                                        <span class="prefix">Rp.</span>
+                                        <input type="text" value="0,00" readonly class="text-right" />
+                                    </div>
+                                </div>
+                                <div class="biaya-field">
+                                    <div class="biaya-input-box danger readonly">
+                                        <span class="prefix text-danger">Rp.</span>
+                                        <input type="text" value="0,00" readonly class="text-right text-danger" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-            <div class="sub-col sub-col-pph">
-              <div class="sub-input-box danger">
-                <span class="prefix text-danger">Rp.</span>
-                <input type="text" value="0,00" class="sub-input-field text-right text-danger" />
-              </div>
-            </div>
+                        <!-- Detail Box Component -->
+                        <div class="biaya-detail">
+                            <div class="biaya-detail-inner">
+                                <div class="branch-icon">
+                                    <i class="branch-connector"></i>
+                                </div>
 
-            <div class="sub-col sub-col-btn">
-              <button type="button" class="btn-sub-del"><i class="fas fa-minus-circle"></i></button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="biaya-item">
-    <div class="biaya-header" onclick="toggleBiaya(this)">
-      <div class="biaya-header-left">
-        <i class="fas fa-chevron-right biaya-arrow"></i>
-        <span class="biaya-title">Honor dan Jasa Perorangan</span>
-      </div>
-      <div class="biaya-header-right">
-        <div class="biaya-field">
-          <label>Nominal</label>
-          <div class="biaya-input-box readonly">
-            <span class="prefix">Rp.</span>
-            <input type="text" value="0,00" readonly class="text-right" />
-          </div>
-        </div>
-        <div class="biaya-field">
-          <label>Potongan PPh</label>
-          <div class="biaya-input-box danger readonly">
-            <span class="prefix text-danger">Rp.</span>
-            <input type="text" value="0,00" readonly class="text-right text-danger" />
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Detail Box Component -->
-    <div class="biaya-detail">
-      <div class="biaya-detail-inner">
-                                        <div class="branch-icon">
-                                            <i class="branch-connector"></i>
+                                <div class="biaya-detail-table">
+                                    <!-- Row 1 -->
+                                    <div class="biaya-sub-row">
+                                        <div class="sub-col sub-col-nama">
+                                            <span class="sub-label-head">Nama Komponen</span>
+                                            <input type="text" placeholder="Nama Komponen" class="sub-input" />
                                         </div>
-
-        <div class="biaya-detail-table">
-          <!-- Row 1 -->
-          <div class="biaya-sub-row">
-            <div class="sub-col sub-col-nama">
-              <span class="sub-label-head">Nama Komponen</span>
-              <input type="text" placeholder="Nama Komponen" class="sub-input" />
-            </div>
-
-            <div class="sub-col sub-col-formula">
-              <span class="sub-label-head">Formula</span>
-              <input type="text" placeholder="Formula" class="sub-input" />
-            </div>
-
-            <div class="sub-col sub-col-nominal">
-              <span class="sub-label-head">Nominal</span>
-              <div class="sub-input-box">
-                <span class="prefix">Rp.</span>
-                <input type="text" value="0,00" class="sub-input-field text-right" />
-              </div>
-            </div>
-
-            <div class="sub-col sub-col-pph">
-              <span class="sub-label-head">Potongan PPh</span>
-              <div class="sub-input-box danger">
-                <span class="prefix text-danger">Rp.</span>
-                <input type="text" value="0,00" class="sub-input-field text-right text-danger" />
-              </div>
-            </div>
-
-            <div class="sub-col sub-col-btn">
-              <button type="button" class="btn-sub-del"><i class="fas fa-minus-circle"></i></button>
-            </div>
-          </div>
-
-          <!-- Row 2 -->
-          <div class="biaya-sub-row">
-            <div class="sub-col sub-col-nama">
-              <input type="text" placeholder="Nama Komponen" class="sub-input" />
-            </div>
-            <div class="sub-col sub-col-formula"></div>
-            
-            <div class="sub-col sub-col-nominal">
-              <div class="sub-input-box">
-                <span class="prefix">Rp.</span>
-                <input type="text" value="0,00" class="sub-input-field text-right" />
-              </div>
-            </div>
-
-            <div class="sub-col sub-col-pph">
-              <div class="sub-input-box danger">
-                <span class="prefix text-danger">Rp.</span>
-                <input type="text" value="0,00" class="sub-input-field text-right text-danger" />
-              </div>
-            </div>
-
-            <div class="sub-col sub-col-btn">
-              <button type="button" class="btn-sub-del"><i class="fas fa-minus-circle"></i></button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>  
-  <div class="biaya-item">
-    <div class="biaya-header" onclick="toggleBiaya(this)">
-      <div class="biaya-header-left">
-        <i class="fas fa-chevron-right biaya-arrow"></i>
-        <span class="biaya-title">Honor dan Jasa Perorangan</span>
-      </div>
-      <div class="biaya-header-right">
-        <div class="biaya-field">
-          <label>Nominal</label>
-          <div class="biaya-input-box readonly">
-            <span class="prefix">Rp.</span>
-            <input type="text" value="0,00" readonly class="text-right" />
-          </div>
-        </div>
-        <div class="biaya-field">
-          <label>Potongan PPh</label>
-          <div class="biaya-input-box danger readonly">
-            <span class="prefix text-danger">Rp.</span>
-            <input type="text" value="0,00" readonly class="text-right text-danger" />
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Detail Box Component -->
-    <div class="biaya-detail">
-      <div class="biaya-detail-inner">
-                                        <div class="branch-icon">
-                                            <i class="branch-connector"></i>
+                                        <div class="sub-col sub-col-formula">
+                                            <span class="sub-label-head">Formula</span>
+                                            <input type="text" placeholder="Formula" class="sub-input" />
                                         </div>
+                                        <div class="sub-col sub-col-nominal">
+                                            <span class="sub-label-head">Nominal</span>
+                                            <div class="sub-input-box">
+                                                <span class="prefix">Rp.</span>
+                                                <input type="text" value="0,00" class="sub-input-field text-right" />
+                                            </div>
+                                        </div>
+                                        <div class="sub-col sub-col-pph">
+                                            <span class="sub-label-head">Potongan PPh</span>
+                                            <div class="sub-input-box danger">
+                                                <span class="prefix text-danger">Rp.</span>
+                                                <input type="text" value="0,00" class="sub-input-field text-right text-danger" />
+                                            </div>
+                                        </div>
+                                        <div class="sub-col sub-col-btn">
+                                            <button type="button" class="btn-sub-del"><i class="fas fa-minus-circle"></i></button>
+                                        </div>
+                                    </div>
 
-        <div class="biaya-detail-table">
-          <!-- Row 1 -->
-          <div class="biaya-sub-row">
-            <div class="sub-col sub-col-nama">
-              <span class="sub-label-head">Nama Komponen</span>
-              <input type="text" placeholder="Nama Komponen" class="sub-input" />
+                                    <!-- Row 2 -->
+                                    <div class="biaya-sub-row">
+                                        <div class="sub-col sub-col-nama">
+                                            <input type="text" placeholder="Nama Komponen" class="sub-input" />
+                                        </div>
+                                        <div class="sub-col sub-col-formula"></div>
+                                        <div class="sub-col sub-col-nominal">
+                                            <div class="sub-input-box">
+                                                <span class="prefix">Rp.</span>
+                                                <input type="text" value="0,00" class="sub-input-field text-right" />
+                                            </div>
+                                        </div>
+                                        <div class="sub-col sub-col-pph">
+                                            <div class="sub-input-box danger">
+                                                <span class="prefix text-danger">Rp.</span>
+                                                <input type="text" value="0,00" class="sub-input-field text-right text-danger" />
+                                            </div>
+                                        </div>
+                                        <div class="sub-col sub-col-btn">
+                                            <button type="button" class="btn-sub-del"><i class="fas fa-minus-circle"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                  )
+                  .join("")}
             </div>
-
-            <div class="sub-col sub-col-formula">
-              <span class="sub-label-head">Formula</span>
-              <input type="text" placeholder="Formula" class="sub-input" />
-            </div>
-
-            <div class="sub-col sub-col-nominal">
-              <span class="sub-label-head">Nominal</span>
-              <div class="sub-input-box">
-                <span class="prefix">Rp.</span>
-                <input type="text" value="0,00" class="sub-input-field text-right" />
-              </div>
-            </div>
-
-            <div class="sub-col sub-col-pph">
-              <span class="sub-label-head">Potongan PPh</span>
-              <div class="sub-input-box danger">
-                <span class="prefix text-danger">Rp.</span>
-                <input type="text" value="0,00" class="sub-input-field text-right text-danger" />
-              </div>
-            </div>
-
-            <div class="sub-col sub-col-btn">
-              <button type="button" class="btn-sub-del"><i class="fas fa-minus-circle"></i></button>
-            </div>
-          </div>
-
-          <!-- Row 2 -->
-          <div class="biaya-sub-row">
-            <div class="sub-col sub-col-nama">
-              <input type="text" placeholder="Nama Komponen" class="sub-input" />
-            </div>
-            <div class="sub-col sub-col-formula"></div>
-            
-            <div class="sub-col sub-col-nominal">
-              <div class="sub-input-box">
-                <span class="prefix">Rp.</span>
-                <input type="text" value="0,00" class="sub-input-field text-right" />
-              </div>
-            </div>
-
-            <div class="sub-col sub-col-pph">
-              <div class="sub-input-box danger">
-                <span class="prefix text-danger">Rp.</span>
-                <input type="text" value="0,00" class="sub-input-field text-right text-danger" />
-              </div>
-            </div>
-
-            <div class="sub-col sub-col-btn">
-              <button type="button" class="btn-sub-del"><i class="fas fa-minus-circle"></i></button>
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </div>
-        `;
+    `;
   }
 }
 
-// Toggle accordion logic for Kwitansi Item
-function toggleKwitansi(event, headerEl) {
+// Toggle accordion logic for kuitansi Item
+function togglekuitansi(event, headerEl) {
   // Cegah buka/tutup saat user sedang mengetik di form
   if (event.target.tagName === "INPUT") return;
 
-  const item = headerEl.closest(".kwitansi-item");
+  const item = headerEl.closest(".kuitansi-item");
   const arrow = headerEl.querySelector(".kw-arrow");
   const detail = item.querySelector(".kw-detail");
-  const rowContainer = item.closest(".kwitansi-row-container");
+  const rowContainer = item.closest(".kuitansi-row-container");
 
   const isClosed =
     detail.style.display === "none" || !item.classList.contains("expanded");
@@ -1047,10 +2087,10 @@ function setTipePenerima(type) {
     if (dropdownPerorangan) dropdownPerorangan.style.display = "block";
     if (btnText) btnText.textContent = "Tambah Komponen Biaya";
   } else if (type === "toyota") {
-    // Mode Toyota (Badan Usaha): Daftar Kwitansi + Tambah Kwitansi / Invoice
+    // Mode Toyota (Badan Usaha): Daftar kuitansi + Tambah kuitansi / Invoice
     if (titleBadan) titleBadan.style.display = "block";
     if (dropdownPerorangan) dropdownPerorangan.style.display = "none";
-    if (btnText) btnText.textContent = "Tambah Kwitansi / Invoice";
+    if (btnText) btnText.textContent = "Tambah kuitansi / Invoice";
   }
 }
 
@@ -1067,9 +2107,9 @@ function handleTambah() {
     console.log("Tambah Komponen Biaya untuk kategori:", selectedKategori);
     // Jalankan fungsi tambah sub-komponen biaya di sini
   } else {
-    // Logika Tambah Kwitansi (Toyota - Badan Usaha)
-    console.log("Tambah Baris Kwitansi / Invoice baru");
-    // Jalankan fungsi tambah kwitansi/invoice di sini
+    // Logika Tambah kuitansi (Toyota - Badan Usaha)
+    console.log("Tambah Baris kuitansi / Invoice baru");
+    // Jalankan fungsi tambah kuitansi/invoice di sini
   }
 }
 let currentActiveTargetRow = null;
@@ -1077,7 +2117,7 @@ let currentActiveTargetRow = null;
 // Buka Modal
 function openObjekPajakModal(triggerBtn) {
   currentActiveTargetRow = triggerBtn
-    ? triggerBtn.closest(".biaya-sub-row, .kwitansi-item")
+    ? triggerBtn.closest(".biaya-sub-row, .kuitansi-item")
     : null;
   const modal = document.getElementById("modalObjekPajak");
   if (modal) modal.style.display = "flex";
@@ -1123,22 +2163,22 @@ function filterTaxList() {
   });
 }
 
-let currentKwitansiRow = null;
+let currentkuitansiRow = null;
 
 // Buka Modal Faktur PPN
 function openFakturPPNModal(triggerEl) {
-  // Ambil referensi baris kwitansi tempat ikon diklik
-  currentKwitansiRow = triggerEl ? triggerEl.closest(".kwitansi-item") : null;
+  // Ambil referensi baris kuitansi tempat ikon diklik
+  currentkuitansiRow = triggerEl ? triggerEl.closest(".kuitansi-item") : null;
 
-  if (currentKwitansiRow) {
-    // Sinkronisasi otomatis nomor kwitansi & nominal jika sudah diinput di card
-    const inputNoKw = currentKwitansiRow.querySelector(".kw-field-no input");
-    const inputNominal = currentKwitansiRow.querySelector(
+  if (currentkuitansiRow) {
+    // Sinkronisasi otomatis nomor kuitansi & nominal jika sudah diinput di card
+    const inputNoKw = currentkuitansiRow.querySelector(".kw-field-no input");
+    const inputNominal = currentkuitansiRow.querySelector(
       ".kw-field-nominal input",
     );
 
     if (inputNoKw && inputNoKw.value) {
-      document.getElementById("ppnNoKwitansi").value = inputNoKw.value;
+      document.getElementById("ppnNokuitansi").value = inputNoKw.value;
     }
     if (inputNominal && inputNominal.value) {
       document.getElementById("ppnNilaiInvoice").value =
@@ -1778,27 +2818,24 @@ function toggleAccordion(element) {
 function formatRupiah(val) {
   return "Rp. " + new Intl.NumberFormat("id-ID").format(val) + ",00";
 }
-
 // State aplikasi
 let activeKategori = "bpjs";
 let currentPage = 1;
 const itemsPerPage = 10;
+let currentFilteredData = [];
 
 // Helper format Rupiah
 function formatRupiah(val) {
   return "Rp. " + new Intl.NumberFormat("id-ID").format(val) + ",00";
 }
 
-// 1. Fungsi Render List (Hanya menampilkan data halaman aktif)
+// 1. Render List Item Halaman Aktif
 function renderAnggaranList(data, totalItems) {
   const container = document.getElementById("list-anggaran-container");
   const countElement = document.getElementById("total-anggaran-count");
 
   if (!container) return;
-
-  if (countElement) {
-    countElement.innerText = totalItems;
-  }
+  if (countElement) countElement.innerText = totalItems;
 
   if (data.length === 0) {
     container.innerHTML = `
@@ -1838,59 +2875,76 @@ function renderAnggaranList(data, totalItems) {
   renderPagination(totalItems);
 }
 
-// 2. Kontrol Tombol Pagination (Next / Prev / Page Number)
+// 2. Sinkronkan dengan Struktur Pagination HTML Anda
 function renderPagination(totalItems) {
-  const paginationContainer = document.getElementById("pagination-container");
-  if (!paginationContainer) return;
+  const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
+  const currentPageBtn = document.querySelector(
+    ".pagination-controls .active-page",
+  );
+  const totalPagesText = document.querySelector(
+    ".pagination-controls .page-text",
+  );
 
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const btnFirst = document.querySelector(
+    ".pagination-controls button:nth-child(1)",
+  );
+  const btnPrev = document.querySelector(
+    ".pagination-controls button:nth-child(2)",
+  );
+  const btnNext = document.querySelector(
+    ".pagination-controls button:nth-child(5)",
+  );
+  const btnLast = document.querySelector(
+    ".pagination-controls button:nth-child(6)",
+  );
 
-  // Sembunyikan pagination jika data hanya 1 halaman atau kosong
-  if (totalPages <= 1) {
-    paginationContainer.innerHTML = "";
-    return;
+  if (currentPageBtn) currentPageBtn.innerText = currentPage;
+  if (totalPagesText) totalPagesText.innerText = `of ${totalPages}`;
+
+  if (btnFirst) {
+    btnFirst.disabled = currentPage === 1;
+    btnFirst.onclick = () => goToPage(1);
   }
-
-  paginationContainer.innerHTML = `
-    <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 16px;">
-      <button 
-        onclick="goToPage(${currentPage - 1})" 
-        ${currentPage === 1 ? "disabled" : ""}
-        style="padding: 6px 12px; cursor: pointer; border-radius: 4px; border: 1px solid #cbd5e1; background: #fff;">
-        &laquo; Prev
-      </button>
-
-      <span style="font-size: 14px; color: #64748b;">
-        Halaman <strong>${currentPage}</strong> dari <strong>${totalPages}</strong>
-      </span>
-
-      <button 
-        onclick="goToPage(${currentPage + 1})" 
-        ${currentPage === totalPages ? "disabled" : ""}
-        style="padding: 6px 12px; cursor: pointer; border-radius: 4px; border: 1px solid #cbd5e1; background: #fff;">
-        Next &raquo;
-      </button>
-    </div>
-  `;
+  if (btnPrev) {
+    btnPrev.disabled = currentPage === 1;
+    btnPrev.onclick = () => goToPage(currentPage - 1);
+  }
+  if (btnNext) {
+    btnNext.disabled = currentPage === totalPages;
+    btnNext.onclick = () => goToPage(currentPage + 1);
+  }
+  if (btnLast) {
+    btnLast.disabled = currentPage === totalPages;
+    btnLast.onclick = () => goToPage(totalPages);
+  }
 }
 
-// 3. Fungsi Pindah Halaman
+// 3. Pindah Halaman
 function goToPage(page) {
+  const totalPages = Math.ceil(currentFilteredData.length / itemsPerPage) || 1;
+  if (page < 1 || page > totalPages) return;
   currentPage = page;
-  filterAndRenderAnggaran(false); // false agar tidak mereset page kembali ke 1
+  sliceAndRender();
 }
 
-// 4. Filter, Potong 10 Item (Slice), lalu Render
+// 4. Potong Data Sesuai Halaman Aktif
+function sliceAndRender() {
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedData = currentFilteredData.slice(
+    startIndex,
+    startIndex + itemsPerPage,
+  );
+  renderAnggaranList(paginatedData, currentFilteredData.length);
+}
+
+// 5. Filter Data
 function filterAndRenderAnggaran(resetPage = true) {
-  if (resetPage) {
-    currentPage = 1; // Kembali ke halaman 1 saat user ganti kategori atau mengetik pencarian
-  }
+  if (resetPage) currentPage = 1;
 
   const searchInput = document.getElementById("search-anggaran");
   const keyword = searchInput ? searchInput.value.toLowerCase().trim() : "";
 
-  // Filter data
-  const filteredData = anggaranData.filter((item) => {
+  currentFilteredData = anggaranData.filter((item) => {
     const matchCategory =
       activeKategori.toUpperCase() === "ALL" ||
       item.kategori.toUpperCase() === activeKategori.toUpperCase();
@@ -1902,127 +2956,76 @@ function filterAndRenderAnggaran(resetPage = true) {
     return matchCategory && matchSearch;
   });
 
-  // Ambil hanya 10 item untuk halaman aktif
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const paginatedData = filteredData.slice(startIndex, endIndex);
-
-  renderAnggaranList(paginatedData, filteredData.length);
+  sliceAndRender();
 }
 
-// 5. Handler Seleksi Item
-function selectAnggaranItem(element) {
-  const itemId = element.getAttribute("data-id");
-
-  anggaranData.forEach((item) => {
-    item.terpilih = item.id === itemId;
-  });
-
-  document
-    .querySelectorAll("#list-anggaran-container .list-item")
-    .forEach((el) => el.classList.remove("selected"));
-
-  element.classList.add("selected");
-}
-
-// 2. Handler Ganti Tab (BPJS / SKP)
+// 6. Ganti Tab Kategori
 window.selectSumberAnggaran = function (type) {
   activeKategori = type;
 
-  // Ganti highlight kartu aktif
   document
     .querySelectorAll(".select-card")
     .forEach((card) => card.classList.remove("selected"));
-
   const targetCard = document.getElementById(`card-${type}`);
   if (targetCard) targetCard.classList.add("selected");
 
-  // Reset input pencarian saat berganti tab (opsional)
   const searchInput = document.getElementById("search-anggaran");
   if (searchInput) searchInput.value = "";
 
-  filterAndRenderAnggaran();
+  filterAndRenderAnggaran(true);
 };
 
-// 3. Handler Pemilihan Item List
+// 7. Handler Pilih Item List & Update Summary (Satu Fungsi Utuh)
 window.selectAnggaranItem = function (element) {
   const selectedId = element.getAttribute("data-id");
-
-  anggaranData.forEach((item) => {
-    item.terpilih = item.id === selectedId;
-  });
-
-  document
-    .querySelectorAll("#list-anggaran-container .list-item")
-    .forEach((el) => el.classList.remove("selected"));
-
-  element.classList.add("selected");
-};
-
-// 4. Pasang Event Listener saat Halaman Selesai Dimuat
-document.addEventListener("DOMContentLoaded", () => {
-  const searchInput = document.getElementById("search-anggaran");
-
-  // Event saat pengguna mengetik di kotak pencarian
-  if (searchInput) {
-    searchInput.addEventListener("input", filterAndRenderAnggaran);
-  }
-
-  // Render awal (default: tab BPJS)
-  selectSumberAnggaran("bpjs");
-});
-
-window.selectAnggaranItem = function (element) {
-  const selectedId = element.getAttribute("data-id");
-
-  // 1. Cari data anggaran yang diklik
   const selectedItem = anggaranData.find((item) => item.id === selectedId);
   if (!selectedItem) return;
 
-  // 2. Tandai status terpilih
   anggaranData.forEach((item) => {
     item.terpilih = item.id === selectedId;
   });
 
-  // 3. Highlight kartu yang dipilih
   document
     .querySelectorAll("#list-anggaran-container .list-item")
-    .forEach((el) => el.classList.remove("selected"));
+    .forEach((el) => {
+      el.classList.remove("selected");
+    });
   element.classList.add("selected");
 
-  // 4. Siapkan nilai
   const tahun = selectedItem.id.substring(0, 4);
   const judul = selectedItem.judul;
   const saldo = formatRupiah(selectedItem.saldo);
 
-  // Helper pengisi teks yang aman dari null error
   const setText = (id, text) => {
     const el = document.getElementById(id);
     if (el) el.innerText = text;
   };
 
-  // BAGIAN 1 (Summary Step 2)
   setText("summary-tahun", tahun);
   setText("summary-judul", judul);
   setText("summary-saldo", saldo);
 
-  // BAGIAN 2 (Step 3 Summary Card)
   setText("step3-summary-tahun", tahun);
   setText("step3-summary-judul", judul);
   setText("step3-summary-saldo", saldo);
 
-  // BAGIAN 3 (Info Item 1)
   setText("info-kegiatan-terpilih", judul);
   setText("info-saldo-tersedia", saldo);
-
-  // BAGIAN 4 (Info Item 2)
   setText("info-kegiatan-terpilih-2", judul);
   setText("info-saldo-tersedia-2", saldo);
-
-  // BAGIAN 5 (Info Item 3)
   setText("info-kegiatan-terpilih-3", judul);
   setText("info-saldo-tersedia-3", saldo);
 };
+
+// 8. Inisialisasi Event Listener Awal
+document.addEventListener("DOMContentLoaded", () => {
+  const searchInput = document.getElementById("search-anggaran");
+  if (searchInput) {
+    searchInput.addEventListener("input", () => filterAndRenderAnggaran(true));
+  }
+
+  selectSumberAnggaran("bpjs");
+});
 function handleStatusClick(e, btn) {
   // Hentikan agar accordion tidak ikut terbuka/tertutup
   e.stopPropagation();
@@ -2106,3 +3109,182 @@ function toggleKeperluan() {
 
   btn.innerText = isCollapsed ? "Lihat Selengkapnya" : "Lihat Lebih Sedikit";
 }
+
+function formatIndonesianDate(date) {
+  return new Intl.DateTimeFormat("id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(date);
+}
+
+function initDate() {
+  const el = document.getElementById("doc-date");
+  if (!el) return;
+
+  const status = el.getAttribute("data-status");
+  const lockedDate = el.getAttribute("data-date");
+
+  // Jika sudah berstatus final/terkirim dan ada tanggal arsipnya, kunci di tanggal tersebut.
+  // Selain itu (draft, form baru, atau tanggal kosong), SELALU gunakan tanggal hari ini (today).
+  if (status === "submitted" && lockedDate) {
+    el.textContent = formatIndonesianDate(new Date(lockedDate));
+  } else {
+    el.textContent = formatIndonesianDate(new Date());
+  }
+}
+
+document.addEventListener("DOMContentLoaded", initDate);
+
+const textarea = document.querySelector(".base-textarea");
+const targetDiv = document.querySelector(".keperluan-text-box");
+const targetP = document.querySelector(".info-desc"); // hapus jika p tidak perlu ikut update
+
+// Fungsi untuk sinkronisasi teks
+function updateText() {
+  // textContent menjaga keamanan teks (mencegah XSS)
+  targetDiv.textContent = textarea.value;
+
+  if (targetP) {
+    targetP.textContent = textarea.value;
+  }
+}
+
+// Dengarkan setiap ada input/ketikan dari user
+textarea.addEventListener("input", updateText);
+
+// Jalankan sekali di awal agar sinkron dengan isi textarea bawaan
+updateText();
+
+const dropArea = document.getElementById("dropArea");
+const fileInput = document.getElementById("fileInput");
+
+// 1. Trigger input file saat div diklik
+dropArea.addEventListener("click", () => {
+  fileInput.click();
+});
+
+// 2. Tangani file yang dipilih via klik explorer
+fileInput.addEventListener("change", (e) => {
+  handleFiles(e.target.files);
+});
+
+// 3. Mencegah browser membuka file secara default saat drag-and-drop
+["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
+  dropArea.addEventListener(
+    eventName,
+    (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    },
+    false,
+  );
+});
+
+// Efek visual saat file diseret di atas area (opsional)
+["dragenter", "dragover"].forEach((eventName) => {
+  dropArea.addEventListener(
+    eventName,
+    () => {
+      dropArea.classList.add("drag-active");
+    },
+    false,
+  );
+});
+
+["dragleave", "drop"].forEach((eventName) => {
+  dropArea.addEventListener(
+    eventName,
+    () => {
+      dropArea.classList.remove("drag-active");
+    },
+    false,
+  );
+});
+
+// 4. Tangani file saat dilepas (drop)
+dropArea.addEventListener("drop", (e) => {
+  const dt = e.dataTransfer;
+  const files = dt.files;
+  handleFiles(files);
+});
+
+// 5. Fungsi pemrosesan file (validasi ukuran & format)
+function handleFiles(files) {
+  const maxSizeBytes = 10 * 1024 * 1024; // 10MB
+  const validExtensions = ["pdf", "jpg", "jpeg", "png"];
+
+  Array.from(files).forEach((file) => {
+    const ext = file.name.split(".").pop().toLowerCase();
+
+    // Validasi format
+    if (!validExtensions.includes(ext)) {
+      alert(`Format file "${file.name}" tidak didukung.`);
+      return;
+    }
+
+    // Validasi ukuran
+    if (file.size > maxSizeBytes) {
+      alert(`Ukuran file "${file.name}" melebihi batas 10MB.`);
+      return;
+    }
+
+    // File valid: teruskan ke fungsi penambahan list kartu Anda
+    console.log("File siap diproses:", file);
+  });
+
+  // Reset nilai input agar bisa memilih file yang sama jika dihapus sebelumnya
+  fileInput.value = "";
+}
+
+// Variable state untuk melacak step saat ini
+let currentStep = 1;
+
+  const lastStep = FLOWS_CONFIG[currentType].length;
+
+// Fungsi untuk memperbarui visibilitas tombol di footer
+function updateFooterold() {
+    // const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
+    const btnSubmit = document.getElementById('btn-submit');
+    // currentStep = document
+
+
+    // 2. Kontrol tombol Berikutnya dan Submit di Step Terakhir (Step 5)
+    if (currentStep === lastStep) {
+        // Step 5 (Terakhir): Sembunyikan 'Berikutnya', Tampilkan 'Submit'
+        btnNext.style.display = 'none';
+        btnSubmit.style.display = 'inline-block';
+    } else {
+        // Step 1-4: Tampilkan 'Berikutnya', Sembunyikan 'Submit'
+        btnNext.style.display = 'inline-block';
+        btnSubmit.style.display = 'none';
+    }
+}
+
+function updateFooter() {
+    // 1. Get all step content elements as an array
+    const steps = Array.from(document.querySelectorAll('.step-content'));
+    if (steps.length === 0) return;
+
+    // 2. Find the visible step and the last step
+    const currentStepEl = steps.find(step => step.style.display !== 'none');
+    const lastStepEl = steps[steps.length - 1];
+
+    const btnNext = document.getElementById('btn-nextstep');
+    const btnSubmit = document.getElementById('btn-submit');
+
+    // 3. Compare current step ID against the last step ID
+    if (currentStepEl && currentStepEl.id === lastStepEl.id) {
+        btnNext.style.display = 'none';
+        btnSubmit.style.display = 'inline-block';
+    } else {
+        btnNext.style.display = 'inline-block';
+        btnSubmit.style.display = 'none';
+    }
+}
+
+// Jalankan updateFooter pertama kali saat halaman dimuat
+document.addEventListener('DOMContentLoaded', () => {
+    updateFooter();
+});
