@@ -97,17 +97,6 @@ function renderDetilPerjalananHTML() {
     `;
 }
 
-function selectSkema(type) {
-  document.getElementById("skema-pembayaran").classList.remove("selected");
-  document.getElementById("skema-persekot").classList.remove("selected");
-  document.getElementById(`skema-${type}`).classList.add("selected");
-
-  if (type === "persekot") {
-    document.getElementById("dynamic-persekot").style.display = "flex";
-  } else {
-    document.getElementById("dynamic-persekot").style.display = "none";
-  }
-}
 // Konfigurasi alur form dan label stepper
 const FLOWS_CONFIG = {
   operasional: [
@@ -196,6 +185,7 @@ function render() {
       if (idx < activeFlow.length - 1) {
         stepperHtml += `<div class="${lineClass}"></div>`;
       }
+      
     });
 
     stepperContainer.innerHTML = stepperHtml;
@@ -212,6 +202,9 @@ function render() {
   const activeWrap = document.getElementById(`step-${targetWrapperId}-wrapper`);
   if (activeWrap) {
     activeWrap.style.display = "flex";
+  }
+  if (targetWrapperId === 4) {
+    applyRincianBiayaRules();
   }
 }
 
@@ -2042,6 +2035,7 @@ function switchStep3Tab(type, el) {
         </div>
     `;
   }
+  applyKuitansiItemState();
 }
 
 // Toggle accordion logic for kuitansi Item
@@ -3288,3 +3282,142 @@ function updateFooter() {
 document.addEventListener('DOMContentLoaded', () => {
     updateFooter();
 });
+
+/// Default skema sesuai HTML: 'pembayaran' (Klaim Langsung)
+// Variabel penyimpan state (default: pembayaran / klaim langsung)
+let selectedSkemaType = "pembayaran";
+
+function selectSkema(type) {
+  // 1. Simpan tipe skema yang dipilih
+  selectedSkemaType = type;
+
+  // 2. Logika toggle class card Anda
+  const cardPembayaran = document.getElementById("skema-pembayaran");
+  const cardPersekot = document.getElementById("skema-persekot");
+  if (cardPembayaran) cardPembayaran.classList.remove("selected");
+  if (cardPersekot) cardPersekot.classList.remove("selected");
+
+  const targetCard = document.getElementById(`skema-${type}`);
+  if (targetCard) targetCard.classList.add("selected");
+
+  // 3. Logika tampilan dynamic-persekot bawaan Anda
+  const dynPersekot = document.getElementById("dynamic-persekot");
+  if (dynPersekot) {
+    if (type === "persekot") {
+      dynPersekot.style.display = "flex";
+    } else {
+      dynPersekot.style.display = "none";
+    }
+  }
+}
+function applyKuitansiItemState() {
+  const isPersekot = (selectedSkemaType === "persekot");
+
+  // Gabungkan semua selector tombol & icon dinamis dalam satu query selector
+  const dynamicElements = document.querySelectorAll(`
+    .kw-icon-doc,
+    .btn-add-sub,
+    .btn-sub-remove,
+    .btn-remove-row,
+    .btn-sub-del
+  `);
+
+  dynamicElements.forEach((el) => {
+    if (isPersekot) {
+      el.style.pointerEvents = "none";
+      el.style.opacity = "0.5";
+      el.style.cursor = "not-allowed";
+    } else {
+      el.style.pointerEvents = "";
+      el.style.opacity = "";
+      el.style.cursor = "";
+    }
+  });
+}
+
+function applyRincianBiayaRules() {
+  const isPersekot = (selectedSkemaType === "persekot");
+
+  const leftEmpty = document.getElementById("s4-left-empty");
+  const rightEmpty = document.getElementById("s4-right-empty");
+  const leftPopulated = document.getElementById("s4-left-populated");
+  const rightPopulated = document.getElementById("s4-right-populated");
+
+  // Tombol & Elemen Statis
+  const btnTambah = document.getElementById("btnTambahRincian");
+  const btnAddKuitansi = document.getElementById("btnAddHeader");
+  const btnTrash = document.querySelector(".btn-trash");
+  const itemToyota = document.querySelector(".s4-pop-item.theme-blue");
+  const btnChange = document.querySelector(".btn-copy-card");
+
+  if (isPersekot) {
+    // 1. Tampilkan Populated, Sembunyikan Empty State
+    if (leftEmpty) leftEmpty.style.display = "none";
+    if (rightEmpty) rightEmpty.style.display = "none";
+    if (leftPopulated) leftPopulated.style.display = ""; 
+    if (rightPopulated) rightPopulated.style.display = "";
+
+    // 2. Trigger data Toyota
+    if (typeof switchStep3Tab === "function") {
+      switchStep3Tab("toyota", itemToyota);
+    }
+
+    // 3. Matikan Tombol Statis
+    if (btnTambah) {
+      btnTambah.disabled = true;
+      btnTambah.style.pointerEvents = "none";
+      btnTambah.style.opacity = "0.7";
+    }
+    if (btnAddKuitansi) {
+      btnAddKuitansi.disabled = true;
+      btnAddKuitansi.style.pointerEvents = "none";
+      btnAddKuitansi.style.opacity = "0.7"; 
+    }
+    if (btnTrash) {
+      btnTrash.disabled = true;
+      btnTrash.style.pointerEvents = "none";
+      btnTrash.style.opacity = "0.7";
+    }
+    if (btnChange) {
+      btnChange.disabled = true;
+      btnChange.style.pointerEvents = "none";
+      btnChange.style.opacity = "0.7";
+    }
+
+    // 4. Kunci semua elemen dinamis hasil generate
+    applyKuitansiItemState();
+
+  } else {
+    // ==========================================
+    // KONDISI KLAIM LANGSUNG: KEMBALI NORMAL
+    // ==========================================
+    if (leftEmpty) leftEmpty.style.display = "";
+    if (rightEmpty) rightEmpty.style.display = "";
+    if (leftPopulated) leftPopulated.style.display = "none";
+    if (rightPopulated) rightPopulated.style.display = "none";
+
+    if (btnTambah) {
+      btnTambah.disabled = false;
+      btnTambah.style.pointerEvents = "";
+      btnTambah.style.opacity = "";
+    }
+    if (btnAddKuitansi) {
+      btnAddKuitansi.disabled = false;
+      btnAddKuitansi.style.pointerEvents = "";
+      btnAddKuitansi.style.opacity = "";
+    }
+    if (btnTrash) {
+      btnTrash.disabled = false;
+      btnTrash.style.pointerEvents = "";
+      btnTrash.style.opacity = "";
+    }
+    if (btnChange) {
+      btnChange.disabled = false;
+      btnChange.style.pointerEvents = "";
+      btnChange.style.opacity = "";
+    }
+
+    // Pulihkan elemen dinamis
+    applyKuitansiItemState();
+  }
+}

@@ -287,33 +287,39 @@ body {
 }
 
 .badge-draft {
-  background-color: #f1f5f9;
-  color: #64748b;
-  border: 1px solid #cbd5e1;
+  background-color: #EDEFF0;
+  color: #5D5D5D;
+  border: 2px solid #919EA5;
 }
 
 .badge-approved {
-  background-color: #e8f5e9;
-  color: #2e7d32;
-  border: 1px solid #c8e6c9;
+  background-color: #E9FAEB;
+  color: #3BAB47;
+  border: 2px solid #98D59E;
 }
 
 .badge-revise {
-  background-color: #fff3e0;
-  color: #ef6c00;
-  border: 1px solid #ffe0b2;
+  background-color: #FDECE5;
+  color: #F26522;
+  border: 2px solid #F8AD8A;
 }
 
 .badge-unrealized {
-  background-color: #fbe9e7;
-  color: #d84315;
-  border: 1px solid #ffccbc;
+  background-color: #FDECE5;
+  color: #F26522;
+  border: 2px solid #F8AD8A;
 }
 
 .badge-done {
-  background-color: #e3f2fd;
-  color: #1565c0;
-  border: 1px solid #bbdefb;
+  background-color: #F6FBFF;
+  color: #226DA8;
+  border: 3px solid #226DA8;
+}
+
+.badge-submitted {
+  background-color: #E9F3FA;
+  color: #226DA8;
+  border: 2px solid #8CB4D4;
 }
 
 .status-container {

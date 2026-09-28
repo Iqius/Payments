@@ -40,8 +40,8 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "revise",
-    statusText: "Revise",
+    status: "submitted",
+    statusText: "Submitted",
     statusDate: null,
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
   },
@@ -300,6 +300,66 @@ const documentData = [
     statusDate: null,
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
   },
+    {
+    id: "25112601965450",
+    tanggal: "02 Des 2025",
+    tanggalRaw: "2025-12-02",
+    kantor: "33A",
+    metode: "Reimburse / Klaim Langsung",
+    anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
+    nominal: 1000000,
+    keperluan:
+      "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
+    status: "draft",
+    statusText: "Draft",
+    statusDate: null,
+    verifikator: "Aprillia Wahyuningtyas, A.Md.",
+  },
+  {
+    id: "25112601965451",
+    tanggal: "03 Des 2025",
+    tanggalRaw: "2025-12-03",
+    kantor: "33A",
+    metode: "Reimburse / Klaim Langsung",
+    anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
+    nominal: 1000000,
+    keperluan:
+      "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
+    status: "submitted",
+    statusText: "Submitted",
+    statusDate: null,
+    verifikator: "Aprillia Wahyuningtyas, A.Md.",
+  },
+  {
+    id: "25112601965452",
+    tanggal: "02 Jan 2025",
+    tanggalRaw: "2026-01-02",
+    kantor: "33A",
+    metode: "Reimburse / Klaim Langsung",
+    anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
+    nominal: 1000000,
+    keperluan:
+      "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
+    status: "revise",
+    statusText: "Revise",
+    statusDate: null,
+    verifikator: "Aprillia Wahyuningtyas, A.Md.",
+  },
+  {
+    id: "25112601965453",
+    tanggal: "02 jan 2025",
+    tanggalRaw: "2025-01-02",
+    kantor: "33A",
+    metode: "Persekot Kerja",
+    anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
+    nominal: 1000000,
+    keperluan:
+      "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
+    status: "submitted",
+    statusText: "Submitted",
+    statusDate: null,
+    verifikator: "Aprillia Wahyuningtyas, A.Md.",
+  },
 ];
 
 // Helper: Format Nominal ke Rupiah
@@ -317,10 +377,9 @@ function renderTable(data) {
       const idDok = item.id || "-";
       const statusText = item.statusText || item.status || "Draft";
       
-      // Validasi status draft
-      const isDraft =
-        String(statusText).toLowerCase().trim() === "draft" ||
-        String(item.status).toLowerCase().trim() === "draft";
+      const cleanStatus = String(item.status || "").toLowerCase().trim();
+      const isDraft = cleanStatus === "draft" || String(statusText).toLowerCase().trim() === "draft";
+      const isSubmitted = cleanStatus === "submitted";
 
       const statusHtml = item.statusDate
         ? `<div class="status-container">
@@ -329,8 +388,21 @@ function renderTable(data) {
            </div>`
         : `<span class="badge badge-${item.status}">${item.statusText}</span>`;
 
+      // 1. Aksi klik langsung untuk baris TR
+      const trClickAttr = isSubmitted 
+        ? `onmouseup="if(!event.target.closest('input[type=checkbox]')){ window.location.href='validation.html?id=${idDok}'; }" style="cursor: pointer;"` 
+        : "";
+
+      // 2. Aksi klik langsung untuk link ID dokumen (mengabaikan e.preventDefault apapun)
+      const docLinkHtml = isSubmitted
+        ? `<a href="validation.html?id=${idDok}" 
+              onclick="window.location.href='validation.html?id=${idDok}'; return false;" 
+              style="cursor: pointer; font-weight: bold; text-decoration: underline;" 
+              class="doc-link">${idDok}</a>`
+        : `<a href="#" class="doc-link">${idDok}</a>`;
+
       return `
-        <tr>
+        <tr ${trClickAttr}>
             <td>
               <input type="checkbox" 
                      class="row-checkbox" 
@@ -338,7 +410,7 @@ function renderTable(data) {
                      data-status="${statusText}" 
                      ${!isDraft ? "disabled" : ""}>
             </td>
-            <td><a href="#" class="doc-link">${idDok}</a></td>
+            <td>${docLinkHtml}</td>
             <td>${item.tanggal}</td>
             <td>${item.kantor}</td>
             <td>${item.metode}</td>
@@ -353,8 +425,41 @@ function renderTable(data) {
     })
     .join("");
 
-  // Sinkronkan kembali tombol dan master checkbox
   updateButtonAndCheckAllState();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const tbody = document.getElementById("table-body");
+
+  if (tbody) {
+    tbody.addEventListener("click", (e) => {
+      // 1. Abaikan jika yang diklik adalah checkbox
+      if (e.target.closest("input[type='checkbox']")) {
+        return;
+      }
+
+      // 2. Cari baris tr terdekat yang diklik
+      const row = e.target.closest("tr");
+      if (!row) return;
+
+      const status = row.getAttribute("data-status");
+      const docId = row.getAttribute("data-id");
+
+      // 3. Jika statusnya submitted, langsung pindahkan ke validation.html
+      if (status === "submitted") {
+        window.location.href = `validation.html?id=${docId}`;
+      }
+    });
+  }
+});
+
+// Fungsi pengarah agar checkbox tidak memicu perpindahan halaman
+function handleRowRedirect(event, url) {
+  // Abaikan redirect jika user hanya mencentang checkbox
+  if (event.target.closest("input[type='checkbox']")) {
+    return;
+  }
+  window.location.href = url;
 }
 
 // 3. Inisialisasi saat DOM siap
