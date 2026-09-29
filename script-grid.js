@@ -367,7 +367,6 @@ function formatRupiah(amount) {
   return "Rp " + new Intl.NumberFormat("id-ID").format(amount);
 }
 
-// 2. Fungsi Render Tabel
 function renderTable(data) {
   const tbody = document.getElementById("table-body");
   if (!tbody) return;
@@ -376,9 +375,11 @@ function renderTable(data) {
     .map((item) => {
       const idDok = item.id || "-";
       const statusText = item.statusText || item.status || "Draft";
-      
+
       const cleanStatus = String(item.status || "").toLowerCase().trim();
-      const isDraft = cleanStatus === "draft" || String(statusText).toLowerCase().trim() === "draft";
+      const isDraft = cleanStatus === "draft" ||
+                      String(statusText).toLowerCase().trim() === "draft";
+
       const isSubmitted = cleanStatus === "submitted";
 
       const statusHtml = item.statusDate
@@ -388,44 +389,52 @@ function renderTable(data) {
            </div>`
         : `<span class="badge badge-${item.status}">${item.statusText}</span>`;
 
-      // 1. Aksi klik langsung untuk baris TR
-      const trClickAttr = isSubmitted 
-        ? `onmouseup="if(!event.target.closest('input[type=checkbox]')){ window.location.href='validation.html?id=${idDok}'; }" style="cursor: pointer;"` 
-        : "";
-
-      // 2. Aksi klik langsung untuk link ID dokumen (mengabaikan e.preventDefault apapun)
+      // Hanya dokumen dengan status submitted yang berupa link aktif dan bisa diklik
       const docLinkHtml = isSubmitted
-        ? `<a href="validation.html?id=${idDok}" 
-              onclick="window.location.href='validation.html?id=${idDok}'; return false;" 
-              style="cursor: pointer; font-weight: bold; text-decoration: underline;" 
+        ? `<a href="validation.html?id=${encodeURIComponent(idDok)}"
+              style="cursor: pointer; font-weight: bold; text-decoration: underline; color: #1e60aa;"
               class="doc-link">${idDok}</a>`
-        : `<a href="#" class="doc-link">${idDok}</a>`;
+        : `<span class="doc-link" style="color: inherit; text-decoration: none;">${idDok}</span>`;
 
       return `
-        <tr ${trClickAttr}>
-            <td>
-              <input type="checkbox" 
-                     class="row-checkbox" 
-                     value="${idDok}" 
-                     data-status="${statusText}" 
-                     ${!isDraft ? "disabled" : ""}>
-            </td>
-            <td>${docLinkHtml}</td>
-            <td>${item.tanggal}</td>
-            <td>${item.kantor}</td>
-            <td>${item.metode}</td>
-            <td class="truncate" title="${item.anggaran}">${item.anggaran}</td>
-            <td>${formatRupiah(item.nominal)}</td>
-            <td class="truncate" title="${item.keperluan}">${item.keperluan}</td>
-            <td class="${item.statusDate ? "status-cell" : ""}">${statusHtml}</td>
-            <td>${item.verifikator}</td>
-            <td class="action-cell"><i class="fas fa-ellipsis-h"></i></td>
+        <tr 
+          data-status="${cleanStatus}" 
+          data-id="${idDok}"
+        >
+          <td>
+            <input type="checkbox"
+                   class="row-checkbox"
+                   value="${idDok}"
+                   data-status="${statusText}"
+                   ${!isDraft ? "disabled" : ""}>
+          </td>
+
+          <td>${docLinkHtml}</td>
+          <td>${item.tanggal || "-"}</td>
+          <td>${item.kantor || "-"}</td>
+          <td>${item.metode || "-"}</td>
+          <td class="truncate" title="${item.anggaran || ""}">
+            ${item.anggaran || "-"}
+          </td>
+          <td>${typeof formatRupiah === "function" ? formatRupiah(item.nominal) : item.nominal}</td>
+          <td class="truncate" title="${item.keperluan || ""}">
+            ${item.keperluan || "-"}
+          </td>
+          <td class="${item.statusDate ? "status-cell" : ""}">
+            ${statusHtml}
+          </td>
+          <td>${item.verifikator || "-"}</td>
+          <td class="action-cell">
+            <i class="fas fa-ellipsis-h"></i>
+          </td>
         </tr>
       `;
     })
     .join("");
 
-  updateButtonAndCheckAllState();
+  if (typeof updateButtonAndCheckAllState === "function") {
+    updateButtonAndCheckAllState();
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -676,13 +685,30 @@ function renderDocumentTable() {
         ? `<span class="status-date">${item.statusDate}</span>`
         : "";
 
-      // Validasi ketat: Hanya Draft yang aktif
+      // Validasi ketat: Hanya Draft yang aktif untuk checkbox
       const isDraft =
         String(statusText).toLowerCase().trim() === "draft" ||
-        String(item.status).toLowerCase().trim() === "draft";
+        statusClass === "draft";
+
+      // Cek apakah status adalah submitted
+      const isSubmitted =
+        statusClass === "submitted" ||
+        String(statusText).toLowerCase().trim() === "submitted";
+
+      // Hanya kolom ID Dokumen yang aktif jika berstatus submitted
+      const docLinkHtml = isSubmitted
+        ? `<a href="validation.html?id=${encodeURIComponent(idDok)}" 
+              class="doc-link" 
+              style="cursor: pointer; font-weight: bold; text-decoration: underline; color: #1e60aa;">
+              ${idDok}
+           </a>`
+        : `<span class="link-col">${idDok}</span>`;
 
       return `
-        <tr>
+        <tr
+          data-status="${statusClass}"
+          data-id="${idDok}"
+        >
           <td>
             <input type="checkbox" 
                    class="row-checkbox" 
@@ -690,7 +716,7 @@ function renderDocumentTable() {
                    data-status="${statusText}"
                    ${!isDraft ? "disabled" : ""}>
           </td>
-          <td><span class="link-col">${idDok}</span></td>
+          <td>${docLinkHtml}</td>
           <td>${tgl}</td>
           <td><span class="link-col">${kantor}</span></td>
           <td><span class="link-col">${metode}</span></td>

@@ -4786,10 +4786,11 @@ input:checked + .slider-round:before {
 .detil-perjalanan-body {
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
+  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 25px;
-  font-size: 9.5px; /* Diperkecil dari 11px */
+  gap: 40px;
+  font-size: 9.5px; /* Diperkecil dari 11px*/
+  max-width: 800px;
   color: #4a5568;
 }
 

@@ -561,8 +561,7 @@
   padding: 16px;
   border-radius: 9.6px;
   box-shadow: 0 0.8px 4px rgba(0, 0, 0, 0.03);
-  min-height: 320px;
-  max-height: 480px;
+  height: 250px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -638,6 +637,7 @@
   color: #4b5563;
   display: flex;
   align-items: center;
+  height: 23px;
 }
 
 .bank-card {
@@ -1050,6 +1050,7 @@
   gap: 8px;
   padding-left: 28px;
   padding-right: 32px;
+  margin-bottom: 5px;
 }
 
 .detail-table {
