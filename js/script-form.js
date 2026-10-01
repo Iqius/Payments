@@ -20,7 +20,7 @@ function selectAnggaranItem(element) {
 
   // Update status di array data
   anggaranData.forEach((item) => {
-    item.terpilih = item.id === selectedId;
+    item.terpilih = item.idAnggaran === selectedId;
   });
 
   // Update styling aktif di tampilan
@@ -2848,11 +2848,11 @@ function renderAnggaranList(data, totalItems) {
       const selectedClass = item.terpilih ? "selected" : "";
 
       return `
-        <div class="list-item ${itemClass} ${selectedClass}" data-id="${item.id}" onclick="selectAnggaranItem(this)">
+        <div class="list-item ${itemClass} ${selectedClass}" data-id="${item.idAnggaran}" onclick="selectAnggaranItem(this)">
           <div class="check-area"><i class="fas fa-check"></i></div>
           <div class="item-content">
             <div class="item-header">
-              <span class="kode">${item.id}</span>
+              <span class="kode">${item.idAnggaran}</span>
               <span class="badge-mini ${badgeClass}">${item.kategori.toUpperCase()}</span>
             </div>
             <div class="item-title">${item.judul}</div>
@@ -2944,7 +2944,7 @@ function filterAndRenderAnggaran(resetPage = true) {
       item.kategori.toUpperCase() === activeKategori.toUpperCase();
 
     const matchSearch =
-      item.id.toLowerCase().includes(keyword) ||
+      item.idAnggaran.toLowerCase().includes(keyword) ||
       item.judul.toLowerCase().includes(keyword);
 
     return matchCategory && matchSearch;
@@ -2972,11 +2972,11 @@ window.selectSumberAnggaran = function (type) {
 // 7. Handler Pilih Item List & Update Summary (Satu Fungsi Utuh)
 window.selectAnggaranItem = function (element) {
   const selectedId = element.getAttribute("data-id");
-  const selectedItem = anggaranData.find((item) => item.id === selectedId);
+  const selectedItem = anggaranData.find((item) => item.idAnggaran === selectedId);
   if (!selectedItem) return;
 
   anggaranData.forEach((item) => {
-    item.terpilih = item.id === selectedId;
+    item.terpilih = item.idAnggaran === selectedId;
   });
 
   document
@@ -2986,7 +2986,7 @@ window.selectAnggaranItem = function (element) {
     });
   element.classList.add("selected");
 
-  const tahun = selectedItem.id.substring(0, 4);
+  const tahun = selectedItem.idAnggaran.substring(0, 4);
   const judul = selectedItem.judul;
   const saldo = formatRupiah(selectedItem.saldo);
 
@@ -3136,6 +3136,7 @@ const targetP = document.querySelector(".info-desc"); // hapus jika p tidak perl
 
 // Fungsi untuk sinkronisasi teks
 function updateText() {
+  if (!textarea || !targetDiv) return;
   // textContent menjaga keamanan teks (mencegah XSS)
   targetDiv.textContent = textarea.value;
 
@@ -3145,7 +3146,7 @@ function updateText() {
 }
 
 // Dengarkan setiap ada input/ketikan dari user
-textarea.addEventListener("input", updateText);
+textarea?.addEventListener("input", updateText);
 
 // Jalankan sekali di awal agar sinkron dengan isi textarea bawaan
 updateText();
@@ -3153,6 +3154,7 @@ updateText();
 const dropArea = document.getElementById("dropArea");
 const fileInput = document.getElementById("fileInput");
 
+if (dropArea && fileInput) {
 // 1. Trigger input file saat div diklik
 dropArea.addEventListener("click", () => {
   fileInput.click();
@@ -3202,6 +3204,7 @@ dropArea.addEventListener("drop", (e) => {
   const files = dt.files;
   handleFiles(files);
 });
+}
 
 // 5. Fungsi pemrosesan file (validasi ukuran & format)
 function handleFiles(files) {
@@ -3421,3 +3424,181 @@ function applyRincianBiayaRules() {
     applyKuitansiItemState();
   }
 }
+
+/* Prefill form dari grid (dokumen Unrealized).
+   Muat PALING AKHIR, setelah file data & script-form.js.
+   URL: form-operasional.html?id=...&idAnggaran=...                       */
+
+function getOperasionalParams() {
+  const p = new URLSearchParams(window.location.search);
+  return { id: p.get("id"), idAnggaran: p.get("idAnggaran") };
+}
+
+// Isi teks biasa (bukan input), mis. ID Dokumen & Tanggal Pengajuan di header
+function setText(elId, value) {
+  const el = document.getElementById(elId);
+  if (!el) {
+    console.warn("[prefill] elemen tidak ditemukan:", elId);
+    return;
+  }
+  el.textContent = value ?? "";
+  console.log("[prefill] isi", elId, "=", el.textContent);
+}
+
+function formatNominalInput(val) {
+  return new Intl.NumberFormat("id-ID").format(val || 0) + ",00";
+}
+
+function setField(elId, value, lock = true) {
+  const el = document.getElementById(elId);
+  if (!el) {
+    console.warn("[prefill] elemen tidak ditemukan:", elId);
+    return;
+  }
+  el.value = value ?? "";
+  if (lock) el.readOnly = true;
+  el.dispatchEvent(new Event("input", { bubbles: true }));
+  console.log("[prefill] isi", elId, "=", el.value);
+}
+
+function selectAnggaranById(idAnggaran) {
+  if (!idAnggaran) return false;
+  if (typeof anggaranData === "undefined") {
+    console.error("[prefill] anggaranData tidak ada di halaman ini");
+    return false;
+  }
+  const target = anggaranData.find((a) => a.idAnggaran === idAnggaran);
+  if (!target) {
+    console.warn("[prefill] idAnggaran tidak ada di anggaranData:", idAnggaran);
+    return false;
+  }
+
+  activeKategori = String(target.kategori).toLowerCase();
+  document
+    .querySelectorAll(".bpjs-card, .skp-card")
+    .forEach((c) => c.classList.remove("selected"));
+  document.getElementById(`card-${activeKategori}`)?.classList.add("selected");
+
+  const searchInput = document.getElementById("search-anggaran");
+  if (searchInput) searchInput.value = "";
+  filterAndRenderAnggaran(true);
+
+  const idx = currentFilteredData.findIndex((a) => a.idAnggaran === idAnggaran);
+  if (idx === -1) return false;
+  currentPage = Math.floor(idx / itemsPerPage) + 1;
+  sliceAndRender();
+
+  const el = document.querySelector(
+    `#list-anggaran-container .list-item[data-id="${idAnggaran}"]`,
+  );
+  if (!el) return false;
+  window.selectAnggaranItem(el);
+  el.scrollIntoView({ block: "nearest" });
+  console.log("[prefill] anggaran dipilih:", idAnggaran);
+  return true;
+}
+
+// Mode "Pertanggungjawaban Persekot Kerja" - HANYA saat dibuka dari badge Unrealized.
+// Skema internal tetap 'pembayaran' agar Rincian Biaya (step 3) kosong & bisa diedit
+// seperti Klaim Langsung. Yang berubah hanya tampilan kartu skema + field persekot.
+function applyModePertanggungjawaban() {
+  selectSkema("pembayaran");
+
+  const cardKlaim = document.getElementById("skema-pembayaran");
+  const cardPersekot = document.getElementById("skema-persekot");
+
+  if (cardKlaim) {
+    cardKlaim.classList.remove("selected");
+    cardKlaim.style.display = "none";
+  }
+  if (cardPersekot) {
+    cardPersekot.classList.add("selected");
+    cardPersekot.removeAttribute("onclick");
+    cardPersekot.querySelector("strong").textContent =
+      "Pertanggungjawaban Persekot Kerja";
+    cardPersekot.querySelector("span").textContent =
+      "Pertanggungjawaban dana muka persekot kerja";
+  }
+
+  // Tampilkan Tanggal Kegiatan & Nilai Pengajuan Persekot
+  const dyn = document.getElementById("dynamic-persekot");
+  if (dyn) dyn.style.display = "flex";
+
+  // Ringkasan skema di halaman Review
+  const s3 = document.querySelector(".step3-summary-card .radio-card");
+  if (s3) {
+    s3.querySelector("strong").textContent = "Pertanggungjawaban Persekot Kerja";
+    s3.querySelector("span").textContent =
+      "Pertanggungjawaban dana muka persekot kerja";
+  }
+}
+
+// Kunci halaman 1: semua input read-only, semua kartu/daftar tidak bisa diklik
+function lockStep1() {
+  const wrap = document.getElementById("step-1-wrapper");
+  if (!wrap) return;
+
+  if (!document.getElementById("step1-lock-style")) {
+    const style = document.createElement("style");
+    style.id = "step1-lock-style";
+    style.textContent = `
+      #step-1-wrapper.is-readonly .select-card,
+      #step-1-wrapper.is-readonly .radio-card,
+      #step-1-wrapper.is-readonly .list-item {
+        pointer-events: none;
+        cursor: default;
+      }
+      #step-1-wrapper.is-readonly input,
+      #step-1-wrapper.is-readonly textarea {
+        cursor: default;
+      }`;
+    document.head.appendChild(style);
+  }
+
+  wrap.classList.add("is-readonly");
+  wrap.querySelectorAll("input, textarea").forEach((el) => (el.readOnly = true));
+  console.log("[prefill] halaman 1 dikunci");
+}
+
+function prefillFormOperasional() {
+  const { id, idAnggaran } = getOperasionalParams();
+  console.log("[prefill] mulai. URL params:", { id, idAnggaran });
+  if (!id) {
+    console.warn("[prefill] tidak ada ?id= di URL, berhenti (form baru)");
+    return;
+  }
+  if (typeof documentData === "undefined") {
+    console.error("[prefill] documentData tidak ada di halaman ini");
+    return;
+  }
+  const item = documentData.find((d) => d.id === id);
+  if (!item) {
+    console.warn("[prefill] dokumen tidak ditemukan:", id);
+    return;
+  }
+  console.log("[prefill] dokumen ditemukan:", item);
+
+  applyModePertanggungjawaban();
+
+  // Header
+  setText("doc-id", item.id); // ID Dokumen <- id
+  let tglPengajuan = item.tanggal; // Tanggal Pengajuan <- tanggal
+  if (item.tanggalRaw) {
+    const [y, m, d] = item.tanggalRaw.split("-").map(Number);
+    tglPengajuan = formatIndonesianDate(new Date(y, m - 1, d));
+  }
+  setText("doc-date", tglPengajuan);
+
+  // Form
+  setField("input-tanggal-kegiatan", item.statusDate); // Tanggal Kegiatan <- statusDate
+  setField("input-nilai-persekot", formatNominalInput(item.nominal)); // Nilai Persekot <- nominal
+  setField("input-keperluan", item.keperluan); // Keperluan <- keperluan
+
+  selectAnggaranById(idAnggaran || item.idAnggaran);
+
+  // Terakhir: kunci seluruh halaman 1 (tidak bisa diedit)
+  lockStep1();
+}
+
+console.log("[prefill] file termuat");
+document.addEventListener("DOMContentLoaded", prefillFormOperasional);

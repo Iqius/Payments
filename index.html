@@ -7,8 +7,8 @@
     <title>Daftar Pencairan Anggaran</title>
     <!-- Assuming FontAwesome for icons as in your reference -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="style-popup.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style-popup.css">
 </head>
 
 <body>
@@ -16,6 +16,9 @@
         <!-- Header Section -->
         <div class="header-section">
             <h1 class="page-title">Daftar Pencairan Anggaran</h1>
+                        <button type="button" id="btnKembali" class="main-button secondary-btn" onclick="window.location.href='pages/grid-approval.html'">
+    <i class="fas fa-arrow-left" style="font-size: 16px;"></i>
+</button>
             <button type="button" id="btnPencairanBaru" class="main-button primary-btn">
                 <i class="fas fa-plus" style="font-size: 16px;"></i>
                 <span>Pencairan Baru</span>
@@ -226,15 +229,16 @@
         // Function to handle card selection
         function selectPengajuan(type) {
             if (type === 'operasional') {
-                window.location.href = 'form-operasional.html?type=operasional';
+                window.location.href = 'pages/form-operasional.html?type=operasional';
             } else if (type === 'perjalanan') {
-                window.location.href = 'form-operasional.html?type=perjalanan_dinas';
+                window.location.href = 'pages/form-operasional.html?type=perjalanan_dinas';
             } else {
                 document.getElementById('pengajuanModal').classList.add('hidden');
             }
         }
     </script>
-    <script src="script-grid.js"></script>
+    <script src="js/script-grid.js"></script>
+    <script src="js/script-dataGridPengajuan.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Pencairan Anggaran</title>
+    <!-- Assuming FontAwesome for icons as in your reference -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style-popup.css">
+    <style>
+        /* Search sejajar ke pojok kanan tabel */
+        #main-menu-grid .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
+
+        #main-menu-grid .filter-group .search-group {
+            margin-left: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="main-content" id="main-menu-grid">
+        <!-- Header Section -->
+        <div class="header-section">
+            <h1 class="page-title">Daftar Verifikasi dan Approval</h1>
+            <button type="button" id="btnKembali" class="main-button secondary-btn"
+                onclick="window.location.href='../index.html'">
+                <i class="fas fa-arrow-left" style="font-size: 16px;"></i>
+            </button>
+        </div>
+        <div class="page-banner">
+            <!-- Filter & Navigation Section -->
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <!-- Format must be YYYY-MM-DD for the value to render on page load -->
+                    <input id="start-date" class="base-textbox" type="date">
+                    <input id="end-date" class="base-textbox" type="date">
+                    <select id="filter-status" class="base-dropbox status-select">
+                        <option value="all" selected>Semua Status</option>
+                        <option value="disetujui">Disetujui</option>
+                        <option value="belumDisetujui">Belum Disetujui</option>
+                    </select>
+                    <div class="search-group">
+                        <input id="search-input" class="base-textbox search-box" type="text" placeholder="Cari...">
+                    </div>
+                </div>
+
+                <!-- Data Table -->
+                <div class="base-card table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th width="10%">ID Dokumen</th>
+                                <th width="10%">Kantor</th>
+                                <th width="12%">Metode Pencairan</th>
+                                <th width="15%">Jenis Pencairan</th>
+                                <th width="14%">Nominal Pengajuan</th>
+                                <th width="24%">Keperluan</th>
+                                <th width="7%">Tanggal Masuk</th>
+                                <th width="8%">Disetujui Oleh</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <!-- Baris data di-render dinamis oleh script.js -->
+                        </tbody>
+                    </table>
+                    <!-- Pagination -->
+                    <div class="table-footer outline">
+                        <div class="pagination-info">
+                            Menampilkan
+                            <select class="base-dropbox mini-select" id="page-size-select">
+                                <option value="5" selected>5</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                            </select>
+                            items per halaman dari <strong id="total-doc-items">0</strong> items
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="page-btn" id="btn-first-page"><i class="fas fa-step-backward"></i></button>
+                            <button class="page-btn" id="btn-prev-page"><i class="fas fa-chevron-left"></i></button>
+                            <button class="page-btn active-page" id="current-page-num">1</button>
+                            <span class="page-text" id="total-pages-text">of 1</span>
+                            <button class="page-btn" id="btn-next-page"><i class="fas fa-chevron-right"></i></button>
+                            <button class="page-btn" id="btn-last-page"><i class="fas fa-step-forward"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </main>
+    <script src="../js/script-dataGridPengajuan.js"></script>
+    <script src="../js/script-gridApproval.js"></script>
+
+</body>
+
+</html>
