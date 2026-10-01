@@ -6,6 +6,7 @@
 // disetujui      : status approved / done
 // belumDisetujui : semua status selain itu
 const STATUS_DISETUJUI = ["approved", "done"];
+const STATUS_BELUM_DISETUJUI = ["submitted"];
 
 // ---------- Helper ----------
 function formatRupiah(val) {
@@ -47,11 +48,11 @@ function getFilteredData() {
   return documentData.filter((item) => {
     const status = String(item.status || "").toLowerCase();
     const disetujui = STATUS_DISETUJUI.includes(status);
+    const belumDisetujui = STATUS_BELUM_DISETUJUI.includes(status);
 
     const matchStatus =
-      selectedStatus === "all" ||
       (selectedStatus === "disetujui" && disetujui) ||
-      (selectedStatus === "belumDisetujui" && !disetujui);
+      (selectedStatus === "belumDisetujui" && belumDisetujui);
 
     const matchSearch = [
       item.id,
@@ -83,18 +84,12 @@ function buildRowHtml(item) {
 
   const statusClass = escapeHtml((item.status || "draft").toLowerCase().trim());
   const statusText = escapeHtml(item.statusText || item.status || "Draft");
-  const statusLower = statusText.toLowerCase().trim();
-
-  // Hanya Submitted yang ID dokumennya berupa link ke halaman verifikasi
-  const isSubmitted = statusLower === "submitted" || statusClass === "submitted";
-
+  // Semua dokumen di grid ini (submitted / approved / done) dibuka di halaman approval.
+  // Tombol Approve & Kembalikan diatur di form-approval.html sesuai statusnya.
   const linkStyle =
     'style="cursor: pointer; font-weight: bold; text-decoration: underline; color: #1e60aa;"';
-
-  const docLinkHtml = isSubmitted
-    ? `<a href="../pages/form-verifikasi.html?id=${encodeURIComponent(item.id || "")}"
-          class="doc-link" ${linkStyle}>${idDok}</a>`
-    : `<span class="link-col">${idDok}</span>`;
+  const docLinkHtml = `<a href="form-approval.html?id=${encodeURIComponent(item.id || "")}"
+        class="doc-link" ${linkStyle}>${idDok}</a>`;
 
   return `
     <tr data-status="${statusClass}" data-id="${idDok}">
@@ -107,7 +102,7 @@ function buildRowHtml(item) {
         <span class="link-col">${escapeHtml(truncateText(keperluan, 60))}</span>
       </td>
       <td>${escapeHtml(item.tanggal || "-")}</td>
-      <td><span class="link-col">${escapeHtml(item.pengaju || "-")}</span></td>
+      <td><span class="link-col">${escapeHtml(item.penyetuju || "-")}</span></td>
     </tr>
   `;
 }

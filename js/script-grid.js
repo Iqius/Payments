@@ -130,10 +130,20 @@ function buildRowHtml(item) {
       id: item.id || "",
       idAnggaran: item.idAnggaran || "",
     });
-    statusBadgeHtml = `<a href="../pages/form-operasional.html?${params.toString()}"
+    statusBadgeHtml = `<a href="pages/pencairan/form-operasional.html?${params.toString()}"
           title="Buka form pertanggungjawaban"
           style="text-decoration: none; cursor: pointer; display: inline-block;">${badgeHtml}</a>`;
   }
+  // Hanya Submitted yang ID dokumennya berupa link ke halaman verifikasi
+  const isSubmitted = statusLower === "submitted" || statusClass === "submitted";
+
+  const linkStyle =
+    'style="cursor: pointer; font-weight: bold; text-decoration: underline; color: #1e60aa;"';
+
+  const docLinkHtml = isSubmitted
+    ? `<a href="pages/verifikasi/form-verifikasi.html?id=${encodeURIComponent(item.id || "")}"
+          class="doc-link" ${linkStyle}>${idDok}</a>`
+    : `<span class="link-col">${idDok}</span>`;
 
   const statusDateHtml = item.statusDate
     ? `<span class="status-date">${escapeHtml(item.statusDate)}</span>`
@@ -148,7 +158,8 @@ function buildRowHtml(item) {
                data-status="${statusText}"
                ${isDraft ? "" : "disabled"}>
       </td>
-      <td><span class="link-col">${idDok}</span></td>
+            <td>${docLinkHtml}</td>
+
       <td>${escapeHtml(item.tanggal || "-")}</td>
       <td><span class="link-col">${escapeHtml(item.kantor || "-")}</span></td>
       <td><span class="link-col">${escapeHtml(item.metode || "-")}</span></td>

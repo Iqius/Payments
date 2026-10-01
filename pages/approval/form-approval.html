@@ -1,0 +1,2133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Verifikasi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/style-popup.css">
+    <link rel="stylesheet" href="../../css/style-submit.css">
+    <link rel="stylesheet" href="../../css/style-verifikasi.css">
+
+    <!-- Link Bootstrap Icons yang benar (tanpa tanda kurung markdown) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body class="form-page-body">
+
+    <!-- Toast Notification -->
+    <div id="toastNotification" class="toast hidden">
+        <i class="fas fa-check-circle"></i> Berhasil disimpan
+    </div>
+
+    <div class="form-main-container">
+        <!-- Global Header -->
+        <header class="form-header">
+            <div class="header-container">
+                <i class="far fa-building icon-building"></i>
+                <div class="header-left">
+                    <div class="breadcrumb">Klaim Langsung</div>
+                    <h2 id="header-title">Operasional Umum</h2>
+                </div>
+            </div>
+
+            <div class="header-center align-end">
+                <div class="info-pill">
+                    <span class="label">ID Dokumen</span>
+                    <span class="value">260327123456</span>
+                </div>
+                <div class="info-pill">
+                    <span class="label">Tanggal Pengajuan</span>
+                    <span class="value" id="doc-date" data-status="draft" data-date=""> 02 Des 2025</span>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <div class="stepper" id="stepper-wrapper"></div>
+
+                <button class="close-form-btn" onclick="window.location.href='grid-approval.html'">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </header>
+        <div id="step-5-wrapper" class="step-content"
+            style="display: flex; flex-direction: column; flex-grow: 1; overflow: hidden;">
+            <div class="step2-info-bar">
+                <!-- Blok Kiri (Biru Muda Utuh) -->
+                <div class="info-item">
+                    <span class="info-label">Anggaran Kegiatan Dipilih</span>
+                    <span class="info-value" id="info-kegiatan-terpilih-3">Monitoring, Kontrol dan Evaluasi...</span>
+                </div>
+            </div>
+
+            <main class="step4-main-grid">
+
+                <!-- Part A: Left Side (Informasi & Verifikasi) -->
+                <div class="s5-left-panel">
+                    <div class="step3-summary-card s5-info-card">
+                        <h4>Informasi Pengajuan</h4>
+
+                        <div class="info-row-inline">
+                            <span class="s5-info-label">Nama Pengaju</span>
+                            <strong class="s5-info-value">Satria Arindra</strong>
+                        </div>
+                        <div class="info-row-inline">
+                            <span class="s5-info-label">Sub Unit Kerja</span>
+                            <strong class="s5-info-value">Asisten Deputi Bidang Treasury</strong>
+                        </div>
+
+                        <div class="info-row-stacked">
+                            <span class="s5-info-label">Keperluan</span>
+                            <p class="info-desc">
+                                Beban pembinaan administrasi untuk pembayaran SPPD nomor SPPD/70297/112025 atas nama
+                                Amri Irwansyah, Elvina Sari, dan M Zaki Yamani. Perihal: pemeriksaan kasus karyawan
+                                Puskesmas Ladang Tuha dan koordinasi dengan Kemenag serta Baitul Mal Kabupaten Aceh
+                                Selatan terkait program BPJS Ketenagakerjaan. Dokumen pendukung telah dikumpulkan dan
+                                diverifikasi, termasuk bukti pembayaran dan SPPD yang sah. </p>
+                        </div>
+                    </div>
+
+                    <div class="step3-summary-card s5-verifikasi-card">
+                        <h4>Verifikasi</h4>
+
+                        <!-- Detail Verifikator -->
+                        <div class="info-card">
+                            <div class="info-row">
+                                <span class="s5-info-label">Nama Verifikator</span>
+                                <span class="s5-info-value">Satria Arindra</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="s5-info-label">Tanggal verifikasi</span>
+                                <span class="s5-info-value">01 Agustus 2026</span>
+                            </div>
+                        </div>
+
+                        <!-- Header -->
+                        <div class="doc-header-inline" onclick="openFilePreviewModal()" role="button"
+                            title="Perbesar / Lihat Pop-up">
+                            <h4>Dokumen Pendukung</h4>
+                            <span class="pt-zoom">
+                                <i class="fas fa-up-right-from-square"></i>
+                            </span>
+                        </div>
+
+                        <!-- Summary Card -->
+                        <div class="doc-summary-card">
+                            <div class="summary-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">7</span>
+                                    <span class="stat-label">Dokumen diunggah</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">8/8</span>
+                                    <span class="stat-label">Wajib Lengkap</span>
+                                </div>
+                            </div>
+
+                            <!-- Progress Bar -->
+                            <div class="progress-wrapper">
+                                <div class="progress-bar-fill" style="width: 100%;"></div>
+                                <span class="progress-percent">100%</span>
+                            </div>
+                        </div>
+
+                        <!-- Spacer Area (Area Kosong) -->
+                        <div class="doc-body-spacer"></div>
+
+                        <!-- Footer Button -->
+                        <footer class="doc-footer-action">
+                            <button type="button" class="btn-preview-merged" onclick="openMergedPreview()">
+                                Buka pratinjau gabungan
+                            </button>
+                        </footer>
+                    </div>
+                </div>
+
+                <!-- Part B: Middle Side (Icon Buttons Centered Vertically) -->
+                <div class="s5-middle-panel">
+                    <button class="s5-icon-btn active" onclick="switchs5Tab('ringkasan', this)" title="Ringkasan Umum">
+                        <i class="fas fa-home"></i>
+                    </button>
+                    <button class="s5-icon-btn" onclick="switchs5Tab('pajak', this)" title="Informasi Pajak">
+                        <i class="fas fa-percent"></i>
+                    </button>
+                    <button class="s5-icon-btn" onclick="switchs5Tab('pembayaran', this)" title="">
+                        <i class="fas fa-book"></i>
+                    </button>
+                    <button class="s5-icon-btn" onclick="switchs5Tab('jurnal', this)" title="">
+                        <i class="fas fa-book-open"></i>
+                    </button>
+                    <button class="s5-icon-btn" onclick="switchs5Tab('catatan', this)" title="">
+                        <i class="fas fa-file-invoice"></i>
+                    </button>
+                </div>
+
+                <!-- Part C: Right Side (Header & Dynamic Content) -->
+                <div class="s5-right-panel">
+                    <header class="s5-header">
+                        <div class="header-info">
+                            <h1>Rincian Biaya</h1>
+                            <p>Rincian biaya penggunaan anggaran yang diajukan.</p>
+                        </div>
+                    </header>
+
+                    <!-- Default Content: Ringkasan Umum (List + Accordion details) -->
+                    <div class="s5-right-content" id="s5-content-ringkasan">
+                        <h2 class="s5-section-title">Ringkasan Umum</h2>
+                        <div class="s5-list-container">
+
+                            <!-- Item 1 (KTP - Orange - Status Centang) -->
+                            <div class="s5-accordion-item">
+                                <div class="s5-list-row" onclick="toggleRow(this)">
+                                    <i class="fa-solid fa-chevron-right chevron-icon"></i>
+
+                                    <div class="card person-card bg-orange" onclick="openModal(event)"
+                                        style="cursor: pointer;">
+                                        <div class="person-name">Aldi Suandana K</div>
+                                        <div class="person-meta">
+                                            <span class="tag">KTP</span>
+                                            <i class="fa-solid fa-circle-check icon-verified"></i>
+                                            <span class="id-number">1234567890123456</span>
+                                            <span class="grade">PTKP K/3</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="card component-card">
+                                        2 Komponen biaya
+                                    </div>
+
+                                    <div class="card bank-card">
+                                        <div class="bank-icon-placeholder">
+                                            <i class="fa-solid fa-building-columns"></i>
+                                        </div>
+                                        <div class="bank-info">
+                                            <div class="bank-name">Satria Arindra</div>
+                                            <div class="bank-acc">131-00-113-7576-9 <span class="acc-name"></span>Bank
+                                                Tabungan...</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card amount-card">
+                                        <div class="amount-label">Total Biaya</div>
+                                        <div class="amount-value">
+                                            <span>Rp.</span>
+                                            <span class="value-number">0,00</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="status-btn status-warning" data-status="warning"
+                                        style="cursor: pointer;" onclick="handleStatusClick(event, this)">
+                                        <i class="fa-solid fa-question"></i>
+                                    </div> -->
+                                </div>
+
+                                <!-- Detail Sub-Item 1 -->
+                                <div class="accordion-content">
+                                    <div class="detail-container">
+                                        <div class="branch-icon">
+                                            <i class="branch-connector"></i>
+                                        </div>
+                                        <div class="detail-table">
+                                            <div class="detail-header">
+                                                <div class="col-name">Komponen Biaya</div>
+                                                <div class="col-nominalHome">Nominal Biaya</div>
+                                                <div class="col-pph">Potongan PPh</div>
+                                                <div class="col-transfer text-right">Nominal Transfer</div>
+                                            </div>
+                                            <div class="detail-row">
+                                                <div class="col-name sub-card">Uang Saku Bukan Pegawai Tidak
+                                                    Berkesinamb...</div>
+                                                <div class="col-nominalHome">Rp. 1.000.000.000,00</div>
+                                                <div class="col-pph"><span class="badge-pph">Rp. 0,00</span></div>
+                                                <div class="col-transfer"><span class="badge-transfer">Rp. 0,00</span>
+                                                </div>
+                                            </div>
+                                            <div class="detail-row">
+                                                <div class="col-name sub-card">Bantuan Transportasi</div>
+                                                <div class="col-nominalHome">Rp. 1.000.000.000,00</div>
+                                                <div class="col-pph"><span class="badge-pph">Rp. 0,00</span></div>
+                                                <div class="col-transfer"><span class="badge-transfer">Rp. 0,00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Item 2 (KTP - Orange - Status Tanda Tanya) -->
+                            <div class="s5-accordion-item">
+                                <div class="s5-list-row" onclick="toggleRow(this)">
+                                    <i class="fa-solid fa-chevron-right chevron-icon"></i>
+
+                                    <div class="card person-card bg-orange" onclick="openModal(event)"
+                                        style="cursor: pointer;">
+                                        <div class="person-name">Aldi Suandana K</div>
+                                        <div class="person-meta">
+                                            <span class="tag">KTP</span>
+                                            <i class="fa-solid fa-circle-check icon-verified"></i>
+                                            <span class="id-number">1234567890123456</span>
+                                            <span class="grade">PTKP K/3</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="card component-card">
+                                        2 Komponen biaya
+                                    </div>
+
+                                    <div class="card bank-card">
+                                        <div class="bank-icon-placeholder">
+                                            <i class="fa-solid fa-building-columns"></i>
+                                        </div>
+                                        <div class="bank-info">
+                                            <div class="bank-name">Satria Arindra</div>
+                                            <div class="bank-acc">131-00-113-7576-9 <span class="acc-name"></span>Bank
+                                                Tabungan...</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card amount-card">
+                                        <div class="amount-label">Total Biaya</div>
+                                        <div class="amount-value">
+                                            <span>Rp.</span>
+                                            <span class="value-number">0,00</span>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="status-btn status-warning" data-status="warning"
+                                        style="cursor: pointer;" onclick="handleStatusClick(event, this)">
+                                        <i class="fa-solid fa-question"></i>
+                                    </div> -->
+                                </div>
+
+                                <!-- Detail Sub-Item 2 -->
+                                <div class="accordion-content">
+                                    <div class="detail-container">
+                                        <div class="branch-icon">
+                                            <i class="branch-connector"></i>
+                                        </div>
+                                        <div class="detail-table">
+                                            <div class="detail-header">
+                                                <div class="col-name">Komponen Biaya</div>
+                                                <div class="col-nominalHome">Nominal Biaya</div>
+                                                <div class="col-pph">Potongan PPh</div>
+                                                <div class="col-transfer">Nominal Transfer</div>
+                                            </div>
+                                            <div class="detail-row">
+                                                <div class="col-name sub-card">Komponen Biaya A</div>
+                                                <div class="col-nominalHome">Rp. 500.000.000,00</div>
+                                                <div class="col-pph"><span class="badge-pph">Rp. 0,00</span>
+                                                </div>
+                                                <div class="col-transfer"><span class="badge-transfer">Rp. 0,00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Item 3 (NPWP - Hijau - Status Tanda Tanya) -->
+                            <div class="s5-accordion-item">
+                                <div class="s5-list-row" onclick="toggleRow(this)">
+                                    <i class="fa-solid fa-chevron-right chevron-icon"></i>
+
+                                    <div class="card person-card bg-green-light" onclick="openModal(event)"
+                                        style="cursor: pointer;">
+                                        <div class="person-name">Aldi Suandana K</div>
+                                        <div class="person-meta">
+                                            <span class="tag">NPWP</span>
+                                            <i class="fa-solid fa-circle-check icon-verified"></i>
+                                            <span class="id-number">12-34.39843.883023</span>
+                                            <span class="grade">Grade 15</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="card component-card">
+                                        2 Komponen biaya
+                                    </div>
+
+                                    <div class="card bank-card">
+                                        <div class="bank-icon-placeholder">
+                                            <i class="fa-solid fa-building-columns"></i>
+                                        </div>
+                                        <div class="bank-info">
+                                            <div class="bank-name">Satria Arindra</div>
+                                            <div class="bank-acc">131-00-113-7576-9 <span class="acc-name"></span>Bank
+                                                Tabungan...</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card amount-card">
+                                        <div class="amount-label">Total Biaya</div>
+                                        <div class="amount-value">
+                                            <span>Rp.</span>
+                                            <span class="value-number">0,00</span>
+                                        </div>
+                                    </div>
+<!-- 
+                                    <div class="status-btn status-warning" data-status="warning"
+                                        style="cursor: pointer;" onclick="handleStatusClick(event, this)">
+                                        <i class="fa-solid fa-question"></i>
+                                    </div> -->
+                                </div>
+
+                                <!-- Detail Sub-Item 3 -->
+                                <div class="accordion-content">
+                                    <div class="detail-container">
+                                        <div class="branch-icon">
+                                            <i class="branch-connector"></i>
+                                        </div>
+                                        <div class="detail-table">
+                                            <div class="detail-header">
+                                                <div class="col-name">Komponen Biaya</div>
+                                                <div class="col-nominalHome">Nominal Biaya</div>
+                                                <div class="col-pph">Potongan PPh</div>
+                                                <div class="col-transfer">Nominal Transfer</div>
+                                            </div>
+                                            <div class="detail-row">
+                                                <div class="col-name sub-card">Gaji Pokok / Honorarium</div>
+                                                <div class="col-nominalHome">Rp. 50.000.000,00</div>
+                                                <div class="col-pph"><span class="badge-pph">Rp. 0,00</span>
+                                                </div>
+                                                <div class="col-transfer"><span class="badge-transfer">Rp. 0,00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Item 4 (Perusahaan - Abu-abu - Status Gagal) -->
+                            <div class="s5-accordion-item">
+                                <div class="s5-list-row" onclick="toggleRow(this)">
+                                    <i class="fa-solid fa-chevron-right chevron-icon"></i>
+
+                                    <div class="card person-card bg-gray" onclick="openModal(event, 'modalBadanUsaha')"
+                                        style="cursor: pointer;">
+                                        <div class="person-name">PT Toyota Motor Manufacturing Indonesia</div>
+                                        <div class="person-meta">
+                                            <span class="tag">NPWP</span>
+                                            <i class="fa-solid fa-circle-check icon-verified"></i>
+                                            <span class="id-number">12-34.39843.883023</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="card component-card">
+                                        5 Invoice
+                                    </div>
+
+                                    <div class="card bank-card">
+                                        <div class="bank-icon-placeholder">
+                                            <i class="fa-solid fa-building-columns"></i>
+                                        </div>
+                                        <div class="bank-info">
+                                            <div class="bank-name">Satria Arindra</div>
+                                            <div class="bank-acc">131-00-113-7576-9 <span class="acc-name"></span>Bank
+                                                Tabungan...</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card amount-card">
+                                        <div class="amount-label">Total Biaya</div>
+                                        <div class="amount-value">
+                                            <span>Rp.</span>
+                                            <span class="value-number">0,00</span>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="status-btn status-warning" data-status="warning"
+                                        style="cursor: pointer;" onclick="handleStatusClick(event, this)">
+                                        <i class="fa-solid fa-question"></i>
+                                    </div> -->
+                                </div>
+
+                                <!-- Detail Sub-Item 4 -->
+                                <div class="accordion-content">
+                                    <div class="detail-container">
+                                        <div class="branch-icon">
+                                            <i class="branch-connector"></i>
+                                        </div>
+                                        <div class="detail-table">
+                                            <div class="detail-header">
+                                                <div class="col-name">Invoice List</div>
+                                                <div class="col-nominalHome">Nominal Biaya</div>
+                                                <div class="col-pph">Potongan PPh</div>
+                                                <div class="col-transfer">Nominal Transfer</div>
+                                            </div>
+                                            <div class="detail-row">
+                                                <div class="col-name sub-card">INV-2024-001</div>
+                                                <div class="col-nominalHome">Rp. 200.000.000,00</div>
+                                                <div class="col-pph"><span class="badge-pph">Rp. 0,00</span>
+                                                </div>
+                                                <div class="col-transfer"><span class="badge-transfer">Rp. 0,00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="panel-pagination">
+                            <span class="total-rincian"></span>
+                            <div class="pagination-controls mini-pagination">
+                                <button class="page-btn"><i class="fas fa-step-backward"></i></button>
+                                <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
+                                <button class="page-btn active-page">1</button>
+                                <span class="page-text">of 5</span>
+                                <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+                                <button class="page-btn"><i class="fas fa-step-forward"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="s5-right-content" id="s5-content-pajak" style="display:none;">
+                        <h2 class="s5-section-title">Potongan Pajak</h2>
+                        <div class="s5-header-container">
+                            <!-- Header Kolom -->
+                            <div class="table-header">
+                                <div class="s5-header-left">Jenis Pajak</div>
+                                <div class="s5-header-right">Total Potongan Pajak</div>
+                            </div>
+                        </div>
+                        <div class="s5-list-container">
+
+                            <!-- Daftar Potongan Pajak -->
+                            <div class="s5-list">
+
+                                <!-- Baris Item 1 -->
+                                <div class="tax-accordion-wrapper">
+
+                                    <!-- ITEM LEVEL 1 (BARIS UTAMA PAJAK) -->
+                                    <div class="tax-item">
+                                        <div class="tax-header-row" onclick="toggleAccordion(this)">
+                                            <i class="fa-solid fa-chevron-right chevron-icon"></i>
+
+                                            <div class="tax-main-card">
+                                                <span class="tax-title">Pajak Penghasilan Pasal 21</span>
+                                                <span class="tax-badge">3 Objek Pajak</span>
+                                            </div>
+
+                                            <div class="tax-total-card">
+                                                <span class="total-title">Total Potongan</span>
+                                                <span class="total-value">Rp. 10.000.000,00</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- KONTEN LEVEL 2 (PANEL BIRU MUDA) -->
+                                        <div class="tax-content-panel">
+                                            <div class="tree-container">
+                                                <!-- Ikon Cabang Level 1 ke 2 -->
+                                                <div class="branch-icon">
+                                                    <i class="branch-connector"></i>
+                                                </div>
+
+                                                <div class="objek-table">
+                                                    <!-- Header Tabel Objek Pajak -->
+                                                    <div class="grid-header">
+                                                        <div class="col-name-head">Nama Objek Pajak</div>
+                                                        <div class="col-dpp-head">Total DPP PPh</div>
+                                                        <div class="col-potongan-head">Total Potongan PPh</div>
+                                                    </div>
+
+                                                    <!-- ITEM LEVEL 2 (OBJEK PAJAK BERPENGARUH KE LEVEL 3) -->
+                                                    <div class="objek-item">
+                                                        <div class="objek-row" onclick="toggleAccordion(this)">
+                                                            <i class="fa-solid fa-chevron-right chevron-icon"></i>
+
+                                                            <div class="objek-card">
+                                                                Uang Saku Bukan Pegawai Tidak Berkesinambungan
+                                                            </div>
+
+                                                            <div class="badge-dpp">
+                                                                <span>Rp.</span>
+                                                                <span>0,00</span>
+                                                            </div>
+
+                                                            <div class="badge-potongan">
+                                                                <span>Rp.</span>
+                                                                <span>0,00</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- KONTEN LEVEL 3 (DAFTAR PEGAWAI KUNING) -->
+                                                        <div class="pegawai-content-panel">
+                                                            <!-- Header Kolom Pegawai -->
+                                                            <div class="grid-header-pegawai">
+                                                                <div class="col-name-head">Nama Pegawai / Pegawai
+                                                                    Eksternal / Rekanan</div>
+                                                                <div class="col-dpp-head">DPP PPh</div>
+                                                                <div class="col-potongan-head">Potongan PPh</div>
+                                                            </div>
+
+                                                            <!-- Pegawai 1 (Ada Ikon Cabang) -->
+                                                            <div class="pegawai-row">
+                                                                <div class="branch-icon">
+                                                                    <i class="branch-connector"></i>
+                                                                </div>
+                                                                <div class="pegawai-card">Aldi Suandana K</div>
+                                                                <div class="badge-dpp"><span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                                <div class="badge-potongan">
+                                                                    <span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Pegawai 2 -->
+                                                            <div class="pegawai-row">
+                                                                <div class="branch-icon"></div>
+                                                                <div class="pegawai-card">Aldi Suandana K</div>
+                                                                <div class="badge-dpp"><span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                                <div class="badge-potongan">
+                                                                    <span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Pegawai 3 -->
+                                                            <div class="pegawai-row">
+                                                                <div class="branch-icon"></div>
+                                                                <div class="pegawai-card">Aldi Suandana K</div>
+                                                                <div class="badge-dpp"><span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                                <div class="badge-potongan">
+                                                                    <span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Baris Item 2 -->
+                                <div class="tax-accordion-wrapper">
+
+                                    <!-- ITEM LEVEL 1 (BARIS UTAMA PAJAK) -->
+                                    <div class="tax-item">
+                                        <div class="tax-header-row" onclick="toggleAccordion(this)">
+                                            <i class="fa-solid fa-chevron-right chevron-icon"></i>
+
+                                            <div class="tax-main-card">
+                                                <span class="tax-title">Pajak Penghasilan Pasal 21</span>
+                                                <span class="tax-badge">3 Objek Pajak</span>
+                                            </div>
+
+                                            <div class="tax-total-card">
+                                                <span class="total-title">Total Potongan</span>
+                                                <span class="total-value">Rp. 10.000.000,00</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- KONTEN LEVEL 2 (PANEL BIRU MUDA) -->
+                                        <div class="tax-content-panel">
+                                            <div class="tree-container">
+                                                <!-- Ikon Cabang Level 1 ke 2 -->
+                                                <div class="branch-icon">
+                                                    <i class="branch-connector"></i>
+                                                </div>
+
+                                                <div class="objek-table">
+                                                    <!-- Header Tabel Objek Pajak -->
+                                                    <div class="grid-header">
+                                                        <div class="col-name-head">Nama Objek Pajak</div>
+                                                        <div class="col-dpp-head">Total DPP PPh</div>
+                                                        <div class="col-potongan-head">Total Potongan PPh</div>
+                                                    </div>
+
+                                                    <!-- ITEM LEVEL 2 (OBJEK PAJAK BERPENGARUH KE LEVEL 3) -->
+                                                    <div class="objek-item">
+                                                        <div class="objek-row" onclick="toggleAccordion(this)">
+                                                            <i class="fa-solid fa-chevron-right chevron-icon"></i>
+
+                                                            <div class="objek-card">
+                                                                Uang Saku Bukan Pegawai Tidak Berkesinambungan
+                                                            </div>
+
+                                                            <div class="badge-dpp">
+                                                                <span>Rp.</span>
+                                                                <span>0,00</span>
+                                                            </div>
+
+                                                            <div class="badge-potongan">
+                                                                <span>Rp.</span>
+                                                                <span>0,00</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- KONTEN LEVEL 3 (DAFTAR PEGAWAI KUNING) -->
+                                                        <div class="pegawai-content-panel">
+                                                            <!-- Header Kolom Pegawai -->
+                                                            <div class="grid-header-pegawai">
+                                                                <div class="col-name-head">Nama Pegawai / Pegawai
+                                                                    Eksternal / Rekanan</div>
+                                                                <div class="col-dpp-head">DPP PPh</div>
+                                                                <div class="col-potongan-head">Potongan PPh</div>
+                                                            </div>
+
+                                                            <!-- Pegawai 1 (Ada Ikon Cabang) -->
+                                                            <div class="pegawai-row">
+                                                                <div class="branch-icon">
+                                                                    <i class="branch-connector"></i>
+                                                                </div>
+                                                                <div class="pegawai-card">Aldi Suandana K</div>
+                                                                <div class="badge-dpp"><span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                                <div class="badge-potongan">
+                                                                    <span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Pegawai 2 -->
+                                                            <div class="pegawai-row">
+                                                                <div class="branch-icon"></div>
+                                                                <div class="pegawai-card">Aldi Suandana K</div>
+                                                                <div class="badge-dpp"><span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                                <div class="badge-potongan">
+                                                                    <span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Pegawai 3 -->
+                                                            <div class="pegawai-row">
+                                                                <div class="branch-icon"></div>
+                                                                <div class="pegawai-card">Aldi Suandana K</div>
+                                                                <div class="badge-dpp"><span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                                <div class="badge-potongan">
+                                                                    <span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Baris Item 3 -->
+                                <div class="tax-accordion-wrapper">
+
+                                    <!-- ITEM LEVEL 1 (BARIS UTAMA PAJAK) -->
+                                    <div class="tax-item">
+                                        <div class="tax-header-row" onclick="toggleAccordion(this)">
+                                            <i class="fa-solid fa-chevron-right chevron-icon"></i>
+
+                                            <div class="tax-main-card">
+                                                <span class="tax-title">Pajak Penghasilan Pasal 21</span>
+                                                <span class="tax-badge">3 Objek Pajak</span>
+                                            </div>
+
+                                            <div class="tax-total-card">
+                                                <span class="total-title">Total Potongan</span>
+                                                <span class="total-value">Rp. 10.000.000,00</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- KONTEN LEVEL 2 (PANEL BIRU MUDA) -->
+                                        <div class="tax-content-panel">
+                                            <div class="tree-container">
+                                                <!-- Ikon Cabang Level 1 ke 2 -->
+                                                <div class="branch-icon">
+                                                    <i class="branch-connector"></i>
+                                                </div>
+
+                                                <div class="objek-table">
+                                                    <!-- Header Tabel Objek Pajak -->
+                                                    <div class="grid-header">
+                                                        <div class="col-name-head">Nama Objek Pajak</div>
+                                                        <div class="col-dpp-head">Total DPP PPh</div>
+                                                        <div class="col-potongan-head">Total Potongan PPh</div>
+                                                    </div>
+
+                                                    <!-- ITEM LEVEL 2 (OBJEK PAJAK BERPENGARUH KE LEVEL 3) -->
+                                                    <div class="objek-item">
+                                                        <div class="objek-row" onclick="toggleAccordion(this)">
+                                                            <i class="fa-solid fa-chevron-right chevron-icon"></i>
+
+                                                            <div class="objek-card">
+                                                                Uang Saku Bukan Pegawai Tidak Berkesinambungan
+                                                            </div>
+
+                                                            <div class="badge-dpp">
+                                                                <span>Rp.</span>
+                                                                <span>0,00</span>
+                                                            </div>
+
+                                                            <div class="badge-potongan">
+                                                                <span>Rp.</span>
+                                                                <span>0,00</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- KONTEN LEVEL 3 (DAFTAR PEGAWAI KUNING) -->
+                                                        <div class="pegawai-content-panel">
+                                                            <!-- Header Kolom Pegawai -->
+                                                            <div class="grid-header-pegawai">
+                                                                <div class="col-name-head">Nama Pegawai / Pegawai
+                                                                    Eksternal / Rekanan</div>
+                                                                <div class="col-dpp-head">DPP PPh</div>
+                                                                <div class="col-potongan-head">Potongan PPh</div>
+                                                            </div>
+
+                                                            <!-- Pegawai 1 (Ada Ikon Cabang) -->
+                                                            <div class="pegawai-row">
+                                                                <div class="branch-icon">
+                                                                    <i class="branch-connector"></i>
+                                                                </div>
+                                                                <div class="pegawai-card">Aldi Suandana K</div>
+                                                                <div class="badge-dpp"><span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                                <div class="badge-potongan">
+                                                                    <span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Pegawai 2 -->
+                                                            <div class="pegawai-row">
+                                                                <div class="branch-icon"></div>
+                                                                <div class="pegawai-card">Aldi Suandana K</div>
+                                                                <div class="badge-dpp"><span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                                <div class="badge-potongan">
+                                                                    <span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Pegawai 3 -->
+                                                            <div class="pegawai-row">
+                                                                <div class="branch-icon"></div>
+                                                                <div class="pegawai-card">Aldi Suandana K</div>
+                                                                <div class="badge-dpp"><span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                                <div class="badge-potongan">
+                                                                    <span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Baris Item 4 -->
+                                <div class="tax-accordion-wrapper">
+
+                                    <!-- ITEM LEVEL 1 (BARIS UTAMA PAJAK) -->
+                                    <div class="tax-item">
+                                        <div class="tax-header-row" onclick="toggleAccordion(this)">
+                                            <i class="fa-solid fa-chevron-right chevron-icon"></i>
+
+                                            <div class="tax-main-card">
+                                                <span class="tax-title">Pajak Penghasilan Pasal 21</span>
+                                                <span class="tax-badge">3 Objek Pajak</span>
+                                            </div>
+
+                                            <div class="tax-total-card">
+                                                <span class="total-title">Total Potongan</span>
+                                                <span class="total-value">Rp. 10.000.000,00</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- KONTEN LEVEL 2 (PANEL BIRU MUDA) -->
+                                        <div class="tax-content-panel">
+                                            <div class="tree-container">
+                                                <!-- Ikon Cabang Level 1 ke 2 -->
+                                                <div class="branch-icon">
+                                                    <i class="branch-connector"></i>
+                                                </div>
+
+                                                <div class="objek-table">
+                                                    <!-- Header Tabel Objek Pajak -->
+                                                    <div class="grid-header">
+                                                        <div class="col-name-head">Nama Objek Pajak</div>
+                                                        <div class="col-dpp-head">Total DPP PPh</div>
+                                                        <div class="col-potongan-head">Total Potongan PPh</div>
+                                                    </div>
+
+                                                    <!-- ITEM LEVEL 2 (OBJEK PAJAK BERPENGARUH KE LEVEL 3) -->
+                                                    <div class="objek-item">
+                                                        <div class="objek-row" onclick="toggleAccordion(this)">
+                                                            <i class="fa-solid fa-chevron-right chevron-icon"></i>
+
+                                                            <div class="objek-card">
+                                                                Uang Saku Bukan Pegawai Tidak Berkesinambungan
+                                                            </div>
+
+                                                            <div class="badge-dpp">
+                                                                <span>Rp.</span>
+                                                                <span>0,00</span>
+                                                            </div>
+
+                                                            <div class="badge-potongan">
+                                                                <span>Rp.</span>
+                                                                <span>0,00</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- KONTEN LEVEL 3 (DAFTAR PEGAWAI KUNING) -->
+                                                        <div class="pegawai-content-panel">
+                                                            <!-- Header Kolom Pegawai -->
+                                                            <div class="grid-header-pegawai">
+                                                                <div class="col-name-head">Nama Pegawai / Pegawai
+                                                                    Eksternal / Rekanan</div>
+                                                                <div class="col-dpp-head">DPP PPh</div>
+                                                                <div class="col-potongan-head">Potongan PPh</div>
+                                                            </div>
+
+                                                            <!-- Pegawai 1 (Ada Ikon Cabang) -->
+                                                            <div class="pegawai-row">
+                                                                <div class="branch-icon">
+                                                                    <i class="branch-connector"></i>
+                                                                </div>
+                                                                <div class="pegawai-card">Aldi Suandana K</div>
+                                                                <div class="badge-dpp"><span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                                <div class="badge-potongan">
+                                                                    <span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Pegawai 2 -->
+                                                            <div class="pegawai-row">
+                                                                <div class="branch-icon"></div>
+                                                                <div class="pegawai-card">Aldi Suandana K</div>
+                                                                <div class="badge-dpp"><span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                                <div class="badge-potongan">
+                                                                    <span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Pegawai 3 -->
+                                                            <div class="pegawai-row">
+                                                                <div class="branch-icon"></div>
+                                                                <div class="pegawai-card">Aldi Suandana K</div>
+                                                                <div class="badge-dpp"><span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                                <div class="badge-potongan">
+                                                                    <span>Rp.</span><span>0,00</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="s5-right-content" id="s5-content-pembayaran" style="display:none;">
+                        <h2 class="s5-section-title">Tujuan dan Status Pembayaran</h2>
+                        <div class="s5-header-container">
+                            <!-- Header Labels -->
+                            <div class="table-header">
+                                <div class="col-target">Tujuan Pembayaran</div>
+                                <div class="col-nominal">Nominal Transfer</div>
+                                <div class="col-status">Status Transfer</div>
+                                <div class="col-code">Kode Transfer</div>
+                            </div>
+                        </div>
+                        <div class="s5-list-container">
+                            <!-- List Rows -->
+                            <div class="s5-list">
+                                <div class="s5-accordion-item">
+                                    <div class="s5-list-row" onclick="toggleRow(this)">
+                                        <i class="fa-solid fa-chevron-right chevron-icon"></i>
+
+
+                                        <div class="main-card">
+                                            <div class="bank-info-2">
+                                                <div class="bank-logo">
+                                                    <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                                                        <path d="M4 11C10 7, 22 7, 28 11" stroke="#004680"
+                                                            stroke-width="4" stroke-linecap="round" />
+                                                        <path d="M4 16C10 12, 22 12, 28 16" stroke="#cfa028"
+                                                            stroke-width="4" stroke-linecap="round" />
+                                                        <path d="M4 21C10 17, 22 17, 28 21" stroke="#004680"
+                                                            stroke-width="4" stroke-linecap="round" />
+                                                    </svg>
+                                                </div>
+                                                <div class="bank-details">
+                                                    <span class="bank-name">Bank Tabungan Negara Unit Syariah</span>
+                                                    <div class="account-row">
+                                                        <span class="account-number">131-00-113-7576-9</span>
+                                                        <i class="fa-solid fa-circle-check icon-verified"></i>
+                                                    </div>
+                                                    <span class="account-holder">Satria Arindra</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="recipient-tag">2 Pegawai Internal, 1 Rekanan</div>
+
+                                            <div class="nominal-box">
+                                                <span>Rp.</span>
+                                                <span>0,00</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="status-card">
+                                            <div class="status-badge status-pending">Belum Proses</div>
+                                            <div class="code-box">xxxxxx</div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-content">
+                                        <div class="detail-container">
+                                            <div class="branch-icon">
+                                                <i class="branch-connector"></i>
+                                            </div>
+                                            <div class="detail-tableTujuan">
+                                                <div class="detail-header">
+                                                    <div class="col-name">Nama Pegawai/Pegawai Eksternal/Rekanan</div>
+                                                    <div class="col-nominalHome">Total Biaya</div>
+                                                    <div class="col-pph">Total Potongan</div>
+                                                    <div class="col-transfer text-right">Total Transfer</div>
+                                                </div>
+                                                <div class="detail-row row-pegawai">
+                                                    <div class="col-name sub-card">Aldi Suadaana K</div>
+                                                    <div class="col-nominalHome">Rp. 1.000.000.000,00</div>
+                                                    <div class="col-pph"><span class="badge-pph">Rp. 0,00</span></div>
+                                                    <div class="col-transfer"><span class="badge-transfer">Rp.
+                                                            0,00</span></div>
+                                                </div>
+                                                <div class="detail-row row-rekanan">
+                                                    <div class="col-name sub-card">PT Toyota Manufracturing Indonesia
+                                                    </div>
+                                                    <div class="col-nominalHome">Rp. 1.000.000.000,00</div>
+                                                    <div class="col-pph"><span class="badge-pph">Rp. 0,00</span></div>
+                                                    <div class="col-transfer"><span class="badge-transfer">Rp.
+                                                            0,00</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="s5-accordion-item">
+                                    <div class="s5-list-row" onclick="toggleRow(this)">
+                                        <i class="fa-solid fa-chevron-right chevron-icon"></i>
+
+
+                                        <div class="main-card">
+                                            <div class="bank-info-2">
+                                                <div class="bank-logo">
+                                                    <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                                                        <path d="M4 11C10 7, 22 7, 28 11" stroke="#004680"
+                                                            stroke-width="4" stroke-linecap="round" />
+                                                        <path d="M4 16C10 12, 22 12, 28 16" stroke="#cfa028"
+                                                            stroke-width="4" stroke-linecap="round" />
+                                                        <path d="M4 21C10 17, 22 17, 28 21" stroke="#004680"
+                                                            stroke-width="4" stroke-linecap="round" />
+                                                    </svg>
+                                                </div>
+                                                <div class="bank-details">
+                                                    <span class="bank-name">Bank Tabungan Negara Unit Syariah</span>
+                                                    <div class="account-row">
+                                                        <span class="account-number">131-00-113-7576-9</span>
+                                                        <i class="fa-solid fa-circle-check icon-verified"></i>
+                                                    </div>
+                                                    <span class="account-holder">Satria Arindra</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="recipient-tag">2 Pegawai Internal, 1 Rekanan</div>
+
+                                            <div class="nominal-box">
+                                                <span>Rp.</span>
+                                                <span>0,00</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="status-card">
+                                            <div class="status-badge status-success">Sukses</div>
+                                            <div class="code-box">xxxxxx</div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-content">
+                                        <div class="detail-container">
+                                            <div class="branch-icon">
+                                                <i class="branch-connector"></i>
+                                            </div>
+                                            <div class="detail-tableTujuan">
+                                                <div class="detail-header">
+                                                    <div class="col-name">Nama Pegawai/Pegawai Eksternal/Rekanan</div>
+                                                    <div class="col-nominalHome">Total Biaya</div>
+                                                    <div class="col-pph">Total Potongan</div>
+                                                    <div class="col-transfer text-right">Total Transfer</div>
+                                                </div>
+                                                <div class="detail-row row-pegawai">
+                                                    <div class="col-name sub-card">Aldi Suadaana K</div>
+                                                    <div class="col-nominalHome">Rp. 1.000.000.000,00</div>
+                                                    <div class="col-pph"><span class="badge-pph">Rp. 0,00</span></div>
+                                                    <div class="col-transfer"><span class="badge-transfer">Rp.
+                                                            0,00</span></div>
+                                                </div>
+                                                <div class="detail-row row-rekanan">
+                                                    <div class="col-name sub-card">PT Toyota Manufracturing Indonesia
+                                                    </div>
+                                                    <div class="col-nominalHome">Rp. 1.000.000.000,00</div>
+                                                    <div class="col-pph"><span class="badge-pph">Rp. 0,00</span></div>
+                                                    <div class="col-transfer"><span class="badge-transfer">Rp.
+                                                            0,00</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="s5-accordion-item">
+                                    <div class="s5-list-row" onclick="toggleRow(this)">
+                                        <i class="fa-solid fa-chevron-right chevron-icon"></i>
+
+
+                                        <div class="main-card">
+                                            <div class="bank-info-2">
+                                                <div class="bank-logo">
+                                                    <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                                                        <path d="M4 11C10 7, 22 7, 28 11" stroke="#004680"
+                                                            stroke-width="4" stroke-linecap="round" />
+                                                        <path d="M4 16C10 12, 22 12, 28 16" stroke="#cfa028"
+                                                            stroke-width="4" stroke-linecap="round" />
+                                                        <path d="M4 21C10 17, 22 17, 28 21" stroke="#004680"
+                                                            stroke-width="4" stroke-linecap="round" />
+                                                    </svg>
+                                                </div>
+                                                <div class="bank-details">
+                                                    <span class="bank-name">Bank Tabungan Negara Unit Syariah</span>
+                                                    <div class="account-row">
+                                                        <span class="account-number">131-00-113-7576-9</span>
+                                                        <i class="fa-solid fa-circle-check icon-verified"></i>
+                                                    </div>
+                                                    <span class="account-holder">Satria Arindra</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="recipient-tag">2 Pegawai Internal, 1 Rekanan</div>
+
+                                            <div class="nominal-box">
+                                                <span>Rp.</span>
+                                                <span>0,00</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="status-card">
+                                            <div class="status-badge status-pending">Belum Proses</div>
+                                            <div class="code-box">xxxxxx</div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-content">
+                                        <div class="detail-container">
+                                            <div class="branch-icon">
+                                                <i class="branch-connector"></i>
+                                            </div>
+                                            <div class="detail-tableTujuan">
+                                                <div class="detail-header">
+                                                    <div class="col-name">Nama Pegawai/Pegawai Eksternal/Rekanan</div>
+                                                    <div class="col-nominalHome">Total Biaya</div>
+                                                    <div class="col-pph">Total Potongan</div>
+                                                    <div class="col-transfer text-right">Total Transfer</div>
+                                                </div>
+                                                <div class="detail-row row-pegawai">
+                                                    <div class="col-name sub-card">Aldi Suadaana K</div>
+                                                    <div class="col-nominalHome">Rp. 1.000.000.000,00</div>
+                                                    <div class="col-pph"><span class="badge-pph">Rp. 0,00</span></div>
+                                                    <div class="col-transfer"><span class="badge-transfer">Rp.
+                                                            0,00</span></div>
+                                                </div>
+                                                <div class="detail-row row-rekanan">
+                                                    <div class="col-name sub-card">PT Toyota Manufracturing Indonesia
+                                                    </div>
+                                                    <div class="col-nominalHome">Rp. 1.000.000.000,00</div>
+                                                    <div class="col-pph"><span class="badge-pph">Rp. 0,00</span></div>
+                                                    <div class="col-transfer"><span class="badge-transfer">Rp.
+                                                            0,00</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="s5-accordion-item">
+                                    <div class="s5-list-row" onclick="toggleRow(this)">
+                                        <i class="fa-solid fa-chevron-right chevron-icon"></i>
+
+
+                                        <div class="main-card">
+                                            <div class="bank-info-2">
+                                                <div class="bank-logo">
+                                                    <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                                                        <path d="M4 11C10 7, 22 7, 28 11" stroke="#004680"
+                                                            stroke-width="4" stroke-linecap="round" />
+                                                        <path d="M4 16C10 12, 22 12, 28 16" stroke="#cfa028"
+                                                            stroke-width="4" stroke-linecap="round" />
+                                                        <path d="M4 21C10 17, 22 17, 28 21" stroke="#004680"
+                                                            stroke-width="4" stroke-linecap="round" />
+                                                    </svg>
+                                                </div>
+                                                <div class="bank-details">
+                                                    <span class="bank-name">Bank Tabungan Negara Unit Syariah</span>
+                                                    <div class="account-row">
+                                                        <span class="account-number">131-00-113-7576-9</span>
+                                                        <i class="fa-solid fa-circle-check icon-verified"></i>
+                                                    </div>
+                                                    <span class="account-holder">Satria Arindra</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="recipient-tag">2 Pegawai Internal, 1 Rekanan</div>
+
+                                            <div class="nominal-box">
+                                                <span>Rp.</span>
+                                                <span>0,00</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="status-card">
+                                            <div class="status-badge status-processing">Dalam proses</div>
+                                            <div class="code-box">xxxxxx</div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-content">
+                                        <div class="detail-container">
+                                            <div class="branch-icon">
+                                                <i class="branch-connector"></i>
+                                            </div>
+                                            <div class="detail-tableTujuan">
+                                                <div class="detail-header">
+                                                    <div class="col-name">Nama Pegawai/Pegawai Eksternal/Rekanan</div>
+                                                    <div class="col-nominalHome">Total Biaya</div>
+                                                    <div class="col-pph">Total Potongan</div>
+                                                    <div class="col-transfer text-right">Total Transfer</div>
+                                                </div>
+                                                <div class="detail-row row-pegawai">
+                                                    <div class="col-name sub-card">Aldi Suadaana K</div>
+                                                    <div class="col-nominalHome">Rp. 1.000.000.000,00</div>
+                                                    <div class="col-pph"><span class="badge-pph">Rp. 0,00</span></div>
+                                                    <div class="col-transfer"><span class="badge-transfer">Rp.
+                                                            0,00</span></div>
+                                                </div>
+                                                <div class="detail-row row-rekanan">
+                                                    <div class="col-name sub-card">PT Toyota Manufracturing Indonesia
+                                                    </div>
+                                                    <div class="col-nominalHome">Rp. 1.000.000.000,00</div>
+                                                    <div class="col-pph"><span class="badge-pph">Rp. 0,00</span></div>
+                                                    <div class="col-transfer"><span class="badge-transfer">Rp.
+                                                            0,00</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="s5-accordion-item">
+                                    <div class="s5-list-row" onclick="toggleRow(this)">
+                                        <i class="fa-solid fa-chevron-right chevron-icon"></i>
+
+
+                                        <div class="main-card">
+                                            <div class="bank-info-2">
+                                                <div class="bank-logo">
+                                                    <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                                                        <path d="M4 11C10 7, 22 7, 28 11" stroke="#004680"
+                                                            stroke-width="4" stroke-linecap="round" />
+                                                        <path d="M4 16C10 12, 22 12, 28 16" stroke="#cfa028"
+                                                            stroke-width="4" stroke-linecap="round" />
+                                                        <path d="M4 21C10 17, 22 17, 28 21" stroke="#004680"
+                                                            stroke-width="4" stroke-linecap="round" />
+                                                    </svg>
+                                                </div>
+                                                <div class="bank-details">
+                                                    <span class="bank-name">Bank Tabungan Negara Unit Syariah</span>
+                                                    <div class="account-row">
+                                                        <span class="account-number">131-00-113-7576-9</span>
+                                                        <i class="fa-solid fa-circle-check icon-verified"></i>
+                                                    </div>
+                                                    <span class="account-holder">Satria Arindra</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="recipient-tag">2 Pegawai Internal, 1 Rekanan</div>
+
+                                            <div class="nominal-box">
+                                                <span>Rp.</span>
+                                                <span>0,00</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="status-card">
+                                            <div class="status-badge status-processing">Dalam Proses</div>
+                                            <div class="code-box">xxxxxx</div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-content">
+                                        <div class="detail-container">
+                                            <div class="branch-icon">
+                                                <i class="branch-connector"></i>
+                                            </div>
+                                            <div class="detail-tableTujuan">
+                                                <div class="detail-header">
+                                                    <div class="col-name">Nama Pegawai/Pegawai Eksternal/Rekanan</div>
+                                                    <div class="col-nominalHome">Total Biaya</div>
+                                                    <div class="col-pph">Total Potongan</div>
+                                                    <div class="col-transfer text-right">Total Transfer</div>
+                                                </div>
+                                                <div class="detail-row row-pegawai">
+                                                    <div class="col-name sub-card">Aldi Suadaana K</div>
+                                                    <div class="col-nominalHome">Rp. 1.000.000.000,00</div>
+                                                    <div class="col-pph"><span class="badge-pph">Rp. 0,00</span></div>
+                                                    <div class="col-transfer"><span class="badge-transfer">Rp.
+                                                            0,00</span></div>
+                                                </div>
+                                                <div class="detail-row row-rekanan">
+                                                    <div class="col-name sub-card">PT Toyota Manufracturing Indonesia
+                                                    </div>
+                                                    <div class="col-nominalHome">Rp. 1.000.000.000,00</div>
+                                                    <div class="col-pph"><span class="badge-pph">Rp. 0,00</span></div>
+                                                    <div class="col-transfer"><span class="badge-transfer">Rp.
+                                                            0,00</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="s5-right-content" id="s5-content-jurnal" style="display:none;">
+                        <h2 class="s5-section-title">Jurnal Voucher</h2>
+                        <div class="s5-list-container">
+
+                            <!-- Timeline Stepper -->
+                            <div class="stepper-container">
+                                <!-- Garis Penghubung Background -->
+                                <div class="step-line-container">
+                                    <div class="step-line"></div>
+                                    <div class="step-line"></div>
+                                    <div class="step-line"></div>
+                                    <div class="step-line active-blue"></div>
+                                </div>
+
+                                <!-- Step 1 (Grey / Normal Dibalik) -->
+                                <div class="step-item">
+                                    <div class="step-node node-gray"></div>
+                                    <div class="step-info">
+                                        <span class="step-date">1 Jan 2025</span>
+                                        <span class="step-title">BYMHD</span>
+                                        <span class="step-status status-gray">Normal · Dibalik</span>
+                                    </div>
+                                </div>
+
+                                <!-- Step 2 (Green / Reversal Terposting) -->
+                                <div class="step-item">
+                                    <div class="step-node node-green"></div>
+                                    <div class="step-info">
+                                        <span class="step-date">1 Jan 2025</span>
+                                        <span class="step-title">BYMHD</span>
+                                        <span class="step-status status-green">Reversal · Terposting</span>
+                                    </div>
+                                </div>
+
+                                <!-- Step 3 (Pink / Normal Dibatalkan) -->
+                                <div class="step-item">
+                                    <div class="step-node node-pink"></div>
+                                    <div class="step-info">
+                                        <span class="step-date">1 Jan 2025</span>
+                                        <span class="step-title">Pembayaran</span>
+                                        <span class="step-status status-pink">Normal · Dibatalkan</span>
+                                    </div>
+                                </div>
+
+                                <!-- Step 4 (Green / Reversal Terposting) -->
+                                <div class="step-item">
+                                    <div class="step-node node-green"></div>
+                                    <div class="step-info">
+                                        <span class="step-date">1 Jan 2025</span>
+                                        <span class="step-title">Pembayaran</span>
+                                        <span class="step-status status-green">Reversal · Terposting</span>
+                                    </div>
+                                </div>
+
+                                <!-- Step 5 (Blue / Active - Pembayaran Ulang) -->
+                                <div class="step-item">
+                                    <div class="step-node node-blue"></div>
+                                    <div class="step-info">
+                                        <span class="step-date active">1 Jan 2025</span>
+                                        <span class="step-title active">Pembayaran Ulang</span>
+                                        <span class="step-status status-blue">Normal · Terposting</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Kartu Detail Jurnal -->
+                            <div class="detail-card">
+                                <div class="card-header">
+                                    <h2 class="card-title">Detail Jurnal — Pembayaran Ulang</h2>
+                                    <p class="card-subtitle">VJ-260327-005 · 21 Des 2026 · Normal · Terposting · 3 baris
+                                    </p>
+                                </div>
+
+                                <table class="journal-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 50px; text-align: center;">No.</th>
+                                            <th>Kode Akun</th>
+                                            <th>Nama Akun</th>
+                                            <th class="text-right" style="width: 150px;">Debit</th>
+                                            <th class="text-right" style="width: 150px;">Kredit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align: center;">1</td>
+                                            <td>1-1100</td>
+                                            <td>Kas & Setara Kas</td>
+                                            <td class="text-right">Rp 25.000.000</td>
+                                            <td class="text-right dash-symbol">—</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: center;">2</td>
+                                            <td>5-2100</td>
+                                            <td>Beban Perjalanan Dinas</td>
+                                            <td class="text-right dash-symbol">—</td>
+                                            <td class="text-right">Rp 22.500.000</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: center;">3</td>
+                                            <td>2-1300</td>
+                                            <td>Hutang PPh 21</td>
+                                            <td class="text-right dash-symbol">—</td>
+                                            <td class="text-right">Rp 2.500.000</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <!-- Baris Total -->
+                                <div class="table-footer">
+                                    <span class="total-title">Total</span>
+                                    <div class="total-amounts">
+                                        <span class="total-val" style="margin-right: 50px;">Rp 25.000.000</span>
+                                        <span class="total-val">Rp 25.000.000</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="s5-right-content" id="s5-content-catatan" style="display:none;">
+                        <h2 class="s5-section-title">Aktifitas dan Catatan</h2>
+
+
+                        <div class="main-container">
+                            <div class="s5-list-container">
+                                <!-- Left Sidebar: Alur Persetujuan -->
+                                <div class="sidebar">
+                                    <div class="sidebar-title">Alur Persetujuan</div>
+
+                                    <div class="flow-wrapper">
+                                        <div class="flow-list">
+
+                                            <div class="flow-item active">
+                                                <div class="flow-item-left">
+                                                    <span class="dot dot-blue"></span>
+                                                    <div class="flow-text">
+                                                        <span class="flow-title">Pembuat</span>
+                                                        <span class="flow-subtitle sub-blue">Sedang diperbaiki -
+                                                            Aktif</span>
+                                                    </div>
+                                                </div>
+                                                <span class="flow-number">1</span>
+                                            </div>
+
+                                            <div class="flow-item">
+                                                <div class="flow-item-left">
+                                                    <span class="dot dot-green"></span>
+                                                    <div class="flow-text">
+                                                        <span class="flow-title">Asisten Deputi Unit Kerja</span>
+                                                        <span class="flow-subtitle sub-green">Disetujui</span>
+                                                    </div>
+                                                </div>
+                                                <span class="flow-number">2</span>
+                                            </div>
+
+                                            <div class="flow-item">
+                                                <div class="flow-item-left">
+                                                    <span class="dot dot-orange"></span>
+                                                    <div class="flow-text">
+                                                        <span class="flow-title">Deputi Unit Kerja</span>
+                                                        <span class="flow-subtitle sub-orange">Dikembalikan ke
+                                                            pembuat</span>
+                                                    </div>
+                                                </div>
+                                                <span class="flow-number">3</span>
+                                            </div>
+
+                                            <div class="flow-item">
+                                                <div class="flow-item-left">
+                                                    <span class="dot dot-grey"></span>
+                                                    <div class="flow-text">
+                                                        <span class="flow-title">Direktur Teknis</span>
+                                                        <span class="flow-subtitle sub-grey">Belum dapat diproses</span>
+                                                    </div>
+                                                </div>
+                                                <span class="flow-number">4</span>
+                                            </div>
+
+                                            <div class="flow-item">
+                                                <div class="flow-item-left">
+                                                    <span class="dot dot-grey"></span>
+                                                    <div class="flow-text">
+                                                        <span class="flow-title">Verifikator Keuangan</span>
+                                                        <span class="flow-subtitle sub-grey">Belum dapat diproses</span>
+                                                    </div>
+                                                </div>
+                                                <span class="flow-number">5</span>
+                                            </div>
+
+                                            <div class="flow-item">
+                                                <div class="flow-item-left">
+                                                    <span class="dot dot-grey"></span>
+                                                    <div class="flow-text">
+                                                        <span class="flow-title">Asisten Deputi Perpajakan</span>
+                                                        <span class="flow-subtitle sub-grey">Belum dapat diproses</span>
+                                                    </div>
+                                                </div>
+                                                <span class="flow-number">6</span>
+                                            </div>
+
+                                            <div class="flow-item">
+                                                <div class="flow-item-left">
+                                                    <span class="dot dot-grey"></span>
+                                                    <div class="flow-text">
+                                                        <span class="flow-title">Asisten Deputi Treasury</span>
+                                                        <span class="flow-subtitle sub-grey">Belum dapat diproses</span>
+                                                    </div>
+                                                </div>
+                                                <span class="flow-number">7</span>
+                                            </div>
+
+                                            <div class="flow-item">
+                                                <div class="flow-item-left">
+                                                    <span class="dot dot-grey"></span>
+                                                    <div class="flow-text">
+                                                        <span class="flow-title">Deputi Keuangan</span>
+                                                        <span class="flow-subtitle sub-grey">Belum dapat diproses</span>
+                                                    </div>
+                                                </div>
+                                                <span class="flow-number">8</span>
+                                            </div>
+
+                                            <div class="flow-item">
+                                                <div class="flow-item-left">
+                                                    <span class="dot dot-grey"></span>
+                                                    <div class="flow-text">
+                                                        <span class="flow-title">Direktur Keuangan</span>
+                                                        <span class="flow-subtitle sub-grey">Belum dapat diproses</span>
+                                                    </div>
+                                                </div>
+                                                <span class="flow-number">9</span>
+                                            </div>
+
+                                            <div class="flow-item">
+                                                <div class="flow-item-left">
+                                                    <span class="dot dot-grey"></span>
+                                                    <div class="flow-text">
+                                                        <span class="flow-title">Direktur Utama</span>
+                                                        <span class="flow-subtitle sub-grey">Belum dapat diproses</span>
+                                                    </div>
+                                                </div>
+                                                <span class="flow-number">10</span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="s5-list-container s5-aktivitas">
+                                <!-- Right Content: Aktivitas Dokumen -->
+                                <div class="content-panel">
+                                    <div class="content-header">
+                                        <div class="header-title-group">
+                                            <div class="panel-title">Aktivitas Dokumen</div>
+                                            <div class="panel-subtitle">Semua tahap · 6 aktivitas</div>
+                                        </div>
+                                        <button class="sort-btn">Terbaru &darr;</button>
+                                    </div>
+
+                                    <div class="activity-list">
+
+                                        <div class="activity-card blue-card">
+                                            <span class="dot dot-blue"></span>
+                                            <div class="activity-content">
+                                                <span class="activity-main-text">Pembuat mulai memperbaiki
+                                                    pengajuan</span>
+                                                <span class="activity-meta">Satria Arindra · Pembuat · 21 Mar 2026,
+                                                    08:30</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="activity-card amber-card">
+                                            <span class="dot dot-orange"></span>
+                                            <div class="activity-content">
+                                                <span class="activity-main-text">Pengajuan dikembalikan ke
+                                                    pembuat</span>
+                                                <span class="activity-meta">Budi Santoso · Deputi Unit Kerja · 20 Mar
+                                                    2026, 10:42</span>
+                                                <p class="activity-note">Dokumen pendukung belum sesuai dengan kegiatan
+                                                    yang diajukan. Mohon perbarui kuitansi dan rincian biaya.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="activity-card">
+                                            <span class="dot dot-green"></span>
+                                            <div class="activity-content">
+                                                <span class="activity-main-text">Disetujui Asisten Deputi Unit
+                                                    Kerja</span>
+                                                <span class="activity-meta">19 Mar 2026, 14:22</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="activity-card">
+                                            <span class="dot dot-green"></span>
+                                            <div class="activity-content">
+                                                <span class="activity-main-text">Pengajuan dikirim oleh pembuat</span>
+                                                <span class="activity-meta">18 Mar 2026, 09:15</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="activity-card">
+                                            <span class="dot dot-grey"></span>
+                                            <div class="activity-content">
+                                                <span class="activity-main-text">Pengajuan dibuat</span>
+                                                <span class="activity-meta">Sistem · 18 Mar 2026, 09:10</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <footer class="s5-header">
+                        <div class="header-summary">
+
+                            <!-- Wrapper box dengan background ungu muda -->
+                            <div class="action-group-box">
+                                <!-- Metode Pembayaran -->
+                                <div class="action-item">
+                                    <span class="action-label">Metode Pembayaran</span>
+                                    <button type="button" class="btn-toggle" id="btnPayment"
+                                        onclick="togglePayment(this)">
+                                        <span class="btn-text">Bank</span>
+                                        <i class="bi bi-arrow-repeat"></i>
+                                    </button>
+                                </div>
+
+                                <!-- Divider Vertikal -->
+                                <div class="group-divider"></div>
+
+                                <!-- Kode Buku -->
+                                <div class="action-item">
+                                    <span class="action-label">Kode Buku</span>
+                                    <button type="button" class="btn-static">
+                                        <span class="code-text">S0118</span>
+                                        <i class="bi bi-pencil-square icon-pencil"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Total Pengajuan -->
+                            <div class="step4-summary-box">
+                                <span class="summary-title">Total Pengajuan</span>
+                                <span class="summary-amount">Rp. 10.000.000.000,00</span>
+                            </div>
+                            <!-- Total PPh -->
+                            <div class="step4-summary-box">
+                                <span class="summary-title">Total Pajak Penghasilan (PPh)</span>
+                                <span class="summary-amount text-red">Rp. 10.000.000.000,00</span>
+                            </div>
+                            <!-- Total Transfer -->
+                            <div class="step4-summary-box">
+                                <span class="summary-title">Total Transfer</span>
+                                <span class="summary-amount text-green">Rp. 10.000.000.000,00</span>
+                            </div>
+                        </div>
+                    </footer>
+            </main>
+            <footer class="form-footer">
+                <div class="action-footer">
+                    <button class="btn-action btn-kembalikan" onclick="window.location.href='grid-approval.html'">
+                        Kembalikan
+                    </button>
+
+                    <div class="right-actions">
+                        <button class="btn-action btn-approve" onclick="window.location.href='grid-approval.html'">
+                            Approve
+                        </button>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <div id="filePreviewModal" class="custom-modal-overlay" style="display: none;">
+        <div class="custom-modal-container">
+
+            <!-- Modal Header -->
+            <div class="custom-modal-header">
+                <div class="modal-title-wrap">
+                    <h3 class="modal-title">Dokumen Pendukung</h3>
+                    <p class="modal-subtitle">Periksa kelengkapan dan kesesuaian setiap dokumen yang diunggah</p>
+                </div>
+                <button class="modal-close-btn" type="button">&times;</button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="custom-modal-body">
+
+                <!-- Panel Kiri: Grid Kartu File & Pagination -->
+                <div class="step3-middle-panel">
+                    <div class="file-grid-2col">
+
+                        <!-- Card 1 -->
+                        <div class="file-item-card">
+                            <div class="fic-top">
+                                <i class="fas fa-file-image icon-teal"></i>
+                                <div class="fic-details">
+                                    <span class="fic-name">File Name.pdf</span>
+                                    <span class="fic-category">Dokumen Perpajakan</span>
+                                </div>
+                                <span class="fic-size">9 Mb</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 (Active / Selected) -->
+                        <div class="file-item-card active-card">
+                            <div class="fic-top">
+                                <i class="fas fa-file-pdf icon-red"></i>
+                                <div class="fic-details">
+                                    <span class="fic-name">File Name.pdf</span>
+                                    <span class="fic-category">Dokumen Perpajakan</span>
+                                </div>
+                                <span class="fic-size">9 Mb</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 3 (Perlu Perbaikan) -->
+                        <div class="file-item-card">
+                            <div class="fic-top">
+                                <i class="fas fa-file-image icon-teal"></i>
+                                <div class="fic-details">
+                                    <span class="fic-name">File Name.pdf</span>
+                                    <span class="fic-category">Dokumen Perpajakan</span>
+                                </div>
+                                <span class="fic-size">9 Mb</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 4 -->
+                        <div class="file-item-card">
+                            <div class="fic-top">
+                                <i class="fas fa-file-image icon-teal"></i>
+                                <div class="fic-details">
+                                    <span class="fic-name">File Name.pdf</span>
+                                    <span class="fic-category">Dokumen Perpajakan</span>
+                                </div>
+                                <span class="fic-size">9 Mb</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 5 -->
+                        <div class="file-item-card">
+                            <div class="fic-top">
+                                <i class="fas fa-file-image icon-teal"></i>
+                                <div class="fic-details">
+                                    <span class="fic-name">File Name.pdf</span>
+                                    <span class="fic-category">Dokumen Perpajakan</span>
+                                </div>
+                                <span class="fic-size">9 Mb</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 6 (Perlu Perbaikan) -->
+                        <div class="file-item-card">
+                            <div class="fic-top">
+                                <i class="fas fa-file-pdf icon-red"></i>
+                                <div class="fic-details">
+                                    <span class="fic-name">File Name.pdf</span>
+                                    <span class="fic-category">Dokumen Perpajakan</span>
+                                </div>
+                                <span class="fic-size">9 Mb</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 7 -->
+                        <div class="file-item-card">
+                            <div class="fic-top">
+                                <i class="fas fa-file-image icon-teal"></i>
+                                <div class="fic-details">
+                                    <span class="fic-name">File Name.pdf</span>
+                                    <span class="fic-category">Dokumen Perpajakan</span>
+                                </div>
+                                <span class="fic-size">9 Mb</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 8 -->
+                        <div class="file-item-card">
+                            <div class="fic-top">
+                                <i class="fas fa-file-pdf icon-red"></i>
+                                <div class="fic-details">
+                                    <span class="fic-name">File Name.pdf</span>
+                                    <span class="fic-category">Dokumen Perpajakan</span>
+                                </div>
+                                <span class="fic-size">9 Mb</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 9 -->
+                        <div class="file-item-card">
+                            <div class="fic-top">
+                                <i class="fas fa-file-image icon-teal"></i>
+                                <div class="fic-details">
+                                    <span class="fic-name">File Name.pdf</span>
+                                    <span class="fic-category">Dokumen Perpajakan</span>
+                                </div>
+                                <span class="fic-size">9 Mb</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 10 -->
+                        <div class="file-item-card">
+                            <div class="fic-top">
+                                <i class="fas fa-file-image icon-teal"></i>
+                                <div class="fic-details">
+                                    <span class="fic-name">File Name.pdf</span>
+                                    <span class="fic-category">Dokumen Perpajakan</span>
+                                </div>
+                                <span class="fic-size">9 Mb</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 11 (Perlu Perbaikan) -->
+                        <div class="file-item-card">
+                            <div class="fic-top">
+                                <i class="fas fa-file-pdf icon-red"></i>
+                                <div class="fic-details">
+                                    <span class="fic-name">File Name.pdf</span>
+                                    <span class="fic-category">Laporan Kegiatan</span>
+                                </div>
+                                <span class="fic-size">9 Mb</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 12 -->
+                        <div class="file-item-card">
+                            <div class="fic-top">
+                                <i class="fas fa-file-pdf icon-red"></i>
+                                <div class="fic-details">
+                                    <span class="fic-name">File Name.pdf</span>
+                                    <span class="fic-category">Dokumen Perpajakan</span>
+                                </div>
+                                <span class="fic-size">9 Mb</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer / Pagination -->
+                    <div class="table-footer-pagination">
+                        <span class="pagination-info">Menampilkan 1 - 12 dari 12</span>
+                        <div class="pagination-controls">
+                            <button class="page-btn disabled" disabled><i class="fas fa-angle-double-left"></i></button>
+                            <button class="page-btn disabled" disabled><i class="fas fa-angle-left"></i></button>
+                            <button class="page-btn active-page">1</button>
+                            <span class="page-text">of 5</span>
+                            <button class="page-btn"><i class="fas fa-angle-right"></i></button>
+                            <button class="page-btn"><i class="fas fa-angle-double-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel Kanan: Viewer & Input Catatan -->
+                <div class="step3-right-panel">
+
+                    <!-- Preview Struk -->
+                    <div class="panel-card preview-card">
+                        <div class="preview-toolbar">
+                            <div class="pt-left">
+                                <i class="fas fa-file-pdf icon-red"></i>
+                                <span class="file-name">File Name.pdf</span>
+                            </div>
+                            <button type="button" class="pt-zoom" title="Perbesar">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+
+                        <div class="preview-image-container">
+                            <img src="../../assets/images/struk2.png" alt="Struk Pembayaran" class="preview-receipt-img">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Popup Konfirmasi -->
+    <div id="modalPerorangan" class="app-modal-overlay" style="display: none;">
+        <div class="app-modal-container">
+
+            <!-- Modal Body (Isi dari preview right-panel & list biaya) -->
+            <div class="app-modal-body">
+
+                <!-- Profil & Ringkasan Biaya -->
+                <div class="s4-dynamic-header-row">
+                    <!-- Kolom 1: Profil -->
+                    <div class="header-col col-profile">
+                        <div class="sdh-banner-card theme-perorangan">
+                            <div class="sdh-title-group">
+                                <h3 id="dyn-title">Aldi Suadana K</h3>
+                                <p id="dyn-subtitle">Kementrian Sosial</p>
+                            </div>
+                            <div class="dyn-badge badge-perorangan" id="dyn-badge">Perorangan</div>
+                        </div>
+                        <div class="sdh-details">
+                            <div class="sdh-item">
+                                <span>NPWP <i class="fas fa-times-circle text-red"></i></span>
+                                <strong>12-34.39843.883023</strong>
+                            </div>
+                            <div class="sdh-item">
+                                <span>KTP <i class="fas fa-check-circle text-green"></i></span>
+                                <strong>1234567890123456</strong>
+                            </div>
+                            <div class="sdh-item"><span>Kode</span><strong id="dyn-kode">EJ15000156</strong></div>
+                            <div class="sdh-item"><span>Unit Kerja</span><strong>J13 - Jakarta Salemba</strong></div>
+                        </div>
+                    </div>
+
+                    <!-- Kolom 2: Rekening Bank -->
+                    <div class="header-col col-bank">
+                        <div class="bank-top-box">
+                            <span class="box-title">Siti Rahmawati</span>
+                            <div class="bank-account-row">
+                                <div class="bank-logo-placeholder"></div>
+                                <div class="bank-acc-info">
+                                    <div class="acc-num-line">
+                                        <strong>131-00-113-7576-9</strong>
+                                        <i class="fas fa-check-circle text-green"></i>
+                                    </div>
+                                    <span class="acc-owner">Bank Tabungan Negara Unit Syariah</span>
+                                </div>
+                                <span class="verified-stack-fix" title="Terverifikasi">
+                                    <i class="fa-solid fa-certificate icon-bg"></i>
+                                    <i class="fa-solid fa-check icon-check"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="sub-info-line">
+                            <span>Estimasi Potongan PPh</span>
+                            <strong class="text-red">Rp. 10.000.000.000.000</strong>
+                        </div>
+                    </div>
+
+                    <!-- Kolom 3: Total Biaya -->
+                    <div class="header-col col-total">
+                        <div class="total-top-box">
+                            <span class="box-title">Total Biaya</span>
+                            <h2 class="total-amount">Rp1.000.920.000.000</h2>
+                        </div>
+                        <div class="sub-info-line">
+                            <span>Nilai Transfer (Estimasi)</span>
+                            <strong>Rp. 10.000.000.000.000</strong>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-modal-close-confirm" onclick="closeModal()">&times;</button>
+
+                </div>
+
+                <!-- Detail Perjalanan Dinas -->
+                <div id="cardDetilPerjalananDinas" class="detil-perjalanan-card" style="margin-top: 16px;">
+                    <div class="detil-perjalanan-title">Detil perjalanan dinas</div>
+                    <div class="detil-perjalanan-body">
+                        <div class="detil-perjalanan-col">
+                            <div class="detil-row">
+                                <span class="detil-label">Jenis Perjalanan</span>
+                                <span class="detil-val-bold">Luar kota</span>
+                            </div>
+                            <div class="detil-row">
+                                <span class="detil-label">Transportasi</span>
+                                <div class="transport-badge">
+                                    <i class="fas fa-train"></i>
+                                    <span>Kereta Api</span>
+                                    <i class="fas fa-check-circle check-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Highlight Durasi & Tanggal -->
+                        <div class="detil-box-white">
+                            <div class="detil-perjalanan-col detil-col-gap">
+                                <div class="detil-row">
+                                    <span class="detil-label detil-label-date">Tanggal Berangkat</span>
+                                    <span class="detil-val">01 Agustus 2026</span>
+                                </div>
+                                <div class="detil-row">
+                                    <span class="detil-label detil-label-date">Tanggal Kembali</span>
+                                    <span class="detil-val">05 Agustus 2026</span>
+                                </div>
+                            </div>
+                            <div class="detil-highlight-box">
+                                <div class="highlight-label">Durasi Perjalanan</div>
+                                <div class="highlight-val">5 Hari</div>
+                            </div>
+                        </div>
+
+                        <!-- Rute Kota -->
+                        <div class="detil-perjalanan-col detil-col-gap">
+                            <div class="detil-row">
+                                <span class="detil-label detil-label-city">Kota Asal</span>
+                                <span class="detil-val">Jakarta</span>
+                            </div>
+                            <div class="detil-row">
+                                <span class="detil-label detil-label-city">Kota Tujuan</span>
+                                <span class="detil-val">Denpasar</span>
+                            </div>
+                            <div class="detil-row">
+                                <span class="detil-label detil-label-city">Kota Kembali</span>
+                                <span class="detil-val">Jakarta</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Area Kelompok Biaya Dinamis -->
+                <div class="s4-kuitansi-area" style="margin-top: 16px;">
+                    <div id="dropdownPerorangan" class="kw-select-group">
+                        <select class="kw-select-kategori">
+                            <option value="">Pilih Kelompok Biaya...</option>
+                            <option value="honor">Honor dan Jasa Perorangan</option>
+                            <option value="royalti">Hadiah Royalti dan Sewa</option>
+                            <option value="deposito">Pendapatan Bunga Deposito</option>
+                            <option value="usaha">Penghasilan Usaha Perseorangan</option>
+                            <option value="profesional">Penghasilan dari Jasa Profesional</option>
+                            <option value="sewa">Pendapatan Sewa Properti</option>
+                        </select>
+                    </div>
+                    <div class="kw-list" id="kuitansi-list-container">
+                        <!-- Diisi otomatis oleh JavaScript -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="modalBadanUsaha" class="app-modal-overlay" style="display: none;">
+        <div class="app-modal-container">
+
+            <!-- Modal Body (Isi dari preview right-panel & list biaya) -->
+            <div class="app-modal-body">
+
+                <!-- Profil & Ringkasan Biaya -->
+                <div class="s4-dynamic-header-row">
+                    <!-- Kolom 1: Profil -->
+                    <div class="header-col col-profile">
+                        <div class="sdh-banner-card theme-badan-usaha">
+                            <div class="sdh-title-group">
+                                <h3 id="dyn-title">Lubuk Anang Adventure</h3>
+                                <p id="dyn-subtitle">Nama Pemilik NIK</p>
+                            </div>
+                            <div class="dyn-badge badge-badan-usaha" id="dyn-badge">Badan Usaha</div>
+                        </div>
+                        <div class="sdh-details">
+                            <div class="sdh-item">
+                                <span>NPWP <i class="fas fa-times-circle text-red"></i></span>
+                                <strong>12-34.39843.883023</strong>
+                            </div>
+                            <div class="sdh-item">
+                                <span>KTP <i class="fas fa-check-circle text-green"></i></span>
+                                <strong>1234567890123456</strong>
+                            </div>
+                            <div class="sdh-item"><span>Kode</span><strong id="dyn-kode">EJ15000156</strong></div>
+                            <div class="sdh-item"><span>Unit Kerja</span><strong>J13 - Jakarta Salemba</strong></div>
+                        </div>
+                    </div>
+
+                    <!-- Kolom 2: Rekening Bank -->
+                    <div class="header-col col-bank">
+                        <div class="bank-top-box">
+                            <span class="box-title">Siti Rahmawati</span>
+                            <div class="bank-account-row">
+                                <div class="bank-logo-placeholder"></div>
+                                <div class="bank-acc-info">
+                                    <div class="acc-num-line">
+                                        <strong>131-00-113-7576-9</strong>
+                                        <i class="fas fa-check-circle text-green"></i>
+                                    </div>
+                                    <span class="acc-owner">Bank Tabungan Negara Unit Syariah</span>
+                                </div>
+                                <span class="verified-stack-fix" title="Terverifikasi">
+                                    <i class="fa-solid fa-certificate icon-bg"></i>
+                                    <i class="fa-solid fa-check icon-check"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="sub-info-line">
+                            <span>Estimasi Potongan PPh</span>
+                            <strong class="text-red">Rp. 10.000.000.000.000</strong>
+                        </div>
+                    </div>
+
+                    <!-- Kolom 3: Total Biaya -->
+                    <div class="header-col col-total">
+                        <div class="total-top-box">
+                            <span class="box-title">Total Biaya</span>
+                            <h2 class="total-amount">Rp1.000.920.000.000</h2>
+                        </div>
+                        <div class="sub-info-line">
+                            <span>Nilai Transfer (Estimasi)</span>
+                            <strong>Rp. 10.000.000.000.000</strong>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-modal-close-confirm" onclick="closeModal()">&times;</button>
+
+                </div>
+
+
+                <!-- Area Kelompok Biaya Dinamis -->
+                <div class="s4-kuitansi-area" style="margin-top: 16px;">
+                    <div class="kw-section-title-row"
+                        style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding-top: 4px;">
+                        <h4 style="margin: 0; font-size: 15px; font-weight: 700; color: #475569;">Kuitansi / Invoice
+                        </h4>
+                        <span
+                            style="background-color: #f0f7ff; color: #0284c7; font-size: 12px; font-weight: 600; padding: 2px 10px; border-radius: 9999px; border: 1px solid #e0effe;">
+                            10 Kuitansi
+                        </span>
+                    </div>
+                    <div class="kw-list" id="kuitansi-list-container">
+                        <!-- Diisi otomatis oleh JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../js/script-dataGridPengajuan.js"></script>
+    <script src="../../js/script-formApproval.js"></script>
+    <script src="../../js/script-verifikasi.js"></script>
+</body>
+
+</html>

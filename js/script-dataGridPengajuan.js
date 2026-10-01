@@ -16,6 +16,7 @@ const documentData = [
     pengaju: "Satria Arindra.",
     idAnggaran: "202571PB620",
     jenis: "Operasional Umum",
+    penyetuju: null,
   },
   {
     id: "25112601965431",
@@ -34,6 +35,7 @@ const documentData = [
     pengaju: "Satria Arindra.",
     idAnggaran: "202571PB620",
     jenis: "Operasional Umum",
+    penyetuju: "Aldi Suadana",
   },
   {
     id: "25112601965432",
@@ -52,6 +54,7 @@ const documentData = [
     pengaju: "Satria Arindra.",
     idAnggaran: "202571PB620",
     jenis: "Operasional Umum",
+    penyetuju: null,
   },
   {
     id: "25112601965433",
@@ -70,6 +73,7 @@ const documentData = [
     idAnggaran: "202571PB620",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
+    penyetuju: null,
   },
   {
     id: "25112601965434",
@@ -88,8 +92,7 @@ const documentData = [
     idAnggaran: "202571PB620",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
-  },
-  {
+    penyetuju: "Aldi Suadana",
   },
   {
     id: "25112601965435",
@@ -108,6 +111,7 @@ const documentData = [
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
+    penyetuju: null,
   },
   {
     id: "25112601965436",
@@ -126,6 +130,7 @@ const documentData = [
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
+    penyetuju: "aldi Suadana",
   },
   {
     id: "25112601965437",
@@ -144,6 +149,7 @@ const documentData = [
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
+    penyetuju: null,
   },
   {
     id: "25112601965438",
@@ -162,6 +168,7 @@ const documentData = [
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
+    penyetuju: null,
   },
   {
     id: "25112601965439",
@@ -180,6 +187,7 @@ const documentData = [
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
+    penyetuju: "Aldi Suadana",
   },
   {
     id: "25112601965440",
@@ -198,6 +206,7 @@ const documentData = [
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
+    penyetuju: null,
   },
   {
     id: "25112601965441",
@@ -216,6 +225,7 @@ const documentData = [
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
+    penyetuju: "aldi Suadana",
   },
   {
     id: "25112601965442",
@@ -234,6 +244,7 @@ const documentData = [
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
+    penyetuju: null,
   },
   {
     id: "25112601965443",
@@ -252,6 +263,7 @@ const documentData = [
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
+    penyetuju: null,
   },
   {
     id: "25112601965444",
@@ -270,6 +282,7 @@ const documentData = [
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
+    penyetuju: "Aldi Suadana",
   },
   {
     id: "25112601965445",
@@ -288,6 +301,7 @@ const documentData = [
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
+    penyetuju: null,
   },
   {
     id: "25112601965446",
@@ -306,6 +320,7 @@ const documentData = [
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
+    penyetuju: "aldi Suadana",
   },
   {
     id: "25112601965447",
@@ -324,6 +339,7 @@ const documentData = [
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
+    penyetuju: null,
   },
   {
     id: "25112601965448",
@@ -342,6 +358,7 @@ const documentData = [
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
+    penyetuju: null,
   },
   {
     id: "25112601965449",
@@ -360,6 +377,7 @@ const documentData = [
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
+    penyetuju: "Aldi Suadana",
   },
     {
     id: "25112601965450",
@@ -378,6 +396,7 @@ const documentData = [
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
+    penyetuju: null,
   },
   {
     id: "25112601965451",
@@ -396,6 +415,7 @@ const documentData = [
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
+    penyetuju: null,
   },
   {
     id: "25112601965452",
@@ -414,6 +434,7 @@ const documentData = [
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
+    penyetuju: null,
   },
   {
     id: "25112601965453",
@@ -432,5 +453,6 @@ const documentData = [
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
+    penyetuju: null,
   },
 ];
