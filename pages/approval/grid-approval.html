@@ -5,49 +5,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Approval Pencairan Anggaran</title>
-    <!-- Assuming FontAwesome for icons as in your reference -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/style-popup.css">
     <style>
         /* Search sejajar ke pojok kanan tabel */
-        #main-menu-grid .filter-group {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            width: 100%;
-        }
 
-        #main-menu-grid .filter-group .search-group {
-            margin-left: auto;
-        }
     </style>
 </head>
 
 <body>
     <main class="main-content" id="main-menu-grid">
-        <!-- Header Section -->
         <div class="header-section">
             <h1 class="page-title"> Daftar Approval Pencairan Anggaran</h1>
             <button type="button" id="btnKembali" class="main-button secondary-btn"
                 onclick="window.location.href='../../index.html'">
-                <i  style="font-size: 16px;"> Menu Pencairan</i>
+                <i style="font-size: 16px;"> Menu Pencairan</i>
             </button>
         </div>
         <div class="page-banner">
-            <!-- Filter & Navigation Section -->
             <div class="filter-bar">
                 <div class="filter-group">
                     <select id="filter-status" class="base-dropbox status-select">
-                        <option value="disetujui">Disetujui</option>
                         <option value="belumDisetujui">Belum Disetujui</option>
+                        <option value="disetujui">Disetujui</option>
                     </select>
                     <div class="search-group">
                         <input id="search-input" class="base-textbox search-box" type="text" placeholder="Cari...">
                     </div>
                 </div>
-
-                <!-- Data Table -->
                 <div class="base-card table-container">
                     <table class="data-table">
                         <thead>
@@ -66,7 +52,6 @@
                             <!-- Baris data di-render dinamis oleh script.js -->
                         </tbody>
                     </table>
-                    <!-- Pagination -->
                     <div class="table-footer outline">
                         <div class="pagination-info">
                             Menampilkan

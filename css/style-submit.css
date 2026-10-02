@@ -102,10 +102,6 @@
   background-color: #f9fbfd;
 }
 
-/* ========================================================= */
-/* STEP 4: REVIEW & SUBMIT                                   */
-/* ========================================================= */
-
 .step4-main-grid {
   display: grid;
   grid-template-columns: 255px 51.2px 1fr;
@@ -179,7 +175,7 @@
 }
 
 .s5-right-panel {
-  background-color: #F0F9FF;
+  background-color: #f0f9ff;
   border-radius: 6.4px;
   overflow: hidden;
   height: 100%;
@@ -278,7 +274,7 @@
   height: 35.2px;
   border-radius: 8px;
   border: 1px solid transparent;
-  background-color: #226DA8;
+  background-color: #226da8;
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -297,13 +293,9 @@
 .s5-icon-btn.active {
   background-color: #ffffff;
   color: #2b78c5;
-  border: 1.6px solid #226DA8;
+  border: 1.6px solid #226da8;
   box-shadow: 0 2.4px 6.4px rgba(43, 120, 197, 0.25);
 }
-
-/* ========================================================= */
-/* INFORMASI PENGAJUAN (STEP 4)                              */
-/* ========================================================= */
 
 .s5-info-card {
   background-color: white;
@@ -508,9 +500,9 @@
   justify-content: flex-end;
 }
 .header-summary > div:not(:last-child) {
-  border-right: 1px solid #e0e0e0; /* Divider line color and thickness */
+  border-right: 1px solid #e0e0e0;
   /* padding: 8px; */
-  border-radius: 0;            /* Space between text and divider line */
+  border-radius: 0;
 }
 
 .step4-summary-box {
@@ -1010,9 +1002,9 @@
   font-size: 9px;
 }
 .total-value {
-    font-size: 12px;
-    font-weight: 700;
-    color: #e11d48;
+  font-size: 12px;
+  font-weight: 700;
+  color: #e11d48;
 }
 
 .total-amounts {
@@ -1223,7 +1215,6 @@
   stroke: #0f68a9;
 }
 
-/* Left Main Card */
 .main-card {
   flex: 1;
   background: linear-gradient(180deg, #f7faff 0%, #edf4fc 100%);
@@ -2035,4 +2026,3 @@
 .btn-selengkapnya:hover {
   text-decoration: underline;
 }
-

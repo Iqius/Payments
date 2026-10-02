@@ -1,4 +1,3 @@
-/* Import a clean modern font to match Figma */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 :root {
@@ -13,7 +12,16 @@
   --bg-white: #ffffff;
   --font-family: "Inter", sans-serif;
 }
+#main-menu-grid .filter-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
 
+#main-menu-grid .filter-group .search-group {
+  margin-left: auto;
+}
 body {
   margin: 0;
   padding: 20px;
@@ -287,39 +295,39 @@ body {
 }
 
 .badge-draft {
-  background-color: #EDEFF0;
-  color: #5D5D5D;
-  border: 2px solid #919EA5;
+  background-color: #edeff0;
+  color: #5d5d5d;
+  border: 2px solid #919ea5;
 }
 
 .badge-approved {
-  background-color: #E9FAEB;
-  color: #3BAB47;
-  border: 2px solid #98D59E;
+  background-color: #e9faeb;
+  color: #3bab47;
+  border: 2px solid #98d59e;
 }
 
 .badge-revise {
-  background-color: #FDECE5;
-  color: #F26522;
-  border: 2px solid #F8AD8A;
+  background-color: #fdece5;
+  color: #f26522;
+  border: 2px solid #f8ad8a;
 }
 
 .badge-unrealized {
-  background-color: #FDECE5;
-  color: #F26522;
-  border: 2px solid #F8AD8A;
+  background-color: #fdece5;
+  color: #f26522;
+  border: 2px solid #f8ad8a;
 }
 
 .badge-done {
-  background-color: #F6FBFF;
-  color: #226DA8;
-  border: 3px solid #226DA8;
+  background-color: #f6fbff;
+  color: #226da8;
+  border: 3px solid #226da8;
 }
 
 .badge-submitted {
-  background-color: #E9F3FA;
-  color: #226DA8;
-  border: 2px solid #8CB4D4;
+  background-color: #e9f3fa;
+  color: #226da8;
+  border: 2px solid #8cb4d4;
 }
 
 .status-container {
@@ -376,7 +384,6 @@ body {
   color: #333;
 }
 
-/* Pagination Footer */
 .table-footer {
   display: flex;
   justify-content: space-between;
@@ -431,43 +438,38 @@ body {
 }
 
 .page-btn.active-page {
-  background-color: #226DA8;
+  background-color: #226da8;
   color: var(--bg-white);
   font-weight: bold;
 }
 
 .page-text {
-  color: #226DA8;
+  color: #226da8;
   margin: 0 8px;
   font-weight: 500;
 }
 
-/* Date Input Specific Styling */
 input[type="date"].base-textbox {
   font-family: var(--font-family);
-  color: #226DA8;
+  color: #226da8;
   font-weight: 500;
   cursor: pointer;
 
   position: relative;
   padding-left: 36px !important;
   padding-right: 12px;
-  /*border*/
   border: 1px solid var(--primary-blue);
   border-radius: 6px;
   outline: none;
 }
 
-/* Optional: Placeholder/empty text color */
 input[type="date"].base-textbox:invalid {
   color: var(--text-muted);
 }
 
-/* Paksa ikon kalender ke pojok kiri */
 input[type="date"].base-textbox::-webkit-calendar-picker-indicator {
   position: absolute;
-  color: var(--primary-blue); /* Warna ikon kalender */
-  left: 10px;
+  color: var(--primary-blue);
   top: 50%;
   transform: translateY(-50%);
   margin: 0;
@@ -482,7 +484,7 @@ input[type="date"].base-textbox::-webkit-calendar-picker-indicator:hover {
 }
 
 .page-banner {
-  background-color: #e8f4fc; /* Warna biru muda solid */
+  background-color: #e8f4fc;
   border-bottom: 1px solid #cce3f5;
   padding: 20px 24px;
   color: #1b6da4;
@@ -529,7 +531,6 @@ input[type="date"].base-textbox::-webkit-calendar-picker-indicator:hover {
   pointer-events: none;
 }
 
-/* Menu Dropdown */
 .options-list {
   display: none;
   position: absolute;
@@ -566,7 +567,6 @@ input[type="date"].base-textbox::-webkit-calendar-picker-indicator:hover {
   background-color: #eaf4fb;
 }
 
-/* Tampilkan saat hover */
 .custom-select-wrapper:hover .options-list {
   display: block;
 }

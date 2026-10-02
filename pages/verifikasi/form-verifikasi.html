@@ -10,20 +10,16 @@
     <link rel="stylesheet" href="../../css/style-popup.css">
     <link rel="stylesheet" href="../../css/style-submit.css">
     <link rel="stylesheet" href="../../css/style-verifikasi.css">
-
-    <!-- Link Bootstrap Icons yang benar (tanpa tanda kurung markdown) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body class="form-page-body">
 
-    <!-- Toast Notification -->
     <div id="toastNotification" class="toast hidden">
         <i class="fas fa-check-circle"></i> Berhasil disimpan
     </div>
 
     <div class="form-main-container">
-        <!-- Global Header -->
         <header class="form-header">
             <div class="header-container">
                 <i class="far fa-building icon-building"></i>
@@ -55,7 +51,6 @@
         <div id="step-5-wrapper" class="step-content"
             style="display: flex; flex-direction: column; flex-grow: 1; overflow: hidden;">
             <div class="step2-info-bar">
-                <!-- Blok Kiri (Biru Muda Utuh) -->
                 <div class="info-item">
                     <span class="info-label">Anggaran Kegiatan Dipilih</span>
                     <span class="info-value" id="info-kegiatan-terpilih-3">Monitoring, Kontrol dan Evaluasi...</span>
@@ -63,8 +58,6 @@
             </div>
 
             <main class="step4-main-grid">
-
-                <!-- Part A: Left Side (Informasi & Verifikasi) -->
                 <div class="s5-left-panel">
                     <div class="step3-summary-card s5-info-card">
                         <h4>Informasi Pengajuan</h4>
@@ -92,7 +85,6 @@
                     <div class="step3-summary-card s5-verifikasi-card">
                         <h4>Verifikasi</h4>
 
-                        <!-- Detail Verifikator -->
                         <div class="info-card">
                             <div class="info-row">
                                 <span class="s5-info-label">Nama Verifikator</span>
@@ -104,7 +96,6 @@
                             </div>
                         </div>
 
-                        <!-- Header -->
                         <div class="doc-header-inline" onclick="openFilePreviewModal()" role="button"
                             title="Perbesar / Lihat Pop-up">
                             <h4>Dokumen Pendukung</h4>
@@ -113,7 +104,6 @@
                             </span>
                         </div>
 
-                        <!-- Summary Card -->
                         <div class="doc-summary-card">
                             <div class="summary-stats">
                                 <div class="stat-item">
@@ -126,17 +116,14 @@
                                 </div>
                             </div>
 
-                            <!-- Progress Bar -->
                             <div class="progress-wrapper">
                                 <div class="progress-bar-fill" style="width: 100%;"></div>
                                 <span class="progress-percent">100%</span>
                             </div>
                         </div>
 
-                        <!-- Spacer Area (Area Kosong) -->
                         <div class="doc-body-spacer"></div>
 
-                        <!-- Footer Button -->
                         <footer class="doc-footer-action">
                             <button type="button" class="btn-preview-merged" onclick="openMergedPreview()">
                                 Buka pratinjau gabungan
@@ -145,7 +132,6 @@
                     </div>
                 </div>
 
-                <!-- Part B: Middle Side (Icon Buttons Centered Vertically) -->
                 <div class="s5-middle-panel">
                     <button class="s5-icon-btn active" onclick="switchs5Tab('ringkasan', this)" title="Ringkasan Umum">
                         <i class="fas fa-home"></i>
@@ -164,7 +150,6 @@
                     </button>
                 </div>
 
-                <!-- Part C: Right Side (Header & Dynamic Content) -->
                 <div class="s5-right-panel">
                     <header class="s5-header">
                         <div class="header-info">
@@ -173,12 +158,10 @@
                         </div>
                     </header>
 
-                    <!-- Default Content: Ringkasan Umum (List + Accordion details) -->
                     <div class="s5-right-content" id="s5-content-ringkasan">
                         <h2 class="s5-section-title">Ringkasan Umum</h2>
                         <div class="s5-list-container">
 
-                            <!-- Item 1 (KTP - Orange - Status Centang) -->
                             <div class="s5-accordion-item">
                                 <div class="s5-list-row" onclick="toggleRow(this)">
                                     <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -217,13 +200,12 @@
                                         </div>
                                     </div>
 
-                                    <!-- <div class="status-btn status-warning" data-status="warning"
+                                    <div class="status-btn status-warning" data-status="warning"
                                         style="cursor: pointer;" onclick="handleStatusClick(event, this)">
                                         <i class="fa-solid fa-question"></i>
-                                    </div> -->
+                                    </div>
                                 </div>
 
-                                <!-- Detail Sub-Item 1 -->
                                 <div class="accordion-content">
                                     <div class="detail-container">
                                         <div class="branch-icon">
@@ -256,7 +238,6 @@
                                 </div>
                             </div>
 
-                            <!-- Item 2 (KTP - Orange - Status Tanda Tanya) -->
                             <div class="s5-accordion-item">
                                 <div class="s5-list-row" onclick="toggleRow(this)">
                                     <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -294,13 +275,11 @@
                                             <span class="value-number">0,00</span>
                                         </div>
                                     </div>
-                                    <!-- <div class="status-btn status-warning" data-status="warning"
+                                    <div class="status-btn status-warning" data-status="warning"
                                         style="cursor: pointer;" onclick="handleStatusClick(event, this)">
                                         <i class="fa-solid fa-question"></i>
-                                    </div> -->
+                                    </div>
                                 </div>
-
-                                <!-- Detail Sub-Item 2 -->
                                 <div class="accordion-content">
                                     <div class="detail-container">
                                         <div class="branch-icon">
@@ -326,7 +305,6 @@
                                 </div>
                             </div>
 
-                            <!-- Item 3 (NPWP - Hijau - Status Tanda Tanya) -->
                             <div class="s5-accordion-item">
                                 <div class="s5-list-row" onclick="toggleRow(this)">
                                     <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -364,14 +342,13 @@
                                             <span class="value-number">0,00</span>
                                         </div>
                                     </div>
-<!-- 
+
                                     <div class="status-btn status-warning" data-status="warning"
                                         style="cursor: pointer;" onclick="handleStatusClick(event, this)">
                                         <i class="fa-solid fa-question"></i>
-                                    </div> -->
+                                    </div>
                                 </div>
 
-                                <!-- Detail Sub-Item 3 -->
                                 <div class="accordion-content">
                                     <div class="detail-container">
                                         <div class="branch-icon">
@@ -397,7 +374,6 @@
                                 </div>
                             </div>
 
-                            <!-- Item 4 (Perusahaan - Abu-abu - Status Gagal) -->
                             <div class="s5-accordion-item">
                                 <div class="s5-list-row" onclick="toggleRow(this)">
                                     <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -434,13 +410,11 @@
                                             <span class="value-number">0,00</span>
                                         </div>
                                     </div>
-                                    <!-- <div class="status-btn status-warning" data-status="warning"
+                                    <div class="status-btn status-warning" data-status="warning"
                                         style="cursor: pointer;" onclick="handleStatusClick(event, this)">
                                         <i class="fa-solid fa-question"></i>
-                                    </div> -->
+                                    </div>
                                 </div>
-
-                                <!-- Detail Sub-Item 4 -->
                                 <div class="accordion-content">
                                     <div class="detail-container">
                                         <div class="branch-icon">
@@ -483,21 +457,16 @@
                     <div class="s5-right-content" id="s5-content-pajak" style="display:none;">
                         <h2 class="s5-section-title">Potongan Pajak</h2>
                         <div class="s5-header-container">
-                            <!-- Header Kolom -->
                             <div class="table-header">
                                 <div class="s5-header-left">Jenis Pajak</div>
                                 <div class="s5-header-right">Total Potongan Pajak</div>
                             </div>
                         </div>
                         <div class="s5-list-container">
-
-                            <!-- Daftar Potongan Pajak -->
                             <div class="s5-list">
 
-                                <!-- Baris Item 1 -->
                                 <div class="tax-accordion-wrapper">
 
-                                    <!-- ITEM LEVEL 1 (BARIS UTAMA PAJAK) -->
                                     <div class="tax-item">
                                         <div class="tax-header-row" onclick="toggleAccordion(this)">
                                             <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -513,23 +482,19 @@
                                             </div>
                                         </div>
 
-                                        <!-- KONTEN LEVEL 2 (PANEL BIRU MUDA) -->
                                         <div class="tax-content-panel">
                                             <div class="tree-container">
-                                                <!-- Ikon Cabang Level 1 ke 2 -->
                                                 <div class="branch-icon">
                                                     <i class="branch-connector"></i>
                                                 </div>
 
                                                 <div class="objek-table">
-                                                    <!-- Header Tabel Objek Pajak -->
                                                     <div class="grid-header">
                                                         <div class="col-name-head">Nama Objek Pajak</div>
                                                         <div class="col-dpp-head">Total DPP PPh</div>
                                                         <div class="col-potongan-head">Total Potongan PPh</div>
                                                     </div>
 
-                                                    <!-- ITEM LEVEL 2 (OBJEK PAJAK BERPENGARUH KE LEVEL 3) -->
                                                     <div class="objek-item">
                                                         <div class="objek-row" onclick="toggleAccordion(this)">
                                                             <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -549,9 +514,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <!-- KONTEN LEVEL 3 (DAFTAR PEGAWAI KUNING) -->
                                                         <div class="pegawai-content-panel">
-                                                            <!-- Header Kolom Pegawai -->
                                                             <div class="grid-header-pegawai">
                                                                 <div class="col-name-head">Nama Pegawai / Pegawai
                                                                     Eksternal / Rekanan</div>
@@ -559,7 +522,6 @@
                                                                 <div class="col-potongan-head">Potongan PPh</div>
                                                             </div>
 
-                                                            <!-- Pegawai 1 (Ada Ikon Cabang) -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon">
                                                                     <i class="branch-connector"></i>
@@ -572,7 +534,6 @@
                                                                 </div>
                                                             </div>
 
-                                                            <!-- Pegawai 2 -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon"></div>
                                                                 <div class="pegawai-card">Aldi Suandana K</div>
@@ -583,7 +544,6 @@
                                                                 </div>
                                                             </div>
 
-                                                            <!-- Pegawai 3 -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon"></div>
                                                                 <div class="pegawai-card">Aldi Suandana K</div>
@@ -602,10 +562,8 @@
 
                                 </div>
 
-                                <!-- Baris Item 2 -->
                                 <div class="tax-accordion-wrapper">
 
-                                    <!-- ITEM LEVEL 1 (BARIS UTAMA PAJAK) -->
                                     <div class="tax-item">
                                         <div class="tax-header-row" onclick="toggleAccordion(this)">
                                             <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -621,23 +579,19 @@
                                             </div>
                                         </div>
 
-                                        <!-- KONTEN LEVEL 2 (PANEL BIRU MUDA) -->
                                         <div class="tax-content-panel">
                                             <div class="tree-container">
-                                                <!-- Ikon Cabang Level 1 ke 2 -->
                                                 <div class="branch-icon">
                                                     <i class="branch-connector"></i>
                                                 </div>
 
                                                 <div class="objek-table">
-                                                    <!-- Header Tabel Objek Pajak -->
                                                     <div class="grid-header">
                                                         <div class="col-name-head">Nama Objek Pajak</div>
                                                         <div class="col-dpp-head">Total DPP PPh</div>
                                                         <div class="col-potongan-head">Total Potongan PPh</div>
                                                     </div>
 
-                                                    <!-- ITEM LEVEL 2 (OBJEK PAJAK BERPENGARUH KE LEVEL 3) -->
                                                     <div class="objek-item">
                                                         <div class="objek-row" onclick="toggleAccordion(this)">
                                                             <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -657,9 +611,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <!-- KONTEN LEVEL 3 (DAFTAR PEGAWAI KUNING) -->
                                                         <div class="pegawai-content-panel">
-                                                            <!-- Header Kolom Pegawai -->
                                                             <div class="grid-header-pegawai">
                                                                 <div class="col-name-head">Nama Pegawai / Pegawai
                                                                     Eksternal / Rekanan</div>
@@ -667,7 +619,6 @@
                                                                 <div class="col-potongan-head">Potongan PPh</div>
                                                             </div>
 
-                                                            <!-- Pegawai 1 (Ada Ikon Cabang) -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon">
                                                                     <i class="branch-connector"></i>
@@ -680,7 +631,6 @@
                                                                 </div>
                                                             </div>
 
-                                                            <!-- Pegawai 2 -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon"></div>
                                                                 <div class="pegawai-card">Aldi Suandana K</div>
@@ -691,7 +641,6 @@
                                                                 </div>
                                                             </div>
 
-                                                            <!-- Pegawai 3 -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon"></div>
                                                                 <div class="pegawai-card">Aldi Suandana K</div>
@@ -710,10 +659,8 @@
 
                                 </div>
 
-                                <!-- Baris Item 3 -->
                                 <div class="tax-accordion-wrapper">
 
-                                    <!-- ITEM LEVEL 1 (BARIS UTAMA PAJAK) -->
                                     <div class="tax-item">
                                         <div class="tax-header-row" onclick="toggleAccordion(this)">
                                             <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -729,23 +676,19 @@
                                             </div>
                                         </div>
 
-                                        <!-- KONTEN LEVEL 2 (PANEL BIRU MUDA) -->
                                         <div class="tax-content-panel">
                                             <div class="tree-container">
-                                                <!-- Ikon Cabang Level 1 ke 2 -->
                                                 <div class="branch-icon">
                                                     <i class="branch-connector"></i>
                                                 </div>
 
                                                 <div class="objek-table">
-                                                    <!-- Header Tabel Objek Pajak -->
                                                     <div class="grid-header">
                                                         <div class="col-name-head">Nama Objek Pajak</div>
                                                         <div class="col-dpp-head">Total DPP PPh</div>
                                                         <div class="col-potongan-head">Total Potongan PPh</div>
                                                     </div>
 
-                                                    <!-- ITEM LEVEL 2 (OBJEK PAJAK BERPENGARUH KE LEVEL 3) -->
                                                     <div class="objek-item">
                                                         <div class="objek-row" onclick="toggleAccordion(this)">
                                                             <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -765,9 +708,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <!-- KONTEN LEVEL 3 (DAFTAR PEGAWAI KUNING) -->
                                                         <div class="pegawai-content-panel">
-                                                            <!-- Header Kolom Pegawai -->
                                                             <div class="grid-header-pegawai">
                                                                 <div class="col-name-head">Nama Pegawai / Pegawai
                                                                     Eksternal / Rekanan</div>
@@ -775,7 +716,6 @@
                                                                 <div class="col-potongan-head">Potongan PPh</div>
                                                             </div>
 
-                                                            <!-- Pegawai 1 (Ada Ikon Cabang) -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon">
                                                                     <i class="branch-connector"></i>
@@ -788,7 +728,6 @@
                                                                 </div>
                                                             </div>
 
-                                                            <!-- Pegawai 2 -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon"></div>
                                                                 <div class="pegawai-card">Aldi Suandana K</div>
@@ -799,7 +738,6 @@
                                                                 </div>
                                                             </div>
 
-                                                            <!-- Pegawai 3 -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon"></div>
                                                                 <div class="pegawai-card">Aldi Suandana K</div>
@@ -818,10 +756,7 @@
 
                                 </div>
 
-                                <!-- Baris Item 4 -->
                                 <div class="tax-accordion-wrapper">
-
-                                    <!-- ITEM LEVEL 1 (BARIS UTAMA PAJAK) -->
                                     <div class="tax-item">
                                         <div class="tax-header-row" onclick="toggleAccordion(this)">
                                             <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -837,23 +772,19 @@
                                             </div>
                                         </div>
 
-                                        <!-- KONTEN LEVEL 2 (PANEL BIRU MUDA) -->
                                         <div class="tax-content-panel">
                                             <div class="tree-container">
-                                                <!-- Ikon Cabang Level 1 ke 2 -->
                                                 <div class="branch-icon">
                                                     <i class="branch-connector"></i>
                                                 </div>
 
                                                 <div class="objek-table">
-                                                    <!-- Header Tabel Objek Pajak -->
                                                     <div class="grid-header">
                                                         <div class="col-name-head">Nama Objek Pajak</div>
                                                         <div class="col-dpp-head">Total DPP PPh</div>
                                                         <div class="col-potongan-head">Total Potongan PPh</div>
                                                     </div>
 
-                                                    <!-- ITEM LEVEL 2 (OBJEK PAJAK BERPENGARUH KE LEVEL 3) -->
                                                     <div class="objek-item">
                                                         <div class="objek-row" onclick="toggleAccordion(this)">
                                                             <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -873,9 +804,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <!-- KONTEN LEVEL 3 (DAFTAR PEGAWAI KUNING) -->
                                                         <div class="pegawai-content-panel">
-                                                            <!-- Header Kolom Pegawai -->
                                                             <div class="grid-header-pegawai">
                                                                 <div class="col-name-head">Nama Pegawai / Pegawai
                                                                     Eksternal / Rekanan</div>
@@ -883,7 +812,6 @@
                                                                 <div class="col-potongan-head">Potongan PPh</div>
                                                             </div>
 
-                                                            <!-- Pegawai 1 (Ada Ikon Cabang) -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon">
                                                                     <i class="branch-connector"></i>
@@ -896,7 +824,6 @@
                                                                 </div>
                                                             </div>
 
-                                                            <!-- Pegawai 2 -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon"></div>
                                                                 <div class="pegawai-card">Aldi Suandana K</div>
@@ -907,7 +834,6 @@
                                                                 </div>
                                                             </div>
 
-                                                            <!-- Pegawai 3 -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon"></div>
                                                                 <div class="pegawai-card">Aldi Suandana K</div>
@@ -933,7 +859,6 @@
                     <div class="s5-right-content" id="s5-content-pembayaran" style="display:none;">
                         <h2 class="s5-section-title">Tujuan dan Status Pembayaran</h2>
                         <div class="s5-header-container">
-                            <!-- Header Labels -->
                             <div class="table-header">
                                 <div class="col-target">Tujuan Pembayaran</div>
                                 <div class="col-nominal">Nominal Transfer</div>
@@ -942,7 +867,6 @@
                             </div>
                         </div>
                         <div class="s5-list-container">
-                            <!-- List Rows -->
                             <div class="s5-list">
                                 <div class="s5-accordion-item">
                                     <div class="s5-list-row" onclick="toggleRow(this)">
@@ -1309,9 +1233,7 @@
                         <h2 class="s5-section-title">Jurnal Voucher</h2>
                         <div class="s5-list-container">
 
-                            <!-- Timeline Stepper -->
                             <div class="stepper-container">
-                                <!-- Garis Penghubung Background -->
                                 <div class="step-line-container">
                                     <div class="step-line"></div>
                                     <div class="step-line"></div>
@@ -1319,7 +1241,6 @@
                                     <div class="step-line active-blue"></div>
                                 </div>
 
-                                <!-- Step 1 (Grey / Normal Dibalik) -->
                                 <div class="step-item">
                                     <div class="step-node node-gray"></div>
                                     <div class="step-info">
@@ -1329,7 +1250,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Step 2 (Green / Reversal Terposting) -->
                                 <div class="step-item">
                                     <div class="step-node node-green"></div>
                                     <div class="step-info">
@@ -1339,7 +1259,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Step 3 (Pink / Normal Dibatalkan) -->
                                 <div class="step-item">
                                     <div class="step-node node-pink"></div>
                                     <div class="step-info">
@@ -1349,7 +1268,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Step 4 (Green / Reversal Terposting) -->
                                 <div class="step-item">
                                     <div class="step-node node-green"></div>
                                     <div class="step-info">
@@ -1359,7 +1277,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Step 5 (Blue / Active - Pembayaran Ulang) -->
                                 <div class="step-item">
                                     <div class="step-node node-blue"></div>
                                     <div class="step-info">
@@ -1370,7 +1287,6 @@
                                 </div>
                             </div>
 
-                            <!-- Kartu Detail Jurnal -->
                             <div class="detail-card">
                                 <div class="card-header">
                                     <h2 class="card-title">Detail Jurnal — Pembayaran Ulang</h2>
@@ -1413,7 +1329,6 @@
                                     </tbody>
                                 </table>
 
-                                <!-- Baris Total -->
                                 <div class="table-footer">
                                     <span class="total-title">Total</span>
                                     <div class="total-amounts">
@@ -1431,7 +1346,6 @@
 
                         <div class="main-container">
                             <div class="s5-list-container">
-                                <!-- Left Sidebar: Alur Persetujuan -->
                                 <div class="sidebar">
                                     <div class="sidebar-title">Alur Persetujuan</div>
 
@@ -1556,7 +1470,6 @@
 
                             </div>
                             <div class="s5-list-container s5-aktivitas">
-                                <!-- Right Content: Aktivitas Dokumen -->
                                 <div class="content-panel">
                                     <div class="content-header">
                                         <div class="header-title-group">
@@ -1625,9 +1538,7 @@
                     <footer class="s5-header">
                         <div class="header-summary">
 
-                            <!-- Wrapper box dengan background ungu muda -->
                             <div class="action-group-box">
-                                <!-- Metode Pembayaran -->
                                 <div class="action-item">
                                     <span class="action-label">Metode Pembayaran</span>
                                     <button type="button" class="btn-toggle" id="btnPayment"
@@ -1637,10 +1548,8 @@
                                     </button>
                                 </div>
 
-                                <!-- Divider Vertikal -->
                                 <div class="group-divider"></div>
 
-                                <!-- Kode Buku -->
                                 <div class="action-item">
                                     <span class="action-label">Kode Buku</span>
                                     <button type="button" class="btn-static">
@@ -1650,17 +1559,14 @@
                                 </div>
                             </div>
 
-                            <!-- Total Pengajuan -->
                             <div class="step4-summary-box">
                                 <span class="summary-title">Total Pengajuan</span>
                                 <span class="summary-amount">Rp. 10.000.000.000,00</span>
                             </div>
-                            <!-- Total PPh -->
                             <div class="step4-summary-box">
                                 <span class="summary-title">Total Pajak Penghasilan (PPh)</span>
                                 <span class="summary-amount text-red">Rp. 10.000.000.000,00</span>
                             </div>
-                            <!-- Total Transfer -->
                             <div class="step4-summary-box">
                                 <span class="summary-title">Total Transfer</span>
                                 <span class="summary-amount text-green">Rp. 10.000.000.000,00</span>
@@ -1687,7 +1593,6 @@
     <div id="filePreviewModal" class="custom-modal-overlay" style="display: none;">
         <div class="custom-modal-container">
 
-            <!-- Modal Header -->
             <div class="custom-modal-header">
                 <div class="modal-title-wrap">
                     <h3 class="modal-title">Dokumen Pendukung</h3>
@@ -1696,14 +1601,11 @@
                 <button class="modal-close-btn" type="button">&times;</button>
             </div>
 
-            <!-- Modal Body -->
             <div class="custom-modal-body">
 
-                <!-- Panel Kiri: Grid Kartu File & Pagination -->
                 <div class="step3-middle-panel">
                     <div class="file-grid-2col">
 
-                        <!-- Card 1 -->
                         <div class="file-item-card">
                             <div class="fic-top">
                                 <i class="fas fa-file-image icon-teal"></i>
@@ -1715,7 +1617,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 2 (Active / Selected) -->
                         <div class="file-item-card active-card">
                             <div class="fic-top">
                                 <i class="fas fa-file-pdf icon-red"></i>
@@ -1727,7 +1628,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 3 (Perlu Perbaikan) -->
                         <div class="file-item-card">
                             <div class="fic-top">
                                 <i class="fas fa-file-image icon-teal"></i>
@@ -1742,7 +1642,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 4 -->
                         <div class="file-item-card">
                             <div class="fic-top">
                                 <i class="fas fa-file-image icon-teal"></i>
@@ -1754,7 +1653,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 5 -->
                         <div class="file-item-card">
                             <div class="fic-top">
                                 <i class="fas fa-file-image icon-teal"></i>
@@ -1766,7 +1664,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 6 (Perlu Perbaikan) -->
                         <div class="file-item-card">
                             <div class="fic-top">
                                 <i class="fas fa-file-pdf icon-red"></i>
@@ -1781,7 +1678,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 7 -->
                         <div class="file-item-card">
                             <div class="fic-top">
                                 <i class="fas fa-file-image icon-teal"></i>
@@ -1793,7 +1689,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 8 -->
                         <div class="file-item-card">
                             <div class="fic-top">
                                 <i class="fas fa-file-pdf icon-red"></i>
@@ -1805,7 +1700,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 9 -->
                         <div class="file-item-card">
                             <div class="fic-top">
                                 <i class="fas fa-file-image icon-teal"></i>
@@ -1817,7 +1711,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 10 -->
                         <div class="file-item-card">
                             <div class="fic-top">
                                 <i class="fas fa-file-image icon-teal"></i>
@@ -1829,7 +1722,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 11 (Perlu Perbaikan) -->
                         <div class="file-item-card">
                             <div class="fic-top">
                                 <i class="fas fa-file-pdf icon-red"></i>
@@ -1844,7 +1736,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 12 -->
                         <div class="file-item-card">
                             <div class="fic-top">
                                 <i class="fas fa-file-pdf icon-red"></i>
@@ -1858,7 +1749,6 @@
 
                     </div>
 
-                    <!-- Footer / Pagination -->
                     <div class="table-footer-pagination">
                         <span class="pagination-info">Menampilkan 1 - 12 dari 12</span>
                         <div class="pagination-controls">
@@ -1872,10 +1762,8 @@
                     </div>
                 </div>
 
-                <!-- Panel Kanan: Viewer & Input Catatan -->
                 <div class="step3-right-panel">
 
-                    <!-- Preview Struk -->
                     <div class="panel-card preview-card">
                         <div class="preview-toolbar">
                             <div class="pt-left">
@@ -1888,11 +1776,10 @@
                         </div>
 
                         <div class="preview-image-container">
-                            <img src="../assets/images/struk2.png" alt="Struk Pembayaran" class="preview-receipt-img">
+                            <img src="../../assets/images/struk2.png" alt="Struk Pembayaran" class="preview-receipt-img">
                         </div>
                     </div>
 
-                    <!-- Form Catatan Perbaikan -->
                     <div class="panel-card feedback-card">
                         <div class="info-notice">
                             <i class="fa-solid fa-circle-info note-icon"></i>
@@ -1923,16 +1810,12 @@ Mohon unggah dokumen yang lebih jelas.</textarea>
             </div>
         </div>
     </div>
-    <!-- Modal Popup Konfirmasi -->
     <div id="modalPerorangan" class="app-modal-overlay" style="display: none;">
         <div class="app-modal-container">
 
-            <!-- Modal Body (Isi dari preview right-panel & list biaya) -->
             <div class="app-modal-body">
 
-                <!-- Profil & Ringkasan Biaya -->
                 <div class="s4-dynamic-header-row">
-                    <!-- Kolom 1: Profil -->
                     <div class="header-col col-profile">
                         <div class="sdh-banner-card theme-perorangan">
                             <div class="sdh-title-group">
@@ -1955,7 +1838,6 @@ Mohon unggah dokumen yang lebih jelas.</textarea>
                         </div>
                     </div>
 
-                    <!-- Kolom 2: Rekening Bank -->
                     <div class="header-col col-bank">
                         <div class="bank-top-box">
                             <span class="box-title">Siti Rahmawati</span>
@@ -1980,7 +1862,6 @@ Mohon unggah dokumen yang lebih jelas.</textarea>
                         </div>
                     </div>
 
-                    <!-- Kolom 3: Total Biaya -->
                     <div class="header-col col-total">
                         <div class="total-top-box">
                             <span class="box-title">Total Biaya</span>
@@ -1995,7 +1876,6 @@ Mohon unggah dokumen yang lebih jelas.</textarea>
 
                 </div>
 
-                <!-- Detail Perjalanan Dinas -->
                 <div id="cardDetilPerjalananDinas" class="detil-perjalanan-card" style="margin-top: 16px;">
                     <div class="detil-perjalanan-title">Detil perjalanan dinas</div>
                     <div class="detil-perjalanan-body">
@@ -2014,7 +1894,6 @@ Mohon unggah dokumen yang lebih jelas.</textarea>
                             </div>
                         </div>
 
-                        <!-- Highlight Durasi & Tanggal -->
                         <div class="detil-box-white">
                             <div class="detil-perjalanan-col detil-col-gap">
                                 <div class="detil-row">
@@ -2032,7 +1911,6 @@ Mohon unggah dokumen yang lebih jelas.</textarea>
                             </div>
                         </div>
 
-                        <!-- Rute Kota -->
                         <div class="detil-perjalanan-col detil-col-gap">
                             <div class="detil-row">
                                 <span class="detil-label detil-label-city">Kota Asal</span>
@@ -2050,7 +1928,6 @@ Mohon unggah dokumen yang lebih jelas.</textarea>
                     </div>
                 </div>
 
-                <!-- Area Kelompok Biaya Dinamis -->
                 <div class="s4-kuitansi-area" style="margin-top: 16px;">
                     <div id="dropdownPerorangan" class="kw-select-group">
                         <select class="kw-select-kategori">
@@ -2070,7 +1947,6 @@ Mohon unggah dokumen yang lebih jelas.</textarea>
 
             </div>
 
-            <!-- Modal Footer: Tombol Tolak & Centang/Setuju -->
             <div class="app-modal-footer">
                 <button type="button" class="btn-action-approve" onclick="handleSetuju()" title="Setujui">
                     <i class="fas fa-check"></i>
@@ -2086,12 +1962,9 @@ Mohon unggah dokumen yang lebih jelas.</textarea>
     <div id="modalBadanUsaha" class="app-modal-overlay" style="display: none;">
         <div class="app-modal-container">
 
-            <!-- Modal Body (Isi dari preview right-panel & list biaya) -->
             <div class="app-modal-body">
 
-                <!-- Profil & Ringkasan Biaya -->
                 <div class="s4-dynamic-header-row">
-                    <!-- Kolom 1: Profil -->
                     <div class="header-col col-profile">
                         <div class="sdh-banner-card theme-badan-usaha">
                             <div class="sdh-title-group">
@@ -2114,7 +1987,6 @@ Mohon unggah dokumen yang lebih jelas.</textarea>
                         </div>
                     </div>
 
-                    <!-- Kolom 2: Rekening Bank -->
                     <div class="header-col col-bank">
                         <div class="bank-top-box">
                             <span class="box-title">Siti Rahmawati</span>
@@ -2139,7 +2011,6 @@ Mohon unggah dokumen yang lebih jelas.</textarea>
                         </div>
                     </div>
 
-                    <!-- Kolom 3: Total Biaya -->
                     <div class="header-col col-total">
                         <div class="total-top-box">
                             <span class="box-title">Total Biaya</span>
@@ -2155,7 +2026,6 @@ Mohon unggah dokumen yang lebih jelas.</textarea>
                 </div>
 
 
-                <!-- Area Kelompok Biaya Dinamis -->
                 <div class="s4-kuitansi-area" style="margin-top: 16px;">
                     <div class="kw-section-title-row"
                         style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding-top: 4px;">
@@ -2173,7 +2043,6 @@ Mohon unggah dokumen yang lebih jelas.</textarea>
 
             </div>
 
-            <!-- Modal Footer: Tombol Tolak & Centang/Setuju -->
             <div class="app-modal-footer">
                 <button type="button" class="btn-action-approve" onclick="handleSetuju()" title="Setujui">
                     <i class="fas fa-check"></i>

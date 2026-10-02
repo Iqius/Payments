@@ -1,14 +1,31 @@
-// ==========================================
-// GRID APPROVAL - sumber data: documentData (script-dataGridPengajuan.js)
-// ==========================================
+// ==========================================================================
+// GRID APPROVAL (pages/approval/grid-approval.html)
+// Sumber data : documentData (script-dataGridPengajuan.js)
+// Isi file    : konfigurasi -> helper -> filter -> render -> event
+// ==========================================================================
 
-// Pemetaan filter "Status" -> status pada data.
-// disetujui      : status approved / done
-// belumDisetujui : semua status selain itu
-const STATUS_DISETUJUI = ["approved", "done"];
-const STATUS_BELUM_DISETUJUI = ["submitted"];
+// ---------- Konfigurasi ----------
+// Isi dropdown "Status" -> daftar status pada data
+const STATUS_GROUPS = {
+  disetujui: ["approved", "done"],
+  belumDisetujui: ["submitted"],
+};
 
-// ---------- Helper ----------
+// Path relatif terhadap halaman ini (satu folder dengan form-approval.html)
+const URL_FORM_APPROVAL = "form-approval.html";
+
+const DEFAULT_PAGE_SIZE = 5;
+const TOTAL_COLUMNS = 8;
+
+// ---------- State ----------
+let docCurrentPage = 1;
+let docPageSize = DEFAULT_PAGE_SIZE;
+
+// ==========================================================================
+// HELPER
+// ==========================================================================
+const byId = (id) => document.getElementById(id);
+
 function formatRupiah(val) {
   if (val === null || val === undefined || isNaN(val)) return "Rp. 0,00";
   return "Rp. " + new Intl.NumberFormat("id-ID").format(val) + ",00";
@@ -27,32 +44,25 @@ function escapeHtml(value) {
     .replace(/"/g, "&quot;");
 }
 
-// ---------- State ----------
-let docCurrentPage = 1;
-let docPageSize = 5;
-
-// ---------- Filter ----------
+// ==========================================================================
+// FILTER (status + pencarian + rentang tanggal)
+// ==========================================================================
 function getFilteredData() {
   if (typeof documentData === "undefined" || !Array.isArray(documentData)) {
     console.error("Data 'documentData' tidak ditemukan atau bukan array.");
     return [];
   }
 
-  const keyword = (document.getElementById("search-input")?.value || "")
-    .toLowerCase()
-    .trim();
-  const selectedStatus = document.getElementById("filter-status")?.value || "all";
-  const startDate = document.getElementById("start-date")?.value || "";
-  const endDate = document.getElementById("end-date")?.value || "";
+  const keyword = (byId("search-input")?.value || "").toLowerCase().trim();
+  const selectedStatus = byId("filter-status")?.value || "all";
+  const startDate = byId("start-date")?.value || "";
+  const endDate = byId("end-date")?.value || "";
 
   return documentData.filter((item) => {
     const status = String(item.status || "").toLowerCase();
-    const disetujui = STATUS_DISETUJUI.includes(status);
-    const belumDisetujui = STATUS_BELUM_DISETUJUI.includes(status);
 
-    const matchStatus =
-      (selectedStatus === "disetujui" && disetujui) ||
-      (selectedStatus === "belumDisetujui" && belumDisetujui);
+    // Hanya status yang terdaftar di STATUS_GROUPS yang ditampilkan
+    const matchStatus = Boolean(STATUS_GROUPS[selectedStatus]?.includes(status));
 
     const matchSearch = [
       item.id,
@@ -77,19 +87,21 @@ function getFilteredData() {
   });
 }
 
-// ---------- Render satu baris (8 kolom) ----------
+// ==========================================================================
+// RENDER BARIS (8 kolom)
+// ==========================================================================
+const LINK_STYLE =
+  'style="cursor: pointer; font-weight: bold; text-decoration: underline; color: #1e60aa;"';
+
 function buildRowHtml(item) {
   const idDok = escapeHtml(item.id || "-");
   const keperluan = item.keperluan || "-";
-
   const statusClass = escapeHtml((item.status || "draft").toLowerCase().trim());
-  const statusText = escapeHtml(item.statusText || item.status || "Draft");
-  // Semua dokumen di grid ini (submitted / approved / done) dibuka di halaman approval.
-  // Tombol Approve & Kembalikan diatur di form-approval.html sesuai statusnya.
-  const linkStyle =
-    'style="cursor: pointer; font-weight: bold; text-decoration: underline; color: #1e60aa;"';
-  const docLinkHtml = `<a href="form-approval.html?id=${encodeURIComponent(item.id || "")}"
-        class="doc-link" ${linkStyle}>${idDok}</a>`;
+
+  // Semua dokumen di grid ini dibuka di halaman approval;
+  // tombol Approve/Kembalikan diatur di script-formApproval.js sesuai status.
+  const docLinkHtml = `<a href="${URL_FORM_APPROVAL}?id=${encodeURIComponent(item.id || "")}"
+                          class="doc-link" ${LINK_STYLE}>${idDok}</a>`;
 
   return `
     <tr data-status="${statusClass}" data-id="${idDok}">
@@ -107,33 +119,36 @@ function buildRowHtml(item) {
   `;
 }
 
-// ---------- Render tabel (filter + pagination) ----------
+// ==========================================================================
+// RENDER TABEL (filter -> pagination -> baris)
+// ==========================================================================
 function renderTable() {
-  const tableBody = document.getElementById("table-body");
-  const totalItemsEl = document.getElementById("total-doc-items");
-  const pageSizeSelect = document.getElementById("page-size-select");
-  const currentPageEl = document.getElementById("current-page-num");
-  const totalPagesEl = document.getElementById("total-pages-text");
+  const tableBody = byId("table-body");
+  const pageSizeSelect = byId("page-size-select");
 
+  // 1. Ukuran halaman dari dropdown
   if (pageSizeSelect) {
-    docPageSize = parseInt(pageSizeSelect.value, 10) || 5;
+    docPageSize = parseInt(pageSizeSelect.value, 10) || DEFAULT_PAGE_SIZE;
   }
 
+  // 2. Data hasil filter + jumlah halaman
   const filtered = getFilteredData();
   const totalItems = filtered.length;
   const totalPages = Math.ceil(totalItems / docPageSize) || 1;
   docCurrentPage = Math.min(Math.max(docCurrentPage, 1), totalPages);
 
-  if (totalItemsEl) totalItemsEl.innerText = totalItems;
-  if (currentPageEl) currentPageEl.innerText = docCurrentPage;
-  if (totalPagesEl) totalPagesEl.innerText = `of ${totalPages}`;
+  // 3. Info pagination
+  if (byId("total-doc-items")) byId("total-doc-items").innerText = totalItems;
+  if (byId("current-page-num")) byId("current-page-num").innerText = docCurrentPage;
+  if (byId("total-pages-text")) byId("total-pages-text").innerText = `of ${totalPages}`;
 
   if (!tableBody) return;
 
+  // 4. Data kosong
   if (totalItems === 0) {
     tableBody.innerHTML = `
       <tr>
-        <td colspan="8" style="text-align: center; padding: 24px; color: #94a3b8;">
+        <td colspan="${TOTAL_COLUMNS}" style="text-align: center; padding: 24px; color: #94a3b8;">
           Tidak ada data dokumen.
         </td>
       </tr>
@@ -141,6 +156,7 @@ function renderTable() {
     return;
   }
 
+  // 5. Potong sesuai halaman, lalu render
   const startIndex = (docCurrentPage - 1) * docPageSize;
   tableBody.innerHTML = filtered
     .slice(startIndex, startIndex + docPageSize)
@@ -152,33 +168,37 @@ function goToPage(page) {
   const totalPages = Math.ceil(getFilteredData().length / docPageSize) || 1;
   const target = Math.min(Math.max(page, 1), totalPages);
   if (target === docCurrentPage) return;
+
   docCurrentPage = target;
   renderTable();
 }
 
+// Filter berubah -> kembali ke halaman 1
 function applyFilters() {
   docCurrentPage = 1;
   renderTable();
 }
 
-// ---------- Inisialisasi ----------
+// ==========================================================================
+// EVENT
+// ==========================================================================
+function bindFilters() {
+  byId("search-input")?.addEventListener("input", applyFilters);
+  byId("filter-status")?.addEventListener("change", applyFilters);
+  byId("start-date")?.addEventListener("change", applyFilters);
+  byId("end-date")?.addEventListener("change", applyFilters);
+}
+
+function bindPagination() {
+  byId("page-size-select")?.addEventListener("change", applyFilters);
+  byId("btn-first-page")?.addEventListener("click", () => goToPage(1));
+  byId("btn-prev-page")?.addEventListener("click", () => goToPage(docCurrentPage - 1));
+  byId("btn-next-page")?.addEventListener("click", () => goToPage(docCurrentPage + 1));
+  byId("btn-last-page")?.addEventListener("click", () => goToPage(Infinity));
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("search-input")?.addEventListener("input", applyFilters);
-  document.getElementById("filter-status")?.addEventListener("change", applyFilters);
-  document.getElementById("start-date")?.addEventListener("change", applyFilters);
-  document.getElementById("end-date")?.addEventListener("change", applyFilters);
-  document.getElementById("page-size-select")?.addEventListener("change", applyFilters);
-
-  document.getElementById("btn-first-page")?.addEventListener("click", () => goToPage(1));
-  document
-    .getElementById("btn-prev-page")
-    ?.addEventListener("click", () => goToPage(docCurrentPage - 1));
-  document
-    .getElementById("btn-next-page")
-    ?.addEventListener("click", () => goToPage(docCurrentPage + 1));
-  document
-    .getElementById("btn-last-page")
-    ?.addEventListener("click", () => goToPage(Infinity));
-
+  bindFilters();
+  bindPagination();
   renderTable();
 });

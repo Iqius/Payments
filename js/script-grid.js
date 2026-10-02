@@ -1,6 +1,26 @@
-// ==========================================
+// ==========================================================================
+// GRID PENGAJUAN (index.html)
+// Sumber data : documentData (script-dataGridPengajuan.js)
+// Isi file    : konfigurasi -> helper -> filter -> render -> event
+// ==========================================================================
+
+// ---------- Konfigurasi ----------
+// Path relatif terhadap index.html (root)
+const URL_FORM_OPERASIONAL = "pages/pencairan/form-operasional.html";
+const URL_FORM_VERIFIKASI = "pages/verifikasi/form-verifikasi.html";
+
+const DEFAULT_PAGE_SIZE = 20;
+const TOTAL_COLUMNS = 11;
+
+// ---------- State ----------
+let docCurrentPage = 1;
+let docPageSize = DEFAULT_PAGE_SIZE;
+
+// ==========================================================================
 // HELPER
-// ==========================================
+// ==========================================================================
+const byId = (id) => document.getElementById(id);
+
 function formatRupiah(val) {
   if (val === null || val === undefined || isNaN(val)) return "Rp. 0,00";
   return "Rp. " + new Intl.NumberFormat("id-ID").format(val) + ",00";
@@ -19,29 +39,19 @@ function escapeHtml(value) {
     .replace(/"/g, "&quot;");
 }
 
-// ==========================================
-// STATE
-// ==========================================
-let docCurrentPage = 1;
-let docPageSize = 20;
-
-// ==========================================
-// FILTER
-// ==========================================
+// ==========================================================================
+// FILTER (status + pencarian + rentang tanggal)
+// ==========================================================================
 function getFilteredData() {
   if (typeof documentData === "undefined" || !Array.isArray(documentData)) {
     console.error("Data 'documentData' tidak ditemukan atau bukan array.");
     return [];
   }
 
-  const keyword = (document.getElementById("search-input")?.value || "")
-    .toLowerCase()
-    .trim();
-  const selectedStatus = (
-    document.getElementById("filter-status")?.value || "all"
-  ).toLowerCase();
-  const startDate = document.getElementById("start-date")?.value || "";
-  const endDate = document.getElementById("end-date")?.value || "";
+  const keyword = (byId("search-input")?.value || "").toLowerCase().trim();
+  const selectedStatus = (byId("filter-status")?.value || "all").toLowerCase();
+  const startDate = byId("start-date")?.value || "";
+  const endDate = byId("end-date")?.value || "";
 
   return documentData.filter((item) => {
     const matchStatus =
@@ -69,12 +79,12 @@ function getFilteredData() {
   });
 }
 
-// ==========================================
-// SINKRONISASI TOMBOL & MASTER CHECKBOX
-// ==========================================
+// ==========================================================================
+// TOMBOL AKSI & MASTER CHECKBOX
+// ==========================================================================
 function updateButtonAndCheckAllState() {
-  const btnAction = document.getElementById("btnPencairanBaru");
-  const checkAll = document.getElementById("check-all");
+  const btnAction = byId("btnPencairanBaru");
+  const checkAll = byId("check-all");
 
   const enabledCheckboxes = document.querySelectorAll(
     "#table-body .row-checkbox:not(:disabled)",
@@ -83,7 +93,7 @@ function updateButtonAndCheckAllState() {
     "#table-body .row-checkbox:checked",
   ).length;
 
-  // Toggle mode tombol (Hapus / Pencairan Baru)
+  // Mode tombol: "Hapus (n)" saat ada yang dipilih, selain itu "Pencairan Baru"
   if (btnAction) {
     const hasSelection = checkedCount > 0;
     btnAction.classList.toggle("danger-btn", hasSelection);
@@ -95,56 +105,66 @@ function updateButtonAndCheckAllState() {
          <span>Pencairan Baru</span>`;
   }
 
-  // Sinkronisasi status check-all
+  // Master checkbox tercentang jika semua baris yang aktif tercentang
   if (checkAll) {
     checkAll.checked =
       enabledCheckboxes.length > 0 && checkedCount === enabledCheckboxes.length;
   }
 }
 
-// ==========================================
-// RENDER SATU BARIS
-// ==========================================
+// ==========================================================================
+// RENDER BARIS
+// ==========================================================================
+const LINK_STYLE =
+  'style="cursor: pointer; font-weight: bold; text-decoration: underline; color: #1e60aa;"';
+
+// ID dokumen: berupa link ke halaman verifikasi hanya untuk status Submitted
+function buildDocLink(idDok, rawId, isSubmitted) {
+  if (!isSubmitted) return `<span class="link-col">${idDok}</span>`;
+
+  return `<a href="${URL_FORM_VERIFIKASI}?id=${encodeURIComponent(rawId)}"
+             class="doc-link" ${LINK_STYLE}>${idDok}</a>`;
+}
+
+// Badge status: untuk Unrealized, badge-nya menjadi link ke form operasional
+// (membawa id dokumen + id anggaran)
+function buildStatusBadge(item, statusClass, statusText, isUnrealized) {
+  const badge = `<span class="badge ${statusClass} badge-${statusClass}">${statusText}</span>`;
+  if (!isUnrealized) return badge;
+
+  const params = new URLSearchParams({
+    id: item.id || "",
+    idAnggaran: item.idAnggaran || "",
+  });
+
+  return `<a href="${URL_FORM_OPERASIONAL}?${params.toString()}"
+             title="Buka form pertanggungjawaban"
+             style="text-decoration: none; cursor: pointer; display: inline-block;">${badge}</a>`;
+}
+
 function buildRowHtml(item) {
   const idDok = escapeHtml(item.id || "-");
   const anggaran = item.anggaran || "-";
   const keperluan = item.keperluan || "-";
 
+  // Status
   const statusClass = escapeHtml((item.status || "draft").toLowerCase().trim());
   const statusText = escapeHtml(item.statusText || item.status || "Draft");
   const statusLower = statusText.toLowerCase().trim();
+  const is = (name) => statusClass === name || statusLower === name;
 
-  // Hanya Draft yang checkbox-nya aktif
-  const isDraft = statusLower === "draft" || statusClass === "draft";
-  // Hanya Submitted yang ID dokumennya berupa link
+  const isDraft = is("draft"); // hanya Draft yang checkbox-nya aktif
+  const isSubmitted = is("submitted");
+  const isUnrealized = is("unrealized");
 
-  const isUnrealized =
-    statusLower === "unrealized" || statusClass === "unrealized";
-
-  // Badge status: untuk Unrealized, badge-nya yang menjadi link
-  // ke form operasional (bawa id dokumen + id anggaran)
-  const badgeHtml = `<span class="badge ${statusClass} badge-${statusClass}">${statusText}</span>`;
-  let statusBadgeHtml = badgeHtml;
-  if (isUnrealized) {
-    const params = new URLSearchParams({
-      id: item.id || "",
-      idAnggaran: item.idAnggaran || "",
-    });
-    statusBadgeHtml = `<a href="pages/pencairan/form-operasional.html?${params.toString()}"
-          title="Buka form pertanggungjawaban"
-          style="text-decoration: none; cursor: pointer; display: inline-block;">${badgeHtml}</a>`;
-  }
-  // Hanya Submitted yang ID dokumennya berupa link ke halaman verifikasi
-  const isSubmitted = statusLower === "submitted" || statusClass === "submitted";
-
-  const linkStyle =
-    'style="cursor: pointer; font-weight: bold; text-decoration: underline; color: #1e60aa;"';
-
-  const docLinkHtml = isSubmitted
-    ? `<a href="pages/verifikasi/form-verifikasi.html?id=${encodeURIComponent(item.id || "")}"
-          class="doc-link" ${linkStyle}>${idDok}</a>`
-    : `<span class="link-col">${idDok}</span>`;
-
+  // Bagian baris yang butuh logika
+  const docLinkHtml = buildDocLink(idDok, item.id || "", isSubmitted);
+  const statusBadgeHtml = buildStatusBadge(
+    item,
+    statusClass,
+    statusText,
+    isUnrealized,
+  );
   const statusDateHtml = item.statusDate
     ? `<span class="status-date">${escapeHtml(item.statusDate)}</span>`
     : "";
@@ -158,8 +178,7 @@ function buildRowHtml(item) {
                data-status="${statusText}"
                ${isDraft ? "" : "disabled"}>
       </td>
-            <td>${docLinkHtml}</td>
-
+      <td>${docLinkHtml}</td>
       <td>${escapeHtml(item.tanggal || "-")}</td>
       <td><span class="link-col">${escapeHtml(item.kantor || "-")}</span></td>
       <td><span class="link-col">${escapeHtml(item.metode || "-")}</span></td>
@@ -183,38 +202,36 @@ function buildRowHtml(item) {
   `;
 }
 
-// ==========================================
-// RENDER TABEL (filter + pagination + 11 kolom)
-// ==========================================
+// ==========================================================================
+// RENDER TABEL (filter -> pagination -> baris)
+// ==========================================================================
 function renderTable() {
-  const tableBody = document.getElementById("table-body");
-  const totalItemsEl = document.getElementById("total-doc-items");
-  const pageSizeSelect = document.getElementById("page-size-select");
-  const currentPageEl = document.getElementById("current-page-num");
-  const totalPagesEl = document.getElementById("total-pages-text");
+  const tableBody = byId("table-body");
+  const pageSizeSelect = byId("page-size-select");
 
   // 1. Ukuran halaman dari dropdown
   if (pageSizeSelect) {
-    docPageSize = parseInt(pageSizeSelect.value, 10) || 20;
+    docPageSize = parseInt(pageSizeSelect.value, 10) || DEFAULT_PAGE_SIZE;
   }
 
-  // 2. Data hasil filter + hitung halaman
+  // 2. Data hasil filter + jumlah halaman
   const filtered = getFilteredData();
   const totalItems = filtered.length;
   const totalPages = Math.ceil(totalItems / docPageSize) || 1;
   docCurrentPage = Math.min(Math.max(docCurrentPage, 1), totalPages);
 
-  if (totalItemsEl) totalItemsEl.innerText = totalItems;
-  if (currentPageEl) currentPageEl.innerText = docCurrentPage;
-  if (totalPagesEl) totalPagesEl.innerText = `of ${totalPages}`;
+  // 3. Info pagination
+  if (byId("total-doc-items")) byId("total-doc-items").innerText = totalItems;
+  if (byId("current-page-num")) byId("current-page-num").innerText = docCurrentPage;
+  if (byId("total-pages-text")) byId("total-pages-text").innerText = `of ${totalPages}`;
 
   if (!tableBody) return;
 
-  // 3. Data kosong
+  // 4. Data kosong
   if (totalItems === 0) {
     tableBody.innerHTML = `
       <tr>
-        <td colspan="11" style="text-align: center; padding: 24px; color: #94a3b8;">
+        <td colspan="${TOTAL_COLUMNS}" style="text-align: center; padding: 24px; color: #94a3b8;">
           Tidak ada data dokumen.
         </td>
       </tr>
@@ -223,7 +240,7 @@ function renderTable() {
     return;
   }
 
-  // 4. Potong sesuai halaman & render
+  // 5. Potong sesuai halaman, lalu render
   const startIndex = (docCurrentPage - 1) * docPageSize;
   tableBody.innerHTML = filtered
     .slice(startIndex, startIndex + docPageSize)
@@ -233,11 +250,11 @@ function renderTable() {
   updateButtonAndCheckAllState();
 }
 
-// Ganti halaman lalu render ulang
 function goToPage(page) {
   const totalPages = Math.ceil(getFilteredData().length / docPageSize) || 1;
   const target = Math.min(Math.max(page, 1), totalPages);
   if (target === docCurrentPage) return;
+
   docCurrentPage = target;
   renderTable();
 }
@@ -248,40 +265,28 @@ function applyFilters() {
   renderTable();
 }
 
-// ==========================================
-// INISIALISASI
-// ==========================================
-document.addEventListener("DOMContentLoaded", () => {
-  // --- Filter ---
-  const searchInput = document.getElementById("search-input");
-  const filterSelect = document.getElementById("filter-status");
-  const startDateInput = document.getElementById("start-date");
-  const endDateInput = document.getElementById("end-date");
+// ==========================================================================
+// EVENT
+// ==========================================================================
+function bindFilters() {
+  byId("search-input")?.addEventListener("input", applyFilters);
+  byId("filter-status")?.addEventListener("change", applyFilters);
+  byId("start-date")?.addEventListener("change", applyFilters);
+  byId("end-date")?.addEventListener("change", applyFilters);
+}
 
-  searchInput?.addEventListener("input", applyFilters);
-  filterSelect?.addEventListener("change", applyFilters);
-  startDateInput?.addEventListener("change", applyFilters);
-  endDateInput?.addEventListener("change", applyFilters);
+function bindPagination() {
+  byId("page-size-select")?.addEventListener("change", applyFilters);
+  byId("btn-first-page")?.addEventListener("click", () => goToPage(1));
+  byId("btn-prev-page")?.addEventListener("click", () => goToPage(docCurrentPage - 1));
+  byId("btn-next-page")?.addEventListener("click", () => goToPage(docCurrentPage + 1));
+  byId("btn-last-page")?.addEventListener("click", () => goToPage(Infinity));
+}
 
-  // --- Pagination ---
-  document
-    .getElementById("page-size-select")
-    ?.addEventListener("change", applyFilters);
-  document
-    .getElementById("btn-first-page")
-    ?.addEventListener("click", () => goToPage(1));
-  document
-    .getElementById("btn-prev-page")
-    ?.addEventListener("click", () => goToPage(docCurrentPage - 1));
-  document
-    .getElementById("btn-next-page")
-    ?.addEventListener("click", () => goToPage(docCurrentPage + 1));
-  document
-    .getElementById("btn-last-page")
-    ?.addEventListener("click", () => goToPage(Infinity));
+function bindSelection() {
+  const checkAll = byId("check-all");
 
-  // --- Select All (hanya yang tidak disabled / Draft) ---
-  const checkAll = document.getElementById("check-all");
+  // Pilih semua (hanya baris Draft / checkbox yang tidak disabled)
   checkAll?.addEventListener("change", () => {
     document
       .querySelectorAll("#table-body .row-checkbox:not(:disabled)")
@@ -289,28 +294,31 @@ document.addEventListener("DOMContentLoaded", () => {
     updateButtonAndCheckAllState();
   });
 
-  // --- Delegasi checkbox baris ---
-  document.getElementById("table-body")?.addEventListener("change", (e) => {
+  // Checkbox per baris (delegasi, karena baris dirender ulang)
+  byId("table-body")?.addEventListener("change", (e) => {
     if (e.target.classList.contains("row-checkbox")) {
       updateButtonAndCheckAllState();
     }
   });
+}
 
-  // --- Tombol aksi (Pencairan Baru / Hapus) ---
-  document.getElementById("btnPencairanBaru")?.addEventListener("click", () => {
+function bindActionButton() {
+  byId("btnPencairanBaru")?.addEventListener("click", () => {
     const selectedIds = Array.from(
       document.querySelectorAll("#table-body .row-checkbox:checked"),
     ).map((cb) => cb.value);
 
     if (selectedIds.length > 0) {
-      console.log("Menghapus data ID:", selectedIds); // Mode Hapus
+      console.log("Menghapus data ID:", selectedIds); // mode Hapus
     } else {
-      console.log("Membuka form Pencairan Baru"); // Mode Pencairan Baru
+      console.log("Membuka form Pencairan Baru"); // mode Pencairan Baru
     }
   });
+}
 
-  // --- Tab kategori ---
-  const tabGroup = document.getElementById("kategoriTabs");
+function bindCategoryTabs() {
+  const tabGroup = byId("kategoriTabs");
+
   tabGroup?.addEventListener("click", (e) => {
     const clickedBtn = e.target.closest(".tab-btn");
     if (!clickedBtn) return;
@@ -322,14 +330,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     console.log("Kategori dipilih:", clickedBtn.dataset.tab);
   });
+}
 
-  // --- Render awal ---
+document.addEventListener("DOMContentLoaded", () => {
+  bindFilters();
+  bindPagination();
+  bindSelection();
+  bindActionButton();
+  bindCategoryTabs();
   renderTable();
 });
 
-// ==========================================
+// ==========================================================================
 // GLOBAL (dipanggil dari HTML bila ada)
-// ==========================================
+// ==========================================================================
 function handleRowRedirect(event, url) {
   if (event.target.closest("input[type='checkbox']")) return;
   window.location.href = url;

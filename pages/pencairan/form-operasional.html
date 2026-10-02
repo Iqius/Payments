@@ -14,17 +14,14 @@
 
 <body class="form-page-body">
 
-    <!-- Toast Notification -->
     <div id="toastNotification" class="toast hidden">
         <i class="fas fa-check-circle"></i> Berhasil disimpan
     </div>
 
     <div class="form-main-container">
-        <!-- Global Header -->
         <header class="form-header">
             <div class="header-left">
                 <div class="breadcrumb">Pengajuan</div>
-                <!-- Tambahkan id="header-title" -->
                 <h2 id="header-title">Operasional Umum</h2>
             </div>
 
@@ -48,14 +45,10 @@
             </div>
         </header>
 
-        <!-- ========================================== -->
         <!-- WRAPPER STEP 1: SUMBER ANGGARAN & KEGIATAN -->
-        <!-- ========================================== -->
         <div id="step-1-wrapper" class="step-content"
             style="display: flex; flex-direction: column; flex-grow: 1; overflow: hidden;">
-            <!-- [EXISTING STEP 1 CODE UNCHANGED - KEPT AS IS IN ORIGINAL FILE] -->
             <main class="form-content-grid">
-                <!-- Left Panel -->
                 <div class="left-panel">
                     <div class="section-block">
                         <h3>Sumber Anggaran</h3>
@@ -97,7 +90,6 @@
                         </div>
                         <div class="summary-row">
                             <span class="label">Unit Kerja Pemilik Anggaran</span>
-                            <!-- Nilai ini tetap statis terkunci -->
                             <strong class="val">33A - Deputi Bidang Keuangan</strong>
                         </div>
                         <div class="summary-row">
@@ -111,7 +103,6 @@
                     </div>
                 </div>
 
-                <!-- Right Panel -->
                 <div class="right-panel">
                     <div class="section-block h-100">
                         <h3>Daftar Anggaran Kegiatan</h3>
@@ -158,7 +149,8 @@
                 <div class="dynamic-fields" id="dynamic-persekot" style="display: none;">
                     <div class="input-group">
                         <label>Tanggal Kegiatan</label>
-                        <input type="text" id="input-tanggal-kegiatan" class="base-textbox" value="01 Agustus 2026" readonly>
+                        <input type="text" id="input-tanggal-kegiatan" class="base-textbox" value="01 Agustus 2026"
+                            readonly>
                     </div>
                     <div class="input-group">
                         <label>Nilai Pengajuan Persekot</label>
@@ -171,18 +163,16 @@
 
                 <div class="keperluan-container">
                     <h3>Keperluan Pencairan</h3>
-                    <textarea id="input-keperluan" class="base-textarea full-width" placeholder="Masukkan keperluan pencairan..."></textarea>
+                    <textarea id="input-keperluan" class="base-textarea full-width"
+                        placeholder="Masukkan keperluan pencairan..."></textarea>
                 </div>
             </section>
         </div>
 
-        <!-- ========================================== -->
         <!-- WRAPPER STEP 2: DOKUMEN PENDUKUNG          -->
-        <!-- ========================================== -->
         <div id="step-2-wrapper" class="step-content"
             style="display: none; flex-direction: column; flex-grow: 1; overflow: hidden;">
             <main class="step3-main-grid">
-                <!-- Left Panel: Context & Summary -->
                 <div class="step3-left-panel">
                     <div class="section-block">
                         <h3>Sumber Anggaran</h3>
@@ -196,7 +186,6 @@
                         </div>
                         <div class="summary-row">
                             <span class="label">Unit Kerja Pemilik Anggaran</span>
-                            <!-- Tetap statis terkunci -->
                             <strong class="val">33A - Deputi Bidang Keuangan</strong>
                         </div>
                         <div class="summary-row">
@@ -214,10 +203,24 @@
                     </div>
                     <div class="step3-summary-card">
                         <div class="radio-card selected">
-                            <div class="radio-indicator"><i class="fas fa-check"></i></div>
                             <strong>Klaim Langsung</strong>
                             <span>Pembayaran reimburse, tagihan, dan biaya kegiatan</span>
                         </div>
+                        <div id="step3-persekot-fields" class="skema-info-fields" style="display: none;">
+    <div class="skema-field">
+        <span class="skema-field-label">Tanggal Kegiatan</span>
+        <div class="skema-field-box">
+            <strong class="skema-field-val" id="step3-summary-tgl-kegiatan">-</strong>
+        </div>
+    </div>
+    <div class="skema-field">
+        <span class="skema-field-label">Nilai Pengajuan Persekot</span>
+        <div class="skema-field-box">
+            <!-- <span class="skema-field-prefix">Rp.</span> -->
+            <strong class="skema-field-val" id="step3-summary-nilai-persekot">-</strong>
+        </div>
+    </div>
+</div>
                         <div class="keperluan-wrapper">
                             <h4>Keperluan Pencairan</h4>
                             <div class="keperluan-text-box"></div>
@@ -227,11 +230,23 @@
 
                 </div>
 
-                <!-- Middle Panel: Uploaded Files & Upload Dropzone -->
                 <div class="step3-middle-panel">
                     <div class="file-grid-2col">
 
-                        <!-- Card 1 -->
+                        <div class="step3-file-card">
+                            <div class="s4-fc-header">
+                                <div class="fc-info">
+                                    <i class="fas fa-file-pdf text-red"></i>
+                                    <span class="fc-title">File Name.pdf</span>
+                                </div>
+                                <span class="fc-size">9 Mb</span>
+                            </div>
+                            <div class="s4-fc-tags">
+                                <span class="doc-tag">Dokumen Perpajakan</span>
+                                <span class="doc-tag">B.A. Penyelesaian Pekerjaan</span>
+                            </div>
+                        </div>
+
                         <div class="step3-file-card">
                             <div class="s4-fc-header">
                                 <div class="fc-info">
@@ -247,23 +262,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 2 -->
-                        <div class="step3-file-card">
-                            <div class="s4-fc-header">
-                                <div class="fc-info">
-                                    <i class="fas fa-file-pdf text-red"></i>
-                                    <span class="fc-title">File Name.pdf</span>
-                                </div>
-                                <span class="fc-size">9 Mb</span>
-                                <button class="fc-del-btn"><i class="fas fa-trash-alt"></i></button>
-                            </div>
-                            <div class="s4-fc-tags">
-                                <span class="doc-tag">Dokumen Perpajakan</span>
-                                <span class="doc-tag">B.A. Penyelesaian Pekerjaan</span>
-                            </div>
-                        </div>
-
-                        <!-- Card 3 -->
                         <div class="step3-file-card">
                             <div class="s4-fc-header">
                                 <div class="fc-info">
@@ -278,7 +276,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 4 -->
                         <div class="step3-file-card">
                             <div class="s4-fc-header">
                                 <div class="fc-info">
@@ -293,7 +290,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 5 (Warning) -->
                         <div class="step3-file-card card-warning">
                             <div class="s4-fc-header">
                                 <div class="fc-info">
@@ -308,7 +304,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 6 (Warning) -->
                         <div class="step3-file-card card-warning">
                             <div class="s4-fc-header">
                                 <div class="fc-info">
@@ -323,7 +318,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 7 -->
                         <div class="step3-file-card">
                             <div class="s4-fc-header">
                                 <div class="fc-info">
@@ -338,7 +332,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 8 -->
                         <div class="step3-file-card">
                             <div class="s4-fc-header">
                                 <div class="fc-info">
@@ -377,7 +370,6 @@
                     </div>
 
                     <div class="upload-area-dashed compact-upload" id="dropArea">
-                        <!-- Input file disembunyikan -->
                         <input type="file" id="fileInput" style="display: none;" multiple
                             accept=".pdf,.jpg,.jpeg,.png" />
 
@@ -390,7 +382,6 @@
                     </div>
                 </div>
 
-                <!-- Right Panel: Viewer -->
                 <div class="step3-right-panel">
                     <div class="preview-toolbar">
                         <div class="pt-left">
@@ -417,14 +408,9 @@
             </footer> -->
         </div>
 
-        <!-- ========================================== -->
         <!-- WRAPPER STEP 3: Detil Perjalanan             -->
-        <!-- ========================================== -->
-        <!-- STEP 3 WRAPPER LENGKAP -->
         <div id="step-3-wrapper" class="step-content s3-step-wrapper" style="display: none;">
-            <!-- Header Banner Anggaran -->
             <div class="step2-info-bar">
-                <!-- Blok Kiri (Biru Muda Utuh) -->
                 <div class="info-item">
                     <span class="info-label">Anggaran Kegiatan Dipilih</span>
                     <span class="info-value" id="info-kegiatan-terpilih">- Pilih Kegiatan -</span>
@@ -435,19 +421,13 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Area Konten Utama (Grid 2 Kolom) -->
             <div class="s3-step-content-scrollable">
                 <div class="s3-layout-grid">
-
-                    <!-- ================= KOLOM KIRI ================= -->
                     <div class="s3-card s3-col-left" id="cardDasarPerjalanan">
                         <div class="s3-card-header">
                             <h4>Dasar Perjalanan</h4>
                             <p>Identitas transaksi & daftar SPPD</p>
                         </div>
-
-                        <!-- Trigger Dropdown Kelompok Transaksi -->
                         <div class="s3-transaksi-dropdown-wrapper" id="transaksiDropdownWrapper">
                             <div class="transaksi-card card-dalam-negeri s3-trigger-card"
                                 onclick="toggleTransaksiDropdown(event)">
@@ -460,10 +440,7 @@
                                 </div>
                                 <i class="fas fa-chevron-down s3-dropdown-arrow"></i>
                             </div>
-
-                            <!-- Pilihan Menu Dropdown -->
                             <div class="s3-transaksi-menu" id="transaksiMenu">
-                                <!-- 1. Dalam Negeri -->
                                 <div class="transaksi-card card-dalam-negeri"
                                     onclick="gantiTipeTransaksi('dalam_negeri')">
                                     <div class="card-icon-box"><i class="fas fa-globe-asia"></i></div>
@@ -472,7 +449,6 @@
                                         <span class="main-title">Dalam Negeri</span>
                                     </div>
                                 </div>
-                                <!-- 2. Luar Negeri -->
                                 <div class="transaksi-card card-luar-negeri"
                                     onclick="gantiTipeTransaksi('luar_negeri')">
                                     <div class="card-icon-box"><i class="fas fa-globe"></i></div>
@@ -481,7 +457,6 @@
                                         <span class="main-title">Luar Negeri</span>
                                     </div>
                                 </div>
-                                <!-- 3. Kegiatan Kedinasan -->
                                 <div class="transaksi-card card-kegiatan-dinas"
                                     onclick="gantiTipeTransaksi('kegiatan_dinas')">
                                     <div class="card-icon-box"><i class="far fa-calendar-check"></i></div>
@@ -492,8 +467,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Section Daftar SPPD -->
                         <div class="s3-sppd-section" id="sppdSection">
                             <div class="s3-sppd-top">
                                 <span class="s3-sppd-label">Daftar SPPD</span>
@@ -511,9 +484,7 @@
                                 SPPD</button>
                         </div>
 
-                        <!-- ================= KONTEN KIRI: DALAM NEGERI (DEFAULT AKTIF) ================= -->
                         <div id="kontenKiriDalamNegeri">
-                            <!-- Kategori Perjalanan -->
                             <div class="s3-form-group">
                                 <label class="group-title">Kategori Perjalanan</label>
                                 <div class="s3-choice-grid-2">
@@ -529,7 +500,6 @@
                                 </div>
                             </div>
 
-                            <!-- Tujuan Perjalanan (Dalam Negeri) -->
                             <div class="s3-form-group">
                                 <label class="group-title">Tujuan Perjalanan</label>
                                 <div class="s3-choice-list">
@@ -545,7 +515,6 @@
                                 </div>
                             </div>
 
-                            <!-- Kebutuhan Transport (Biru) -->
                             <div class="s3-form-group">
                                 <label class="group-title">Kebutuhan Transport</label>
                                 <div class="s3-choice-grid-2">
@@ -560,31 +529,25 @@
                             </div>
                         </div>
 
-                        <!-- ================= KONTEN KIRI: LUAR NEGERI (TERSEMBUNYI SAAT START) ================= -->
                         <div id="kontenKiriLuarNegeri" style="display: none;">
-                            <!-- Tujuan Perjalanan (Luar Negeri - 4 Opsi) -->
                             <div class="s3-form-group">
                                 <label class="group-title">Tujuan Perjalanan</label>
                                 <div class="s3-choice-list-purple">
-                                    <!-- Opsi 1 (Active Default) -->
                                     <div class="s3-choice-card-purple active" onclick="selectTujuanPurple(this)">
                                         <span class="radio-circle-purple"></span>
                                         <span>Undangan Terkait BPJS Ketenagakerjaan</span>
                                     </div>
 
-                                    <!-- Opsi 2 -->
                                     <div class="s3-choice-card-purple" onclick="selectTujuanPurple(this)">
                                         <span class="radio-circle-purple"></span>
                                         <span>Kegiatan Studi Banding, Konferensi dan kegiatan sejenis</span>
                                     </div>
 
-                                    <!-- Opsi 3 -->
                                     <div class="s3-choice-card-purple" onclick="selectTujuanPurple(this)">
                                         <span class="radio-circle-purple"></span>
                                         <span>Workshop, Seminar, Training, Short Course dan kegiatan sejenis</span>
                                     </div>
 
-                                    <!-- Opsi 4 -->
                                     <div class="s3-choice-card-purple" onclick="selectTujuanPurple(this)">
                                         <span class="radio-circle-purple"></span>
                                         <span>Kegiatan terkait PMI di negara yang berbatasan langsung</span>
@@ -592,7 +555,6 @@
                                 </div>
                             </div>
 
-                            <!-- Kebutuhan Transport (Ungu) -->
                             <div class="s3-form-group">
                                 <label class="group-title">Kebutuhan Transport</label>
                                 <div class="s3-choice-grid-2">
@@ -606,9 +568,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- C. KONTEN KIRI: KEGIATAN KEDINASAN -->
                         <div id="kontenKiriKegiatanDinas" style="display: none;">
-                            <!-- Kategori Kegiatan -->
                             <div class="s3-form-group">
                                 <label class="group-title">Kategori Kegiatan</label>
                                 <div class="s3-choice-grid-2">
@@ -623,12 +583,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Estimasi Jumlah Peserta -->
                             <div class="s3-form-group">
                                 <label class="group-title">Estimasi Jumlah Peserta</label>
                                 <input type="text" class="s3-input-text-green" value="10 orang" />
                             </div>
-                            <!-- Kebutuhan Transport (Hijau) -->
                             <div class="s3-form-group">
                                 <label class="group-title">Kebutuhan Transport</label>
                                 <div class="s3-choice-grid-2">
@@ -646,16 +604,13 @@
 
                     </div>
 
-                    <!-- ================= KOLOM KANAN ================= -->
                     <div class="s3-card s3-col-right">
                         <div class="s3-card-header">
                             <h4>Detail Perjalanan</h4>
                             <p>Tanggal, rute, moda utama, dan akomodasi.</p>
                         </div>
 
-                        <!-- Baris Jadwal & Rute -->
                         <div class="s3-row-jadwal-rute">
-                            <!-- Card Jadwal (Tetap Sama) -->
                             <div class="s3-box-jadwal">
                                 <div class="s3-box-inner-header orange">Jadwal</div>
                                 <div class="s3-jadwal-content">
@@ -677,7 +632,6 @@
                                 </div>
                             </div>
 
-                            <!-- A. Card Rute Perjalanan DALAM NEGERI (Default Tampil) -->
                             <div class="s3-box-rute" id="boxRuteDalamNegeri">
                                 <div class="s3-box-inner-header blue">Rute Perjalanan</div>
                                 <div class="s3-rute-grid">
@@ -708,7 +662,6 @@
                                 </div>
                             </div>
 
-                            <!-- B. Card Rute Perjalanan LUAR NEGERI (Default Hidden) -->
                             <div class="s3-box-rute-purple" id="boxRuteLuarNegeri" style="display: none;">
                                 <div class="s3-box-inner-header-purple">Rute Perjalanan</div>
                                 <div class="s3-rute-grid-purple">
@@ -738,11 +691,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- C. RUTE KEGIATAN KEDINASAN -->
                             <div class="s3-box-rute-green" id="boxRuteKegiatanDinas" style="display: none;">
                                 <div class="s3-box-inner-header-green">Rute Perjalanan</div>
                                 <div class="s3-rute-grid-kedinasan">
-                                    <!-- Baris 1 -->
                                     <div class="s3-rute-pill-green">
                                         <label>Kantor / Unit Pelaksana</label>
                                         <input type="text" value="Jakarta" readonly />
@@ -756,13 +707,11 @@
                                         <input type="text" value="Bandung" readonly />
                                     </div>
 
-                                    <!-- Kolom Kanan: Kota Tujuan (Memanjang Vertikal) -->
                                     <div class="s3-rute-pill-green pill-vertical-span">
                                         <label>Kota Tujuan</label>
                                         <input type="text" value="Bandung" readonly />
                                     </div>
 
-                                    <!-- Baris 2 -->
                                     <div class="s3-rute-pill-green">
                                         <label>Estimasi Jarak</label>
                                         <input type="text" value="±150 km" readonly />
@@ -779,9 +728,7 @@
                             </div>
                         </div>
 
-                        <!-- Baris Moda Utama & Akomodasi -->
                         <div class="s3-row-moda-akomodasi">
-                            <!-- Moda Utama -->
                             <div class="s3-box-moda">
                                 <div class="s3-box-sub-header">
                                     <strong>Moda Utama</strong>
@@ -812,7 +759,6 @@
                                 </div>
                             </div>
 
-                            <!-- Akomodasi (Border Oranye) -->
                             <div class="s3-box-akomodasi">
                                 <div class="s3-akomodasi-title">Akomodasi</div>
                                 <div class="s3-akomodasi-list">
@@ -827,7 +773,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- C. TEMPAT KEGIATAN (Pengganti Akomodasi) -->
                             <div class="s3-box-tempat-kegiatan" id="boxTempatKegiatan" style="display: none;">
                                 <div class="tempat-kegiatan-title">Tempat Kegiatan</div>
                                 <div class="tempat-kegiatan-inputs">
@@ -843,7 +788,6 @@
                             </div>
                         </div>
 
-                        <!-- Box Travel Management -->
                         <div class="s3-box-travel-mgmt">
                             <div class="s3-box-sub-header">
                                 <strong>Travel Management</strong>
@@ -852,7 +796,6 @@
                             <div class="s3-footer-note">Detail moda per peserta/biaya dapat disesuaikan di Step 3.</div>
                         </div>
 
-                        <!-- Alert Batasan Step 3 (Box Hijau) -->
                         <div class="s3-alert-box">
                             <strong>Batasan Step 3</strong>
                             <p>Daftar SPPD tidak membentuk tanggal, rute, peserta, atau rincian biaya berbeda.</p>
@@ -876,13 +819,10 @@
 
         </div>
 
-        <!-- ========================================== -->
         <!-- WRAPPER STEP 4: RINCIAN BIAYA              -->
-        <!-- ========================================== -->
         <div id="step-4-wrapper" class="step-content"
             style="display: none; flex-direction: column; flex-grow: 1; overflow: hidden;">
             <div class="step2-info-bar">
-                <!-- Blok Kiri (Biru Muda Utuh) -->
                 <div class="info-item">
                     <span class="info-label">Anggaran Kegiatan Dipilih</span>
                     <span class="info-value" id="info-kegiatan-terpilih-2">- Pilih Kegiatan -</span>
@@ -893,7 +833,6 @@
                     </div>
                 </div>
 
-                <!-- Blok Kanan Terpisah (Kuning) -->
                 <div class="badge-tersedia badge-total">
                     <span>Total Pengajuan</span>
                     <strong>Rp. 1.000.000.000.000,00</strong>
@@ -901,7 +840,6 @@
             </div>
 
             <main class="step2-main-grid">
-                <!-- Left Panel -->
                 <div class="step2-left-panel">
                     <button type="button" class="btn-tambah-rincian" id="btnTambahRincian">
                         Tambah Penerima
@@ -911,7 +849,6 @@
                         <input type="text" class="base-textbox search-rincian" placeholder="Cari kode, nama, kode...">
                     </div>
 
-                    <!-- EXISTING EMPTY STATE -->
                     <div class="empty-state-container" id="s4-left-empty">
                         <div class="empty-icon-box">
                             <i class="fas fa-box-open"></i>
@@ -920,9 +857,7 @@
                         <p class="empty-sub">Silahkan klik Tambah Rincian Penerima untuk mulai mengisi rincian.</p>
                     </div>
 
-                    <!-- NEW ADDITION: POPULATED LEFT LIST (Hidden by default) -->
                     <div class="s4-pop-left-list" id="s4-left-populated" style="display: none;">
-                        <!-- Tambahkan class 'theme-blue' -->
                         <div class="s4-pop-item theme-blue active" onclick="switchStep3Tab('toyota', this)">
                             <div class="" border-bluewhite>
                                 <div class="s4-pop-title">PT Toyota Motor Manufacturing Indonesia</div>
@@ -933,7 +868,6 @@
                             </div>
                         </div>
 
-                        <!-- Tambahkan class 'theme-peach' -->
                         <div class="s4-pop-item theme-peach" onclick="switchStep3Tab('siti', this)">
                             <div class="s4-pop-title">Siti Rahmawati</div>
                             <div class="s4-pop-meta">
@@ -956,9 +890,7 @@
                     </div>
                 </div>
 
-                <!-- Right Panel (Preview) -->
                 <div class="step2-right-panel">
-                    <!-- EXISTING EMPTY STATE -->
                     <div class="empty-state-container" id="s4-right-empty">
                         <div class="empty-icon-box lg">
                             <i class="fas fa-folder-open"></i>
@@ -966,11 +898,9 @@
                         <p class="empty-title">Belum ada data untuk ditampilkan</p>
                     </div>
 
-                    <!-- NEW ADDITION: POPULATED RIGHT CONTENT (Hidden by default) -->
                     <div class="s4-pop-right-content" id="s4-right-populated" style="display: none;">
 
                         <div class="s4-dynamic-header-row">
-                            <!-- Kolom 1: Profil & Detail Bawahnya -->
                             <div class="header-col col-profile">
                                 <div class="sdh-banner-card">
                                     <div class="sdh-title-group">
@@ -992,7 +922,6 @@
                                 </div>
                             </div>
 
-                            <!-- Kolom 2: Rekening Bank & Sub Text -->
                             <div class="header-col col-bank">
                                 <div class="bank-top-box">
                                     <span class="box-title">Satria Arindra</span>
@@ -1015,7 +944,6 @@
                                 </div>
                             </div>
 
-                            <!-- Kolom 3: Total Biaya & Sub Text -->
                             <div class="header-col col-total">
                                 <div class="total-top-box">
                                     <span class="box-title">Total Biaya</span>
@@ -1027,7 +955,6 @@
                                 </div>
                             </div>
 
-                            <!-- Kolom 4: Tombol Trash Sebelah Kanan Pas -->
                             <div class="header-col col-action">
                                 <button class="btn-trash"><i class="fas fa-trash-alt"></i></button>
                             </div>
@@ -1035,13 +962,11 @@
 
 
 
-                        <!-- kuitansi List Area -->
                         <div class="s4-kuitansi-area">
                             <div id="cardDetilPerjalananDinas" class="detil-perjalanan-card">
                                 <div class="detil-perjalanan-title">Detil perjalanan dinas</div>
 
                                 <div class="detil-perjalanan-body">
-                                    <!-- Kolom 1: Jenis & Transportasi -->
                                     <div class="detil-perjalanan-col">
                                         <div class="detil-row">
                                             <span class="detil-label">Jenis Perjalanan</span>
@@ -1057,9 +982,7 @@
                                         </div>
                                     </div>
 
-                                    <!-- BOX PUTIH TENGAH (TANGGAL + HIGHLIGHT DURASI) -->
                                     <div class="detil-box-white">
-                                        <!-- Info Tanggal -->
                                         <div class="detil-perjalanan-col detil-col-gap">
                                             <div class="detil-row">
                                                 <span class="detil-label detil-label-date">Tanggal Berangkat</span>
@@ -1075,14 +998,12 @@
                                             </div>
                                         </div>
 
-                                        <!-- Durasi Perjalanan Besar -->
                                         <div class="detil-highlight-box">
                                             <div class="highlight-label">Durasi Perjalanan</div>
                                             <div class="highlight-val">5 Hari</div>
                                         </div>
                                     </div>
 
-                                    <!-- Kolom 4: Rute Kota -->
                                     <div class="detil-perjalanan-col detil-col-gap">
                                         <div class="detil-row">
                                             <span class="detil-label detil-label-city">Kota Asal</span>
@@ -1101,18 +1022,14 @@
                             </div>
                             <div class="kw-area-header">
 
-                                <!-- Sisi Kiri (Title / Dropdown) -->
                                 <div class="header-left-slot">
-                                    <!-- Container judul di luar list -->
                                     <div class="kw-header-wrapper"
                                         style="display: flex; align-items: center; gap: 8px;">
                                         <h4 id="titleBadanUsaha" class="kw-title" style="margin: 0;">Kuitansi / Invoice
                                         </h4>
                                         <div id="container-extra-badge" class="kw-total"></div>
-                                        <!-- Wadah kosong untuk badge dinamis -->
                                     </div>
 
-                                    <!-- Tampilan Khusus Perorangan (Dropdown) -->
                                     <div id="dropdownPerorangan" class="kw-select-group" style="display: none;">
                                         <select class="kw-select-kategori">
                                             <option value="">Pilih Kelompok Biaya...</option>
@@ -1126,14 +1043,12 @@
                                     </div>
                                 </div>
 
-                                <!-- Sisi Kanan (Tombol Tambah Dinamis) -->
                                 <button type="button" id="btnAddHeader" class="btn-add-kuitansi"
                                     onclick="handleTambah()">
                                     <i class="fas fa-plus"></i> <span id="btnAddText">Tambah kuitansi / Invoice</span>
                                 </button>
                             </div>
 
-                            <!-- kuitansi Items Container -->
                             <div class="kw-list" id="kuitansi-list-container">
                                 <!-- Generated by JS based on selection -->
                             </div>
@@ -1152,13 +1067,10 @@
             </footer> -->
         </div>
 
-        <!-- ========================================== -->
         <!-- WRAPPER STEP 5: REVIEW & SUBMIT (ADD AT THE END) -->
-        <!-- ========================================== -->
         <div id="step-5-wrapper" class="step-content"
             style="display: none; flex-direction: column; flex-grow: 1; overflow: hidden;">
             <div class="step2-info-bar">
-                <!-- Blok Kiri (Biru Muda Utuh) -->
                 <div class="info-item">
                     <span class="info-label">Anggaran Kegiatan Dipilih</span>
                     <span class="info-value" id="info-kegiatan-terpilih-3">- Pilih Kegiatan -</span>
@@ -1169,7 +1081,6 @@
                     </div>
                 </div>
 
-                <!-- Blok Kanan Terpisah (Kuning) -->
                 <div class="badge-tersedia badge-total">
                     <span>Total Pengajuan</span>
                     <strong>Rp. 1.000.000.000.000,00</strong>
@@ -1178,7 +1089,6 @@
 
             <main class="step4-main-grid">
 
-                <!-- Part A: Left Side (Informasi & Verifikasi) -->
                 <div class="s5-left-panel">
                     <div class="step3-summary-card s5-info-card">
                         <h4>Informasi Pengajuan</h4>
@@ -1201,7 +1111,6 @@
                     <div class="step3-summary-card s5-verifikasi-card">
                         <h4>Verifikasi</h4>
 
-                        <!-- Detail Verifikator -->
                         <div class="info-card">
                             <div class="info-row">
                                 <span class="s5-info-label">Nama Verifikator</span>
@@ -1213,7 +1122,6 @@
                             </div>
                         </div>
 
-                        <!-- Header -->
                         <div class="doc-header-inline" onclick="openFilePreviewModal()" role="button"
                             title="Perbesar / Lihat Pop-up">
                             <h4>Dokumen Pendukung</h4>
@@ -1222,7 +1130,6 @@
                             </span>
                         </div>
 
-                        <!-- Summary Card -->
                         <div class="doc-summary-card">
                             <div class="summary-stats">
                                 <div class="stat-item">
@@ -1235,17 +1142,14 @@
                                 </div>
                             </div>
 
-                            <!-- Progress Bar -->
                             <div class="progress-wrapper">
                                 <div class="progress-bar-fill" style="width: 100%;"></div>
                                 <span class="progress-percent">100%</span>
                             </div>
                         </div>
 
-                        <!-- Spacer Area (Area Kosong) -->
                         <div class="doc-body-spacer"></div>
 
-                        <!-- Footer Button -->
                         <footer class="doc-footer-action">
                             <button type="button" class="btn-preview-merged" onclick="openMergedPreview()">
                                 Buka pratinjau gabungan
@@ -1254,7 +1158,6 @@
                     </div>
                 </div>
 
-                <!-- Part B: Middle Side (Icon Buttons Centered Vertically) -->
                 <div class="s5-middle-panel">
                     <button class="s5-icon-btn active" onclick="switchs5Tab('ringkasan', this)" title="Ringkasan Umum">
                         <i class="fas fa-home"></i>
@@ -1273,7 +1176,6 @@
                     </button>
                 </div>
 
-                <!-- Part C: Right Side (Header & Dynamic Content) -->
                 <div class="s5-right-panel">
                     <header class="s5-header">
                         <div class="header-info">
@@ -1282,12 +1184,10 @@
                         </div>
                     </header>
 
-                    <!-- Default Content: Ringkasan Umum (List + Accordion details) -->
                     <div class="s5-right-content" id="s5-content-ringkasan">
                         <h2 class="s5-section-title">Ringkasan Umum</h2>
                         <div class="s5-list-container">
 
-                            <!-- Item 1 (KTP - Orange - Status Centang) -->
                             <div class="s5-accordion-item">
                                 <div class="s5-list-row" onclick="toggleRow(this)">
                                     <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -1326,7 +1226,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Detail Sub-Item 1 -->
                                 <div class="accordion-content">
                                     <div class="detail-container">
                                         <div class="branch-icon">
@@ -1359,7 +1258,6 @@
                                 </div>
                             </div>
 
-                            <!-- Item 2 (KTP - Orange - Status Tanda Tanya) -->
                             <div class="s5-accordion-item">
                                 <div class="s5-list-row" onclick="toggleRow(this)">
                                     <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -1398,7 +1296,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Detail Sub-Item 2 -->
                                 <div class="accordion-content">
                                     <div class="detail-container">
                                         <div class="branch-icon">
@@ -1424,7 +1321,6 @@
                                 </div>
                             </div>
 
-                            <!-- Item 3 (NPWP - Hijau - Status Tanda Tanya) -->
                             <div class="s5-accordion-item">
                                 <div class="s5-list-row" onclick="toggleRow(this)">
                                     <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -1463,7 +1359,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Detail Sub-Item 3 -->
                                 <div class="accordion-content">
                                     <div class="detail-container">
                                         <div class="branch-icon">
@@ -1489,7 +1384,6 @@
                                 </div>
                             </div>
 
-                            <!-- Item 4 (Perusahaan - Abu-abu - Status Gagal) -->
                             <div class="s5-accordion-item">
                                 <div class="s5-list-row" onclick="toggleRow(this)">
                                     <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -1527,7 +1421,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Detail Sub-Item 4 -->
                                 <div class="accordion-content">
                                     <div class="detail-container">
                                         <div class="branch-icon">
@@ -1570,7 +1463,6 @@
                     <div class="s5-right-content" id="s5-content-pajak" style="display:none;">
                         <h2 class="s5-section-title">Potongan Pajak</h2>
                         <div class="s5-header-container">
-                            <!-- Header Kolom -->
                             <div class="table-header">
                                 <div class="s5-header-left">Jenis Pajak</div>
                                 <div class="s5-header-right">Total Potongan Pajak</div>
@@ -1578,13 +1470,10 @@
                         </div>
                         <div class="s5-list-container">
 
-                            <!-- Daftar Potongan Pajak -->
                             <div class="s5-list">
 
-                                <!-- Baris Item 1 -->
                                 <div class="tax-accordion-wrapper">
 
-                                    <!-- ITEM LEVEL 1 (BARIS UTAMA PAJAK) -->
                                     <div class="tax-item">
                                         <div class="tax-header-row" onclick="toggleAccordion(this)">
                                             <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -1600,23 +1489,19 @@
                                             </div>
                                         </div>
 
-                                        <!-- KONTEN LEVEL 2 (PANEL BIRU MUDA) -->
                                         <div class="tax-content-panel">
                                             <div class="tree-container">
-                                                <!-- Ikon Cabang Level 1 ke 2 -->
                                                 <div class="branch-icon">
                                                     <i class="branch-connector"></i>
                                                 </div>
 
                                                 <div class="objek-table">
-                                                    <!-- Header Tabel Objek Pajak -->
                                                     <div class="grid-header">
                                                         <div class="col-name-head">Nama Objek Pajak</div>
                                                         <div class="col-dpp-head">Total DPP PPh</div>
                                                         <div class="col-potongan-head">Total Potongan PPh</div>
                                                     </div>
 
-                                                    <!-- ITEM LEVEL 2 (OBJEK PAJAK BERPENGARUH KE LEVEL 3) -->
                                                     <div class="objek-item">
                                                         <div class="objek-row" onclick="toggleAccordion(this)">
                                                             <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -1636,9 +1521,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <!-- KONTEN LEVEL 3 (DAFTAR PEGAWAI KUNING) -->
                                                         <div class="pegawai-content-panel">
-                                                            <!-- Header Kolom Pegawai -->
                                                             <div class="grid-header-pegawai">
                                                                 <div class="col-name-head">Nama Pegawai / Pegawai
                                                                     Eksternal / Rekanan</div>
@@ -1646,7 +1529,6 @@
                                                                 <div class="col-potongan-head">Potongan PPh</div>
                                                             </div>
 
-                                                            <!-- Pegawai 1 (Ada Ikon Cabang) -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon">
                                                                     <i class="branch-connector"></i>
@@ -1659,7 +1541,6 @@
                                                                 </div>
                                                             </div>
 
-                                                            <!-- Pegawai 2 -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon"></div>
                                                                 <div class="pegawai-card">Aldi Suandana K</div>
@@ -1670,7 +1551,6 @@
                                                                 </div>
                                                             </div>
 
-                                                            <!-- Pegawai 3 -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon"></div>
                                                                 <div class="pegawai-card">Aldi Suandana K</div>
@@ -1689,10 +1569,8 @@
 
                                 </div>
 
-                                <!-- Baris Item 2 -->
                                 <div class="tax-accordion-wrapper">
 
-                                    <!-- ITEM LEVEL 1 (BARIS UTAMA PAJAK) -->
                                     <div class="tax-item">
                                         <div class="tax-header-row" onclick="toggleAccordion(this)">
                                             <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -1708,23 +1586,19 @@
                                             </div>
                                         </div>
 
-                                        <!-- KONTEN LEVEL 2 (PANEL BIRU MUDA) -->
                                         <div class="tax-content-panel">
                                             <div class="tree-container">
-                                                <!-- Ikon Cabang Level 1 ke 2 -->
                                                 <div class="branch-icon">
                                                     <i class="branch-connector"></i>
                                                 </div>
 
                                                 <div class="objek-table">
-                                                    <!-- Header Tabel Objek Pajak -->
                                                     <div class="grid-header">
                                                         <div class="col-name-head">Nama Objek Pajak</div>
                                                         <div class="col-dpp-head">Total DPP PPh</div>
                                                         <div class="col-potongan-head">Total Potongan PPh</div>
                                                     </div>
 
-                                                    <!-- ITEM LEVEL 2 (OBJEK PAJAK BERPENGARUH KE LEVEL 3) -->
                                                     <div class="objek-item">
                                                         <div class="objek-row" onclick="toggleAccordion(this)">
                                                             <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -1744,9 +1618,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <!-- KONTEN LEVEL 3 (DAFTAR PEGAWAI KUNING) -->
                                                         <div class="pegawai-content-panel">
-                                                            <!-- Header Kolom Pegawai -->
                                                             <div class="grid-header-pegawai">
                                                                 <div class="col-name-head">Nama Pegawai / Pegawai
                                                                     Eksternal / Rekanan</div>
@@ -1754,7 +1626,6 @@
                                                                 <div class="col-potongan-head">Potongan PPh</div>
                                                             </div>
 
-                                                            <!-- Pegawai 1 (Ada Ikon Cabang) -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon">
                                                                     <i class="branch-connector"></i>
@@ -1767,7 +1638,6 @@
                                                                 </div>
                                                             </div>
 
-                                                            <!-- Pegawai 2 -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon"></div>
                                                                 <div class="pegawai-card">Aldi Suandana K</div>
@@ -1778,7 +1648,6 @@
                                                                 </div>
                                                             </div>
 
-                                                            <!-- Pegawai 3 -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon"></div>
                                                                 <div class="pegawai-card">Aldi Suandana K</div>
@@ -1797,10 +1666,8 @@
 
                                 </div>
 
-                                <!-- Baris Item 3 -->
                                 <div class="tax-accordion-wrapper">
 
-                                    <!-- ITEM LEVEL 1 (BARIS UTAMA PAJAK) -->
                                     <div class="tax-item">
                                         <div class="tax-header-row" onclick="toggleAccordion(this)">
                                             <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -1816,23 +1683,19 @@
                                             </div>
                                         </div>
 
-                                        <!-- KONTEN LEVEL 2 (PANEL BIRU MUDA) -->
                                         <div class="tax-content-panel">
                                             <div class="tree-container">
-                                                <!-- Ikon Cabang Level 1 ke 2 -->
                                                 <div class="branch-icon">
                                                     <i class="branch-connector"></i>
                                                 </div>
 
                                                 <div class="objek-table">
-                                                    <!-- Header Tabel Objek Pajak -->
                                                     <div class="grid-header">
                                                         <div class="col-name-head">Nama Objek Pajak</div>
                                                         <div class="col-dpp-head">Total DPP PPh</div>
                                                         <div class="col-potongan-head">Total Potongan PPh</div>
                                                     </div>
 
-                                                    <!-- ITEM LEVEL 2 (OBJEK PAJAK BERPENGARUH KE LEVEL 3) -->
                                                     <div class="objek-item">
                                                         <div class="objek-row" onclick="toggleAccordion(this)">
                                                             <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -1852,9 +1715,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <!-- KONTEN LEVEL 3 (DAFTAR PEGAWAI KUNING) -->
                                                         <div class="pegawai-content-panel">
-                                                            <!-- Header Kolom Pegawai -->
                                                             <div class="grid-header-pegawai">
                                                                 <div class="col-name-head">Nama Pegawai / Pegawai
                                                                     Eksternal / Rekanan</div>
@@ -1862,7 +1723,6 @@
                                                                 <div class="col-potongan-head">Potongan PPh</div>
                                                             </div>
 
-                                                            <!-- Pegawai 1 (Ada Ikon Cabang) -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon">
                                                                     <i class="branch-connector"></i>
@@ -1875,7 +1735,6 @@
                                                                 </div>
                                                             </div>
 
-                                                            <!-- Pegawai 2 -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon"></div>
                                                                 <div class="pegawai-card">Aldi Suandana K</div>
@@ -1886,7 +1745,6 @@
                                                                 </div>
                                                             </div>
 
-                                                            <!-- Pegawai 3 -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon"></div>
                                                                 <div class="pegawai-card">Aldi Suandana K</div>
@@ -1905,10 +1763,8 @@
 
                                 </div>
 
-                                <!-- Baris Item 4 -->
                                 <div class="tax-accordion-wrapper">
 
-                                    <!-- ITEM LEVEL 1 (BARIS UTAMA PAJAK) -->
                                     <div class="tax-item">
                                         <div class="tax-header-row" onclick="toggleAccordion(this)">
                                             <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -1924,23 +1780,19 @@
                                             </div>
                                         </div>
 
-                                        <!-- KONTEN LEVEL 2 (PANEL BIRU MUDA) -->
                                         <div class="tax-content-panel">
                                             <div class="tree-container">
-                                                <!-- Ikon Cabang Level 1 ke 2 -->
                                                 <div class="branch-icon">
                                                     <i class="branch-connector"></i>
                                                 </div>
 
                                                 <div class="objek-table">
-                                                    <!-- Header Tabel Objek Pajak -->
                                                     <div class="grid-header">
                                                         <div class="col-name-head">Nama Objek Pajak</div>
                                                         <div class="col-dpp-head">Total DPP PPh</div>
                                                         <div class="col-potongan-head">Total Potongan PPh</div>
                                                     </div>
 
-                                                    <!-- ITEM LEVEL 2 (OBJEK PAJAK BERPENGARUH KE LEVEL 3) -->
                                                     <div class="objek-item">
                                                         <div class="objek-row" onclick="toggleAccordion(this)">
                                                             <i class="fa-solid fa-chevron-right chevron-icon"></i>
@@ -1960,9 +1812,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <!-- KONTEN LEVEL 3 (DAFTAR PEGAWAI KUNING) -->
                                                         <div class="pegawai-content-panel">
-                                                            <!-- Header Kolom Pegawai -->
                                                             <div class="grid-header-pegawai">
                                                                 <div class="col-name-head">Nama Pegawai / Pegawai
                                                                     Eksternal / Rekanan</div>
@@ -1970,7 +1820,6 @@
                                                                 <div class="col-potongan-head">Potongan PPh</div>
                                                             </div>
 
-                                                            <!-- Pegawai 1 (Ada Ikon Cabang) -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon">
                                                                     <i class="branch-connector"></i>
@@ -1983,7 +1832,6 @@
                                                                 </div>
                                                             </div>
 
-                                                            <!-- Pegawai 2 -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon"></div>
                                                                 <div class="pegawai-card">Aldi Suandana K</div>
@@ -1994,7 +1842,6 @@
                                                                 </div>
                                                             </div>
 
-                                                            <!-- Pegawai 3 -->
                                                             <div class="pegawai-row">
                                                                 <div class="branch-icon"></div>
                                                                 <div class="pegawai-card">Aldi Suandana K</div>
@@ -2020,7 +1867,6 @@
                     <div class="s5-right-content" id="s5-content-pembayaran" style="display:none;">
                         <h2 class="s5-section-title">Tujuan dan Status Pembayaran</h2>
                         <div class="s5-header-container">
-                            <!-- Header Labels -->
                             <div class="table-header">
                                 <div class="col-target">Tujuan Pembayaran</div>
                                 <div class="col-nominal">Nominal Transfer</div>
@@ -2029,7 +1875,6 @@
                             </div>
                         </div>
                         <div class="s5-list-container">
-                            <!-- List Rows -->
                             <div class="s5-list">
                                 <div class="s5-accordion-item">
                                     <div class="s5-list-row" onclick="toggleRow(this)">
@@ -2401,9 +2246,7 @@
                         <h2 class="s5-section-title">Jurnal Voucher</h2>
                         <div class="s5-list-container">
 
-                            <!-- Timeline Stepper -->
                             <div class="stepper-container">
-                                <!-- Garis Penghubung Background -->
                                 <div class="step-line-container">
                                     <div class="step-line"></div>
                                     <div class="step-line"></div>
@@ -2411,7 +2254,6 @@
                                     <div class="step-line active-blue"></div>
                                 </div>
 
-                                <!-- Step 1 (Grey / Normal Dibalik) -->
                                 <div class="step-item">
                                     <div class="step-node node-gray"></div>
                                     <div class="step-info">
@@ -2421,7 +2263,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Step 2 (Green / Reversal Terposting) -->
                                 <div class="step-item">
                                     <div class="step-node node-green"></div>
                                     <div class="step-info">
@@ -2431,7 +2272,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Step 3 (Pink / Normal Dibatalkan) -->
                                 <div class="step-item">
                                     <div class="step-node node-pink"></div>
                                     <div class="step-info">
@@ -2441,7 +2281,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Step 4 (Green / Reversal Terposting) -->
                                 <div class="step-item">
                                     <div class="step-node node-green"></div>
                                     <div class="step-info">
@@ -2451,7 +2290,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Step 5 (Blue / Active - Pembayaran Ulang) -->
                                 <div class="step-item">
                                     <div class="step-node node-blue"></div>
                                     <div class="step-info">
@@ -2462,7 +2300,6 @@
                                 </div>
                             </div>
 
-                            <!-- Kartu Detail Jurnal -->
                             <div class="detail-card">
                                 <div class="card-header">
                                     <h2 class="card-title">Detail Jurnal — Pembayaran Ulang</h2>
@@ -2505,7 +2342,6 @@
                                     </tbody>
                                 </table>
 
-                                <!-- Baris Total -->
                                 <div class="table-footer">
                                     <span class="total-title">Total</span>
                                     <div class="total-amounts">
@@ -2523,7 +2359,6 @@
 
                         <div class="main-container">
                             <div class="s5-list-container">
-                                <!-- Left Sidebar: Alur Persetujuan -->
                                 <div class="sidebar">
                                     <div class="sidebar-title">Alur Persetujuan</div>
 
@@ -2648,7 +2483,6 @@
 
                             </div>
                             <div class="s5-list-container s5-aktivitas">
-                                <!-- Right Content: Aktivitas Dokumen -->
                                 <div class="content-panel">
                                     <div class="content-header">
                                         <div class="header-title-group">
@@ -2713,7 +2547,6 @@
                             </div>
                         </div>
 
-                        <!-- Content for other buttons (To be confirmed later) -->
                         <div class="s5-right-content" id="s5-content-lainnya" style="display:none;">
                             <div class="empty-state-container">
                                 <div class="empty-icon-box lg"><i class="fas fa-tools"></i></div>
@@ -2754,9 +2587,7 @@
         </div>
 
 
-        <!-- ========================================== -->
         <!-- FOOTER -->
-        <!-- ========================================== -->
         <footer class="form-footer">
             <button class="base-button secondary-btn" onclick="simpanDraft()">Simpan Draf</button>
             <div class="right-actions">
@@ -2770,16 +2601,13 @@
 
     </div>
 
-    <!-- ADDITIONAL HTML: Dialog Jenis Dokumen -->
     <div id="modalJenisDokumen" class="modal-overlay hidden">
         <div class="modal-content doc-checklist-modal">
             <div class="modal-header" style="margin-bottom: 0px;">
                 <div class="header-text">
                     <h2 class="summary-box"><i class="fas fa-file-pdf text-red"></i> File Name.pdf</h2>
-                    <!-- <div class="summary-box"> -->
                     <h3 style="margin-bottom: 0px;">Pilih Jenis Dokumen</h3>
                     <p>Silakan tandai jenis dokumen yang sesuai dengan file lampiran.</p>
-                    <!-- </div> -->
                 </div>
                 <button type="button" class="close-modal-btn" onclick="closeDocModal()">
                     <i class="fas fa-times"></i>
@@ -2787,28 +2615,24 @@
             </div>
 
             <div class="checklist-container">
-                <!-- Checked State -->
                 <label class="custom-checkbox-row">
                     <input type="checkbox" checked>
                     <span class="checkbox-box"><i class="fas fa-check"></i></span>
                     <span class="checkbox-text">Dokumen Perpajakan</span>
                 </label>
 
-                <!-- Checked State -->
                 <label class="custom-checkbox-row">
                     <input type="checkbox" checked>
                     <span class="checkbox-box"><i class="fas fa-check"></i></span>
                     <span class="checkbox-text">B.A. Penyelesaian Pekerjaan</span>
                 </label>
 
-                <!-- Normal / Hover State -->
                 <label class="custom-checkbox-row">
                     <input type="checkbox">
                     <span class="checkbox-box"><i class="fas fa-check"></i></span>
                     <span class="checkbox-text">kuitansi / Invoice</span>
                 </label>
 
-                <!-- Disabled Unchecked State (As referenced in image_f90c26.png) -->
                 <label class="custom-checkbox-row disabled">
                     <input type="checkbox" disabled>
                     <span class="checkbox-box"><i class="fas fa-check"></i></span>
@@ -2822,7 +2646,6 @@
         </div>
     </div>
 
-    <!-- MODAL: TAMBAH RINCIAN -->
     <div id="modalTambahRincian" class="modal-overlay hidden">
         <div class="modal-content modal-person-lg">
             <div class="modal-header">
@@ -2852,7 +2675,6 @@
             </div>
 
             <div class="rincian-person-list">
-                <!-- EXISTING Cards -->
                 <div class="person-card card-pegawai">
                     <div class="pc-header">
                         <div class="pc-title-area">
@@ -2895,11 +2717,8 @@
                     </div>
                 </div>
 
-                <!-- ============================================== -->
                 <!-- NEW ADDITION: 4 Cards from Pic 1               -->
-                <!-- ============================================== -->
 
-                <!-- Card 1: Perorangan (Siti Aminah) -->
                 <div class="person-card card-perorangan">
                     <div class="pc-header">
                         <div class="pc-title-area">
@@ -2910,11 +2729,9 @@
                     </div>
                     <div class="pc-body">
                         <div class="detail-item"><span>Kode</span><strong>EJ15000156</strong></div>
-                        <!-- Check verification type 1: Red Slash -->
                         <div class="detail-item"><span>NPWP <i
                                     class="fas fa-times-circle text-red"></i></span><strong>12-34.39843.883025</strong>
                         </div>
-                        <!-- Check verification type 2: Green Check -->
                         <div class="detail-item"><span>KTP <i
                                     class="fas fa-check-circle text-green"></i></span><strong>1234567890123458</strong>
                         </div>
@@ -2923,7 +2740,6 @@
                     </div>
                 </div>
 
-                <!-- Card 2: Badan Usaha (PT Toyota) - CLICKABLE TO OPEN MODAL -->
                 <div class="person-card card-badan" onclick="openRekeningModal()">
                     <div class="pc-header">
                         <div class="pc-title-area">
@@ -2966,7 +2782,6 @@
         </div>
     </div>
 
-    <!-- NEW ADDITION: MODAL REKENING TUJUAN PEMBAYARAN -->
     <div id="modalRekening" class="modal-overlay hidden">
         <div class="modal-content modal-rekening-lg">
 
@@ -2977,7 +2792,6 @@
                 </div>
             </div>
 
-            <!-- Summary Top Card -->
             <div class="rek-top-summary">
                 <div class="pc-header" style="padding:0; border:none; background:transparent;">
                     <div class="pc-title-area">
@@ -2998,9 +2812,7 @@
                 </div>
             </div>
 
-            <!-- Split Layout -->
             <div class="rek-split-layout">
-                <!-- Left: Radio list -->
                 <div class="rek-split-left">
                     <h4 class="rek-side-title">Sumber Data Rekening</h4>
                     <p class="rek-side-sub">Pilih salah satu sumber rekening tujuan pembayaran.</p>
@@ -3030,11 +2842,7 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Right: Dynamic Content -->
                 <div class="rek-split-right">
-
-                    <!-- View 1: Terdaftar -->
                     <div id="rek-view-terdaftar" class="rek-view-panel active">
                         <h4>Rekening Terdaftar</h4>
                         <p class="view-sub">Data rekening tujuan berikut berasal dari data yang telah didaftarkan.</p>
@@ -3044,7 +2852,6 @@
                                 <div class="form-input-group row-flex">
                                     <input type="text" class="base-textbox" placeholder="Nama Bank"
                                         style="flex-grow:1;">
-                                    <!-- Check verification type 3: Validasi Badge -->
                                     <span class="validasi-badge">Metode Validasi <span
                                             class="badge-online">Online</span></span>
                                 </div>
@@ -3057,10 +2864,8 @@
                             </div>
                             <div class="form-row">
                                 <label>No Rekening</label>
-                                <!-- <div class="input-with-icon"> -->
                                 <input type="text" class="base-textbox" placeholder="Masukkan Nomor Rekening">
                                 <i class="fas fa-check-circle text-green end-icon"></i>
-                                <!-- </div> -->
                             </div>
                             <div class="form-row">
                                 <label>Nama Rekening</label>
@@ -3069,7 +2874,6 @@
                         </div>
                     </div>
 
-                    <!-- View 2: Referensi -->
                     <div id="rek-view-referensi" class="rek-view-panel">
                         <h4>Referensi Rekening Tujuan</h4>
                         <p class="view-sub">Pilih pihak yang telah tersimpan dalam pengajuan ini sebagai referensi
@@ -3120,7 +2924,6 @@
                         </div>
                     </div>
 
-                    <!-- View 3: Baru -->
                     <div id="rek-view-baru" class="rek-view-panel">
                         <h4>Rekening Tujuan Baru</h4>
                         <p class="view-sub">Isi data rekening tujuan baru yang akan digunakan.</p>
@@ -3150,7 +2953,6 @@
                 </div>
             </div>
 
-            <!-- Global Informational Banner & Footer Actions -->
             <div class="rek-global-info">
                 <i class="fas fa-info-circle"></i>
                 <span>Perubahan rekening hanya berlaku untuk transaksi ini dan tidak memperbarui master data
@@ -3165,23 +2967,19 @@
         </div>
     </div>
 
-    <!-- Modal Backdrop & Dialog -->
     <div id="modalObjekPajak" class="modal-overlay" style="display: none;">
         <div class="modal-content modal-card-tax">
-            <!-- Header Modal -->
             <div class="modal-tax-header">
                 <h3 class="modal-tax-title">Objek Pajak</h3>
                 <p class="modal-tax-subtitle">Pilih objek pajak yang sesuai pada transaksi ini.</p>
             </div>
 
-            <!-- Search Bar -->
             <div class="modal-tax-search">
                 <input type="text" id="searchTaxInput" placeholder="Cari kode, nama objek pajak"
                     onkeyup="filterTaxList()" />
                 <i class="fas fa-search search-icon"></i>
             </div>
 
-            <!-- Filter Tabs (Pill Buttons) -->
             <div class="modal-tax-tabs">
                 <button type="button" class="tax-tab active" onclick="switchTaxTab(this, 'all')">Semua ( 88 )</button>
                 <button type="button" class="tax-tab" onclick="switchTaxTab(this, 'pph23')">PPh 23 ( 88 )</button>
@@ -3189,9 +2987,7 @@
                 <button type="button" class="tax-tab" onclick="switchTaxTab(this, 'pph4')">PPh 4 Ayat 2 ( 88 )</button>
             </div>
 
-            <!-- List Objek Pajak Items -->
             <div class="modal-tax-body" id="taxItemList">
-                <!-- Item 1 -->
                 <div class="tax-row-item" onclick="selectTaxItem('21-100-07', 'Tenaga Ahli', '15%')">
                     <div class="tax-col-code">
                         <div class="tax-code-main">21-100-07</div>
@@ -3207,7 +3003,6 @@
                     </div>
                 </div>
 
-                <!-- Item 2 -->
                 <div class="tax-row-item"
                     onclick="selectTaxItem('21-100-08', 'Bukan Pegawai Yang Menerima Imbalan Berkesinambungan', '15%')">
                     <div class="tax-col-code">
@@ -3224,7 +3019,6 @@
                     </div>
                 </div>
 
-                <!-- Item 3 -->
                 <div class="tax-row-item"
                     onclick="selectTaxItem('27-100-99', 'Pegawai Atau Pemberi Jasa Sebagai Wajib Pajak Luar Negeri', '15%')">
                     <div class="tax-col-code">
@@ -3241,7 +3035,6 @@
                     </div>
                 </div>
 
-                <!-- Item 4 -->
                 <div class="tax-row-item"
                     onclick="selectTaxItem('42-000-01', 'Hadiah Undian Yang Dikenakan Pajak Final PPh 4 Ayat (2)', '15%')">
                     <div class="tax-col-code">
@@ -3257,7 +3050,6 @@
                         <span class="badge-label">PPh Psl 4 (2)</span>
                     </div>
                 </div>
-                <!-- Item 5 -->
                 <div class="tax-row-item"
                     onclick="selectTaxItem('21-100-08', 'Bukan Pegawai Yang Menerima Imbalan Berkesinambungan', '15%')">
                     <div class="tax-col-code">
@@ -3274,7 +3066,6 @@
                     </div>
                 </div>
 
-                <!-- Item 6 -->
                 <div class="tax-row-item"
                     onclick="selectTaxItem('21-100-08', 'Bukan Pegawai Yang Menerima Imbalan Berkesinambungan', '15%')">
                     <div class="tax-col-code">
@@ -3291,29 +3082,21 @@
                     </div>
                 </div>
             </div>
-
-
-
-            <!-- Footer Modal -->
             <div class="modal-tax-footer">
                 <button type="button" class="btn-modal-close" onclick="closeObjekPajakModal()">Tutup</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal Faktur PPN -->
     <div id="modalFakturPPN" class="modal-overlay" style="display: none;">
         <div class="modal-content modal-card-ppn">
-            <!-- Header -->
             <div class="modal-ppn-header">
                 <h3 class="modal-ppn-title">Entry Faktur PPN</h3>
                 <p class="modal-ppn-subtitle">Masukkan informasi Pajak Pertambahan Nilai (PPN) sesuai dengan bukti bayar
                     atau faktur pajak yang sah.</p>
             </div>
 
-            <!-- Body / Form Grid -->
             <div class="modal-ppn-body">
-                <!-- Row 1: Rekanan Info -->
                 <div class="ppn-grid-row">
                     <div class="ppn-col-label">Nama Rekanan</div>
                     <div class="ppn-col-input">
@@ -3327,7 +3110,6 @@
                     </div>
                 </div>
 
-                <!-- Row 2: No kuitansi & ID Dokumen -->
                 <div class="ppn-grid-row">
                     <div class="ppn-col-label">No kuitansi / Invoice</div>
                     <div class="ppn-col-input">
@@ -3340,7 +3122,6 @@
                     </div>
                 </div>
 
-                <!-- Row 3: Nilai Invoice -->
                 <div class="ppn-grid-row">
                     <div class="ppn-col-label">Nilai Invoice + PPN</div>
                     <div class="ppn-col-input">
@@ -3348,7 +3129,6 @@
                     </div>
                 </div>
 
-                <!-- Row 4: Toggle Switch PPN Masukan / Pungut -->
                 <div class="ppn-grid-row align-center">
                     <div class="ppn-col-label flex-align">
                         <span>PPN Masukan / Pungut</span>
@@ -3364,7 +3144,6 @@
 
                 <div class="ppn-section-title">Faktur Pajak / Dokumen Lainnya</div>
 
-                <!-- Jenis Transaksi -->
                 <div class="ppn-grid-row">
                     <div class="ppn-col-label">Jenis Transaksi</div>
                     <div class="ppn-col-input-full">
@@ -3375,7 +3154,6 @@
                     </div>
                 </div>
 
-                <!-- Status -->
                 <div class="ppn-grid-row">
                     <div class="ppn-col-label">Status</div>
                     <div class="ppn-col-input-full">
@@ -3386,7 +3164,6 @@
                     </div>
                 </div>
 
-                <!-- Dokumen Transaksi -->
                 <div class="ppn-grid-row">
                     <div class="ppn-col-label">Dokumen Transaksi</div>
                     <div class="ppn-col-input-full">
@@ -3397,7 +3174,6 @@
                     </div>
                 </div>
 
-                <!-- No Seri Faktur -->
                 <div class="ppn-grid-row align-center">
                     <div class="ppn-col-label">No. Seri Faktur</div>
                     <div class="ppn-col-input-full flex-inline-gap">
@@ -3410,8 +3186,6 @@
                         <span class="danger-hint">pastikan sesuai dengan faktur</span>
                     </div>
                 </div>
-
-                <!-- Tanggal Faktur -->
                 <div class="ppn-grid-row align-center">
                     <div class="ppn-col-label">Tanggal Faktur/SSP/PIB</div>
                     <div class="ppn-col-input">
@@ -3422,7 +3196,6 @@
                 </div>
             </div>
 
-            <!-- Footer Action Buttons -->
             <div class="modal-ppn-footer">
                 <button type="button" class="btn-ppn-delete" onclick="deleteFakturPPN()">
                     <i class="fas fa-times"></i> Hapus
@@ -3456,17 +3229,13 @@
         </div>
     </div>
 
-    <!-- Modal Popup Dokumen & Preview -->
     <div id="filePreviewModal" class="custom-modal-overlay" style="display: none;">
         <div class="custom-modal-container">
 
-            <!-- Modal Body: 2 Kolom (List File & Struk Preview) -->
             <div class="custom-modal-body">
 
-                <!-- Panel Kiri: Daftar File Card -->
                 <div class="step3-middle-panel">
                     <div class="file-grid-2col">
-                        <!-- Card 1 -->
                         <div class="step3-file-card-submit">
                             <div class="s4-fc-header-submit">
                                 <div class="fc-info-submit">
@@ -3481,7 +3250,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 2 -->
                         <div class="step3-file-card-submit">
                             <div class="s4-fc-header-submit">
                                 <div class="fc-info-submit">
@@ -3496,7 +3264,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 3 -->
                         <div class="step3-file-card-submit">
                             <div class="s4-fc-header-submit">
                                 <div class="fc-info-submit">
@@ -3510,7 +3277,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 4 -->
                         <div class="step3-file-card-submit">
                             <div class="s4-fc-header-submit">
                                 <div class="fc-info-submit">
@@ -3524,7 +3290,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 5 (Warning) -->
                         <div class="step3-file-card-submit card-warning-submit">
                             <div class="s4-fc-header-submit">
                                 <div class="fc-info-submit">
@@ -3538,7 +3303,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 6 (Warning) -->
                         <div class="step3-file-card-submit card-warning-submit">
                             <div class="s4-fc-header-submit">
                                 <div class="fc-info-submit">
@@ -3552,7 +3316,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 7 -->
                         <div class="step3-file-card-submit">
                             <div class="s4-fc-header-submit">
                                 <div class="fc-info-submit">
@@ -3566,7 +3329,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 8 -->
                         <div class="step3-file-card-submit">
                             <div class="s4-fc-header-submit">
                                 <div class="fc-info-submit">
@@ -3581,7 +3343,6 @@
                         </div>
                     </div>
 
-                    <!-- Pagination -->
                     <div class="table-footer list-pagination">
                         <div class="pagination-info"><strong>0 Rincian</strong></div>
                         <div class="pagination-controls">
@@ -3594,7 +3355,6 @@
                         </div>
                     </div>
 
-                    <!-- Mandatory Info Box -->
                     <div class="mandatory-box">
                         <strong>Mandatory File</strong>
                         <ul>
@@ -3605,7 +3365,6 @@
                     </div>
                 </div>
 
-                <!-- Panel Kanan: Viewer Struk -->
                 <div class="step3-right-panel">
                     <div class="preview-toolbar">
                         <div class="pt-left">
@@ -3622,7 +3381,6 @@
 
             </div>
 
-            <!-- Tombol Tutup di Bawah Pop-up -->
             <div class="custom-modal-footer">
                 <button type="button" class="btn-modal-close" onclick="closeFilePreviewModal()">Tutup</button>
             </div>
@@ -3630,10 +3388,8 @@
 
     </div>
     </div>
-    <!-- Scripts reference -->
     <script src="../../js/script-form.js"></script>
     <script src="../../js/script-dataForm.js"></script>
-    <script src="../../js/script-formOperasional.js"></script>
     <script src="../../js/script-dataGridPengajuan.js"></script>
 
 </body>

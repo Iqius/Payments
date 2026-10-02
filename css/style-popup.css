@@ -199,7 +199,6 @@
   color: #fff;
 }
 
-/* Responsive adjustments */
 @media (max-width: 1024px) {
   .modal-cards-container {
     grid-template-columns: repeat(3, 1fr);
@@ -266,7 +265,7 @@
 }
 
 .header-center {
-  background-color: #E9F3FA;
+  background-color: #e9f3fa;
   border-radius: 32px;
   padding: 16px 24px;
   display: flex;
@@ -330,7 +329,7 @@
 }
 
 .step.active .circle {
-  background-color: #226DA8;
+  background-color: #226da8;
 }
 
 .step.step-completed .circle {
@@ -364,7 +363,7 @@
 }
 
 .step.active .label {
-  color: #226DA8;
+  color: #226da8;
   font-weight: 600;
 }
 
@@ -516,7 +515,7 @@
 }
 
 .summary-box {
-  background-color: #F0F9FF;
+  background-color: #f0f9ff;
   border-radius: 6px;
   padding: 12px;
 }
@@ -768,8 +767,8 @@
 }
 
 .radio-card.selected {
-  background-color: #226DA8;
-  border-color: #226DA8;
+  background-color: #226da8;
+  border-color: #226da8;
 }
 .radio-card.selected strong,
 .radio-card.selected span {
@@ -857,11 +856,11 @@
 
 .outline-blue {
   background-color: transparent;
-  border: 1px solid #226DA8;
-  color: #226DA8;
+  border: 1px solid #226da8;
+  color: #226da8;
 }
 .outline-blue:hover {
-  background-color: #226DA8;
+  background-color: #226da8;
   color: #ffffff;
 }
 
@@ -1046,10 +1045,7 @@
   justify-content: center;
   max-height: 470px;
   /* padding: 8px; */
-
-  /* other option */
-  
-  background: #FFFFFF;
+  background: #ffffff;
   border: 8px solid #f0f9ff;
 }
 
@@ -1291,7 +1287,7 @@
 }
 
 .step3-summary-card {
-  background-color: #F0F9FF;
+  background-color: #f0f9ff;
   border-radius: 6px;
   padding: 10px 11px;
   display: flex;
@@ -1307,6 +1303,55 @@
   font-size: 10px;
   color: #333;
   font-weight: 700;
+}
+.skema-info-fields {
+  margin: 10px 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skema-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.skema-field-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #333333;
+  line-height: 1.3;
+}
+
+.skema-field-box {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid #dcdfe6;
+  border-radius: 6px;
+  min-height: 28px;
+  overflow: hidden;
+}
+
+.skema-field-prefix {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  font-size: 10px;
+  color: #666666;
+  background-color: #f8f9fa;
+  border-right: 1px solid #dcdfe6;
+}
+
+.skema-field-val {
+  flex: 1;
+  padding: 6px 10px;
+  font-size: 10px;
+  font-weight: 400;
+  color: #1565c0;
+  line-height: 1.3;
 }
 
 .skema-selected-box {
@@ -2057,7 +2102,6 @@
   background-color: #155393;
 }
 
-/* STEP 3 POPULATED STATES */
 .s4-pop-left-list {
   display: flex;
   flex-direction: column;
@@ -2145,11 +2189,11 @@
 }
 
 .sdh-banner-card.theme-badan-usaha {
-  background-color: #E7EBF0;
+  background-color: #e7ebf0;
 }
 
 .sdh-banner-card.theme-perorangan {
-  background-color: #FFF1DD;
+  background-color: #fff1dd;
 }
 
 .sdh-title-group h3 {
@@ -2331,10 +2375,9 @@
   font-size: 9px;
 }
 
-/* kuitansi Area */
 .s4-kuitansi-area {
   flex-grow: 1;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   padding: 10px 16px;
   display: flex;
   flex-direction: column;
@@ -2367,23 +2410,38 @@
   flex-direction: column;
   gap: 6px;
   height: 100%;
-  background-color: #F0F9FF;
+  background-color: #f0f9ff;
   padding: 8px;
   border-radius: 6px;
 }
 
-.kw-table-columns-header{
-  position: sticky; top: 0; z-index: 10; display: flex; 
-  align-items: center; gap: 12px; padding: 4px; 
-  background-color: #ffffff; border-radius: 8px; 
-  font-size: 10px; color: #788591; font-weight: 400;
-  margin-right: 40px; box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+.kw-table-columns-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  font-size: 10px;
+  color: #788591;
+  font-weight: 400;
+  margin-right: 40px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
-.biaya-global-header{
-  flex-shrink: 0; display: flex; align-items: center; 
-  justify-content: space-between; padding: 4px; 
-  background-color: #ffffff; border-radius: 8px; 
-  font-size: 10px; color: #788591; font-weight: 400;
+.biaya-global-header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  font-size: 10px;
+  color: #788591;
+  font-weight: 400;
 }
 .kw-list#kuitansi-list-container {
   overflow-y: auto !important;
@@ -2501,7 +2559,7 @@
 }
 
 .s4-pop-item.theme-peach {
-  background-color: #FFF1DD;
+  background-color: #fff1dd;
   border: 4px solid #ffff;
   border-radius: 12px;
   overflow: hidden;
@@ -3075,8 +3133,11 @@
   color: #1e293b;
 }
 .kw-badge-count {
-  color: #226DA8; font-weight: 600; padding: 4px 10px; border-radius: 8px;
-  background-color: #FFFFFF;
+  color: #226da8;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background-color: #ffffff;
 }
 .kw-total {
   margin: 0;
@@ -3085,8 +3146,8 @@
   color: #1e293b;
 }
 
-.kw-header-wrapper{
-  background-color: #F0F9FF;
+.kw-header-wrapper {
+  background-color: #f0f9ff;
 }
 
 .kw-select-kategori {
@@ -3112,8 +3173,8 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  background: #FFFFFF;
-  color: #226DA8;
+  background: #ffffff;
+  color: #226da8;
   font-size: 10px;
   font-weight: 600;
   cursor: pointer;
@@ -3126,7 +3187,6 @@
   background-color: #f0f9ff;
 }
 
-/* Card Dialog Modal Tax */
 .modal-card-tax {
   background: #ffffff;
   width: 90%;
@@ -3315,7 +3375,6 @@
   background: #0369a1;
 }
 
-/* Card Container PPN */
 .modal-card-ppn {
   background: #ffffff;
   width: 92%;
@@ -3569,7 +3628,6 @@ input:checked + .slider-round:before {
   background-color: #0369a1;
 }
 
-/* S3 Layout */
 .s3-step-wrapper {
   display: flex;
   flex-direction: column;
@@ -4761,44 +4819,40 @@ input:checked + .slider-round:before {
   word-break: break-word;
 }
 
-.header-left-slot{
+.header-left-slot {
   background-color: #ffffff;
 }
-/* Card Container: dipangkas menjadi 3/4 ukuran sebelumnya */
 .detil-perjalanan-card {
   display: none;
-  background-color: #F0F9FF;
+  background-color: #f0f9ff;
   border-radius: 6px;
-  padding: 6px 10px; /* Diperkecil dari 8px 14px */
+  padding: 6px 10px;
   margin-bottom: 6px;
   /* border: 1px solid #d0e7f7; */
 }
 
-/* Judul Card */
 .detil-perjalanan-title {
   font-weight: 700;
-  font-size: 10.5px; /* Diperkecil dari 12px */
+  font-size: 10.5px;
   color: #2d3748;
-  margin-bottom: 4px; /* Diperkecil dari 6px */
+  margin-bottom: 4px;
 }
 
-/* Body / Container Kolom */
 .detil-perjalanan-body {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 40px;
-  font-size: 9.5px; /* Diperkecil dari 11px*/
+  font-size: 9.5px;
   max-width: 800px;
   color: #4a5568;
 }
 
-/* Kolom & Baris */
 .detil-perjalanan-col {
   display: flex;
   flex-direction: column;
-  gap: 2.5px; /* Diperkecil dari 4px */
+  gap: 2.5px;
 }
 
 .detil-col-gap {
@@ -4812,7 +4866,6 @@ input:checked + .slider-round:before {
   line-height: 1.1;
 }
 
-/* Label & Value */
 .detil-label {
   color: #718096;
   width: 75px;
@@ -4840,7 +4893,6 @@ input:checked + .slider-round:before {
   font-size: 9.5px;
 }
 
-/* Badge Transportasi */
 .transport-badge {
   display: inline-flex;
   align-items: center;
@@ -4848,7 +4900,7 @@ input:checked + .slider-round:before {
   background-color: #ffffff;
   border: 1px solid #1d6fbf;
   color: #1d6fbf;
-  padding: 3px 6px; /* Diperkecil dari 2px 8px */
+  padding: 3px 6px;
   border-radius: 5px;
   font-weight: 600;
   font-size: 9.5px;
@@ -4859,17 +4911,15 @@ input:checked + .slider-round:before {
   font-size: 8.5px;
 }
 
-/* Box Putih Tengah */
 .detil-box-white {
   background-color: #ffffff;
   border-radius: 5px;
-  padding: 3px 9px; /* Diperkecil dari 4px 12px */
+  padding: 3px 9px;
   display: flex;
   /* align-items: center; */
   gap: 12px;
 }
 
-/* Highlight Box Durasi Tengah */
 .detil-highlight-box {
   text-align: center;
   padding: 0 2px;
@@ -4877,13 +4927,59 @@ input:checked + .slider-round:before {
 
 .highlight-label {
   color: #718096;
-  font-size: 8px; /* Diperkecil dari 9.5px */
+  font-size: 8px;
   margin-bottom: 5px;
 }
 
 .highlight-val {
-  font-size: 11.5px; /* Diperkecil dari 14px */
+  font-size: 11.5px;
   font-weight: 700;
   color: #1a202c;
   line-height: 1;
 }
+#filePreviewModal .file-grid-2col {
+  gap: 8px;
+}
+
+#filePreviewModal .step3-file-card-submit {
+  gap: 6px;
+  padding: 8px 10px;
+}
+
+.fc-title-submit {
+  font-size: 10px;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fc-size-submit {
+  font-size: 8px;
+  color: #888;
+  white-space: nowrap;
+}
+
+.s4-fc-tags-submit {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.step3-file-card-submit.card-warning-submit {
+  border-color: #f5c69b;
+  background-color: #fffcf8;
+}
+
+.s4-fc-warning-submit {
+  font-size: 8px;
+  color: #ff4d4f;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-weight: 600;
+}
+

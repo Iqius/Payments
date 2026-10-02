@@ -1,101 +1,15 @@
-/* ========================================================================= */
-/* EXISTING FORM LOGIC (KEPT INTACT)                                         */
-/* ========================================================================= */
-function selectSumberAnggaran(type) {
-  // 1. Ganti active class pada kartu filter
-  document
-    .querySelectorAll(".select-card")
-    .forEach((card) => card.classList.remove("selected"));
+// ==========================================================================
+// FORM PENGAJUAN (form-operasional.html)
+// Alur: Sumber Anggaran -> Dokumen Pendukung -> (Detil Perjalanan) ->
+//       Rincian Biaya -> Review & Submit
+// Catatan: fungsi bernama dipanggil lewat atribut onclick di HTML, jadi
+//          harus tetap global. Urutan kode dipertahankan karena beberapa
+//          statement dijalankan langsung saat file dimuat.
+// ==========================================================================
 
-  const targetCard = document.getElementById(`card-${type}`);
-  if (targetCard) targetCard.classList.add("selected");
-
-  // 2. Kirim 2 argumen: array data + tipe kategorinya
-  renderAnggaranList(anggaranData, type);
-}
-
-// 4. Handler Pemilihan Item List (Radio Behavior)
-function selectAnggaranItem(element) {
-  const selectedId = element.getAttribute("data-id");
-
-  // Update status di array data
-  anggaranData.forEach((item) => {
-    item.terpilih = item.idAnggaran === selectedId;
-  });
-
-  // Update styling aktif di tampilan
-  document
-    .querySelectorAll("#list-anggaran-container .list-item")
-    .forEach((el) => {
-      el.classList.remove("selected");
-    });
-  element.classList.add("selected");
-}
-
-function renderDetilPerjalananHTML() {
-  return `
-        <!-- Card Detil Perjalanan Dinas -->
-        <div class="detil-perjalanan-card" style="background-color: #eaf5fc; border-radius: 12px; padding: 16px 20px; margin-bottom: 16px; border: 1px solid #d0e7f7;">
-            <div style="font-weight: 700; font-size: 14px; color: #2d3748; margin-bottom: 12px;">Detil perjalanan dinas</div>
-            
-            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; font-size: 12px; color: #4a5568;">
-                <!-- Kolom 1: Jenis & Transportasi -->
-                <div style="display: flex; flex-direction: column; gap: 8px;">
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <span style="width: 100px; color: #718096;">Jenis Perjalanan</span>
-                        <span style="font-weight: 600; color: #2d3748;">Luar kota</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <span style="width: 100px; color: #718096;">Transportasi</span>
-                        <div style="display: inline-flex; align-items: center; gap: 8px; background: #ffffff; border: 1.5px solid #1d6fbf; color: #1d6fbf; padding: 4px 12px; border-radius: 8px; font-weight: 600;">
-                            <i class="fas fa-train"></i>
-                            <span>Kereta Api</span>
-                            <i class="fas fa-check-circle" style="color: #1d6fbf; font-size: 12px;"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Kolom 2: Tanggal -->
-                <div style="display: flex; flex-direction: column; gap: 6px;">
-                    <div style="display: flex; gap: 8px;">
-                        <span style="color: #718096; width: 110px;">Tanggal Berangkat</span>
-                        <span style="font-weight: 500;">01 Agustus 2026</span>
-                    </div>
-                    <div style="display: flex; gap: 8px;">
-                        <span style="color: #718096; width: 110px;">Tanggal Kembali</span>
-                        <span style="font-weight: 500;">05 Agustus 2026</span>
-                    </div>
-                    <div style="display: flex; gap: 8px;">
-                        <span style="color: #718096; width: 110px;">Durasi Perjalanan</span>
-                        <span style="font-weight: 500;">5 Hari</span>
-                    </div>
-                </div>
-
-                <!-- Kolom 3: Highlight Durasi -->
-                <div style="text-align: center; padding: 0 16px;">
-                    <div style="color: #718096; font-size: 11px; margin-bottom: 4px;">Durasi Perjalanan</div>
-                    <div style="font-size: 20px; font-weight: 700; color: #1a202c;">5 Hari</div>
-                </div>
-
-                <!-- Kolom 4: Rute Kota -->
-                <div style="display: flex; flex-direction: column; gap: 6px;">
-                    <div style="display: flex; gap: 8px;">
-                        <span style="color: #718096; width: 80px;">Kota Asal</span>
-                        <span style="font-weight: 500;">Jakarta</span>
-                    </div>
-                    <div style="display: flex; gap: 8px;">
-                        <span style="color: #718096; width: 80px;">Kota Tujuan</span>
-                        <span style="font-weight: 500;">Denpasar</span>
-                    </div>
-                    <div style="display: flex; gap: 8px;">
-                        <span style="color: #718096; width: 80px;">Kota Kembali</span>
-                        <span style="font-weight: 500;">Jakarta</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-}
+// ==========================================================================
+// STEPPER & NAVIGASI STEP
+// ==========================================================================
 
 // Konfigurasi alur form dan label stepper
 const FLOWS_CONFIG = {
@@ -116,25 +30,6 @@ const FLOWS_CONFIG = {
 
 let currentType = "operasional";
 let currentIndex = 0;
-
-// Inisialisasi saat halaman selesai dimuat
-document.addEventListener("DOMContentLoaded", () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const typeParam = urlParams.get("type");
-  const titleEl = document.getElementById("header-title");
-
-  if (typeParam === "perjalanan_dinas") {
-    currentType = "perjalanan_dinas";
-    document.title = "Form Perjalanan Dinas";
-    if (titleEl) titleEl.textContent = "Perjalanan Dinas";
-  } else {
-    currentType = "operasional";
-    document.title = "Form Operasional Umum";
-    if (titleEl) titleEl.textContent = "Operasional Umum";
-  }
-
-  render();
-});
 
 function nextStep() {
   const activeFlow = FLOWS_CONFIG[currentType];
@@ -185,7 +80,6 @@ function render() {
       if (idx < activeFlow.length - 1) {
         stepperHtml += `<div class="${lineClass}"></div>`;
       }
-      
     });
 
     stepperContainer.innerHTML = stepperHtml;
@@ -218,20 +112,19 @@ function simpanDraft() {
   }, 3000);
 }
 
-document
-  .getElementById("btnTambahRincian")
-  ?.addEventListener("click", function () {
-    document.getElementById("modalTambahRincian").classList.remove("hidden");
-  });
-document
-  .getElementById("closeRincianModal")
-  ?.addEventListener("click", function () {
-    document.getElementById("modalTambahRincian").classList.add("hidden");
-  });
+document.getElementById("btnTambahRincian")?.addEventListener("click", function () {
+  document.getElementById("modalTambahRincian").classList.remove("hidden");
+});
+document.getElementById("closeRincianModal")?.addEventListener("click", function () {
+  document.getElementById("modalTambahRincian").classList.add("hidden");
+});
 
-/* ========================================================================= */
-/* NEW LOGIC: MODAL REKENING & STEP 3 DATA POPULATION                        */
-/* ========================================================================= */
+// ==========================================================================
+// MODAL REKENING & RINCIAN BIAYA (STEP 4)
+// ==========================================================================
+
+// Penanda: modal rekening dibuka dari daftar rincian (agar modal rincian dibuka lagi saat ditutup)
+let isOpenedFromRincianList = false;
 
 // Open Rekening Modal from Rincian list
 function openRekeningModal() {
@@ -257,9 +150,7 @@ function closeRekeningModal() {
 // Switch between Rekening Sources in the Modal (Terdaftar, Referensi, Baru)
 function switchRekeningSource(source) {
   // 1. Manage Active Class on Radio Cards
-  document
-    .querySelectorAll(".rek-radio-card")
-    .forEach((card) => card.classList.remove("active"));
+  document.querySelectorAll(".rek-radio-card").forEach((card) => card.classList.remove("active"));
   document.getElementById(`rek-radio-${source}`).classList.add("active");
 
   // 2. Hide all Views, show selected View
@@ -289,9 +180,7 @@ function simpanRekening() {
 // Switch Right Panel based on Left List item clicked
 function switchStep3Tab(type, el) {
   // Handle Active state
-  document
-    .querySelectorAll(".s3-pop-item")
-    .forEach((item) => item.classList.remove("active"));
+  document.querySelectorAll(".s3-pop-item").forEach((item) => item.classList.remove("active"));
   if (el) el.classList.add("active");
 
   const kwList = document.getElementById("kuitansi-list-container");
@@ -1871,9 +1760,7 @@ function switchStep3Tab(type, el) {
     `;
 
     // MENGHITUNG OTOMATIS JUMLAH ROW kuitansi
-    const totalkuitansi = kwList.querySelectorAll(
-      ".kuitansi-row-container",
-    ).length;
+    const totalkuitansi = kwList.querySelectorAll(".kuitansi-row-container").length;
     const badgeEl = document.getElementById("kw-total-badge");
     if (badgeEl) {
       badgeEl.innerText = `${totalkuitansi} Kuitansi`;
@@ -2038,6 +1925,10 @@ function switchStep3Tab(type, el) {
   applyKuitansiItemState();
 }
 
+// ==========================================================================
+// KUITANSI, OBJEK PAJAK & FAKTUR PPN
+// ==========================================================================
+
 // Toggle accordion logic for kuitansi Item
 function togglekuitansi(event, headerEl) {
   // Cegah buka/tutup saat user sedang mengetik di form
@@ -2048,8 +1939,7 @@ function togglekuitansi(event, headerEl) {
   const detail = item.querySelector(".kw-detail");
   const rowContainer = item.closest(".kuitansi-row-container");
 
-  const isClosed =
-    detail.style.display === "none" || !item.classList.contains("expanded");
+  const isClosed = detail.style.display === "none" || !item.classList.contains("expanded");
 
   if (isClosed) {
     // Buka detail
@@ -2090,8 +1980,7 @@ function setTipePenerima(type) {
 
 function handleTambah() {
   const dropdownPerorangan = document.getElementById("dropdownPerorangan");
-  const isSiti =
-    dropdownPerorangan && dropdownPerorangan.style.display !== "none";
+  const isSiti = dropdownPerorangan && dropdownPerorangan.style.display !== "none";
 
   if (isSiti) {
     // Logika Tambah Komponen Biaya (Siti - Perorangan)
@@ -2110,9 +1999,7 @@ let currentActiveTargetRow = null;
 
 // Buka Modal
 function openObjekPajakModal(triggerBtn) {
-  currentActiveTargetRow = triggerBtn
-    ? triggerBtn.closest(".biaya-sub-row, .kuitansi-item")
-    : null;
+  currentActiveTargetRow = triggerBtn ? triggerBtn.closest(".biaya-sub-row, .kuitansi-item") : null;
   const modal = document.getElementById("modalObjekPajak");
   if (modal) modal.style.display = "flex";
 }
@@ -2140,9 +2027,7 @@ function selectTaxItem(code, name, rate) {
 
 // Filter Tab
 function switchTaxTab(btnEl, category) {
-  document
-    .querySelectorAll(".tax-tab")
-    .forEach((btn) => btn.classList.remove("active"));
+  document.querySelectorAll(".tax-tab").forEach((btn) => btn.classList.remove("active"));
   btnEl.classList.add("active");
 }
 
@@ -2167,16 +2052,13 @@ function openFakturPPNModal(triggerEl) {
   if (currentkuitansiRow) {
     // Sinkronisasi otomatis nomor kuitansi & nominal jika sudah diinput di card
     const inputNoKw = currentkuitansiRow.querySelector(".kw-field-no input");
-    const inputNominal = currentkuitansiRow.querySelector(
-      ".kw-field-nominal input",
-    );
+    const inputNominal = currentkuitansiRow.querySelector(".kw-field-nominal input");
 
     if (inputNoKw && inputNoKw.value) {
       document.getElementById("ppnNokuitansi").value = inputNoKw.value;
     }
     if (inputNominal && inputNominal.value) {
-      document.getElementById("ppnNilaiInvoice").value =
-        "Rp " + inputNominal.value;
+      document.getElementById("ppnNilaiInvoice").value = "Rp " + inputNominal.value;
     }
   }
 
@@ -2200,70 +2082,15 @@ function deleteFakturPPN() {
   }
 }
 
+// ==========================================================================
+// DETIL PERJALANAN DINAS (STEP 3)
+// ==========================================================================
+
 // Toggle Buka / Tutup Dropdown
 function toggleTransaksiDropdown(event) {
   event.stopPropagation();
   const wrapper = document.getElementById("transaksiDropdownWrapper");
   if (wrapper) wrapper.classList.toggle("open");
-}
-
-// Handler Saat Salah Satu Opsi Dipilih
-function gantiTipeTransaksi(tipe) {
-  const triggerCard = document.querySelector(".s3-trigger-card");
-  const titleEl = document.getElementById("selectedTransaksiTitle");
-  const iconEl = document.getElementById("selectedTransaksiIcon");
-  const cardDasar = document.getElementById("cardDasarPerjalanan");
-  const wrapper = document.getElementById("transaksiDropdownWrapper");
-
-  const formDomestik = document.getElementById("kontenKiriDalamNegeri");
-  const ruteDomestik = document.getElementById("boxRuteDalamNegeri");
-
-  const formInternasional = document.getElementById("kontenKiriLuarNegeri");
-  const ruteInternasional = document.getElementById("boxRuteLuarNegeri");
-
-  if (tipe === "luar_negeri") {
-    // 1. Update UI Header Card
-    if (titleEl) titleEl.innerText = "Luar Negeri";
-    if (iconEl) iconEl.innerHTML = '<i class="fas fa-globe"></i>';
-    if (triggerCard)
-      triggerCard.className = "transaksi-card card-luar-negeri s3-trigger-card";
-    if (cardDasar) cardDasar.classList.add("theme-luar-negeri");
-
-    // 2. Tampilkan Luar Negeri & Aktifkan Inputnya
-    formInternasional.style.display = "block";
-    ruteInternasional.style.display = "block";
-    toggleInputs(formInternasional, true);
-    toggleInputs(ruteInternasional, true);
-
-    // 3. Sembunyikan Dalam Negeri & Matikan Inputnya
-    formDomestik.style.display = "none";
-    ruteDomestik.style.display = "none";
-    toggleInputs(formDomestik, false);
-    toggleInputs(ruteDomestik, false);
-  } else {
-    // 1. Update UI Header Card
-    if (titleEl) titleEl.innerText = "Dalam Negeri";
-    if (iconEl) iconEl.innerHTML = '<i class="fas fa-globe-asia"></i>';
-    if (triggerCard)
-      triggerCard.className =
-        "transaksi-card card-dalam-negeri s3-trigger-card";
-    if (cardDasar) cardDasar.classList.remove("theme-luar-negeri");
-
-    // 2. Tampilkan Dalam Negeri & Aktifkan Inputnya
-    formDomestik.style.display = "block";
-    ruteDomestik.style.display = "block";
-    toggleInputs(formDomestik, true);
-    toggleInputs(ruteDomestik, true);
-
-    // 3. Sembunyikan Luar Negeri & Matikan Inputnya
-    formInternasional.style.display = "none";
-    ruteInternasional.style.display = "none";
-    toggleInputs(formInternasional, false);
-    toggleInputs(ruteInternasional, false);
-  }
-
-  // Tutup dropdown
-  if (wrapper) wrapper.classList.remove("open");
 }
 
 // Tutup Dropdown jika pengguna klik di luar area
@@ -2273,20 +2100,6 @@ document.addEventListener("click", function (e) {
     wrapper.classList.remove("open");
   }
 });
-
-// Menonaktifkan input di kontainer yang disembunyikan
-function toggleInputs(container, isEnabled) {
-  const inputs = container.querySelectorAll("input, select, textarea");
-  inputs.forEach((el) => {
-    el.disabled = !isEnabled;
-  });
-}
-
-function resetChoice(container) {
-  // Menghapus status active atau mereset value
-  const activeItems = container.querySelectorAll(".active");
-  activeItems.forEach((item) => item.classList.remove("active"));
-}
 
 // Pilihan Kartu Kategori Hijau
 function selectCardGreen(el) {
@@ -2299,10 +2112,7 @@ function selectCardGreen(el) {
   el.classList.add("active");
   const title = el.querySelector(".choice-title");
   if (title && !title.querySelector(".check-icon-green")) {
-    title.insertAdjacentHTML(
-      "afterbegin",
-      '<i class="fas fa-check check-icon-green"></i> ',
-    );
+    title.insertAdjacentHTML("afterbegin", '<i class="fas fa-check check-icon-green"></i> ');
   }
 }
 
@@ -2355,8 +2165,7 @@ function gantiTipeTransaksi(tipe) {
   [kDom, kInt, kDin, rDom, rInt, rDin].forEach((el) => {
     if (el) el.style.display = "none";
   });
-  if (cardDasar)
-    cardDasar.classList.remove("theme-luar-negeri", "theme-kegiatan-dinas");
+  if (cardDasar) cardDasar.classList.remove("theme-luar-negeri", "theme-kegiatan-dinas");
 
   if (tipe === "luar_negeri") {
     titleEl.innerText = "Luar Negeri";
@@ -2371,8 +2180,7 @@ function gantiTipeTransaksi(tipe) {
   } else if (tipe === "kegiatan_dinas") {
     titleEl.innerText = "Kegiatan Kedinasan";
     iconEl.innerHTML = '<i class="far fa-calendar-check"></i>';
-    triggerCard.className =
-      "transaksi-card card-kegiatan-dinas s3-trigger-card";
+    triggerCard.className = "transaksi-card card-kegiatan-dinas s3-trigger-card";
     cardDasar.classList.add("theme-kegiatan-dinas");
 
     kDin.style.display = "block";
@@ -2435,10 +2243,7 @@ function selectAkomodasiS3(cardEl) {
   // 3. Tambahkan class 'active' ke kartu yang sedang diklik
   cardEl.classList.add("active");
 
-  console.log(
-    "Akomodasi dipilih:",
-    cardEl.querySelector("span:last-child").innerText.trim(),
-  );
+  console.log("Akomodasi dipilih:", cardEl.querySelector("span:last-child").innerText.trim());
 }
 
 function selectPillOptionS3(buttonEl) {
@@ -2467,15 +2272,13 @@ function selectCardOptionS3(cardEl) {
   if (!container) return;
 
   // 1. Reset class active dari semua opsi di grup
-  container
-    .querySelectorAll(".s3-choice-card, .s3-choice-card-full")
-    .forEach((card) => {
-      card.classList.remove("active");
+  container.querySelectorAll(".s3-choice-card, .s3-choice-card-full").forEach((card) => {
+    card.classList.remove("active");
 
-      // Hapus ikon centang lama jika ada
-      const oldCheck = card.querySelector(".check-icon");
-      if (oldCheck) oldCheck.remove();
-    });
+    // Hapus ikon centang lama jika ada
+    const oldCheck = card.querySelector(".check-icon");
+    if (oldCheck) oldCheck.remove();
+  });
 
   // 2. Aktifkan kartu yang diklik
   cardEl.classList.add("active");
@@ -2524,6 +2327,10 @@ function selectPillPurple(buttonEl) {
   );
 }
 
+// ==========================================================================
+// MODAL DOKUMEN
+// ==========================================================================
+
 // Open Modal Function
 function openDocModal() {
   const modal = document.getElementById("modalJenisDokumen");
@@ -2546,16 +2353,14 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-/* ========================================================================= */
-/* NEW LOGIC: STEP 4 INTERACTIONS                                            */
-/* ========================================================================= */
+// ==========================================================================
+// REVIEW & SUBMIT (STEP 5)
+// ==========================================================================
 
 // Handle Middle Buttons Tab Switching
 function switchs5Tab(tabId, element) {
   // Remove active state from all icon buttons in middle panel
-  const tabs = element
-    .closest(".s5-middle-panel")
-    .querySelectorAll(".s5-icon-btn");
+  const tabs = element.closest(".s5-middle-panel").querySelectorAll(".s5-icon-btn");
   tabs.forEach((tab) => tab.classList.remove("active"));
 
   // Set clicked button to active
@@ -2634,8 +2439,7 @@ function toggleS5Accordion(element) {
 // Final Submit Function
 function submitPengajuan() {
   const toast = document.getElementById("toastNotification");
-  toast.innerHTML =
-    '<i class="fas fa-check-circle"></i> Pengajuan Berhasil Dikirim';
+  toast.innerHTML = '<i class="fas fa-check-circle"></i> Pengajuan Berhasil Dikirim';
   toast.classList.remove("hidden");
   toast.classList.add("show");
 
@@ -2766,10 +2570,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Event Listeners
-  if (triggerSentral)
-    triggerSentral.addEventListener("click", openModalSentralisasi);
-  if (btnCloseSentral)
-    btnCloseSentral.addEventListener("click", closeModalSentralisasi);
+  if (triggerSentral) triggerSentral.addEventListener("click", openModalSentralisasi);
+  if (btnCloseSentral) btnCloseSentral.addEventListener("click", closeModalSentralisasi);
 
   if (modalSentral) {
     modalSentral.addEventListener("click", (e) => {
@@ -2778,11 +2580,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   document.addEventListener("keydown", (e) => {
-    if (
-      e.key === "Escape" &&
-      modalSentral &&
-      modalSentral.classList.contains("active")
-    ) {
+    if (e.key === "Escape" && modalSentral && modalSentral.classList.contains("active")) {
       closeModalSentralisasi();
     }
   });
@@ -2792,8 +2590,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const keyword = e.target.value.toLowerCase().trim();
       const filtered = dataSentralisasi.filter(
         (item) =>
-          item.code.toLowerCase().includes(keyword) ||
-          item.name.toLowerCase().includes(keyword),
+          item.code.toLowerCase().includes(keyword) || item.name.toLowerCase().includes(keyword),
       );
       renderSentralisasiList(filtered);
     });
@@ -2808,10 +2605,11 @@ function toggleAccordion(element) {
   }
 }
 
-// Helper format mata uang rupiah
-function formatRupiah(val) {
-  return "Rp. " + new Intl.NumberFormat("id-ID").format(val) + ",00";
-}
+// ==========================================================================
+// DAFTAR ANGGARAN KEGIATAN (STEP 1)
+// State, render list, pagination, filter, pilih sumber & kegiatan
+// ==========================================================================
+
 // State aplikasi
 let activeKategori = "bpjs";
 let currentPage = 1;
@@ -2872,25 +2670,13 @@ function renderAnggaranList(data, totalItems) {
 // 2. Sinkronkan dengan Struktur Pagination HTML Anda
 function renderPagination(totalItems) {
   const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
-  const currentPageBtn = document.querySelector(
-    ".pagination-controls .active-page",
-  );
-  const totalPagesText = document.querySelector(
-    ".pagination-controls .page-text",
-  );
+  const currentPageBtn = document.querySelector(".pagination-controls .active-page");
+  const totalPagesText = document.querySelector(".pagination-controls .page-text");
 
-  const btnFirst = document.querySelector(
-    ".pagination-controls button:nth-child(1)",
-  );
-  const btnPrev = document.querySelector(
-    ".pagination-controls button:nth-child(2)",
-  );
-  const btnNext = document.querySelector(
-    ".pagination-controls button:nth-child(5)",
-  );
-  const btnLast = document.querySelector(
-    ".pagination-controls button:nth-child(6)",
-  );
+  const btnFirst = document.querySelector(".pagination-controls button:nth-child(1)");
+  const btnPrev = document.querySelector(".pagination-controls button:nth-child(2)");
+  const btnNext = document.querySelector(".pagination-controls button:nth-child(5)");
+  const btnLast = document.querySelector(".pagination-controls button:nth-child(6)");
 
   if (currentPageBtn) currentPageBtn.innerText = currentPage;
   if (totalPagesText) totalPagesText.innerText = `of ${totalPages}`;
@@ -2924,10 +2710,7 @@ function goToPage(page) {
 // 4. Potong Data Sesuai Halaman Aktif
 function sliceAndRender() {
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedData = currentFilteredData.slice(
-    startIndex,
-    startIndex + itemsPerPage,
-  );
+  const paginatedData = currentFilteredData.slice(startIndex, startIndex + itemsPerPage);
   renderAnggaranList(paginatedData, currentFilteredData.length);
 }
 
@@ -2944,8 +2727,7 @@ function filterAndRenderAnggaran(resetPage = true) {
       item.kategori.toUpperCase() === activeKategori.toUpperCase();
 
     const matchSearch =
-      item.idAnggaran.toLowerCase().includes(keyword) ||
-      item.judul.toLowerCase().includes(keyword);
+      item.idAnggaran.toLowerCase().includes(keyword) || item.judul.toLowerCase().includes(keyword);
 
     return matchCategory && matchSearch;
   });
@@ -2954,12 +2736,10 @@ function filterAndRenderAnggaran(resetPage = true) {
 }
 
 // 6. Ganti Tab Kategori
-window.selectSumberAnggaran = function (type) {
+function selectSumberAnggaran(type) {
   activeKategori = type;
 
-  document
-    .querySelectorAll(".select-card")
-    .forEach((card) => card.classList.remove("selected"));
+  document.querySelectorAll(".select-card").forEach((card) => card.classList.remove("selected"));
   const targetCard = document.getElementById(`card-${type}`);
   if (targetCard) targetCard.classList.add("selected");
 
@@ -2967,10 +2747,10 @@ window.selectSumberAnggaran = function (type) {
   if (searchInput) searchInput.value = "";
 
   filterAndRenderAnggaran(true);
-};
+}
 
 // 7. Handler Pilih Item List & Update Summary (Satu Fungsi Utuh)
-window.selectAnggaranItem = function (element) {
+function selectAnggaranItem(element) {
   const selectedId = element.getAttribute("data-id");
   const selectedItem = anggaranData.find((item) => item.idAnggaran === selectedId);
   if (!selectedItem) return;
@@ -2979,11 +2759,9 @@ window.selectAnggaranItem = function (element) {
     item.terpilih = item.idAnggaran === selectedId;
   });
 
-  document
-    .querySelectorAll("#list-anggaran-container .list-item")
-    .forEach((el) => {
-      el.classList.remove("selected");
-    });
+  document.querySelectorAll("#list-anggaran-container .list-item").forEach((el) => {
+    el.classList.remove("selected");
+  });
   element.classList.add("selected");
 
   const tahun = selectedItem.idAnggaran.substring(0, 4);
@@ -3009,7 +2787,7 @@ window.selectAnggaranItem = function (element) {
   setText("info-saldo-tersedia-2", saldo);
   setText("info-kegiatan-terpilih-3", judul);
   setText("info-saldo-tersedia-3", saldo);
-};
+}
 
 // 8. Inisialisasi Event Listener Awal
 document.addEventListener("DOMContentLoaded", () => {
@@ -3095,14 +2873,9 @@ function closeFilePreviewModal() {
   if (modal) modal.style.display = "none";
 }
 
-function toggleKeperluan() {
-  const textBox = document.getElementById("keperluanText");
-  const btn = document.getElementById("btnToggleKeperluan");
-
-  const isCollapsed = textBox.classList.toggle("clamp-3");
-
-  btn.innerText = isCollapsed ? "Lihat Selengkapnya" : "Lihat Lebih Sedikit";
-}
+// ==========================================================================
+// TANGGAL, KEPERLUAN & UPLOAD FILE
+// ==========================================================================
 
 function formatIndonesianDate(date) {
   return new Intl.DateTimeFormat("id-ID", {
@@ -3155,55 +2928,55 @@ const dropArea = document.getElementById("dropArea");
 const fileInput = document.getElementById("fileInput");
 
 if (dropArea && fileInput) {
-// 1. Trigger input file saat div diklik
-dropArea.addEventListener("click", () => {
-  fileInput.click();
-});
+  // 1. Trigger input file saat div diklik
+  dropArea.addEventListener("click", () => {
+    fileInput.click();
+  });
 
-// 2. Tangani file yang dipilih via klik explorer
-fileInput.addEventListener("change", (e) => {
-  handleFiles(e.target.files);
-});
+  // 2. Tangani file yang dipilih via klik explorer
+  fileInput.addEventListener("change", (e) => {
+    handleFiles(e.target.files);
+  });
 
-// 3. Mencegah browser membuka file secara default saat drag-and-drop
-["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
-  dropArea.addEventListener(
-    eventName,
-    (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-    },
-    false,
-  );
-});
+  // 3. Mencegah browser membuka file secara default saat drag-and-drop
+  ["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
+    dropArea.addEventListener(
+      eventName,
+      (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      },
+      false,
+    );
+  });
 
-// Efek visual saat file diseret di atas area (opsional)
-["dragenter", "dragover"].forEach((eventName) => {
-  dropArea.addEventListener(
-    eventName,
-    () => {
-      dropArea.classList.add("drag-active");
-    },
-    false,
-  );
-});
+  // Efek visual saat file diseret di atas area (opsional)
+  ["dragenter", "dragover"].forEach((eventName) => {
+    dropArea.addEventListener(
+      eventName,
+      () => {
+        dropArea.classList.add("drag-active");
+      },
+      false,
+    );
+  });
 
-["dragleave", "drop"].forEach((eventName) => {
-  dropArea.addEventListener(
-    eventName,
-    () => {
-      dropArea.classList.remove("drag-active");
-    },
-    false,
-  );
-});
+  ["dragleave", "drop"].forEach((eventName) => {
+    dropArea.addEventListener(
+      eventName,
+      () => {
+        dropArea.classList.remove("drag-active");
+      },
+      false,
+    );
+  });
 
-// 4. Tangani file saat dilepas (drop)
-dropArea.addEventListener("drop", (e) => {
-  const dt = e.dataTransfer;
-  const files = dt.files;
-  handleFiles(files);
-});
+  // 4. Tangani file saat dilepas (drop)
+  dropArea.addEventListener("drop", (e) => {
+    const dt = e.dataTransfer;
+    const files = dt.files;
+    handleFiles(files);
+  });
 }
 
 // 5. Fungsi pemrosesan file (validasi ukuran & format)
@@ -3234,60 +3007,42 @@ function handleFiles(files) {
   fileInput.value = "";
 }
 
-// Variable state untuk melacak step saat ini
-let currentStep = 1;
-
-  const lastStep = FLOWS_CONFIG[currentType].length;
-
-// Fungsi untuk memperbarui visibilitas tombol di footer
-function updateFooterold() {
-    // const btnPrev = document.getElementById('btn-prev');
-    const btnNext = document.getElementById('btn-next');
-    const btnSubmit = document.getElementById('btn-submit');
-    // currentStep = document
-
-
-    // 2. Kontrol tombol Berikutnya dan Submit di Step Terakhir (Step 5)
-    if (currentStep === lastStep) {
-        // Step 5 (Terakhir): Sembunyikan 'Berikutnya', Tampilkan 'Submit'
-        btnNext.style.display = 'none';
-        btnSubmit.style.display = 'inline-block';
-    } else {
-        // Step 1-4: Tampilkan 'Berikutnya', Sembunyikan 'Submit'
-        btnNext.style.display = 'inline-block';
-        btnSubmit.style.display = 'none';
-    }
-}
+// ==========================================================================
+// FOOTER (tombol Berikutnya / Submit)
+// ==========================================================================
 
 function updateFooter() {
-    // 1. Get all step content elements as an array
-    const steps = Array.from(document.querySelectorAll('.step-content'));
-    if (steps.length === 0) return;
+  // 1. Get all step content elements as an array
+  const steps = Array.from(document.querySelectorAll(".step-content"));
+  if (steps.length === 0) return;
 
-    // 2. Find the visible step and the last step
-    const currentStepEl = steps.find(step => step.style.display !== 'none');
-    const lastStepEl = steps[steps.length - 1];
+  // 2. Find the visible step and the last step
+  const currentStepEl = steps.find((step) => step.style.display !== "none");
+  const lastStepEl = steps[steps.length - 1];
 
-    const btnNext = document.getElementById('btn-nextstep');
-    const btnSubmit = document.getElementById('btn-submit');
+  const btnNext = document.getElementById("btn-nextstep");
+  const btnSubmit = document.getElementById("btn-submit");
 
-    // 3. Compare current step ID against the last step ID
-    if (currentStepEl && currentStepEl.id === lastStepEl.id) {
-        btnNext.style.display = 'none';
-        btnSubmit.style.display = 'inline-block';
-    } else {
-        btnNext.style.display = 'inline-block';
-        btnSubmit.style.display = 'none';
-    }
+  // 3. Compare current step ID against the last step ID
+  if (currentStepEl && currentStepEl.id === lastStepEl.id) {
+    btnNext.style.display = "none";
+    btnSubmit.style.display = "inline-block";
+  } else {
+    btnNext.style.display = "inline-block";
+    btnSubmit.style.display = "none";
+  }
 }
 
 // Jalankan updateFooter pertama kali saat halaman dimuat
-document.addEventListener('DOMContentLoaded', () => {
-    updateFooter();
+document.addEventListener("DOMContentLoaded", () => {
+  updateFooter();
 });
 
-/// Default skema sesuai HTML: 'pembayaran' (Klaim Langsung)
-// Variabel penyimpan state (default: pembayaran / klaim langsung)
+// ==========================================================================
+// SKEMA PENCAIRAN & ATURAN RINCIAN BIAYA
+// ==========================================================================
+
+// Skema pencairan aktif (default: 'pembayaran' = Klaim Langsung)
 let selectedSkemaType = "pembayaran";
 
 function selectSkema(type) {
@@ -3314,7 +3069,7 @@ function selectSkema(type) {
   }
 }
 function applyKuitansiItemState() {
-  const isPersekot = (selectedSkemaType === "persekot");
+  const isPersekot = selectedSkemaType === "persekot";
 
   // Gabungkan semua selector tombol & icon dinamis dalam satu query selector
   const dynamicElements = document.querySelectorAll(`
@@ -3339,7 +3094,7 @@ function applyKuitansiItemState() {
 }
 
 function applyRincianBiayaRules() {
-  const isPersekot = (selectedSkemaType === "persekot");
+  const isPersekot = selectedSkemaType === "persekot";
 
   const leftEmpty = document.getElementById("s4-left-empty");
   const rightEmpty = document.getElementById("s4-right-empty");
@@ -3357,7 +3112,7 @@ function applyRincianBiayaRules() {
     // 1. Tampilkan Populated, Sembunyikan Empty State
     if (leftEmpty) leftEmpty.style.display = "none";
     if (rightEmpty) rightEmpty.style.display = "none";
-    if (leftPopulated) leftPopulated.style.display = ""; 
+    if (leftPopulated) leftPopulated.style.display = "";
     if (rightPopulated) rightPopulated.style.display = "";
 
     // 2. Trigger data Toyota
@@ -3374,7 +3129,7 @@ function applyRincianBiayaRules() {
     if (btnAddKuitansi) {
       btnAddKuitansi.disabled = true;
       btnAddKuitansi.style.pointerEvents = "none";
-      btnAddKuitansi.style.opacity = "0.7"; 
+      btnAddKuitansi.style.opacity = "0.7";
     }
     if (btnTrash) {
       btnTrash.disabled = true;
@@ -3389,7 +3144,6 @@ function applyRincianBiayaRules() {
 
     // 4. Kunci semua elemen dinamis hasil generate
     applyKuitansiItemState();
-
   } else {
     // ==========================================
     // KONDISI KLAIM LANGSUNG: KEMBALI NORMAL
@@ -3428,6 +3182,10 @@ function applyRincianBiayaRules() {
 /* Prefill form dari grid (dokumen Unrealized).
    Muat PALING AKHIR, setelah file data & script-form.js.
    URL: form-operasional.html?id=...&idAnggaran=...                       */
+
+// ==========================================================================
+// PREFILL DARI GRID (dokumen Unrealized) - ?id=...&idAnggaran=...
+// ==========================================================================
 
 function getOperasionalParams() {
   const p = new URLSearchParams(window.location.search);
@@ -3474,9 +3232,7 @@ function selectAnggaranById(idAnggaran) {
   }
 
   activeKategori = String(target.kategori).toLowerCase();
-  document
-    .querySelectorAll(".bpjs-card, .skp-card")
-    .forEach((c) => c.classList.remove("selected"));
+  document.querySelectorAll(".bpjs-card, .skp-card").forEach((c) => c.classList.remove("selected"));
   document.getElementById(`card-${activeKategori}`)?.classList.add("selected");
 
   const searchInput = document.getElementById("search-anggaran");
@@ -3488,11 +3244,9 @@ function selectAnggaranById(idAnggaran) {
   currentPage = Math.floor(idx / itemsPerPage) + 1;
   sliceAndRender();
 
-  const el = document.querySelector(
-    `#list-anggaran-container .list-item[data-id="${idAnggaran}"]`,
-  );
+  const el = document.querySelector(`#list-anggaran-container .list-item[data-id="${idAnggaran}"]`);
   if (!el) return false;
-  window.selectAnggaranItem(el);
+  selectAnggaranItem(el);
   el.scrollIntoView({ block: "nearest" });
   console.log("[prefill] anggaran dipilih:", idAnggaran);
   return true;
@@ -3514,10 +3268,8 @@ function applyModePertanggungjawaban() {
   if (cardPersekot) {
     cardPersekot.classList.add("selected");
     cardPersekot.removeAttribute("onclick");
-    cardPersekot.querySelector("strong").textContent =
-      "Pertanggungjawaban Persekot Kerja";
-    cardPersekot.querySelector("span").textContent =
-      "Pertanggungjawaban dana muka persekot kerja";
+    cardPersekot.querySelector("strong").textContent = "Pertanggungjawaban Persekot Kerja";
+    cardPersekot.querySelector("span").textContent = "Pertanggungjawaban dana muka persekot kerja";
   }
 
   // Tampilkan Tanggal Kegiatan & Nilai Pengajuan Persekot
@@ -3528,9 +3280,12 @@ function applyModePertanggungjawaban() {
   const s3 = document.querySelector(".step3-summary-card .radio-card");
   if (s3) {
     s3.querySelector("strong").textContent = "Pertanggungjawaban Persekot Kerja";
-    s3.querySelector("span").textContent =
-      "Pertanggungjawaban dana muka persekot kerja";
+    s3.querySelector("span").textContent = "Pertanggungjawaban dana muka persekot kerja";
   }
+
+  // Tampilkan Tanggal Kegiatan & Nilai Pengajuan di ringkasan Review
+  const fields = document.getElementById("step3-persekot-fields");
+  if (fields) fields.style.display = "block";
 }
 
 // Kunci halaman 1: semua input read-only, semua kartu/daftar tidak bisa diklik
@@ -3593,6 +3348,10 @@ function prefillFormOperasional() {
   setField("input-tanggal-kegiatan", item.statusDate); // Tanggal Kegiatan <- statusDate
   setField("input-nilai-persekot", formatNominalInput(item.nominal)); // Nilai Persekot <- nominal
   setField("input-keperluan", item.keperluan); // Keperluan <- keperluan
+
+  // Ringkasan di halaman Review
+  setText("step3-summary-tgl-kegiatan", item.statusDate || "-");
+  setText("step3-summary-nilai-persekot", "Rp. " + formatNominalInput(item.nominal));
 
   selectAnggaranById(idAnggaran || item.idAnggaran);
 
