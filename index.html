@@ -18,6 +18,10 @@
                 onclick="window.location.href='pages/approval/grid-approval.html'">
                 <i style="font-size: 16px;">Menu Approval</i>
             </button>
+                        <button type="button" id="btnKembali" class="main-button secondary-btn"
+                onclick="window.location.href='pages/verifikasi/grid-verifikasi.html'">
+                <i style="font-size: 16px;">Menu Verifikasi</i>
+            </button>
             <button type="button" id="btnPencairanBaru" class="main-button primary-btn">
                 <i class="fas fa-plus" style="font-size: 16px;"></i>
                 <span>Pencairan Baru</span>
@@ -211,8 +215,8 @@
             if (type === 'operasional') {
                 window.location.href = 'pages/pencairan/form-operasional.html?type=operasional';
             } else if (type === 'perjalanan') {
-                window.location.href = 'pages/pencairan/form-perjalanan.html?type=perjalanan_dinas';
-            } else {
+    window.location.href = 'pages/pencairan/form-operasional.html?type=perjalanan_dinas';
+} else {
                 document.getElementById('pengajuanModal').classList.add('hidden');
             }
         }

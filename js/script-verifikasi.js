@@ -15,6 +15,25 @@
 // Konten "lainnya" sengaja tidak diatur di sini.
 const S5_TAB_NAMES = ["ringkasan", "pajak", "jurnal", "pembayaran", "catatan"];
 
+// Breadcrumb dari field metode, mis. "Reimburse / Klaim Langsung" -> "Klaim Langsung"
+function applyBreadcrumbMetode() {
+  const el = document.getElementById("header-breadcrumb");
+  if (!el || typeof documentData === "undefined") return;
+
+  const id = new URLSearchParams(window.location.search).get("id");
+  const item = documentData.find((d) => d.id === id);
+  if (!item || !item.metode) return;
+
+  // Rapikan spasi/tab di awal-akhir (data Anda mengandung karakter tab)
+  const metode = String(item.metode).replace(/\s+/g, " ").trim();
+
+  // Tampilkan seluruh nilai. Untuk bagian terakhir saja, pakai baris di bawah.
+  el.textContent = metode;
+  // el.textContent = metode.split("/").pop().trim();
+}
+
+document.addEventListener("DOMContentLoaded", applyBreadcrumbMetode);
+
 function switchs5Tab(tabId, element) {
   // Tombol ikon yang diklik menjadi aktif
   element
@@ -544,4 +563,18 @@ function handleSetuju() {
 function handleTolak() {
   updateStatusUI(currentActiveStatusBtn, "error");
   closeModal();
+}
+
+
+
+// Kembali ke halaman sebelumnya; kalau tidak ada riwayat, pakai halaman cadangan
+function goBack(fallbackUrl) {
+  const sebelumnya = document.referrer;
+  const samaOrigin = sebelumnya && new URL(sebelumnya).origin === window.location.origin;
+
+  if (window.history.length > 1 && samaOrigin) {
+    window.history.back();
+  } else {
+    window.location.href = fallbackUrl;
+  }
 }

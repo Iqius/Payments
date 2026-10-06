@@ -119,12 +119,22 @@ const LINK_STYLE =
   'style="cursor: pointer; font-weight: bold; text-decoration: underline; color: #1e60aa;"';
 
 // ID dokumen: berupa link ke halaman verifikasi hanya untuk status Submitted
-function buildDocLink(idDok, rawId, isSubmitted) {
+// 1. Link ke halaman verifikasi (hanya untuk status Submitted)
+function buildDocLinkVerifikasi(idDok, rawId, isSubmitted) {
   if (!isSubmitted) return `<span class="link-col">${idDok}</span>`;
 
   return `<a href="${URL_FORM_VERIFIKASI}?id=${encodeURIComponent(rawId)}"
              class="doc-link" ${LINK_STYLE}>${idDok}</a>`;
 }
+
+// 2. Link ke halaman approval, mode baca (semua status kecuali Draft & Unrealized)
+function buildDocLinkApproval(idDok, rawId, clickable) {
+  if (!clickable) return `<span class="link-col">${idDok}</span>`;
+
+  return `<a href="pages/approval/form-approval.html?id=${encodeURIComponent(rawId)}&mode=view"
+             class="doc-link" ${LINK_STYLE}>${idDok}</a>`;
+}
+
 
 // Badge status: untuk Unrealized, badge-nya menjadi link ke form operasional
 // (membawa id dokumen + id anggaran)
@@ -156,9 +166,10 @@ function buildRowHtml(item) {
   const isDraft = is("draft"); // hanya Draft yang checkbox-nya aktif
   const isSubmitted = is("submitted");
   const isUnrealized = is("unrealized");
+const bisaLihat = !isDraft && !isUnrealized;
 
   // Bagian baris yang butuh logika
-  const docLinkHtml = buildDocLink(idDok, item.id || "", isSubmitted);
+const docLinkHtml = buildDocLinkApproval(idDok, item.id || "", bisaLihat);
   const statusBadgeHtml = buildStatusBadge(
     item,
     statusClass,
@@ -201,7 +212,11 @@ function buildRowHtml(item) {
     </tr>
   `;
 }
-
+function buildDocLink(idDok, rawId, clickable) {
+  return clickable
+    ? `<a href="pages/approval/form-approval.html?id=${encodeURIComponent(rawId)}&mode=view" class="doc-link">${idDok}</a>`
+    : `<span class="doc-link disabled">${idDok}</span>`;
+}
 // ==========================================================================
 // RENDER TABEL (filter -> pagination -> baris)
 // ==========================================================================

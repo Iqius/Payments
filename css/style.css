@@ -454,10 +454,7 @@ input[type="date"].base-textbox {
   color: #226da8;
   font-weight: 500;
   cursor: pointer;
-
-  position: relative;
-  padding-left: 36px !important;
-  padding-right: 12px;
+  padding: 8px 12px; /* Kembalikan padding normal */
   border: 1px solid var(--primary-blue);
   border-radius: 6px;
   outline: none;
@@ -468,10 +465,8 @@ input[type="date"].base-textbox:invalid {
 }
 
 input[type="date"].base-textbox::-webkit-calendar-picker-indicator {
-  position: absolute;
+  /* Hapus position: absolute, top, dan transform */
   color: var(--primary-blue);
-  top: 50%;
-  transform: translateY(-50%);
   margin: 0;
   padding: 0;
   cursor: pointer;

@@ -30,9 +30,17 @@ const FLOWS_CONFIG = {
 
 let currentType = "operasional";
 let currentIndex = 0;
+let modePertanggungjawaban = false;
+
+function getActiveFlow() {
+  const flow = FLOWS_CONFIG[currentType];
+  return modePertanggungjawaban
+    ? flow.filter(s => s.targetWrapper !== 1)
+    : flow;
+}
 
 function nextStep() {
-  const activeFlow = FLOWS_CONFIG[currentType];
+  const activeFlow = getActiveFlow();
   if (currentIndex < activeFlow.length - 1) {
     currentIndex++;
     render();
@@ -47,9 +55,11 @@ function prevStep() {
     updateFooter();
   }
 }
-
 function render() {
-  const activeFlow = FLOWS_CONFIG[currentType];
+    updateBreadcrumb();
+
+const activeFlow = getActiveFlow(); 
+
   const stepperContainer = document.getElementById("stepper-wrapper");
 
   // 1. Generate struktur HTML Stepper (Circle, Label, Line) secara dinamis
@@ -3067,7 +3077,13 @@ function selectSkema(type) {
       dynPersekot.style.display = "none";
     }
   }
+  updateBreadcrumb(); 
 }
+function setHeaderInfoDisabled(disabled) {
+  const el = document.querySelector(".header-center");
+  if (el) el.style.display = disabled ? "none" : "";
+}
+
 function applyKuitansiItemState() {
   const isPersekot = selectedSkemaType === "persekot";
 
@@ -3286,6 +3302,13 @@ function applyModePertanggungjawaban() {
   // Tampilkan Tanggal Kegiatan & Nilai Pengajuan di ringkasan Review
   const fields = document.getElementById("step3-persekot-fields");
   if (fields) fields.style.display = "block";
+
+  // Hilangkan step 1 dari alur, mulai dari Dokumen Pendukung
+  modePertanggungjawaban = true;
+  currentIndex = 0;
+  render();
+  updateFooter();
+  setHeaderInfoDisabled(true); 
 }
 
 // Kunci halaman 1: semua input read-only, semua kartu/daftar tidak bisa diklik
@@ -3361,3 +3384,14 @@ function prefillFormOperasional() {
 
 console.log("[prefill] file termuat");
 document.addEventListener("DOMContentLoaded", prefillFormOperasional);
+
+function updateBreadcrumb() {
+  const el = document.getElementById("header-breadcrumb");
+  if (!el) return;
+
+  // Pakai .skema-cards supaya tidak tertukar dengan kartu di ringkasan Review
+  const selected = document.querySelector(".skema-cards .radio-card.selected strong");
+  const nama = selected ? selected.textContent.trim() : "";
+
+  el.textContent = nama ? `Pengajuan - ${nama}` : "Pengajuan";
+}

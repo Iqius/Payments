@@ -17,6 +17,7 @@ const documentData = [
     idAnggaran: "202571PB620",
     jenis: "Operasional Umum",
     penyetuju: null,
+    verified: false,
   },
   {
     id: "25112601965431",
@@ -36,6 +37,8 @@ const documentData = [
     idAnggaran: "202571PB620",
     jenis: "Operasional Umum",
     penyetuju: "Aldi Suadana",
+        verified: true,
+
   },
   {
     id: "25112601965432",
@@ -55,6 +58,8 @@ const documentData = [
     idAnggaran: "202571PB620",
     jenis: "Operasional Umum",
     penyetuju: null,
+        verified: true,
+
   },
   {
     id: "25112601965433",
@@ -74,6 +79,8 @@ const documentData = [
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
+        verified: false,
+
   },
   {
     id: "25112601965434",
@@ -93,6 +100,7 @@ const documentData = [
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: "Aldi Suadana",
+        verified: true,
   },
   {
     id: "25112601965435",
@@ -112,6 +120,8 @@ const documentData = [
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
+        verified: false,
+
   },
   {
     id: "25112601965436",
@@ -131,6 +141,8 @@ const documentData = [
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: "aldi Suadana",
+        verified: true,
+
   },
   {
     id: "25112601965437",
@@ -150,6 +162,8 @@ const documentData = [
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
+        verified: false,
+
   },
   {
     id: "25112601965438",
@@ -169,6 +183,8 @@ const documentData = [
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
+        verified: false,
+
   },
   {
     id: "25112601965439",
@@ -188,6 +204,8 @@ const documentData = [
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: "Aldi Suadana",
+        verified: true,
+
   },
   {
     id: "25112601965440",
@@ -207,6 +225,8 @@ const documentData = [
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
+        verified: false,
+
   },
   {
     id: "25112601965441",
@@ -226,6 +246,8 @@ const documentData = [
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: "aldi Suadana",
+        verified: true,
+
   },
   {
     id: "25112601965442",
@@ -245,6 +267,8 @@ const documentData = [
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
+        verified: false,
+
   },
   {
     id: "25112601965443",
@@ -264,6 +288,8 @@ const documentData = [
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
+        verified: false,
+
   },
   {
     id: "25112601965444",
@@ -283,6 +309,8 @@ const documentData = [
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: "Aldi Suadana",
+        verified: true,
+
   },
   {
     id: "25112601965445",
@@ -302,6 +330,8 @@ const documentData = [
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
+        verified: false,
+
   },
   {
     id: "25112601965446",
@@ -321,6 +351,7 @@ const documentData = [
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: "aldi Suadana",
+        verified: true,
   },
   {
     id: "25112601965447",
@@ -340,6 +371,8 @@ const documentData = [
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
+        verified: false,
+
   },
   {
     id: "25112601965448",
@@ -359,6 +392,8 @@ const documentData = [
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
+        verified: false,
+
   },
   {
     id: "25112601965449",
@@ -378,6 +413,7 @@ const documentData = [
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: "Aldi Suadana",
+        verified: true,
   },
     {
     id: "25112601965450",
@@ -397,6 +433,8 @@ const documentData = [
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
+        verified: false,
+
   },
   {
     id: "25112601965451",
@@ -416,6 +454,8 @@ const documentData = [
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
+        verified: false,
+
   },
   {
     id: "25112601965452",
@@ -435,13 +475,14 @@ const documentData = [
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
+        verified: false,
   },
   {
     id: "25112601965453",
     tanggal: "02 jan 2025",
     tanggalRaw: "2025-01-02",
     kantor: "33A",
-    metode: "Persekot Kerja",
+    metode: "	Reimburse / Klaim Langsung",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
     nominal: 1000000,
     keperluan:
@@ -454,5 +495,26 @@ const documentData = [
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
+        verified: false,
+  },
+    {
+    id: "25112601965454",
+    tanggal: "08 Des 2025",
+    tanggalRaw: "2025-12-08",
+    kantor: "33A",
+    metode: " Pertanggungjawaban Persekot Kerja ",
+    anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
+    nominal: 1000000,
+    keperluan:
+      "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
+    status: "done",
+    statusText: "Done",
+    statusDate: null,
+    verifikator: "Aprillia Wahyuningtyas, A.Md.",
+    idAnggaran: "202571PB620",
+    pengaju: "Satria Arindra.",
+    jenis: "Operasional Umum",
+    penyetuju: "Aldi Suadana",
+        verified: true,
   },
 ];

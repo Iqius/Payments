@@ -11,11 +11,63 @@ const STATUS_GROUPS = {
   belumDisetujui: ["submitted"],
 };
 
+// Mode halaman: "approval" atau "verifikasi"
+const PAGE_MODE =
+  document.body?.dataset.mode ||
+  (window.location.pathname.includes("grid-verifikasi") ? "verifikasi" : "approval");
+
+function getStatus(item) {
+  return String(item.status || "").toLowerCase();
+}
+
+// Disetujui:
+// - approval   : status approved / done
+// - verifikasi : verified true, atau approved / done
+function isDisetujui(item) {
+  const sudahFinal = STATUS_GROUPS.disetujui.includes(getStatus(item));
+  return PAGE_MODE === "verifikasi" ? item.verified === true || sudahFinal : sudahFinal;
+}
+
+// Belum disetujui (status submitted):
+// - approval   : hanya yang verified true
+// - verifikasi : hanya yang belum verified
+function isBelumDisetujui(item) {
+  if (!STATUS_GROUPS.belumDisetujui.includes(getStatus(item))) return false;
+  return PAGE_MODE === "approval" ? item.verified === true : item.verified !== true;
+}
+
+// Kolom "Diproses Oleh"
+// - verifikasi              : kosong ("-")
+// - approval, belum disetujui: nama verifikator
+// - approval, disetujui      : nama penyetuju
+function getNamaPenyetuju(item) {
+  if (isBelumDisetujui(item)) {
+    return PAGE_MODE === "approval" ? item.verifikator || "-" : "-";
+  }
+
+  if (item.penyetuju) return item.penyetuju;
+  if (item.verified === true && item.verifikator) return item.verifikator;
+  return "-";
+}
+
 // Path relatif terhadap halaman ini (satu folder dengan form-approval.html)
-const URL_FORM_APPROVAL = "form-approval.html";
+const URL_FORM_APPROVAL =
+  PAGE_MODE === "verifikasi" ? "../approval/form-approval.html" : "form-approval.html";
+const URL_FORM_VERIFIKASI =
+  PAGE_MODE === "verifikasi" ? "form-verifikasi.html" : "../verifikasi/form-verifikasi.html";
 
 const DEFAULT_PAGE_SIZE = 5;
 const TOTAL_COLUMNS = 8;
+
+function buildFormUrl(item) {
+  const id = encodeURIComponent(item.id || "");
+
+  if (PAGE_MODE === "approval") return `${URL_FORM_APPROVAL}?id=${id}`;
+
+  return item.verified === true
+    ? `${URL_FORM_APPROVAL}?id=${id}&mode=view`
+    : `${URL_FORM_VERIFIKASI}?id=${id}`;
+}
 
 // ---------- State ----------
 let docCurrentPage = 1;
@@ -59,10 +111,9 @@ function getFilteredData() {
   const endDate = byId("end-date")?.value || "";
 
   return documentData.filter((item) => {
-    const status = String(item.status || "").toLowerCase();
-
-    // Hanya status yang terdaftar di STATUS_GROUPS yang ditampilkan
-    const matchStatus = Boolean(STATUS_GROUPS[selectedStatus]?.includes(status));
+    let matchStatus = false;
+    if (selectedStatus === "disetujui") matchStatus = isDisetujui(item);
+    else if (selectedStatus === "belumDisetujui") matchStatus = isBelumDisetujui(item);
 
     const matchSearch = [
       item.id,
@@ -100,7 +151,7 @@ function buildRowHtml(item) {
 
   // Semua dokumen di grid ini dibuka di halaman approval;
   // tombol Approve/Kembalikan diatur di script-formApproval.js sesuai status.
-  const docLinkHtml = `<a href="${URL_FORM_APPROVAL}?id=${encodeURIComponent(item.id || "")}"
+  const docLinkHtml = `<a href="${buildFormUrl(item)}"
                           class="doc-link" ${LINK_STYLE}>${idDok}</a>`;
 
   return `
@@ -114,7 +165,7 @@ function buildRowHtml(item) {
         <span class="link-col">${escapeHtml(truncateText(keperluan, 60))}</span>
       </td>
       <td>${escapeHtml(item.tanggal || "-")}</td>
-      <td><span class="link-col">${escapeHtml(item.penyetuju || "-")}</span></td>
+<td><span class="link-col">${escapeHtml(getNamaPenyetuju(item))}</span></td>
     </tr>
   `;
 }
