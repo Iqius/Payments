@@ -41,13 +41,15 @@ function isBelumDisetujui(item) {
 // - approval, belum disetujui: nama verifikator
 // - approval, disetujui      : nama penyetuju
 function getNamaPenyetuju(item) {
+  // Kategori BELUM DISETUJUI
   if (isBelumDisetujui(item)) {
-    return PAGE_MODE === "approval" ? item.verifikator || "-" : "-";
+    return PAGE_MODE === "approval"
+      ? item.verifikator || "-"   // grid approval  -> nama verifikator
+      : item.pengaju || "-";      // grid verifikasi -> nama pengaju
   }
 
-  if (item.penyetuju) return item.penyetuju;
-  if (item.verified === true && item.verifikator) return item.verifikator;
-  return "-";
+  // Kategori DISETUJUI: penyetuju, kalau kosong pakai verifikator
+  return item.penyetuju || item.verifikator || "-";
 }
 
 // Path relatif terhadap halaman ini (satu folder dengan form-approval.html)
