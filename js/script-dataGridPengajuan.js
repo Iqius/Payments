@@ -9,8 +9,7 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "draft",
-    statusText: "Draft",
+    status: "Draft",
     statusDate: null,
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     pengaju: "Satria Arindra.",
@@ -29,16 +28,14 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "approved",
-    statusText: "Approved",
+    status: "Approved",
     statusDate: null,
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     pengaju: "Satria Arindra.",
     idAnggaran: "202571PB620",
     jenis: "Operasional Umum",
     penyetuju: "Aldi Suadana",
-        verified: true,
-
+    verified: true,
   },
   {
     id: "25112601965432",
@@ -50,16 +47,14 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "submitted",
-    statusText: "Submitted",
+    status: "Submitted",
     statusDate: null,
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     pengaju: "Satria Arindra.",
     idAnggaran: "202571PB620",
     jenis: "Operasional Umum",
     penyetuju: null,
-        verified: true,
-
+    verified: true,
   },
   {
     id: "25112601965433",
@@ -71,16 +66,14 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "unrealized",
-    statusText: "Unrealized",
+    status: "Unrealized",
     statusDate: "15 Jan 2026",
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202571PB620",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
-        verified: false,
-
+    verified: false,
   },
   {
     id: "25112601965434",
@@ -92,15 +85,14 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "done",
-    statusText: "Done",
+    status: "Done",
     statusDate: null,
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202571PB620",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: "Aldi Suadana",
-        verified: true,
+    verified: true,
   },
   {
     id: "25112601965435",
@@ -112,16 +104,14 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "draft",
-    statusText: "Draft",
+    status: "Draft",
     statusDate: null,
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
-        verified: false,
-
+    verified: false,
   },
   {
     id: "25112601965436",
@@ -133,16 +123,14 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "approved",
-    statusText: "Approved",
+    status: "Approved",
     statusDate: null,
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: "aldi Suadana",
-        verified: true,
-
+    verified: true,
   },
   {
     id: "25112601965437",
@@ -154,16 +142,14 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "revise",
-    statusText: "Revise",
+    status: "Revise",
     statusDate: null,
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
-        verified: false,
-
+    verified: false,
   },
   {
     id: "25112601965438",
@@ -175,16 +161,14 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "unrealized",
-    statusText: "Unrealized",
+    status: "Unrealized",
     statusDate: "15 Jan 2026",
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
-        verified: false,
-
+    verified: false,
   },
   {
     id: "25112601965439",
@@ -196,16 +180,14 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "done",
-    statusText: "Done",
+    status: "Done",
     statusDate: null,
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: "Aldi Suadana",
-        verified: true,
-
+    verified: true,
   },
   {
     id: "25112601965440",
@@ -217,16 +199,14 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "draft",
-    statusText: "Draft",
+    status: "Draft",
     statusDate: null,
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
-        verified: false,
-
+    verified: false,
   },
   {
     id: "25112601965441",
@@ -238,16 +218,14 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "approved",
-    statusText: "Approved",
+    status: "Approved",
     statusDate: null,
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: "aldi Suadana",
-        verified: true,
-
+    verified: true,
   },
   {
     id: "25112601965442",
@@ -259,16 +237,14 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "revise",
-    statusText: "Revise",
+    status: "Revise",
     statusDate: null,
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
-        verified: false,
-
+    verified: false,
   },
   {
     id: "25112601965443",
@@ -280,16 +256,14 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "unrealized",
-    statusText: "Unrealized",
+    status: "Unrealized",
     statusDate: "15 Jan 2026",
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
-        verified: false,
-
+    verified: false,
   },
   {
     id: "25112601965444",
@@ -301,16 +275,14 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "done",
-    statusText: "Done",
+    status: "Done",
     statusDate: null,
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: "Aldi Suadana",
-        verified: true,
-
+    verified: true,
   },
   {
     id: "25112601965445",
@@ -322,16 +294,14 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "draft",
-    statusText: "Draft",
+    status: "Draft",
     statusDate: null,
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
-        verified: false,
-
+    verified: false,
   },
   {
     id: "25112601965446",
@@ -343,15 +313,14 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "approved",
-    statusText: "Approved",
+    status: "Approved",
     statusDate: null,
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: "aldi Suadana",
-        verified: true,
+    verified: true,
   },
   {
     id: "25112601965447",
@@ -363,16 +332,14 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "revise",
-    statusText: "Revise",
+    status: "Revise",
     statusDate: null,
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
-        verified: false,
-
+    verified: false,
   },
   {
     id: "25112601965448",
@@ -384,16 +351,14 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "unrealized",
-    statusText: "Unrealized",
+    status: "Unrealized",
     statusDate: "15 Jan 2026",
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
-        verified: false,
-
+    verified: false,
   },
   {
     id: "25112601965449",
@@ -405,17 +370,16 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "done",
-    statusText: "Done",
+    status: "Done",
     statusDate: null,
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: "Aldi Suadana",
-        verified: true,
+    verified: true,
   },
-    {
+  {
     id: "25112601965450",
     tanggal: "02 Des 2025",
     tanggalRaw: "2025-12-02",
@@ -425,16 +389,14 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "draft",
-    statusText: "Draft",
+    status: "Draft",
     statusDate: null,
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
-        verified: false,
-
+    verified: false,
   },
   {
     id: "25112601965451",
@@ -446,16 +408,14 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "submitted",
-    statusText: "Submitted",
+    status: "Submitted",
     statusDate: null,
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
-        verified: false,
-
+    verified: false,
   },
   {
     id: "25112601965452",
@@ -467,15 +427,14 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "revise",
-    statusText: "Revise",
+    status: "Revise",
     statusDate: null,
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
-        verified: false,
+    verified: false,
   },
   {
     id: "25112601965453",
@@ -487,17 +446,16 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "submitted",
-    statusText: "Submitted",
+    status: "Submitted",
     statusDate: null,
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: null,
-        verified: false,
+    verified: false,
   },
-    {
+  {
     id: "25112601965454",
     tanggal: "08 Des 2025",
     tanggalRaw: "2025-12-08",
@@ -507,14 +465,13 @@ const documentData = [
     nominal: 1000000,
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
-    status: "done",
-    statusText: "Done",
+    status: "Done",
     statusDate: null,
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202571PB620",
     pengaju: "Satria Arindra.",
     jenis: "Operasional Umum",
     penyetuju: "Aldi Suadana",
-        verified: true,
+    verified: true,
   },
 ];

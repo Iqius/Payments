@@ -242,10 +242,10 @@
 }
 
 .btn-submit-primary {
-  background-color: #27a844;
+  background-color: #226DA8;
   color: #ffffff;
   border: none;
-  border-radius: 16px;
+  border-radius: 6px;
   padding: 6.4px 19.2px;
   font-weight: 600;
   font-size: 10.4px;
@@ -256,7 +256,6 @@
 }
 
 .btn-submit-primary:hover {
-  background-color: #218c38;
   box-shadow: 0 3.2px 9.6px rgba(39, 168, 68, 0.2);
 }
 

@@ -578,3 +578,32 @@ function goBack(fallbackUrl) {
     window.location.href = fallbackUrl;
   }
 }
+
+// ID Dokumen & Tanggal Pengajuan di header, dari documentData
+function applyHeaderDokumen() {
+  if (typeof documentData === "undefined") return;
+
+  const id = new URLSearchParams(window.location.search).get("id");
+  const item = documentData.find((d) => String(d.id).trim() === String(id).trim());
+  if (!item) return;
+
+  const elId = document.getElementById("doc-id");
+  const elDate = document.getElementById("doc-date");
+
+  if (elId) elId.textContent = item.id;
+
+  if (elDate) {
+    let tanggal = item.tanggal;
+    if (item.tanggalRaw) {
+      const [y, m, d] = item.tanggalRaw.split("-").map(Number);
+      tanggal = new Intl.DateTimeFormat("id-ID", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }).format(new Date(y, m - 1, d));
+    }
+    elDate.textContent = tanggal;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", applyHeaderDokumen);

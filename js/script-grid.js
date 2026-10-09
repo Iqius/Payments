@@ -158,8 +158,8 @@ function buildRowHtml(item) {
   const keperluan = item.keperluan || "-";
 
   // Status
-  const statusClass = escapeHtml((item.status || "draft").toLowerCase().trim());
-  const statusText = escapeHtml(item.statusText || item.status || "Draft");
+const statusText = escapeHtml(item.status || "Draft");
+const statusClass = statusText.toLowerCase().trim();
   const statusLower = statusText.toLowerCase().trim();
   const is = (name) => statusClass === name || statusLower === name;
 
