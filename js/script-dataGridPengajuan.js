@@ -40,7 +40,7 @@ const documentData = [
   {
     id: "25112601965432",
     tanggal: "02 Jan 2025",
-    tanggalRaw: "2026-01-02",
+    tanggalRaw: "2025-01-02",
     kantor: "33A",
     metode: "Reimburse / Klaim Langsung",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
