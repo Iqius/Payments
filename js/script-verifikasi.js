@@ -592,18 +592,7 @@ function applyHeaderDokumen() {
 
   if (elId) elId.textContent = item.id;
 
-  if (elDate) {
-    let tanggal = item.tanggal;
-    if (item.tanggalRaw) {
-      const [y, m, d] = item.tanggalRaw.split("-").map(Number);
-      tanggal = new Intl.DateTimeFormat("id-ID", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      }).format(new Date(y, m - 1, d));
-    }
-    elDate.textContent = tanggal;
-  }
+if (elDate) elDate.textContent = formatTanggal(item.tanggal, true);
 }
 
 document.addEventListener("DOMContentLoaded", applyHeaderDokumen);

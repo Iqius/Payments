@@ -70,10 +70,10 @@ function getFilteredData() {
     );
 
     let matchDate = true;
-    if (item.tanggalRaw) {
-      if (startDate && item.tanggalRaw < startDate) matchDate = false;
-      if (endDate && item.tanggalRaw > endDate) matchDate = false;
-    }
+if (item.tanggal) {
+  if (startDate && item.tanggal < startDate) matchDate = false;
+  if (endDate && item.tanggal > endDate) matchDate = false;
+}
 
     return matchStatus && matchSearch && matchDate;
   });
@@ -190,7 +190,7 @@ const docLinkHtml = buildDocLinkApproval(idDok, item.id || "", bisaLihat);
                ${isDraft ? "" : "disabled"}>
       </td>
       <td>${docLinkHtml}</td>
-      <td>${escapeHtml(item.tanggal || "-")}</td>
+<td>${escapeHtml(formatTanggal(item.tanggal))}</td>
       <td><span class="link-col">${escapeHtml(item.kantor || "-")}</span></td>
       <td><span class="link-col">${escapeHtml(item.metode || "-")}</span></td>
       <td title="${escapeHtml(anggaran)}">

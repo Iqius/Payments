@@ -3360,12 +3360,7 @@ function prefillFormOperasional() {
 
   // Header
   setText("doc-id", item.id); // ID Dokumen <- id
-  let tglPengajuan = item.tanggal; // Tanggal Pengajuan <- tanggal
-  if (item.tanggalRaw) {
-    const [y, m, d] = item.tanggalRaw.split("-").map(Number);
-    tglPengajuan = formatIndonesianDate(new Date(y, m - 1, d));
-  }
-  setText("doc-date", tglPengajuan);
+setText("doc-date", formatTanggal(item.tanggal, true));
 
   // Form
   setField("input-tanggal-kegiatan", item.statusDate); // Tanggal Kegiatan <- statusDate

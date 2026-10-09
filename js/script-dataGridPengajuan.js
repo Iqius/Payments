@@ -1,8 +1,17 @@
+function formatTanggal(iso, long = false) {
+  if (!iso) return "-";
+  const [y, m, d] = String(iso).split("-").map(Number);
+  return new Intl.DateTimeFormat("id-ID", {
+    day: long ? "numeric" : "2-digit",
+    month: long ? "long" : "short",
+    year: "numeric",
+  }).format(new Date(y, m - 1, d));
+}
+
 const documentData = [
   {
     id: "25112601965430",
-    tanggal: "02 Des 2025",
-    tanggalRaw: "2025-12-02",
+    tanggal: "2025-12-02",
     kantor: "33A",
     metode: "Reimburse / Klaim Langsung",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -20,8 +29,7 @@ const documentData = [
   },
   {
     id: "25112601965431",
-    tanggal: "03 Des 2025",
-    tanggalRaw: "2025-12-03",
+    tanggal: "2025-12-03",
     kantor: "33A",
     metode: "Reimburse / Klaim Langsung",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -39,8 +47,7 @@ const documentData = [
   },
   {
     id: "25112601965432",
-    tanggal: "02 Jan 2025",
-    tanggalRaw: "2025-01-02",
+    tanggal: "2025-01-02",
     kantor: "33A",
     metode: "Reimburse / Klaim Langsung",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -58,8 +65,7 @@ const documentData = [
   },
   {
     id: "25112601965433",
-    tanggal: "02 jan 2025",
-    tanggalRaw: "2025-01-02",
+    tanggal: "2025-01-02",
     kantor: "33A",
     metode: "Persekot Kerja",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -77,8 +83,7 @@ const documentData = [
   },
   {
     id: "25112601965434",
-    tanggal: "08 Des 2025",
-    tanggalRaw: "2025-12-08",
+    tanggal: "2025-12-08",
     kantor: "33A",
     metode: "Reimburse / Klaim Langsung",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -96,8 +101,7 @@ const documentData = [
   },
   {
     id: "25112601965435",
-    tanggal: "02 Des 2025",
-    tanggalRaw: "2025-12-02",
+    tanggal: "2025-12-02",
     kantor: "33A",
     metode: "Reimburse / Klaim Langsung",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -115,8 +119,7 @@ const documentData = [
   },
   {
     id: "25112601965436",
-    tanggal: "03 Des 2025",
-    tanggalRaw: "2025-12-03",
+    tanggal: "2025-12-03",
     kantor: "33A",
     metode: "Reimburse / Klaim Langsung",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -134,8 +137,7 @@ const documentData = [
   },
   {
     id: "25112601965437",
-    tanggal: "02 Jan 2025",
-    tanggalRaw: "2026-01-02",
+    tanggal: "2026-01-02",
     kantor: "33A",
     metode: "Reimburse / Klaim Langsung",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -153,8 +155,7 @@ const documentData = [
   },
   {
     id: "25112601965438",
-    tanggal: "02 jan 2025",
-    tanggalRaw: "2025-01-02",
+    tanggal: "2025-01-02",
     kantor: "33A",
     metode: "Persekot Kerja",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -172,8 +173,7 @@ const documentData = [
   },
   {
     id: "25112601965439",
-    tanggal: "08 Des 2025",
-    tanggalRaw: "2025-12-08",
+    tanggal: "2025-12-08",
     kantor: "33A",
     metode: "Reimburse / Klaim Langsung",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -191,8 +191,7 @@ const documentData = [
   },
   {
     id: "25112601965440",
-    tanggal: "02 Des 2025",
-    tanggalRaw: "2025-12-02",
+    tanggal: "2025-12-02",
     kantor: "33A",
     metode: "Reimburse / Klaim Langsung",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -210,8 +209,7 @@ const documentData = [
   },
   {
     id: "25112601965441",
-    tanggal: "03 Des 2025",
-    tanggalRaw: "2025-12-03",
+    tanggal: "2025-12-03",
     kantor: "33A",
     metode: "Reimburse / Klaim Langsung",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -229,8 +227,7 @@ const documentData = [
   },
   {
     id: "25112601965442",
-    tanggal: "02 Jan 2025",
-    tanggalRaw: "2026-01-02",
+    tanggal: "2025-01-02",
     kantor: "33A",
     metode: "Reimburse / Klaim Langsung",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -248,8 +245,7 @@ const documentData = [
   },
   {
     id: "25112601965443",
-    tanggal: "02 jan 2025",
-    tanggalRaw: "2025-01-02",
+    tanggal: "2025-01-02",
     kantor: "33A",
     metode: "Persekot Kerja",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -267,8 +263,7 @@ const documentData = [
   },
   {
     id: "25112601965444",
-    tanggal: "08 Des 2025",
-    tanggalRaw: "2025-12-08",
+    tanggal: "2025-12-08",
     kantor: "33A",
     metode: "Reimburse / Klaim Langsung",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -286,8 +281,7 @@ const documentData = [
   },
   {
     id: "25112601965445",
-    tanggal: "02 Des 2025",
-    tanggalRaw: "2025-12-02",
+    tanggal: "2025-12-02",
     kantor: "33A",
     metode: "Reimburse / Klaim Langsung",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -305,8 +299,7 @@ const documentData = [
   },
   {
     id: "25112601965446",
-    tanggal: "03 Des 2025",
-    tanggalRaw: "2025-12-03",
+    tanggal: "2025-12-03",
     kantor: "33A",
     metode: "Reimburse / Klaim Langsung",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -324,8 +317,7 @@ const documentData = [
   },
   {
     id: "25112601965447",
-    tanggal: "02 Jan 2025",
-    tanggalRaw: "2026-01-02",
+    tanggal: "2026-01-02",
     kantor: "33A",
     metode: "Reimburse / Klaim Langsung",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -343,8 +335,7 @@ const documentData = [
   },
   {
     id: "25112601965448",
-    tanggal: "02 jan 2025",
-    tanggalRaw: "2025-01-02",
+    tanggal: "2025-01-02",
     kantor: "33A",
     metode: "Persekot Kerja",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -362,8 +353,7 @@ const documentData = [
   },
   {
     id: "25112601965449",
-    tanggal: "08 Des 2025",
-    tanggalRaw: "2025-12-08",
+    tanggal: "2025-12-08",
     kantor: "33A",
     metode: "Reimburse / Klaim Langsung",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -381,8 +371,7 @@ const documentData = [
   },
   {
     id: "25112601965450",
-    tanggal: "02 Des 2025",
-    tanggalRaw: "2025-12-02",
+    tanggal: "2025-12-02",
     kantor: "33A",
     metode: "Reimburse / Klaim Langsung",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -400,8 +389,7 @@ const documentData = [
   },
   {
     id: "25112601965451",
-    tanggal: "03 Des 2025",
-    tanggalRaw: "2025-12-03",
+    tanggal: "2025-12-03",
     kantor: "33A",
     metode: "Reimburse / Klaim Langsung",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -419,8 +407,7 @@ const documentData = [
   },
   {
     id: "25112601965452",
-    tanggal: "02 Jan 2025",
-    tanggalRaw: "2026-01-02",
+    tanggal: "2025-01-02",
     kantor: "33A",
     metode: "Reimburse / Klaim Langsung",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -438,8 +425,7 @@ const documentData = [
   },
   {
     id: "25112601965453",
-    tanggal: "02 jan 2025",
-    tanggalRaw: "2025-01-02",
+    tanggal: "2025-01-02",
     kantor: "33A",
     metode: "	Reimburse / Klaim Langsung",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
@@ -457,8 +443,7 @@ const documentData = [
   },
   {
     id: "25112601965454",
-    tanggal: "08 Des 2025",
-    tanggalRaw: "2025-12-08",
+    tanggal: "2025-12-08",
     kantor: "33A",
     metode: " Pertanggungjawaban Persekot Kerja ",
     anggaran: "Monitoring, Kontrol dan Evaluasi Proses Pengadaan di...",
