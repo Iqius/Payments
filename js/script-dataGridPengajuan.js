@@ -253,7 +253,7 @@ const documentData = [
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
     status: "Unrealized",
-    statusDate: "15 Jan 2026",
+    statusDate: "25 Jan 2026",
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
@@ -343,7 +343,7 @@ const documentData = [
     keperluan:
       "Biaya Perjalanan Dinas Kunjungan Site Visite Peserta Tender Pengadaan Mitra Pelaksana dan Pengelola Layanan Masyarakat (Contact Center) 175 BPJS Ketenagakerjaan",
     status: "Unrealized",
-    statusDate: "15 Jan 2026",
+    statusDate: "26 Feb 2026",
     verifikator: "Aprillia Wahyuningtyas, A.Md.",
     idAnggaran: "202634RH780",
     pengaju: "Satria Arindra.",
