@@ -94,9 +94,13 @@
 
   function nilaiPersekot() {
     if (modeSkema() === "pj") {
-      const id = new URLSearchParams(location.search).get("id");
-      const d = typeof documentData !== "undefined" ? documentData.find((x) => x.id === id) : null;
-      return d ? Number(d.nominal) || 0 : 0;
+      try {
+        const rid = window.FormApp && FormApp.snapshot().refId;
+        const ref = rid && window.Store ? Store.get(rid) : null;
+        const n = ref ? Number(ref.nilaiPersekot || ref.nominal) || 0 : 0;
+        if (n) return n;
+      } catch (e) {}
+      return num($("#input-nilai-persekot")?.value);
     }
     return num($("#input-nilai-persekot")?.value);
   }
