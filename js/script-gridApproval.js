@@ -131,10 +131,10 @@ function getFilteredData() {
     );
 
     let matchDate = true;
-if (item.tanggal) {
-  if (startDate && item.tanggal < startDate) matchDate = false;
-  if (endDate && item.tanggal > endDate) matchDate = false;
-}
+    if (item.tanggalRaw) {
+      if (startDate && item.tanggalRaw < startDate) matchDate = false;
+      if (endDate && item.tanggalRaw > endDate) matchDate = false;
+    }
 
     return matchStatus && matchSearch && matchDate;
   });
@@ -166,7 +166,7 @@ function buildRowHtml(item) {
       <td title="${escapeHtml(keperluan)}">
         <span class="link-col">${escapeHtml(truncateText(keperluan, 60))}</span>
       </td>
-<td>${escapeHtml(formatTanggal(item.tanggal))}</td>
+      <td>${escapeHtml(item.tanggal || "-")}</td>
 <td><span class="link-col">${escapeHtml(getNamaPenyetuju(item))}</span></td>
     </tr>
   `;

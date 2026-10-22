@@ -1,3 +1,12 @@
+// ==========================================================================
+// FORM APPROVAL (pages/approval/form-approval.html?id=...)
+// Tombol Approve & Kembalikan hanya tampil untuk dokumen yang masih menunggu
+// persetujuan (submitted). Dokumen approved / done tidak punya aksi.
+// Sumber data: documentData (script-dataGridPengajuan.js)
+// ==========================================================================
+
+(function () {
+// Status yang tidak menampilkan tombol aksi
 const STATUS_TANPA_AKSI = ["approved", "done"];
 
 function hideActionButtons() {
@@ -6,16 +15,14 @@ function hideActionButtons() {
     .forEach((btn) => (btn.style.display = "none"));
 }
 
+const params = new URLSearchParams(window.location.search);
+if (params.get("mode") === "view") {
+  hideActionButtons();
+  return;
+}
+
 function applyApprovalActions() {
-  const params = new URLSearchParams(window.location.search);
-
-  // Dibuka dari grid: tampilan baca saja
-  if (params.get("mode") === "view") {
-    hideActionButtons();
-    return;
-  }
-
-  const id = params.get("id");
+  const id = new URLSearchParams(window.location.search).get("id");
   if (!id || typeof documentData === "undefined") return;
 
   const item = documentData.find((d) => d.id === id);
@@ -25,7 +32,10 @@ function applyApprovalActions() {
   }
 
   const status = String(item.status || "").toLowerCase();
+  console.log("[approval] id:", id, "status:", status);
+
   if (STATUS_TANPA_AKSI.includes(status)) hideActionButtons();
 }
 
 document.addEventListener("DOMContentLoaded", applyApprovalActions);
+})();

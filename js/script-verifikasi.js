@@ -180,13 +180,13 @@ function initRevisionNotes() {
   });
 
   // Hapus Tanda Perbaikan: bersihkan data, badge, dan catatan
-  btnHapus?.addEventListener("click", () => {
+  btnHapus?.addEventListener("click", async () => {
     const activeCard = getActiveCard();
     if (!activeCard) {
       alert("Silakan pilih dokumen terlebih dahulu.");
       return;
     }
-    if (!confirm("Apakah Anda yakin ingin menghapus tanda perbaikan?")) return;
+    if (!(await UI.confirm("Apakah Anda yakin ingin menghapus tanda perbaikan?", { danger: true, ya: "Hapus", judul: "Hapus tanda perbaikan" }))) return;
 
     fileDataStore[activeCard.dataset.index] = { needsRevision: false, note: "" };
     activeCard.querySelector(".badge-perbaikan")?.remove();
@@ -578,21 +578,3 @@ function goBack(fallbackUrl) {
     window.location.href = fallbackUrl;
   }
 }
-
-// ID Dokumen & Tanggal Pengajuan di header, dari documentData
-function applyHeaderDokumen() {
-  if (typeof documentData === "undefined") return;
-
-  const id = new URLSearchParams(window.location.search).get("id");
-  const item = documentData.find((d) => String(d.id).trim() === String(id).trim());
-  if (!item) return;
-
-  const elId = document.getElementById("doc-id");
-  const elDate = document.getElementById("doc-date");
-
-  if (elId) elId.textContent = item.id;
-
-if (elDate) elDate.textContent = formatTanggal(item.tanggal, true);
-}
-
-document.addEventListener("DOMContentLoaded", applyHeaderDokumen);

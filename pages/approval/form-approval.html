@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../../css/style-popup.css">
     <link rel="stylesheet" href="../../css/style-submit.css">
     <link rel="stylesheet" href="../../css/style-verifikasi.css">
+    <link rel="stylesheet" href="../../css/app.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
@@ -24,26 +25,26 @@
             <div class="header-container">
                 <i class="far fa-building icon-building"></i>
                 <div class="header-left">
-<div class="breadcrumb" id="header-breadcrumb">Klaim Langsung</div>
+                    <div class="breadcrumb">Klaim Langsung</div>
                     <h2 id="header-title">Operasional Umum</h2>
                 </div>
             </div>
 
             <div class="header-center align-end">
-<div class="info-pill">
-    <span class="label">ID Dokumen</span>
-    <span class="value" id="doc-id">260327123456</span>
-</div>
-<div class="info-pill">
-    <span class="label">Tanggal Pengajuan</span>
-    <span class="value" id="doc-date"> 02 Des 2025</span>
-</div>
+                <div class="info-pill">
+                    <span class="label">ID Dokumen</span>
+                    <span class="value">260327123456</span>
+                </div>
+                <div class="info-pill">
+                    <span class="label">Tanggal Pengajuan</span>
+                    <span class="value" id="doc-date" data-status="draft" data-date=""> 02 Des 2025</span>
+                </div>
             </div>
 
             <div class="header-right">
                 <div class="stepper" id="stepper-wrapper"></div>
 
-                <button class="close-form-btn" onclick="goBack('../../index.html')">
+                <button class="close-form-btn" onclick="window.location.href='grid-approval.html'">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -1963,6 +1964,15 @@
     <script src="../../js/script-dataGridPengajuan.js"></script>
     <script src="../../js/script-formApproval.js"></script>
     <script src="../../js/script-verifikasi.js"></script>
+    <script src="../../js/script-dataForm.js"></script>
+    <script src="../../js/store.js"></script>
+    <script src="../../js/lib/sweetalert2.all.min.js"></script>
+    <script src="../../js/ui.js"></script>
+    <script src="../../js/script-aksi.js"></script>
+    <script src="../../js/script-detail.js"></script>
+    <script src="../../js/script-upload.js"></script>
+    <script src="../../js/script-review.js"></script>
+    <script src="../../js/script-viewer.js"></script>
 </body>
 
 </html>

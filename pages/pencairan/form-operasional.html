@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/style-popup.css">
     <link rel="stylesheet" href="../../css/style-submit.css">
+    <link rel="stylesheet" href="../../css/app.css">
 
 </head>
 
@@ -227,6 +228,18 @@
                         </div>
                     </div>
 
+                    <div class="upload-area-dashed compact-upload" id="dropArea">
+                        <input type="file" id="fileInput" style="display: none;" multiple
+                            accept=".pdf,.jpg,.jpeg,.png" />
+
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <h4>Tarik file & lepaskan di area ini</h4>
+                        <p>atau klik untuk memilih file</p>
+                        <span class="format-text">Format: PDF, JPG, JPEG, PNG | Max: 10Mb per file</span>
+                    </div>
+
 
                 </div>
 
@@ -371,17 +384,6 @@
                         </ul>
                     </div>
 
-                    <div class="upload-area-dashed compact-upload" id="dropArea">
-                        <input type="file" id="fileInput" style="display: none;" multiple
-                            accept=".pdf,.jpg,.jpeg,.png" />
-
-                        <div class="upload-icon">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                        </div>
-                        <h4>Tarik file & lepaskan di area ini</h4>
-                        <p>atau klik untuk memilih file</p>
-                        <span class="format-text">Format: PDF, JPG, JPEG, PNG | Max: 10Mb per file</span>
-                    </div>
                 </div>
 
                 <div class="step3-right-panel">
@@ -1106,9 +1108,12 @@
 
                         <div class="info-row-stacked">
                             <span class="s5-info-label">Keperluan</span>
-                            <p class="info-desc">
+                            <p class="info-desc clamp"></p>
+                            <button type="button" class="s5-lihat" id="s5-lihat-btn" style="display:none">Lihat selengkapnya <i class="fas fa-chevron-down"></i></button>
                         </div>
                     </div>
+
+                    <div class="step3-summary-card s5-detail-card" id="s5-detail-card" style="display:none"></div>
 
                     <div class="step3-summary-card s5-verifikasi-card">
                         <h4>Verifikasi</h4>
@@ -2763,6 +2768,190 @@
                     </div>
                 </div>
 
+                <div class="person-card card-pegawai">
+                    <div class="pc-header">
+                        <div class="pc-title-area">
+                            <h4>Rina Kartika</h4>
+                            <span>Kepala Seksi — Deputi Bidang Keuangan</span>
+                        </div>
+                        <div class="pc-badge">Pegawai</div>
+                    </div>
+                    <div class="pc-body">
+                        <div class="detail-item"><span>Kode Pegawai</span><strong>131230090</strong></div>
+                        <div class="detail-item"><span>NPWP <i class="fas fa-check-circle text-green"></i></span><strong>12-34.39843.883031</strong></div>
+                        <div class="detail-item"><span>KTP <i class="fas fa-check-circle text-green"></i></span><strong>1234567890123461</strong></div>
+                        <div class="detail-item"><span>PTKP</span><strong>K/1</strong></div>
+                        <div class="detail-item"><span>Grade</span><strong>14</strong></div>
+                        <div class="detail-item"><span>Golongan</span><strong>IX</strong></div>
+                    </div>
+                </div>
+
+                <div class="person-card card-pegawai">
+                    <div class="pc-header">
+                        <div class="pc-title-area">
+                            <h4>Dedi Hermawan</h4>
+                            <span>Staf Senior — Deputi Bidang Teknologi</span>
+                        </div>
+                        <div class="pc-badge">Pegawai</div>
+                    </div>
+                    <div class="pc-body">
+                        <div class="detail-item"><span>Kode Pegawai</span><strong>131230091</strong></div>
+                        <div class="detail-item"><span>NPWP <i class="fas fa-times-circle text-red"></i></span><strong>12-34.39843.883032</strong></div>
+                        <div class="detail-item"><span>KTP <i class="fas fa-check-circle text-green"></i></span><strong>1234567890123462</strong></div>
+                        <div class="detail-item"><span>PTKP</span><strong>TK/0</strong></div>
+                        <div class="detail-item"><span>Grade</span><strong>12</strong></div>
+                        <div class="detail-item"><span>Golongan</span><strong>VIII</strong></div>
+                    </div>
+                </div>
+
+                <div class="person-card card-pegawai">
+                    <div class="pc-header">
+                        <div class="pc-title-area">
+                            <h4>Maya Anggraini</h4>
+                            <span>Analis Utama — Deputi Bidang Investasi</span>
+                        </div>
+                        <div class="pc-badge">Pegawai</div>
+                    </div>
+                    <div class="pc-body">
+                        <div class="detail-item"><span>Kode Pegawai</span><strong>131230092</strong></div>
+                        <div class="detail-item"><span>NPWP <i class="fas fa-check-circle text-green"></i></span><strong>12-34.39843.883033</strong></div>
+                        <div class="detail-item"><span>KTP <i class="fas fa-times-circle text-red"></i></span><strong>1234567890123463</strong></div>
+                        <div class="detail-item"><span>PTKP</span><strong>K/2</strong></div>
+                        <div class="detail-item"><span>Grade</span><strong>15</strong></div>
+                        <div class="detail-item"><span>Golongan</span><strong>IX</strong></div>
+                    </div>
+                </div>
+
+                <div class="person-card card-dewan">
+                    <div class="pc-header">
+                        <div class="pc-title-area">
+                            <h4>Bambang Wirawan</h4>
+                            <span>Anggota Komite Audit</span>
+                        </div>
+                        <div class="pc-badge">Dewan Pengawas dan Komite</div>
+                    </div>
+                    <div class="pc-body">
+                        <div class="detail-item"><span>Kode Pegawai Eksternal</span><strong>EJ15000160</strong></div>
+                        <div class="detail-item"><span>NPWP <i class="fas fa-check-circle text-green"></i></span><strong>12-34.39843.883041</strong></div>
+                        <div class="detail-item"><span>KTP <i class="fas fa-check-circle text-green"></i></span><strong>1234567890123471</strong></div>
+                        <div class="detail-item"><span>PTKP</span><strong>K/3</strong></div>
+                    </div>
+                </div>
+
+                <div class="person-card card-dewan">
+                    <div class="pc-header">
+                        <div class="pc-title-area">
+                            <h4>Sri Wahyuni</h4>
+                            <span>Anggota Dewan Pengawas</span>
+                        </div>
+                        <div class="pc-badge">Dewan Pengawas dan Komite</div>
+                    </div>
+                    <div class="pc-body">
+                        <div class="detail-item"><span>Kode Pegawai Eksternal</span><strong>EJ15000161</strong></div>
+                        <div class="detail-item"><span>NPWP <i class="fas fa-times-circle text-red"></i></span><strong>12-34.39843.883042</strong></div>
+                        <div class="detail-item"><span>KTP <i class="fas fa-check-circle text-green"></i></span><strong>1234567890123472</strong></div>
+                        <div class="detail-item"><span>PTKP</span><strong>K/2</strong></div>
+                    </div>
+                </div>
+
+                <div class="person-card card-perorangan">
+                    <div class="pc-header">
+                        <div class="pc-title-area">
+                            <h4>Andi Pratama</h4>
+                            <span>Kementerian Keuangan</span>
+                        </div>
+                        <div class="pc-badge">Perorangan</div>
+                    </div>
+                    <div class="pc-body">
+                        <div class="detail-item"><span>Kode</span><strong>EJ15000170</strong></div>
+                        <div class="detail-item"><span>NPWP <i class="fas fa-times-circle text-red"></i></span><strong>12-34.39843.883051</strong></div>
+                        <div class="detail-item"><span>KTP <i class="fas fa-check-circle text-green"></i></span><strong>1234567890123481</strong></div>
+                        <div class="detail-item"><span>PTKP</span><strong>K/0</strong></div>
+                        <div class="detail-item"><span>Unit Kerja</span><strong>J15 - Jakarta Cawang</strong></div>
+                    </div>
+                </div>
+
+                <div class="person-card card-perorangan">
+                    <div class="pc-header">
+                        <div class="pc-title-area">
+                            <h4>Dewi Lestari</h4>
+                            <span>Kementerian Agama</span>
+                        </div>
+                        <div class="pc-badge">Perorangan</div>
+                    </div>
+                    <div class="pc-body">
+                        <div class="detail-item"><span>Kode</span><strong>EJ15000171</strong></div>
+                        <div class="detail-item"><span>NPWP <i class="fas fa-check-circle text-green"></i></span><strong>12-34.39843.883052</strong></div>
+                        <div class="detail-item"><span>KTP <i class="fas fa-check-circle text-green"></i></span><strong>1234567890123482</strong></div>
+                        <div class="detail-item"><span>PTKP</span><strong>TK/1</strong></div>
+                        <div class="detail-item"><span>Unit Kerja</span><strong>B03 - Bandung Timur</strong></div>
+                    </div>
+                </div>
+
+                <div class="person-card card-perorangan">
+                    <div class="pc-header">
+                        <div class="pc-title-area">
+                            <h4>Rudi Hartono</h4>
+                            <span>Kementerian Pendidikan</span>
+                        </div>
+                        <div class="pc-badge">Perorangan</div>
+                    </div>
+                    <div class="pc-body">
+                        <div class="detail-item"><span>Kode</span><strong>EJ15000172</strong></div>
+                        <div class="detail-item"><span>NPWP <i class="fas fa-times-circle text-red"></i></span><strong>12-34.39843.883053</strong></div>
+                        <div class="detail-item"><span>KTP <i class="fas fa-check-circle text-green"></i></span><strong>1234567890123483</strong></div>
+                        <div class="detail-item"><span>PTKP</span><strong>K/2</strong></div>
+                        <div class="detail-item"><span>Unit Kerja</span><strong>S07 - Surabaya Selatan</strong></div>
+                    </div>
+                </div>
+
+                <div class="person-card card-badan" onclick="openRekeningModal()">
+                    <div class="pc-header">
+                        <div class="pc-title-area">
+                            <h4>PT Astra International Tbk</h4>
+                            <span>Bagus Santoso</span>
+                        </div>
+                        <div class="pc-badge">Badan Usaha</div>
+                    </div>
+                    <div class="pc-body">
+                        <div class="detail-item"><span>Kode</span><strong>RC100000480</strong></div>
+                        <div class="detail-item"><span>NPWP <i class="fas fa-times-circle text-red"></i></span><strong>12-34.39843.883061</strong></div>
+                        <div class="detail-item"><span>KTP <i class="fas fa-check-circle text-green"></i></span><strong>1234567890123491</strong></div>
+                        <div class="detail-item"><span>Unit Kerja</span><strong>C11 - Jakarta Pusat</strong></div>
+                    </div>
+                </div>
+
+                <div class="person-card card-badan" onclick="openRekeningModal()">
+                    <div class="pc-header">
+                        <div class="pc-title-area">
+                            <h4>CV Karya Mandiri</h4>
+                            <span>Heni Susanti</span>
+                        </div>
+                        <div class="pc-badge">Badan Usaha</div>
+                    </div>
+                    <div class="pc-body">
+                        <div class="detail-item"><span>Kode</span><strong>RC100000481</strong></div>
+                        <div class="detail-item"><span>NPWP <i class="fas fa-check-circle text-green"></i></span><strong>12-34.39843.883062</strong></div>
+                        <div class="detail-item"><span>KTP <i class="fas fa-check-circle text-green"></i></span><strong>1234567890123492</strong></div>
+                        <div class="detail-item"><span>Unit Kerja</span><strong>D02 - Medan Kota</strong></div>
+                    </div>
+                </div>
+
+                <div class="person-card card-badan" onclick="openRekeningModal()">
+                    <div class="pc-header">
+                        <div class="pc-title-area">
+                            <h4>PT Telekomunikasi Indonesia</h4>
+                            <span>Yoga Prasetyo</span>
+                        </div>
+                        <div class="pc-badge">Badan Usaha</div>
+                    </div>
+                    <div class="pc-body">
+                        <div class="detail-item"><span>Kode</span><strong>RC100000482</strong></div>
+                        <div class="detail-item"><span>NPWP <i class="fas fa-check-circle text-green"></i></span><strong>12-34.39843.883063</strong></div>
+                        <div class="detail-item"><span>KTP <i class="fas fa-check-circle text-green"></i></span><strong>1234567890123493</strong></div>
+                        <div class="detail-item"><span>Unit Kerja</span><strong>E05 - Makassar</strong></div>
+                    </div>
+                </div>
             </div>
 
             <div class="modal-footer-pagination">
@@ -3393,6 +3582,15 @@
     <script src="../../js/script-form.js"></script>
     <script src="../../js/script-dataForm.js"></script>
     <script src="../../js/script-dataGridPengajuan.js"></script>
+    <script src="../../js/store.js"></script>
+    <script src="../../js/lib/sweetalert2.all.min.js"></script>
+    <script src="../../js/ui.js"></script>
+    <script src="../../js/script-rincian.js"></script>
+    <script src="../../js/script-upload.js"></script>
+    <script src="../../js/script-detail.js"></script>
+    <script src="../../js/script-review.js"></script>
+    <script src="../../js/data-pengadaan.js"></script>
+    <script src="../../js/script-form-app.js"></script>
 
 </body>
 

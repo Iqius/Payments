@@ -20,9 +20,9 @@ const FLOWS_CONFIG = {
     { targetWrapper: 5, label: "Review & Submit" },
   ],
   perjalanan_dinas: [
+    { targetWrapper: 3, label: "Detil Perjalanan" },
     { targetWrapper: 1, label: "Sumber Anggaran & Kegiatan" },
     { targetWrapper: 2, label: "Dokumen Pendukung" },
-    { targetWrapper: 3, label: "Detil Perjalanan" },
     { targetWrapper: 4, label: "Rincian Biaya" },
     { targetWrapper: 5, label: "Review & Submit" },
   ],
@@ -2084,8 +2084,8 @@ function saveFakturPPN() {
 }
 
 // Hapus Faktur PPN
-function deleteFakturPPN() {
-  if (confirm("Apakah Anda yakin ingin menghapus data faktur ini?")) {
+async function deleteFakturPPN() {
+  if (await UI.confirm("Apakah Anda yakin ingin menghapus data faktur ini?", { danger: true, ya: "Hapus", judul: "Hapus faktur" })) {
     const modal = document.getElementById("modalFakturPPN");
     if (modal) modal.style.display = "none";
     console.log("Data Faktur PPN Dihapus");
@@ -3360,7 +3360,12 @@ function prefillFormOperasional() {
 
   // Header
   setText("doc-id", item.id); // ID Dokumen <- id
-setText("doc-date", formatTanggal(item.tanggal, true));
+  let tglPengajuan = item.tanggal; // Tanggal Pengajuan <- tanggal
+  if (item.tanggalRaw) {
+    const [y, m, d] = item.tanggalRaw.split("-").map(Number);
+    tglPengajuan = formatIndonesianDate(new Date(y, m - 1, d));
+  }
+  setText("doc-date", tglPengajuan);
 
   // Form
   setField("input-tanggal-kegiatan", item.statusDate); // Tanggal Kegiatan <- statusDate
