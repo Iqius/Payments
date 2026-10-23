@@ -59,7 +59,9 @@ const documentData = [
     jenis: "Operasional Umum",
     penyetuju: null,
         verified: true,
-
+            dokumen: [
+      { id: "seed-struk2", name: "struk2.png", size: 0, type: "image/png", tags: ["kuitansi"], url: "../../assets/images/struk2.png" },
+    ],
   },
   {
     id: "25112601965433",
@@ -352,6 +354,9 @@ const documentData = [
     jenis: "Operasional Umum",
     penyetuju: "aldi Suadana",
         verified: true,
+            dokumen: [
+      { id: "seed-struk2", name: "struk2.png", size: 0, type: "image/png", tags: ["kuitansi"], url: "../../assets/images/struk2.png" },
+    ],
   },
   {
     id: "25112601965447",
@@ -455,7 +460,9 @@ const documentData = [
     jenis: "Operasional Umum",
     penyetuju: null,
         verified: false,
-
+            dokumen: [
+      { id: "seed-struk2", name: "struk2.png", size: 0, type: "image/png", tags: ["kuitansi"], url: "../../assets/images/struk2.png" },
+    ],
   },
   {
     id: "25112601965452",

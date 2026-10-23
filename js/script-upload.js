@@ -53,7 +53,16 @@
   // ---------- blob & preview ----------
   async function blobOf(f) {
     if (f.blob) return f.blob;
-    const b = await Store.File.get(docId() + ":" + f.id);
+    let b = await Store.File.get(docId() + ":" + f.id);
+    if (!b && f.url) {
+      // file contoh dari project (bukan unggahan): ambil dari url
+      try {
+        b = await (await fetch(f.url)).blob();
+        f.size = f.size || b.size;
+      } catch (e) {
+        b = null;
+      }
+    }
     if (b) f.blob = b;
     return b;
   }
@@ -431,9 +440,9 @@
   });
 
   // ---------- serialisasi ----------
-  U.dump = () => U.files.map((f) => ({ id: f.id, name: f.name, size: f.size, type: f.type, tags: f.tags.slice() }));
+  U.dump = () => U.files.map((f) => ({ id: f.id, name: f.name, size: f.size, type: f.type, tags: f.tags.slice(), ...(f.url ? { url: f.url } : {}) }));
   U.load = function (meta) {
-    U.files = (meta || []).map((m) => ({ id: m.id, name: m.name, size: m.size, type: m.type, tags: (m.tags || []).slice(), blob: null, stored: true }));
+    U.files = (meta || []).map((m) => ({ id: m.id, name: m.name, size: m.size, type: m.type, tags: (m.tags || []).slice(), url: m.url, blob: null, stored: true }));
     U.removed = [];
     U.activeId = U.files[0] ? U.files[0].id : null;
     U.render();
