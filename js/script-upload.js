@@ -10,8 +10,7 @@
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const esc = (v) => String(v ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
-  const PAGE = 10; // 10 baris (1 kolom) per halaman
-  const MAX_BYTES = 10 * 1024 * 1024;
+    const MAX_BYTES = 10 * 1024 * 1024;
   const EXT_OK = ["pdf", "jpg", "jpeg", "png"];
 
   const U = {
@@ -216,15 +215,11 @@
     if (sec) sec.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  // ---------- render kartu ----------
-  // nama baris = jenis dokumen yang dipilih (bila ada yang sama diberi nomor); nama file asli tampil di pratinjau
-  function labelBaris(f) {
-    if (!f.tags.length) return "";
-    const nama = f.tags.map(jenisNama).join(", ");
-    const sama = U.files.filter((x) => x.tags.map(jenisNama).join(", ") === nama);
-    return sama.length > 1 ? `${nama} (${sama.indexOf(f) + 1})` : nama;
-  }
-  function catatanFile(id) {
+  // ---------- daftar per jenis dokumen ----------
+  // Tengah: semua jenis dokumen, masing-masing dengan tombol unggah. File yang sudah diunggah
+  // tampil bersarang di bawah jenisnya (ikon branch). Satu file = satu jenis (tags[0]).
+  const BRANCH = '<div class="branch-icon"><i class="branch-connector"></i></div>';
+    function catatanFile(id) {
     try {
       const d = window.Store && window.FormApp ? Store.get(FormApp.id()) : null;
       return (d && d.fileNotes && d.fileNotes[id]) || "";
@@ -232,19 +227,27 @@
       return "";
     }
   }
-  function kartu(f, readOnly) {
-    const lbl = labelBaris(f);
+  function barisFile(f) {
     const note = catatanFile(f.id);
     return `
-      <div class="step3-file-card f-row${f.tags.length ? "" : " card-warning"}${f.id === U.activeId ? " is-active" : ""}" data-fid="${f.id}">
-        <div class="fr-name" title="${esc(f.name)}">${iconOf(f)}${
-          lbl
-            ? `<span class="fr-text">${esc(lbl)}</span>`
-            : `<span class="fr-text">${esc(f.name)}</span><span class="fr-warn" data-act="jenis"><i class="fas fa-exclamation-circle"></i> Belum pilih jenis dokumen</span>`
-        }</div>
+      <div class="step3-file-card f-row f-child${f.id === U.activeId ? " is-active" : ""}" data-fid="${f.id}">
+        <div class="fr-name" title="${esc(f.name)}">${BRANCH}${iconOf(f)}<span class="fr-text">${esc(f.name)}</span></div>
         <span class="fr-size">${fmtSize(f.size)}</span>
         <span class="fr-fb">${note ? `<span class="badge-perbaikan" title="${esc(note)}"><i class="fas fa-triangle-exclamation"></i> Perlu perbaikan</span>` : ""}</span>
-        <span class="fr-act">${readOnly ? "" : '<button type="button" class="fc-del-btn fr-del" data-act="del" title="Hapus file"><i class="fas fa-trash-alt"></i></button>'}</span>
+        <span class="fr-act"><button type="button" class="fc-del-btn fr-del" data-act="del" title="Hapus file"><i class="fas fa-trash-alt"></i></button></span>
+      </div>`;
+  }
+  function barisJenis(j, files, wajib, tanpaUnggah) {
+    const ada = files.length;
+    return `
+      <div class="jenis-grp${ada ? " ada" : ""}" data-jenis="${j.key}">
+        <div class="f-row j-row" data-jenis="${j.key}">
+          <div class="fr-name"><i class="fas ${ada ? "fa-folder-open" : "fa-folder"} j-ico"></i><span class="fr-text">${esc(j.nama)}</span>${
+            wajib ? `<em class="j-wajib${ada ? " ok" : ""}">Wajib</em>` : ""
+          }${ada ? `<span class="j-count">${ada} file</span>` : ""}</div>
+          <span class="fr-act">${tanpaUnggah ? "" : `<button type="button" class="j-up-btn" data-act="upload" data-jenis="${j.key}" title="Unggah ${esc(j.nama)}"><i class="fas fa-upload"></i></button>`}</span>
+        </div>
+        ${files.map(barisFile).join("")}
       </div>`;
   }
 
@@ -252,26 +255,19 @@
     const root = $("#step-2-wrapper");
     if (!root) return;
     const grid = $(".file-grid-2col", root);
-    const pages = Math.max(1, Math.ceil(U.files.length / PAGE));
-    U.page = Math.min(Math.max(U.page || 1, 1), pages);
-    if (grid) grid.innerHTML = U.files.length ? '<div class="fr-head"><span>Jenis Dokumen</span><span>Ukuran</span><span>Feedback</span><span>Aksi</span></div>' + U.files.slice((U.page - 1) * PAGE, U.page * PAGE).map((f) => kartu(f, false)).join("") : '<div class="fc-empty">Belum ada dokumen. Unggah dokumen pendukung di bawah.</div>';
+    const wajib = wajibKeys();
+    if (grid) {
+      const keyAda = new Set(Store.JENIS_DOKUMEN.map((j) => j.key));
+      const tanpa = U.files.filter((f) => !f.tags.length || !keyAda.has(f.tags[0]));
+      grid.innerHTML =
+        '<div class="fr-head"><span>Jenis Dokumen</span><span>Ukuran</span><span>Feedback</span><span>Aksi</span></div>' +
+        Store.JENIS_DOKUMEN.map((j) => barisJenis(j, U.files.filter((f) => f.tags[0] === j.key), wajib.includes(j.key))).join("") +
+        (tanpa.length ? barisJenis({ key: "", nama: "Belum ada jenis" }, tanpa, false, true) : "");
+    }
     const info = $(".list-pagination .pagination-info strong", root);
     if (info) info.textContent = `${U.files.length} Dokumen`;
     const pc = $(".list-pagination .pagination-controls", root);
-    if (pc) {
-      pc.style.display = U.files.length > PAGE ? "" : "none";
-      pc.innerHTML = `<button type="button" class="page-btn" data-pg="first"${U.page === 1 ? " disabled" : ""}><i class="fas fa-step-backward"></i></button>
-        <button type="button" class="page-btn" data-pg="prev"${U.page === 1 ? " disabled" : ""}><i class="fas fa-chevron-left"></i></button>
-        <button type="button" class="page-btn active-page">${U.page}</button><span class="page-text">of ${pages}</span>
-        <button type="button" class="page-btn" data-pg="next"${U.page === pages ? " disabled" : ""}><i class="fas fa-chevron-right"></i></button>
-        <button type="button" class="page-btn" data-pg="last"${U.page === pages ? " disabled" : ""}><i class="fas fa-step-forward"></i></button>`;
-      pc.onclick = (ev) => {
-        const b = ev.target.closest("[data-pg]");
-        if (!b || b.disabled) return;
-        U.page = { first: 1, prev: U.page - 1, next: U.page + 1, last: pages }[b.dataset.pg];
-        U.render();
-      };
-    }
+    if (pc) pc.style.display = "none"; // semua jenis tampil dalam satu daftar (bisa di-scroll)
 
     const st = U.wajibStatus();
     const box = $(".mandatory-box", root);
@@ -286,7 +282,6 @@
     const active = U.files.find((f) => f.id === U.activeId) || U.files[0] || null;
     U.activeId = active ? active.id : null;
     if (!keepOpen) tampilPreview(active);
-    refreshJenisBox(keepOpen === true);
     refreshSummaryKiri();
     if (window.Review && Review.refreshDocs) Review.refreshDocs();
   };
@@ -318,25 +313,23 @@
   U.refreshSummaryKiri = refreshSummaryKiri;
 
   // ---------- tambah / hapus file ----------
-  window.handleFiles = function (files) {
+  // jenis = key jenis dokumen tujuan (dari modal unggah); tanpa jenis -> "Belum ada jenis"
+  window.handleFiles = function (files, jenis) {
     let n = 0;
     Array.from(files || []).forEach((file) => {
       const ext = file.name.split(".").pop().toLowerCase();
       if (!EXT_OK.includes(ext)) return UI.toast(`Format file "${file.name}" tidak didukung.`, "err");
       if (file.size > MAX_BYTES) return UI.toast(`Ukuran file "${file.name}" melebihi batas 10MB.`, "err");
-      const f = { id: "f" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), name: file.name, size: file.size, type: file.type || ext, tags: [], blob: file, stored: false };
+      const f = { id: "f" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), name: file.name, size: file.size, type: file.type || ext, tags: jenis ? [jenis] : [], blob: file, stored: false };
       U.files.push(f);
       U.activeId = f.id;
       n++;
     });
     const fi = document.getElementById("fileInput");
     if (fi) fi.value = "";
-    if (n) U.page = Math.ceil(U.files.length / PAGE);
     U.render();
-    if (n) {
-      UI.toast(`${n} file ditambahkan. Pilih jenis dokumen pada setiap file.`, "ok");
-      if (n === 1) U.bukaDropdown();
-    }
+    if (n) UI.toast(`${n} file ditambahkan${jenis ? " ke " + jenisNama(jenis) : ""}.`, "ok");
+    return n;
   };
 
   async function hapusFile(id) {
@@ -353,92 +346,85 @@
     U.render();
   }
 
-  // ---------- dropdown jenis dokumen (di bawah pratinjau) ----------
-  function ensureJenisBox() {
-    const panel = $("#step-2-wrapper .step3-right-panel");
-    if (!panel) return null;
-    let box = $(".jenis-box", panel);
-    if (box) return box;
-    box = document.createElement("div");
-    box.className = "jenis-box";
-    box.innerHTML = `
-      <label class="jb-label">Jenis Dokumen <span class="jb-req">*</span></label>
-      <div class="jd-dd">
-        <button type="button" class="jd-btn" id="jd-btn"><span class="jd-text">Label</span><i class="fas fa-chevron-down"></i></button>
-        <div class="jd-menu" id="jd-menu" hidden></div>
-      </div>
-      <button type="button" class="jb-hapus" id="jb-hapus">Hapus</button>`;
-    const pv = $(".preview-image-container", panel);
-    if (pv) panel.insertBefore(box, pv); // urutan: nama file, pilihan jenis + hapus, pratinjau
-    else panel.appendChild(box);
-    $("#jd-btn", box).addEventListener("click", (ev) => {
-      ev.stopPropagation();
-      if (!U.activeId) return;
-      const m = $("#jd-menu", box);
-      m.hidden = !m.hidden;
+  // ---------- modal unggah per jenis dokumen ----------
+  // Klik ikon unggah pada baris jenis -> modal: tarik & lepas atau klik untuk memilih file.
+  // File langsung masuk ke jenis itu saat dilepas / dipilih, lalu modal tertutup.
+  let ujJenis = null;
+  function modalUnggah() {
+    let m = document.getElementById("modal-unggah-jenis");
+    if (m) return m;
+    m = document.createElement("div");
+    m.id = "modal-unggah-jenis";
+    m.className = "uj-overlay";
+    m.hidden = true;
+    m.innerHTML = `
+      <div class="uj-box" role="dialog" aria-modal="true" aria-labelledby="uj-title">
+        <div class="uj-head">
+          <div><h3 id="uj-title">Unggah Dokumen</h3><p class="uj-sub">Pilih atau tarik file ke area di bawah.</p></div>
+          <button type="button" class="uj-close" aria-label="Tutup"><i class="fas fa-times"></i></button>
+        </div>
+        <label class="uj-drop" id="uj-drop">
+          <input type="file" id="uj-input" multiple accept=".pdf,.jpg,.jpeg,.png" hidden />
+          <i class="fas fa-cloud-upload-alt uj-ico"></i>
+          <strong>Tarik file & lepaskan di sini</strong>
+          <span>atau klik untuk memilih file</span>
+          <em>Format: PDF, JPG, JPEG, PNG | Maks. 10MB per file</em>
+        </label>
+      </div>`;
+    document.body.appendChild(m);
+    const drop = $("#uj-drop", m);
+    const inp = $("#uj-input", m);
+    const tutup = () => {
+      m.hidden = true;
+      ujJenis = null;
+    };
+    const masuk = (files) => {
+      const key = ujJenis;
+      if (!files || !files.length) return;
+      if (handleFiles(files, key)) tutup();
+      inp.value = "";
+    };
+    $(".uj-close", m).addEventListener("click", tutup);
+    m.addEventListener("click", (ev) => ev.target === m && tutup());
+    document.addEventListener("keydown", (ev) => ev.key === "Escape" && !m.hidden && tutup());
+    inp.addEventListener("change", () => masuk(inp.files));
+    ["dragenter", "dragover"].forEach((t) =>
+      drop.addEventListener(t, (ev) => {
+        ev.preventDefault();
+        drop.classList.add("drag-active");
+      }),
+    );
+    ["dragleave", "drop"].forEach((t) => drop.addEventListener(t, () => drop.classList.remove("drag-active")));
+    drop.addEventListener("drop", (ev) => {
+      ev.preventDefault();
+      masuk(ev.dataTransfer && ev.dataTransfer.files);
     });
-    $("#jd-menu", box).addEventListener("click", (ev) => ev.stopPropagation());
-    $("#jd-menu", box).addEventListener("change", (ev) => {
-      const f = U.files.find((x) => x.id === U.activeId);
-      if (!f) return;
-      const v = ev.target.value; // satu file = satu jenis dokumen
-      f.tags = v ? [v] : [];
-      U.render(true);
-      $("#jd-menu", box).hidden = true;
-    });
-    $("#jb-hapus", box).addEventListener("click", () => U.activeId && hapusFile(U.activeId));
-    document.addEventListener("click", () => {
-      const m = $("#jd-menu", box);
-      if (m) m.hidden = true;
-    });
-    return box;
+    return m;
   }
-  function refreshJenisBox(keepOpen) {
-    const box = ensureJenisBox();
-    if (!box) return;
-    const f = U.files.find((x) => x.id === U.activeId);
-    const wajib = wajibKeys();
-    const menu = $("#jd-menu", box);
-    const btn = $("#jd-btn", box);
-    btn.disabled = !f;
-    $("#jb-hapus", box).disabled = !f;
-    $(".jd-text", btn).textContent = f && f.tags.length ? f.tags.map(jenisNama).join(", ") : f ? "Pilih jenis dokumen" : "Label";
-    btn.classList.toggle("jd-kosong", !!f && !f.tags.length);
-    menu.innerHTML = Store.JENIS_DOKUMEN.map(
-      (j) => `<label class="jd-opt"><input type="radio" name="jd-jenis" value="${j.key}" ${f && f.tags.includes(j.key) ? "checked" : ""}><span class="jd-box"><i class="fas fa-check"></i></span><span>${esc(j.nama)}${wajib.includes(j.key) ? '<em class="doc-wajib">Wajib</em>' : ""}</span></label>`,
-    ).join("");
-    if (!keepOpen) menu.hidden = true;
-  }
-  U.bukaDropdown = () => {
-    const box = ensureJenisBox();
-    if (box && U.activeId) $("#jd-menu", box).hidden = false;
+  U.bukaUnggah = function (key) {
+    const m = modalUnggah();
+    ujJenis = key;
+    $("#uj-title", m).textContent = "Unggah " + jenisNama(key);
+    m.hidden = false;
   };
-  function bukaModalJenis(id) {
-    U.activeId = id;
-    U.render();
-    U.bukaDropdown();
-  }
-  window.openDocModal = function () {
-    if (U.activeId) bukaModalJenis(U.activeId);
-  };
-  window.closeDocModal = function () {
-    $("#modalJenisDokumen")?.classList.add("hidden");
-  };
+  // kompatibilitas pemanggil lama
+  U.bukaDropdown = () => {};
+  window.openDocModal = () => {};
+  window.closeDocModal = () => {};
 
-  // ---------- klik pada kartu ----------
+  // ---------- klik pada daftar ----------
   document.addEventListener("click", (ev) => {
+    const up = ev.target.closest('#step-2-wrapper [data-act="upload"]');
+    if (up) return U.bukaUnggah(up.dataset.jenis);
     const card = ev.target.closest("#step-2-wrapper .step3-file-card[data-fid]");
     if (!card) return;
     const id = card.dataset.fid;
     const act = ev.target.closest("[data-act]");
     if (act && act.dataset.act === "del") return hapusFile(id);
     U.activeId = id;
-    if (act && act.dataset.act === "jenis") return bukaModalJenis(id);
-    $$("#step-2-wrapper .step3-file-card").forEach((c) => c.classList.toggle("is-active", c.dataset.fid === id));
+    $$("#step-2-wrapper .step3-file-card[data-fid]").forEach((c) => c.classList.toggle("is-active", c.dataset.fid === id));
     tampilPreview(U.files.find((f) => f.id === id));
-    refreshJenisBox();
   });
-
   // ---------- serialisasi ----------
   U.dump = () => U.files.map((f) => ({ id: f.id, name: f.name, size: f.size, type: f.type, tags: f.tags.slice(), ...(f.url ? { url: f.url } : {}) }));
   U.load = function (meta) {

@@ -75,7 +75,15 @@
 
   const mkSub = () => ({ id: "s" + ++S.seq, kode: "-", nama: "", kode2: "-", dpp: 0, tarif: 0, pph: 0, dppAuto: true });
   const mkKw = () => ({ id: "k" + ++S.seq, no: "", tgl: today(), nominal: 0, ppn: 0, open: false, subs: [mkSub()] });
-  const mkKomp = (g, extra = {}) => ({ id: "c" + ++S.seq, g, nama: "", formula: "", nominal: 0, pph: 0, ...extra });
+  const mkKomp = (g, extra = {}) => ({ id: "c" + ++S.seq, g, tipe: "fp", nama: "", formula: "", nominal: 0, pph: 0, ...extra });
+  // Tipe komponen biaya perorangan:
+  //   fp = pakai formula + potongan PPh | p = tanpa formula, dengan PPh | n = tanpa formula, tanpa PPh
+  const TIPE_KOMP = [
+    { key: "fp", title: "Dengan formula & PPh", desc: "Isi formula perhitungan, nominal, dan potongan PPh." },
+    { key: "p", title: "Tanpa formula, dengan PPh", desc: "Cukup nominal dan potongan PPh." },
+    { key: "n", title: "Tanpa formula & tanpa PPh", desc: "Hanya nominal, tidak dipotong PPh." },
+  ];
+  const tipeKomp = (c) => (c && TIPE_KOMP.some((t) => t.key === c.tipe) ? c.tipe : "fp"); // data lama = fp
   const mkEntry = (p, extra = {}) => ({ uid: "r" + ++S.seq, p, rek: null, kuitansi: [], komponen: [], openG: {}, ...extra });
 
   const subPph = (s) => Math.round((s.dpp * s.tarif) / 100);
@@ -409,14 +417,20 @@
   // ----- Perorangan: kelompok biaya + komponen -----
   function htmlKomp(c, first, locked) {
     const ro = locked ? "readonly" : "";
+    const tp = tipeKomp(c);
+    const formula = tp === "fp" ? `<input type="text" data-f="formula" value="${esc(c.formula)}" placeholder="Formula" class="sub-input" ${ro} />` : ""; // tanpa formula: kolom dibiarkan kosong (tanpa kotak)
+    const pph =
+      tp === "n"
+        ? "" // tanpa PPh: kolom kosong (tanpa kotak)
+        : `<div class="sub-input-box danger"><span class="prefix text-danger">Rp.</span><input type="text" data-f="pph" value="${fmt(c.pph)}" class="sub-input-field text-right text-danger" ${ro} /></div>`;
     return `
-    <div class="biaya-sub-row" data-cid="${c.id}">
+    <div class="biaya-sub-row tipe-${tp}" data-cid="${c.id}">
       <div class="sub-col sub-col-nama">${first ? '<span class="sub-label-head">Nama Komponen</span>' : ""}<input type="text" data-f="nama" value="${esc(c.nama)}" placeholder="Nama Komponen" class="sub-input" ${ro} /></div>
-      <div class="sub-col sub-col-formula">${first ? '<span class="sub-label-head">Formula</span>' : ""}${first ? `<input type="text" data-f="formula" value="${esc(c.formula)}" placeholder="Formula" class="sub-input" ${ro} />` : `<input type="text" data-f="formula" value="${esc(c.formula)}" placeholder="Formula" class="sub-input" ${ro} />`}</div>
+      <div class="sub-col sub-col-formula">${first ? '<span class="sub-label-head">Formula</span>' : ""}${formula}</div>
       <div class="sub-col sub-col-nominal">${first ? '<span class="sub-label-head">Nominal</span>' : ""}
         <div class="sub-input-box"><span class="prefix">Rp.</span><input type="text" data-f="nominal" value="${fmt(c.nominal)}" class="sub-input-field text-right" ${locked && !c.nominalEditable ? "readonly" : ""} /></div></div>
       <div class="sub-col sub-col-pph">${first ? '<span class="sub-label-head">Potongan PPh</span>' : ""}
-        <div class="sub-input-box danger"><span class="prefix text-danger">Rp.</span><input type="text" data-f="pph" value="${fmt(c.pph)}" class="sub-input-field text-right text-danger" ${ro} /></div></div>
+        ${pph}</div>
       <div class="sub-col sub-col-btn">${c.base || locked ? "" : '<button type="button" class="btn-sub-del" data-act="del-komp" title="Hapus komponen"><i class="fas fa-minus-circle"></i></button>'}</div>
     </div>`;
   }
@@ -581,27 +595,42 @@
       refreshTotals();
       $(`.kuitansi-item[data-kid="${k.id}"]`)?.scrollIntoView({ block: "nearest" });
     } else {
-      // dropdown di atas hanya filter; kelompok dipilih lewat pop up setelah tombol ini diklik
-      const opsi = {};
-      KELOMPOK.forEach((g) => (opsi[g.key] = g.title));
+      // dropdown di atas hanya filter; kelompok + tipe komponen dipilih lewat pop up setelah tombol ini diklik
       const r = await Swal.fire({
         title: "Tambah Komponen Biaya",
-        text: "Pilih kelompok biaya",
-        input: "select",
-        inputOptions: opsi,
-        inputPlaceholder: "Pilih kelompok biaya...",
-        inputValue: e.filterG || "",
+        html: `<div class="tk-pop">
+            <label class="tk-label" for="tk-kelompok">Kelompok biaya</label>
+            <select id="tk-kelompok" class="tk-select">
+              <option value="">Pilih kelompok biaya...</option>
+              ${KELOMPOK.map((g) => `<option value="${g.key}"${g.key === e.filterG ? " selected" : ""}>${esc(g.title)}</option>`).join("")}
+            </select>
+            <div class="tk-label">Jenis komponen</div>
+            <div class="tk-opts">
+              ${TIPE_KOMP.map(
+                (t, i) => `<label class="tk-opt"><input type="radio" name="tk-tipe" value="${t.key}"${i === 0 ? " checked" : ""}><span><strong>${esc(t.title)}</strong><em>${esc(t.desc)}</em></span></label>`,
+              ).join("")}
+            </div>
+          </div>`,
         showCancelButton: true,
         confirmButtonText: "Tambah",
         cancelButtonText: "Batal",
         reverseButtons: true,
         confirmButtonColor: "#1f6fa8",
-        inputValidator: (v) => (!v ? "Pilih kelompok biaya terlebih dahulu." : undefined),
+        focusConfirm: false,
+        preConfirm: () => {
+          const g = document.getElementById("tk-kelompok").value;
+          const tp = (document.querySelector('input[name="tk-tipe"]:checked') || {}).value || "fp";
+          if (!g) {
+            Swal.showValidationMessage("Pilih kelompok biaya terlebih dahulu.");
+            return false;
+          }
+          return { g, tp };
+        },
       });
       if (!r.isConfirmed) return;
-      const key = r.value;
+      const key = r.value.g;
       if (e.filterG && e.filterG !== key) e.filterG = key; // tampilkan kelompok yang baru ditambah
-      e.komponen.push(mkKomp(key));
+      e.komponen.push(mkKomp(key, { tipe: r.value.tp }));
       e.openG[key] = true;
       renderRight();
       refreshTotals();
@@ -672,6 +701,9 @@
     } else if (c) {
       if (f === "nominal" || f === "pph") c[f] = num(t.value);
       else c[f] = t.value;
+      const tp = tipeKomp(c);
+      if (tp === "n") c.pph = 0; // tanpa PPh
+      if (tp !== "fp") c.formula = ""; // tanpa formula
     }
     refreshTotals();
   }
