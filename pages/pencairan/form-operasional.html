@@ -3325,11 +3325,19 @@
                         <span>PPN Masukan / Pungut</span>
                         <i class="fas fa-info-circle tooltip-icon" title="Pajak Masukan"></i>
                     </div>
-                    <div class="ppn-col-input">
+                    <div class="ppn-col-input ppn-pungut-row">
                         <label class="switch-toggle">
                             <input type="checkbox" id="togglePpnPungut" checked />
                             <span class="slider-round"></span>
                         </label>
+                        <div class="ppn-jenis-wrap" id="ppnJenisWrap">
+                            <label class="ppn-jenis-label" for="ppnJenisPpn">Jenis PPN</label>
+                            <select id="ppnJenisPpn" class="ppn-select">
+                                <option value="">Pilih Jenis PPN</option>
+                                <option value="PPN10">PPN10 - PPN atas Barang dan Jasa BPJS</option>
+                                <option value="PPN11">PPN11 - PPN Masukan Bangunan Investasi BPJS</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
@@ -3591,6 +3599,8 @@
     <script src="../../js/script-review.js"></script>
     <script src="../../js/data-pengadaan.js"></script>
     <script src="../../js/script-form-app.js"></script>
+    <!-- DEV TESTING: tombol isi file & penerima dummy. Hapus baris ini bila tidak dipakai. -->
+    <script src="../../js/dev-testing.js"></script>
 
 </body>
 

@@ -418,10 +418,10 @@
   function htmlKomp(c, first, locked) {
     const ro = locked ? "readonly" : "";
     const tp = tipeKomp(c);
-    const formula = tp === "fp" ? `<input type="text" data-f="formula" value="${esc(c.formula)}" placeholder="Formula" class="sub-input" ${ro} />` : ""; // tanpa formula: kolom dibiarkan kosong (tanpa kotak)
+    const formula = tp === "fp" ? `<input type="text" data-f="formula" value="${esc(c.formula)}" placeholder="Formula" class="sub-input" ${ro} />` : '<span class="sub-kosong"></span>'; // tanpa formula: kolom kosong (tanpa kotak), tetap setinggi input
     const pph =
       tp === "n"
-        ? "" // tanpa PPh: kolom kosong (tanpa kotak)
+        ? '<span class="sub-kosong"></span>' // tanpa PPh: kolom kosong (tanpa kotak), tetap setinggi input
         : `<div class="sub-input-box danger"><span class="prefix text-danger">Rp.</span><input type="text" data-f="pph" value="${fmt(c.pph)}" class="sub-input-field text-right text-danger" ${ro} /></div>`;
     return `
     <div class="biaya-sub-row tipe-${tp}" data-cid="${c.id}">
@@ -752,14 +752,24 @@
       if ($("#ppnNamaRekanan")) $("#ppnNamaRekanan").value = e.p.nama;
       if ($("#ppnKodeRekanan")) $("#ppnKodeRekanan").value = e.p.kode;
     }
+    const k = e && e.kuitansi.find((x) => x.id === kwFaktur);
+    if ($("#ppnJenisPpn")) $("#ppnJenisPpn").value = (k && k.jenisPpn) || "";
     _openFaktur(el);
+    tampilJenisPpn();
   };
+  // Jenis PPN hanya tampil saat "PPN Masukan / Pungut" aktif
+  function tampilJenisPpn() {
+    const w = $("#ppnJenisWrap");
+    if (w) w.style.visibility = $("#togglePpnPungut")?.checked ? "visible" : "hidden";
+  }
+  document.addEventListener("change", (ev) => ev.target && ev.target.id === "togglePpnPungut" && tampilJenisPpn());
   window.saveFakturPPN = function () {
     const e = aktifE();
     const k = e && e.kuitansi.find((x) => x.id === kwFaktur);
     if (k) {
       const dipungut = $("#togglePpnPungut")?.checked;
       k.ppn = dipungut ? Math.round((k.nominal * 11) / 111) : 0; // PPN 11% termasuk dalam nominal
+      k.jenisPpn = dipungut ? $("#ppnJenisPpn")?.value || "" : "";
       const s0 = k.subs[0];
       if (s0 && s0.dppAuto) { s0.dpp = Math.max(k.nominal - k.ppn, 0); s0.pph = subPph(s0); }
       renderRight();

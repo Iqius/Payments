@@ -20,7 +20,7 @@
 
   const CFG = (window.APP_CONFIG = Object.assign(
     {
-      validasiDokumenWajib: true, // Submit ditolak bila dokumen wajib belum lengkap
+      validasiDokumenWajib: false, // Submit ditolak bila dokumen wajib belum lengkap
       pengaju: { nama: "Satria Arindra", subUnit: "Asisten Deputi Bidang Treasury", kantor: "33A" },
       verifikator: "Aprillia Wahyuningtyas, A.Md.",
       penyetuju: "Aldi Suadana",

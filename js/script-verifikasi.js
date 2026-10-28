@@ -13,7 +13,7 @@
 
 // Konten tab di panel tengah (id elemen: s5-content-<nama>).
 // Konten "lainnya" sengaja tidak diatur di sini.
-const S5_TAB_NAMES = ["ringkasan", "pajak", "jurnal", "pembayaran", "catatan"];
+const S5_TAB_NAMES = ["ringkasan", "grup", "pajak", "jurnal", "pembayaran", "catatan"];
 
 // Breadcrumb dari field metode, mis. "Reimburse / Klaim Langsung" -> "Klaim Langsung"
 function applyBreadcrumbMetode() {

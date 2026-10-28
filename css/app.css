@@ -78,7 +78,7 @@
 .swal2-popup:not(.swal2-toast) .swal2-html-container { font-size: 16.94px; color: #475569; }
 .swal2-popup.swal2-toast { padding: 9.68px 16.94px; width: auto; max-width: 435.49px; box-shadow: 0 7.26px 24.19px rgba(15,23,42,.18); }
 .swal2-popup.swal2-toast .swal2-title { font-size: 15.73px; margin: 0 9.68px; }
-.swal2-popup.swal2-toast .swal2-icon { width: 29.03px; height: 29.03px; min-width: 29.03px; margin: 0; }
+.swal2-popup.swal2-toast .swal2-icon { width: 2em; height: 2em; min-width: 2em; font-size: 14.5px; margin: 0; } /* ukur lewat font-size supaya lingkaran & centang ikut mengecil */
 .swal2-popup.swal2-toast .swal2-icon .swal2-icon-content { font-size: 19.36px; }
 .swal2-container { z-index: 20000; }
 .swal-toast-app { font-size: 16.94px; }
@@ -383,19 +383,18 @@ input[type="date"].dmy-in::-webkit-datetime-edit { opacity: 0; }
 #step-2-wrapper .f-child .fr-name { font-weight: 500; }
 #step-2-wrapper .f-child .branch-icon { align-self: flex-start; width: 24px; min-width: 24px; margin-top: -10px; }
 
-/* modal unggah */
-.uj-overlay { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; background: rgba(15, 23, 42, .45); }
-.uj-overlay[hidden] { display: none; }
-.uj-box { width: min(629.04px, 92vw); background: #fff; border-radius: 14.52px; padding: 24.19px 26.61px 26.61px; box-shadow: 0 24.19px 60.48px rgba(0,0,0,.25); }
-.uj-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14.52px; margin-bottom: 16.94px; }
-.uj-head h3 { margin: 0; font-size: 19.36px; color: #0f172a; }
-.uj-sub { margin: 4.84px 0 0; font-size: 14.52px; color: #64748b; }
-.uj-close { background: none; border: none; font-size: 19.36px; color: #64748b; cursor: pointer; padding: 4.84px; }
-.uj-drop { display: flex; flex-direction: column; align-items: center; gap: 4.84px; padding: 41.13px 19.36px; border: 2.42px dashed #93c5fd; border-radius: 12.1px; background: #f5f9ff; text-align: center; cursor: pointer; color: #334155; font-size: 14.52px; }
-.uj-drop.drag-active { border-color: #1f6fa8; background: #e6f0fb; }
-.uj-drop strong { font-size: 16.94px; color: #0f172a; }
-.uj-drop em { font-style: normal; font-size: 13.31px; color: #94a3b8; margin-top: 4.84px; }
-.uj-ico { font-size: 36.29px; color: #1f6fa8; margin-bottom: 4.84px; }
+/* jenis dokumen aktif + tarik file ke seluruh layar */
+#step-2-wrapper .j-row { cursor: pointer; }
+#step-2-wrapper .jenis-grp.j-aktif > .j-row { border-color: #1f6fa8; background: #eef5fc; }
+#step-2-wrapper .jenis-grp.j-aktif .j-ico { color: #1f6fa8; }
+#uj-layar { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; background: rgba(31, 111, 168, .18); border: 4.84px dashed #1f6fa8; box-sizing: border-box; pointer-events: none; }
+#uj-layar[hidden] { display: none; }
+#uj-layar.tanpa-jenis { background: rgba(225, 29, 72, .10); border-color: #e11d48; }
+.uj-layar-box { display: flex; flex-direction: column; align-items: center; gap: 7.26px; padding: 29.03px 48.39px; background: #fff; border-radius: 16.94px; box-shadow: 0 19.36px 48.39px rgba(15, 23, 42, .2); text-align: center; }
+.uj-layar-box i { font-size: 43.55px; color: #1f6fa8; }
+#uj-layar.tanpa-jenis .uj-layar-box i { color: #e11d48; }
+.uj-layar-box strong { font-size: 19.36px; color: #0f172a; }
+.uj-layar-box span { font-size: 14.52px; color: #64748b; }
 #step-2-wrapper .j-row .fr-text { min-width: 0; }
 #step-2-wrapper .j-wajib, #step-2-wrapper .j-count { flex: 0 0 auto; white-space: nowrap; }
 #step-2-wrapper .j-row .fr-name { grid-column: 1 / 4; } /* nama jenis boleh memakai kolom Ukuran & Feedback */
@@ -418,3 +417,52 @@ input[type="date"].dmy-in::-webkit-datetime-edit { opacity: 0; }
 /* objek pajak (badan usaha): input sejajar satu garis, label hanya menumpuk di atas kolomnya */
 .kw-sub-row { align-items: flex-end; }
 .kw-sub-row .sub-col-action { align-self: flex-end; display: flex; align-items: center; justify-content: center; height: 26.61px; }
+
+/* kolom formula / PPh yang tidak dipakai: ruang kosong setinggi input, supaya baris pertama tetap rapi */
+.biaya-sub-row .sub-kosong { display: block; width: 100%; height: 29.03px; }
+
+/* Entry Faktur PPN: toggle hijau (warna Figma) + Jenis PPN di sebelah toggle */
+#modalFakturPPN .switch-toggle input:checked + .slider-round { background-color: #3BAB47; }
+#modalFakturPPN .ppn-pungut-row { display: flex; align-items: flex-end; gap: 19.36px; }
+#modalFakturPPN .ppn-pungut-row .switch-toggle { flex: 0 0 auto; margin-bottom: 4.24px; }
+#modalFakturPPN .ppn-jenis-wrap { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3.63px; }
+#modalFakturPPN .ppn-jenis-label { font-size: 12.1px; color: #64748b; }
+
+/* jarak antara bar "Anggaran Kegiatan Dipilih" dan isi step Review / Verifikasi / Approval */
+.step2-info-bar + .step4-main-grid { margin-top: 9.68px; }
+
+/* tab Pajak: jarak antar objek pajak & antara objek dengan daftar pegawainya */
+#s5-content-pajak .objek-item + .objek-item { margin-top: 16.94px; }
+#s5-content-pajak .pegawai-content-panel { padding-top: 9.68px; }
+#s5-content-pajak .grid-header-pegawai { margin-bottom: 7.26px; }
+#s5-content-pajak .pegawai-row + .pegawai-row { margin-top: 9.68px; }
+
+/* Informasi Grup Pengajuan (verifikasi & approval): header per grup role */
+#s5-content-grup .grup-sec { display: flex; flex-direction: column; gap: 7.26px; flex: 0 0 auto; }
+#s5-content-grup .grup-sec + .grup-sec { margin-top: 16.94px; }
+#s5-content-grup .grup-head { display: flex; align-items: center; gap: 12.1px; padding: 9.68px 16.94px; background: #eef5fc; border: 1px solid #d6e6f5; border-radius: 9.68px; }
+#s5-content-grup .grup-nama { flex: 1; min-width: 0; font-size: 15.73px; font-weight: 700; color: #0f3a66; display: flex; align-items: baseline; gap: 9.68px; }
+#s5-content-grup .grup-nama span { font-size: 12.1px; font-weight: 500; color: #64748b; }
+#s5-content-grup .grup-tot { display: flex; flex-direction: column; align-items: flex-end; min-width: 169.36px; padding-left: 14.52px; border-left: 1px solid #d6e6f5; }
+#s5-content-grup .grup-tot span { font-size: 10.89px; color: #64748b; }
+#s5-content-grup .grup-tot strong { font-size: 15.73px; color: #1e293b; }
+#s5-content-grup .grup-tot strong.text-red { color: #e11d48; }
+/* petunjuk folder: "Pilih folder…" di judul daftar (sebelum ada yang aktif), "Drop file di sini" di folder aktif */
+#step-2-wrapper .j-petunjuk { font-style: normal; margin-left: 9.68px; padding: 1.21px 8.47px; border-radius: 9.68px; background: #fff7ed; color: #c2410c; font-size: 10.89px; font-weight: 600; }
+#step-2-wrapper .file-grid-2col.ada-aktif .j-petunjuk { display: none; }
+#step-2-wrapper .j-drop-label { display: none; margin-left: auto; flex: 0 0 auto; white-space: nowrap; padding: 2.42px 9.68px; border-radius: 9.68px; background: #1f6fa8; color: #fff; font-size: 10.89px; font-weight: 600; }
+#step-2-wrapper .jenis-grp.j-aktif .j-drop-label { display: inline-flex; align-items: center; gap: 4.84px; }
+/* grup bisa dibuka / ditutup lewat panah di kiri (default tertutup) */
+#s5-content-grup .grup-head { cursor: pointer; user-select: none; }
+#s5-content-grup .grup-panah { flex: 0 0 auto; color: #1f6fa8; font-size: 14.52px; transition: transform .2s; }
+#s5-content-grup .grup-sec.buka .grup-panah { transform: rotate(90deg); }
+#s5-content-grup .grup-isi { display: none; flex-direction: column; gap: 7.26px; }
+#s5-content-grup .grup-sec.buka .grup-isi { display: flex; }
+
+/* folder bisa dibuka / ditutup (panah di kiri) */
+#step-2-wrapper .j-panah { flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; width: 21.77px; height: 21.77px; margin-left: -7.26px; padding: 0; border: 0; background: none; cursor: pointer; }
+#step-2-wrapper .j-panah:disabled { color: #cbd5e1; cursor: default; }
+#step-2-wrapper .jenis-grp.ada:not(.tutup) .j-panah .chevron-icon { transform: rotate(90deg); } /* terbuka = panah ke bawah; folder kosong tetap ke kanan */
+#step-2-wrapper .j-panah:disabled .chevron-icon { color: #cbd5e1; cursor: default; }
+#step-2-wrapper .j-isi { display: flex; flex-direction: column; gap: 4.84px; }
+#step-2-wrapper .jenis-grp.tutup .j-isi { display: none; }

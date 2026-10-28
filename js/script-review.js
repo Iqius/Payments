@@ -16,7 +16,7 @@
   const rpK = (n) => "Rp " + nf.format(Math.round(n || 0)); // gaya tabel jurnal
 
   const PAGE = 10;
-  const R = { page: { ringkasan: 1, pembayaran: 1 }, q: { ringkasan: "", pembayaran: "" }, terbaru: true, expandKeperluan: false };
+  const R = { page: { ringkasan: 1, pembayaran: 1 }, q: { ringkasan: "", pembayaran: "", grup: "" }, terbaru: true, expandKeperluan: false };
   window.Review = R;
   R.PAGE = PAGE;
 
@@ -124,6 +124,19 @@
     );
   }
 
+  // satu baris penerima (dipakai tab Informasi Umum & Informasi Grup Pengajuan)
+  const barisRingkasan = (e) => `
+      <div class="s5-accordion-item">
+        <div class="s5-list-row" data-uid="${esc(e.uid)}" onclick="toggleRow(this)">
+          <i class="fa-solid fa-chevron-right chevron-icon"></i>
+          <div class="card person-card ${bgClass(e)}"><div class="person-name">${esc(e.p.nama)}</div><div class="person-meta">${metaPerson(e)}</div></div>
+          <div class="card component-card">${isB(e) ? `${e.kuitansi.length} Kwitansi / Invoice` : `${e.komponen.length} Komponen biaya`}</div>
+          <div class="card bank-card"><div class="bank-icon-placeholder"><i class="fa-solid fa-building-columns"></i></div><div class="bank-info">${bankCard(e)}</div></div>
+          <div class="card amount-card"><div class="amount-label">Total Biaya</div><div class="amount-value"><span>Rp.</span><span class="value-number">${nf.format(Math.round(tot(e)))},00</span></div></div>
+        </div>
+        <div class="accordion-content"><div class="detail-container"><div class="branch-icon"><i class="branch-connector"></i></div><div class="detail-table">${detailRowsHtml(e)}</div></div></div>
+      </div>`;
+
   function renderRingkasan() {
     const root = $("#s5-content-ringkasan");
     const cont = $(".s5-list-container", root);
@@ -142,22 +155,7 @@
       return;
     }
     const pg = pager("ringkasan", list.length, renderRingkasan);
-    cont.innerHTML = list
-      .slice(pg.from, pg.to)
-      .map(
-        (e) => `
-      <div class="s5-accordion-item">
-        <div class="s5-list-row" data-uid="${esc(e.uid)}" onclick="toggleRow(this)">
-          <i class="fa-solid fa-chevron-right chevron-icon"></i>
-          <div class="card person-card ${bgClass(e)}"><div class="person-name">${esc(e.p.nama)}</div><div class="person-meta">${metaPerson(e)}</div></div>
-          <div class="card component-card">${isB(e) ? `${e.kuitansi.length} Kwitansi / Invoice` : `${e.komponen.length} Komponen biaya`}</div>
-          <div class="card bank-card"><div class="bank-icon-placeholder"><i class="fa-solid fa-building-columns"></i></div><div class="bank-info">${bankCard(e)}</div></div>
-          <div class="card amount-card"><div class="amount-label">Total Biaya</div><div class="amount-value"><span>Rp.</span><span class="value-number">${nf.format(Math.round(tot(e)))},00</span></div></div>
-        </div>
-        <div class="accordion-content"><div class="detail-container"><div class="branch-icon"><i class="branch-connector"></i></div><div class="detail-table">${detailRowsHtml(e)}</div></div></div>
-      </div>`,
-      )
-      .join("");
+    cont.innerHTML = list.slice(pg.from, pg.to).map(barisRingkasan).join("");
     pasangCari("ringkasan", cont, renderRingkasan);
     root.appendChild(pg.el);
   }
@@ -519,10 +517,83 @@
     R.refreshDocs();
   }
 
+
+  // ---------- Informasi Grup Pengajuan (verifikasi & approval) ----------
+  // Penerima dikelompokkan per role (badge), urut seperti filter "Tambah Penerima".
+  // Tiap grup: nama grup | total pengajuan | total PPh, lalu baris penerima seperti Informasi Umum.
+  const GRUP_URUT = ["Direksi", "Penasihat", "Dewan Pengawas dan Komite", "Pegawai", "Perorangan", "Badan Usaha"];
+  const grupOf = (e) => (e.p && e.p.badge) || (isB(e) ? "Badan Usaha" : "Pegawai");
+  function wadahGrup() {
+    if (!document.querySelector("[onclick*=\"switchs5Tab('grup'\"]")) return null; // hanya halaman yang punya menunya
+    let root = $("#s5-content-grup");
+    if (root) return root;
+    const ref = $("#s5-content-ringkasan");
+    if (!ref) return null;
+    root = document.createElement("div");
+    root.className = "s5-right-content";
+    root.id = "s5-content-grup";
+    root.style.display = "none";
+    root.innerHTML = '<h2 class="s5-section-title">Informasi Grup Pengajuan</h2><div class="s5-list-container"></div>';
+    ref.after(root);
+    return root;
+  }
+  R.grupBuka = new Set(); // grup yang sedang dibuka (default semua tertutup)
+  R.toggleGrup = function (head) {
+    const sec = head.closest(".grup-sec");
+    const g = sec.dataset.grup;
+    const buka = !sec.classList.contains("buka");
+    sec.classList.toggle("buka", buka);
+    head.title = (buka ? "Tutup" : "Buka") + " grup";
+    if (buka) R.grupBuka.add(g);
+    else R.grupBuka.delete(g);
+  };
+  function renderGrup() {
+    const root = wadahGrup();
+    if (!root) return;
+    const cont = $(".s5-list-container", root);
+    const semua = ent();
+    const qr = R.q.grup.trim().toLowerCase();
+    const list = semua.filter((e) => cocok(qr, e));
+    if (!semua.length) {
+      cont.innerHTML = '<div class="s5-empty">Belum ada rincian biaya.</div>';
+      return;
+    }
+    const map = new Map();
+    list.forEach((e) => {
+      const g = grupOf(e);
+      if (!map.has(g)) map.set(g, []);
+      map.get(g).push(e);
+    });
+    if (qr) map.forEach((v, g) => R.grupBuka.add(g)); // saat mencari, grup yang cocok otomatis terbuka
+    const urut = [...map.keys()].sort((a, b) => (GRUP_URUT.indexOf(a) + 1 || 99) - (GRUP_URUT.indexOf(b) + 1 || 99));
+    cont.innerHTML = urut.length
+      ? urut
+          .map((g) => {
+            const rows = map.get(g);
+            const tAju = rows.reduce((t, e) => t + tot(e), 0);
+            const tPph = rows.reduce((t, e) => t + pphOf(e), 0);
+            const buka = R.grupBuka.has(g);
+            return `
+      <div class="grup-sec${buka ? " buka" : ""}" data-grup="${esc(g)}">
+        <div class="grup-head" onclick="Review.toggleGrup(this)" title="${buka ? "Tutup" : "Buka"} grup">
+          <i class="fa-solid fa-chevron-right grup-panah"></i>
+          <div class="grup-nama">${esc(g)}<span>${rows.length} penerima</span></div>
+          <div class="grup-tot"><span>Total Pengajuan</span><strong>${rp(tAju)}</strong></div>
+          <div class="grup-tot"><span>Total PPh</span><strong class="text-red">${rp(tPph)}</strong></div>
+        </div>
+        <div class="grup-isi">${rows.map(barisRingkasan).join("")}</div>
+      </div>`;
+          })
+          .join("")
+      : '<div class="s5-empty">Tidak ada hasil untuk pencarian ini.</div>';
+    pasangCari("grup", cont, renderGrup);
+  }
+
   R.render = function () {
     try {
       renderKiri();
       renderRingkasan();
+      renderGrup();
       renderPajak();
       renderPembayaran();
       renderJurnal();

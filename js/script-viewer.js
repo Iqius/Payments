@@ -442,7 +442,7 @@
     const st = UploadApp.wajibStatus();
     const catatan = [];
     if (belum) catatan.push(`${belum} baris rincian belum diperiksa`);
-    if (st.kurang.length) catatan.push("dokumen wajib belum lengkap (" + st.kurang.map(UploadApp.jenisNama).join(", ") + ")");
+    if (APP_CONFIG.validasiDokumenWajib && st.kurang.length) catatan.push("dokumen wajib belum lengkap (" + st.kurang.map(UploadApp.jenisNama).join(", ") + ")");
     if (catatan.length) return UI.confirm(catatan.join("; ") + ". Tetap verifikasi?", { ya: "Tetap verifikasi", judul: "Periksa kembali" });
     return true;
   };

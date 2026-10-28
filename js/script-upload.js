@@ -19,6 +19,7 @@
     activeId: null,
     modalFileId: null,
     urls: {},
+    jenisTutup: new Set(), // folder (jenis dokumen) yang sedang ditutup; default semua terbuka
   };
   window.UploadApp = U;
 
@@ -219,7 +220,7 @@
   // Tengah: semua jenis dokumen, masing-masing dengan tombol unggah. File yang sudah diunggah
   // tampil bersarang di bawah jenisnya (ikon branch). Satu file = satu jenis (tags[0]).
   const BRANCH = '<div class="branch-icon"><i class="branch-connector"></i></div>';
-    function catatanFile(id) {
+  function catatanFile(id) {
     try {
       const d = window.Store && window.FormApp ? Store.get(FormApp.id()) : null;
       return (d && d.fileNotes && d.fileNotes[id]) || "";
@@ -239,15 +240,16 @@
   }
   function barisJenis(j, files, wajib, tanpaUnggah) {
     const ada = files.length;
+    const tutup = U.jenisTutup.has(j.key);
     return `
-      <div class="jenis-grp${ada ? " ada" : ""}" data-jenis="${j.key}">
+      <div class="jenis-grp${ada ? " ada" : ""}${tutup ? " tutup" : ""}" data-jenis="${j.key}">
         <div class="f-row j-row" data-jenis="${j.key}">
-          <div class="fr-name"><i class="fas ${ada ? "fa-folder-open" : "fa-folder"} j-ico"></i><span class="fr-text">${esc(j.nama)}</span>${
+          <div class="fr-name"><button type="button" class="j-panah" data-act="expand" title="${tutup ? "Buka" : "Tutup"}"${ada ? "" : " disabled"}><i class="fa-solid fa-chevron-right chevron-icon"></i></button><i class="fas ${ada && !tutup ? "fa-folder-open" : "fa-folder"} j-ico"></i><span class="fr-text">${esc(j.nama)}</span>${
             wajib ? `<em class="j-wajib${ada ? " ok" : ""}">Wajib</em>` : ""
-          }${ada ? `<span class="j-count">${ada} file</span>` : ""}</div>
+          }${ada ? `<span class="j-count">${ada} file</span>` : ""}${tanpaUnggah ? "" : '<span class="j-drop-label"><i class="fas fa-cloud-upload-alt"></i> Drop file di sini</span>'}</div>
           <span class="fr-act">${tanpaUnggah ? "" : `<button type="button" class="j-up-btn" data-act="upload" data-jenis="${j.key}" title="Unggah ${esc(j.nama)}"><i class="fas fa-upload"></i></button>`}</span>
         </div>
-        ${files.map(barisFile).join("")}
+        <div class="j-isi">${files.map(barisFile).join("")}</div>
       </div>`;
   }
 
@@ -261,13 +263,14 @@
       const tanpa = U.files.filter((f) => !f.tags.length || !keyAda.has(f.tags[0]));
       grid.innerHTML =
         '<div class="fr-head"><span>Jenis Dokumen</span><span>Ukuran</span><span>Feedback</span><span>Aksi</span></div>' +
-        Store.JENIS_DOKUMEN.map((j) => barisJenis(j, U.files.filter((f) => f.tags[0] === j.key), wajib.includes(j.key))).join("") +
+           Store.JENIS_DOKUMEN.map((j) => barisJenis(j, U.files.filter((f) => f.tags[0] === j.key), wajib.includes(j.key))).join("") +
         (tanpa.length ? barisJenis({ key: "", nama: "Belum ada jenis" }, tanpa, false, true) : "");
     }
     const info = $(".list-pagination .pagination-info strong", root);
     if (info) info.textContent = `${U.files.length} Dokumen`;
     const pc = $(".list-pagination .pagination-controls", root);
     if (pc) pc.style.display = "none"; // semua jenis tampil dalam satu daftar (bisa di-scroll)
+    tandaiAktif();
 
     const st = U.wajibStatus();
     const box = $(".mandatory-box", root);
@@ -321,6 +324,7 @@
       if (!EXT_OK.includes(ext)) return UI.toast(`Format file "${file.name}" tidak didukung.`, "err");
       if (file.size > MAX_BYTES) return UI.toast(`Ukuran file "${file.name}" melebihi batas 10MB.`, "err");
       const f = { id: "f" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), name: file.name, size: file.size, type: file.type || ext, tags: jenis ? [jenis] : [], blob: file, stored: false };
+      if (jenis) U.jenisTutup.delete(jenis); // folder tujuan otomatis terbuka
       U.files.push(f);
       U.activeId = f.id;
       n++;
@@ -346,66 +350,39 @@
     U.render();
   }
 
-  // ---------- modal unggah per jenis dokumen ----------
-  // Klik ikon unggah pada baris jenis -> modal: tarik & lepas atau klik untuk memilih file.
-  // File langsung masuk ke jenis itu saat dilepas / dipilih, lalu modal tertutup.
-  let ujJenis = null;
-  function modalUnggah() {
-    let m = document.getElementById("modal-unggah-jenis");
-    if (m) return m;
-    m = document.createElement("div");
-    m.id = "modal-unggah-jenis";
-    m.className = "uj-overlay";
-    m.hidden = true;
-    m.innerHTML = `
-      <div class="uj-box" role="dialog" aria-modal="true" aria-labelledby="uj-title">
-        <div class="uj-head">
-          <div><h3 id="uj-title">Unggah Dokumen</h3><p class="uj-sub">Pilih atau tarik file ke area di bawah.</p></div>
-          <button type="button" class="uj-close" aria-label="Tutup"><i class="fas fa-times"></i></button>
-        </div>
-        <label class="uj-drop" id="uj-drop">
-          <input type="file" id="uj-input" multiple accept=".pdf,.jpg,.jpeg,.png" hidden />
-          <i class="fas fa-cloud-upload-alt uj-ico"></i>
-          <strong>Tarik file & lepaskan di sini</strong>
-          <span>atau klik untuk memilih file</span>
-          <em>Format: PDF, JPG, JPEG, PNG | Maks. 10MB per file</em>
-        </label>
-      </div>`;
-    document.body.appendChild(m);
-    const drop = $("#uj-drop", m);
-    const inp = $("#uj-input", m);
-    const tutup = () => {
-      m.hidden = true;
-      ujJenis = null;
-    };
-    const masuk = (files) => {
-      const key = ujJenis;
-      if (!files || !files.length) return;
-      if (handleFiles(files, key)) tutup();
+  // ---------- unggah per jenis dokumen ----------
+  // Ikon unggah -> langsung membuka jendela pilih file untuk jenis itu.
+  // Klik baris jenis -> jenis itu AKTIF; file yang ditarik ke mana saja di layar masuk ke jenis aktif.
+  U.jenisAktif = null;
+  let pilihUntuk = null;
+  function inputPilih() {
+    let inp = document.getElementById("uj-input");
+    if (inp) return inp;
+    inp = document.createElement("input");
+    inp.type = "file";
+    inp.id = "uj-input";
+    inp.multiple = true;
+    inp.accept = ".pdf,.jpg,.jpeg,.png";
+    inp.hidden = true;
+    document.body.appendChild(inp);
+    inp.addEventListener("change", () => {
+      if (inp.files.length) handleFiles(inp.files, pilihUntuk);
       inp.value = "";
-    };
-    $(".uj-close", m).addEventListener("click", tutup);
-    m.addEventListener("click", (ev) => ev.target === m && tutup());
-    document.addEventListener("keydown", (ev) => ev.key === "Escape" && !m.hidden && tutup());
-    inp.addEventListener("change", () => masuk(inp.files));
-    ["dragenter", "dragover"].forEach((t) =>
-      drop.addEventListener(t, (ev) => {
-        ev.preventDefault();
-        drop.classList.add("drag-active");
-      }),
-    );
-    ["dragleave", "drop"].forEach((t) => drop.addEventListener(t, () => drop.classList.remove("drag-active")));
-    drop.addEventListener("drop", (ev) => {
-      ev.preventDefault();
-      masuk(ev.dataTransfer && ev.dataTransfer.files);
     });
-    return m;
+    return inp;
   }
+   function tandaiAktif() {
+     if (!U.jenisAktif && Store.JENIS_DOKUMEN.length) U.jenisAktif = Store.JENIS_DOKUMEN[0].key; // default: folder paling atas aktif
+     $$("#step-2-wrapper .jenis-grp[data-jenis]").forEach((g) => g.classList.toggle("j-aktif", !!U.jenisAktif && g.dataset.jenis === U.jenisAktif));
+   }
+  U.aktifkanJenis = function (key) {
+    U.jenisAktif = key || null;
+    tandaiAktif();
+  };
   U.bukaUnggah = function (key) {
-    const m = modalUnggah();
-    ujJenis = key;
-    $("#uj-title", m).textContent = "Unggah " + jenisNama(key);
-    m.hidden = false;
+    U.aktifkanJenis(key);
+    pilihUntuk = key;
+    inputPilih().click();
   };
   // kompatibilitas pemanggil lama
   U.bukaDropdown = () => {};
@@ -416,6 +393,25 @@
   document.addEventListener("click", (ev) => {
     const up = ev.target.closest('#step-2-wrapper [data-act="upload"]');
     if (up) return U.bukaUnggah(up.dataset.jenis);
+        const ex = ev.target.closest('#step-2-wrapper [data-act="expand"]');
+    if (ex) {
+      const g = ex.closest(".jenis-grp");
+      const key = g.dataset.jenis;
+      const tutup = !g.classList.contains("tutup");
+      g.classList.toggle("tutup", tutup);
+      ex.title = tutup ? "Buka" : "Tutup";
+      const ico = g.querySelector(".j-ico");
+      if (ico) ico.className = `fas ${tutup ? "fa-folder" : "fa-folder-open"} j-ico`;
+      if (tutup) U.jenisTutup.add(key);
+      else U.jenisTutup.delete(key);
+      return;
+    }
+    const jr = ev.target.closest("#step-2-wrapper .j-row");
+    if (jr) {
+      const g = jr.closest(".jenis-grp");
+      if (g && g.dataset.jenis) U.aktifkanJenis(g.dataset.jenis);
+      return;
+    }
     const card = ev.target.closest("#step-2-wrapper .step3-file-card[data-fid]");
     if (!card) return;
     const id = card.dataset.fid;
@@ -425,6 +421,58 @@
     $$("#step-2-wrapper .step3-file-card[data-fid]").forEach((c) => c.classList.toggle("is-active", c.dataset.fid === id));
     tampilPreview(U.files.find((f) => f.id === id));
   });
+
+  // ---------- tarik & lepas ke seluruh layar (saat step 2 tampil) ----------
+  const step2Tampil = () => {
+    const w = document.getElementById("step-2-wrapper");
+    return !!w && w.offsetParent !== null;
+  };
+  const bawaFile = (ev) => !!ev.dataTransfer && Array.from(ev.dataTransfer.types || []).includes("Files");
+  function overlay() {
+    let o = document.getElementById("uj-layar");
+    if (o) return o;
+    o = document.createElement("div");
+    o.id = "uj-layar";
+    o.hidden = true;
+    o.innerHTML = '<div class="uj-layar-box"><i class="fas fa-cloud-upload-alt"></i><strong></strong><span></span></div>';
+    document.body.appendChild(o);
+    return o;
+  }
+  function tampilOverlay(on) {
+    const o = overlay();
+    o.hidden = !on;
+    if (!on) return;
+    const ada = !!U.jenisAktif;
+    o.classList.toggle("tanpa-jenis", !ada);
+    $("strong", o).textContent = ada ? "Lepaskan untuk mengunggah ke " + jenisNama(U.jenisAktif) : "Pilih jenis dokumen terlebih dahulu";
+    $("span", o).textContent = ada ? "Format: PDF, JPG, JPEG, PNG | Maks. 10MB per file" : "Klik salah satu jenis dokumen di daftar, lalu tarik file lagi.";
+  }
+  let dragN = 0;
+  window.addEventListener("dragenter", (ev) => {
+    if (!step2Tampil() || !bawaFile(ev)) return;
+    ev.preventDefault();
+    dragN++;
+    tampilOverlay(true);
+  });
+  window.addEventListener("dragover", (ev) => {
+    if (!step2Tampil() || !bawaFile(ev)) return;
+    ev.preventDefault();
+    if (ev.dataTransfer) ev.dataTransfer.dropEffect = U.jenisAktif ? "copy" : "none";
+  });
+  window.addEventListener("dragleave", (ev) => {
+    if (!step2Tampil() || !bawaFile(ev)) return;
+    dragN = Math.max(0, dragN - 1);
+    if (!dragN) tampilOverlay(false);
+  });
+  window.addEventListener("drop", (ev) => {
+    if (!step2Tampil() || !bawaFile(ev)) return;
+    ev.preventDefault(); // jangan sampai browser membuka file
+    dragN = 0;
+    tampilOverlay(false);
+    if (!U.jenisAktif) return UI.toast("Pilih jenis dokumen terlebih dahulu, lalu tarik file lagi.", "err");
+    handleFiles(ev.dataTransfer.files, U.jenisAktif);
+  });
+
   // ---------- serialisasi ----------
   U.dump = () => U.files.map((f) => ({ id: f.id, name: f.name, size: f.size, type: f.type, tags: f.tags.slice(), ...(f.url ? { url: f.url } : {}) }));
   U.load = function (meta) {
