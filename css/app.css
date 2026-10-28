@@ -334,7 +334,19 @@
 #step-2-wrapper .fr-warn { color: #e11d48; font-size: 12.1px; font-weight: 600; white-space: nowrap; cursor: pointer; }
 #step-2-wrapper .fr-size { font-size: 12.7px; color: #64748b; text-align: right; font-style: italic; }
 #step-2-wrapper .fr-fb { display: flex; align-items: center; }
-#step-2-wrapper .fr-fb .badge-perbaikan { font-size: 12.1px; padding: 2.42px 9.68px; white-space: nowrap; }
+#step-2-wrapper .fr-fb .badge-perbaikan {
+  background: #fffbeb;
+  border: 0.8px solid #fde68a;
+  color: #d97706;
+  font-size: 0.697rem;
+  font-weight: 600;
+  border-radius: 5.81px;
+  padding: 4.84px 7.74px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5.81px;
+}
 #step-2-wrapper .fr-del { justify-self: end; }
 /* panel kanan: nama file, pilihan jenis + hapus, lalu pratinjau */
 #step-2-wrapper .step3-right-panel .jenis-box { flex: 0 0 auto; margin: 0 0 9.68px; }
