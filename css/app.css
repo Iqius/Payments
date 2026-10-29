@@ -342,10 +342,11 @@
   font-weight: 600;
   border-radius: 5.81px;
   padding: 4.84px 7.74px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 5.81px;
+  white-space: nowrap;
 }
 #step-2-wrapper .fr-del { justify-self: end; }
 /* panel kanan: nama file, pilihan jenis + hapus, lalu pratinjau */
@@ -459,9 +460,7 @@ input[type="date"].dmy-in::-webkit-datetime-edit { opacity: 0; }
 #s5-content-grup .grup-tot span { font-size: 10.89px; color: #64748b; }
 #s5-content-grup .grup-tot strong { font-size: 15.73px; color: #1e293b; }
 #s5-content-grup .grup-tot strong.text-red { color: #e11d48; }
-/* petunjuk folder: "Pilih folder…" di judul daftar (sebelum ada yang aktif), "Drop file di sini" di folder aktif */
-#step-2-wrapper .j-petunjuk { font-style: normal; margin-left: 9.68px; padding: 1.21px 8.47px; border-radius: 9.68px; background: #fff7ed; color: #c2410c; font-size: 10.89px; font-weight: 600; }
-#step-2-wrapper .file-grid-2col.ada-aktif .j-petunjuk { display: none; }
+/* label "Drop file di sini" di folder aktif */
 #step-2-wrapper .j-drop-label { display: none; margin-left: auto; flex: 0 0 auto; white-space: nowrap; padding: 2.42px 9.68px; border-radius: 9.68px; background: #1f6fa8; color: #fff; font-size: 10.89px; font-weight: 600; }
 #step-2-wrapper .jenis-grp.j-aktif .j-drop-label { display: inline-flex; align-items: center; gap: 4.84px; }
 /* grup bisa dibuka / ditutup lewat panah di kiri (default tertutup) */
@@ -470,7 +469,6 @@ input[type="date"].dmy-in::-webkit-datetime-edit { opacity: 0; }
 #s5-content-grup .grup-sec.buka .grup-panah { transform: rotate(90deg); }
 #s5-content-grup .grup-isi { display: none; flex-direction: column; gap: 7.26px; }
 #s5-content-grup .grup-sec.buka .grup-isi { display: flex; }
-
 /* folder bisa dibuka / ditutup (panah di kiri) */
 #step-2-wrapper .j-panah { flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; width: 21.77px; height: 21.77px; margin-left: -7.26px; padding: 0; border: 0; background: none; cursor: pointer; }
 #step-2-wrapper .j-panah:disabled { color: #cbd5e1; cursor: default; }
@@ -478,3 +476,35 @@ input[type="date"].dmy-in::-webkit-datetime-edit { opacity: 0; }
 #step-2-wrapper .j-panah:disabled .chevron-icon { color: #cbd5e1; cursor: default; }
 #step-2-wrapper .j-isi { display: flex; flex-direction: column; gap: 4.84px; }
 #step-2-wrapper .jenis-grp.tutup .j-isi { display: none; }
+
+/* ===== Popup Dokumen Pendukung (Review / Verifikasi / Approval): dikelompokkan per jenis, 1 kolom tipis ===== */
+#filePreviewModal .file-grid-2col.pf-grouped { display: flex !important; flex-direction: column; gap: 7.26px; grid-auto-rows: auto; overflow-y: auto; align-content: normal; flex: 1 1 auto; min-height: 0; }
+#filePreviewModal .pf-grp { display: flex; flex-direction: column; gap: 4.84px; flex: 0 0 auto; }
+#filePreviewModal .pf-head { display: flex; align-items: center; gap: 9.68px; height: 41.13px; box-sizing: border-box; padding: 0 14.52px; background: #fff; border: 1px solid #d6e6f5; border-radius: 9.68px; cursor: pointer; user-select: none; }
+#filePreviewModal .pf-head .chevron-icon { transform: rotate(90deg); }
+#filePreviewModal .pf-grp.tutup .pf-head .chevron-icon { transform: none; }
+#filePreviewModal .pf-ico { color: #1f6fa8; font-size: 15.73px; }
+#filePreviewModal .pf-nama { font-size: 14.52px; font-weight: 700; color: #1e293b; }
+#filePreviewModal .pf-count { font-size: 12.1px; color: #64748b; }
+#filePreviewModal .pf-grp.tutup > .pf-row { display: none; }
+/* baris file tipis: nama | ukuran | feedback */
+#filePreviewModal .pf-row.pf-row { display: grid; grid-template-columns: minmax(0, 1fr) 84.68px 145.16px; align-items: center; column-gap: 9.68px; height: 41.13px; min-height: 0; margin: 0 0 0 26.61px; padding: 0 14.52px; box-sizing: border-box; background: #fff; border: 2px solid transparent; border-radius: 9.68px; box-shadow: 0 1px 3px rgba(15, 23, 42, .06); cursor: pointer; overflow: visible; }
+#filePreviewModal .pf-row.is-active, #filePreviewModal .pf-row.active-card { border-color: #1f6fa8; box-shadow: none; }
+#filePreviewModal .pf-name { display: flex; align-items: center; gap: 9.68px; min-width: 0; font-size: 14.52px; font-weight: 500; color: #1e293b; }
+#filePreviewModal .pf-name > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#filePreviewModal .pf-name .branch-icon { align-self: flex-start; width: 24px; min-width: 24px; margin-top: -10px; }
+#filePreviewModal .pf-size { font-size: 12.7px; color: #64748b; font-style: italic; text-align: right; }
+#filePreviewModal .pf-fb { display: flex; justify-content: flex-end; }
+/* pratinjau gabungan: judul per jenis */
+.preview-image-container.is-merged .mp-grup-judul { flex: 0 0 auto; display: flex; align-items: center; gap: 7.26px; padding: 4.84px 2.42px 0; font-size: 14.52px; font-weight: 700; color: #0f3a66; }
+.preview-image-container.is-merged .mp-grup-judul i { color: #1f6fa8; }
+.preview-image-container.is-merged .mp-grup-judul span { font-size: 12.1px; font-weight: 500; color: #64748b; }
+
+/* ===== Popup Dokumen Pendukung: ukuran SAMA di Review, Verifikasi, Approval (1 file maupun gabungan) ===== */
+#filePreviewModal .custom-modal-container { width: min(1210px, 94vw) !important; max-width: none !important; height: min(820px, 92vh) !important; max-height: none !important; box-sizing: border-box; display: flex; flex-direction: column; overflow: hidden; }
+#filePreviewModal .custom-modal-body { flex: 1 1 auto; min-height: 0; }
+#filePreviewModal .step3-middle-panel, #filePreviewModal .step3-right-panel { min-height: 0; max-height: none; }
+#filePreviewModal .step3-right-panel { display: flex; flex-direction: column; }
+#filePreviewModal .preview-card { flex: 1 1 auto; min-height: 0; height: auto !important; display: flex; flex-direction: column; }
+#filePreviewModal .preview-image-container { flex: 1 1 auto; min-height: 0; height: auto !important; max-height: none !important; }
+#filePreviewModal .feedback-card { flex: 0 0 auto; }

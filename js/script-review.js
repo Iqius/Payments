@@ -625,12 +625,11 @@
     const m = $("#filePreviewModal");
     const files = UploadApp.files;
     const grid = $(".file-grid-2col", m);
+    // dikelompokkan per jenis dokumen (folder), sama seperti step upload
+    const kartu = (f) => UploadApp.barisPopup(f, "step3-file-card-submit" + (!PV.gabung && f.id === PV.aktifId ? " is-active" : ""));
+    grid.classList.add("pf-grouped");
     grid.innerHTML = files.length
-      ? files
-          .map(
-            (f) => `<div class="step3-file-card-submit${!PV.gabung && f.id === PV.aktifId ? " is-active" : ""}" data-fid="${f.id}" style="cursor:pointer"><div class="s4-fc-header-submit"><div class="fc-info-submit">${UploadApp.iconOf(f)}<span class="fc-title-submit" title="${esc(f.name)}">${esc(f.name)}</span></div><span class="fc-size-submit">${UploadApp.fmtSize(f.size)}</span></div><div class="s4-fc-tags-submit">${f.tags.map((t) => `<span class="doc-tag">${esc(UploadApp.jenisNama(t))}</span>`).join("")}</div></div>`,
-          )
-          .join("")
+      ? UploadApp.htmlFolderPopup(kartu)
       : '<div class="fc-empty">Belum ada dokumen pendukung.</div>';
     const st = UploadApp.wajibStatus();
     const info = $(".list-pagination .pagination-info strong", m);

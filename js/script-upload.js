@@ -177,6 +177,52 @@
     });
   }
 
+
+  // ---------- kelompok per jenis dokumen (dipakai popup Review / Verifikasi / Approval & pratinjau gabungan) ----------
+  // urut sesuai JENIS_DOKUMEN; file tanpa jenis di grup "Belum ada jenis" paling bawah; hanya grup yang ada filenya
+  U.grupFiles = function (files) {
+    const list = files || U.files;
+    const out = Store.JENIS_DOKUMEN.map((j) => ({ key: j.key, nama: j.nama, files: list.filter((f) => f.tags[0] === j.key) })).filter((g) => g.files.length);
+    const keyAda = new Set(Store.JENIS_DOKUMEN.map((j) => j.key));
+    const tanpa = list.filter((f) => !f.tags.length || !keyAda.has(f.tags[0]));
+    if (tanpa.length) out.push({ key: "", nama: "Belum ada jenis", files: tanpa });
+    return out;
+  };
+  // satu baris tipis file di popup (seperti step upload): branch + ikon + nama | ukuran | feedback
+  // cls = class tambahan yang dipakai halaman (mis. status aktif), note = catatan perbaikan
+  U.barisPopup = function (f, cls, note) {
+    return `<div class="pf-row ${cls || ""}" data-fid="${esc(f.id)}" title="${esc(f.name)}">
+      <div class="pf-name">${BRANCH}${iconOf(f)}<span>${esc(f.name)}</span></div>
+      <span class="pf-size">${fmtSize(f.size)}</span>
+      <span class="pf-fb">${note ? '<span class="badge-perbaikan"><i class="fas fa-triangle-exclamation"></i> Perlu perbaikan</span>' : ""}</span>
+    </div>`;
+  };
+  // daftar kiri popup: folder (panah buka/tutup, default terbuka) + kartu file dari kartuFn
+  U.popupTutup = new Set();
+  U.htmlFolderPopup = function (kartuFn) {
+    return U.grupFiles()
+      .map((g) => {
+        const tutup = U.popupTutup.has(g.key);
+        return `<div class="pf-grp${tutup ? " tutup" : ""}" data-pf="${esc(g.key)}">
+          <div class="pf-head" data-act="pf-toggle" title="${tutup ? "Buka" : "Tutup"}"><i class="fa-solid fa-chevron-right chevron-icon"></i><i class="fas ${tutup ? "fa-folder" : "fa-folder-open"} pf-ico"></i><span class="pf-nama">${esc(g.nama)}</span><span class="pf-count">${g.files.length} file</span></div>
+          ${g.files.map(kartuFn).join("")}
+        </div>`;
+      })
+      .join("");
+  };
+  document.addEventListener("click", (ev) => {
+    const h = ev.target.closest('#filePreviewModal [data-act="pf-toggle"]');
+    if (!h) return;
+    const g = h.closest(".pf-grp");
+    const tutup = !g.classList.contains("tutup");
+    g.classList.toggle("tutup", tutup);
+    h.title = tutup ? "Buka" : "Tutup";
+    const ico = $(".pf-ico", h);
+    if (ico) ico.className = `fas ${tutup ? "fa-folder" : "fa-folder-open"} pf-ico`;
+    if (tutup) U.popupTutup.add(g.dataset.pf);
+    else U.popupTutup.delete(g.dataset.pf);
+  });
+
   // pratinjau gabungan: semua file jadi satu tampilan, tiap file diberi label di atasnya
   let tokenGab = null;
   async function tampilGabungan(scope) {
@@ -196,13 +242,23 @@
     }
     box.innerHTML = "";
     box.scrollTop = 0;
-    const slots = U.files.map((f, i) => {
-      const sec = document.createElement("section");
-      sec.className = "mp-sec";
-      sec.dataset.fid = f.id;
-      sec.innerHTML = `<div class="mp-label">${iconOf(f)} <strong>${i + 1}. ${esc(f.name)}</strong><span class="mp-tags">${f.tags.map((t) => `<span class="doc-tag">${esc(jenisNama(t))}</span>`).join("") || '<span class="doc-tag">Belum ada jenis</span>'}</span></div><div class="mp-body"><div class="preview-empty">Memuat…</div></div>`;
-      box.appendChild(sec);
-      return { f, body: sec.querySelector(".mp-body") };
+    // dikelompokkan per jenis dokumen: judul jenis, lalu file-filenya
+    const slots = [];
+    let no = 0;
+    U.grupFiles().forEach((g) => {
+      const jd = document.createElement("div");
+      jd.className = "mp-grup-judul";
+      jd.innerHTML = `<i class="fas fa-folder-open"></i> ${esc(g.nama)} <span>${g.files.length} file</span>`;
+      box.appendChild(jd);
+      g.files.forEach((f) => {
+        no++;
+        const sec = document.createElement("section");
+        sec.className = "mp-sec";
+        sec.dataset.fid = f.id;
+        sec.innerHTML = `<div class="mp-label">${iconOf(f)} <strong>${no}. ${esc(f.name)}</strong></div><div class="mp-body"><div class="preview-empty">Memuat…</div></div>`;
+        box.appendChild(sec);
+        slots.push({ f, body: sec.querySelector(".mp-body") });
+      });
     });
     for (const s of slots) {
       if (tk.batal) return;
@@ -263,7 +319,7 @@
       const tanpa = U.files.filter((f) => !f.tags.length || !keyAda.has(f.tags[0]));
       grid.innerHTML =
         '<div class="fr-head"><span>Jenis Dokumen</span><span>Ukuran</span><span>Feedback</span><span>Aksi</span></div>' +
-           Store.JENIS_DOKUMEN.map((j) => barisJenis(j, U.files.filter((f) => f.tags[0] === j.key), wajib.includes(j.key))).join("") +
+        Store.JENIS_DOKUMEN.map((j) => barisJenis(j, U.files.filter((f) => f.tags[0] === j.key), wajib.includes(j.key))).join("") +
         (tanpa.length ? barisJenis({ key: "", nama: "Belum ada jenis" }, tanpa, false, true) : "");
     }
     const info = $(".list-pagination .pagination-info strong", root);
@@ -371,10 +427,10 @@
     });
     return inp;
   }
-   function tandaiAktif() {
-     if (!U.jenisAktif && Store.JENIS_DOKUMEN.length) U.jenisAktif = Store.JENIS_DOKUMEN[0].key; // default: folder paling atas aktif
-     $$("#step-2-wrapper .jenis-grp[data-jenis]").forEach((g) => g.classList.toggle("j-aktif", !!U.jenisAktif && g.dataset.jenis === U.jenisAktif));
-   }
+  function tandaiAktif() {
+    if (!U.jenisAktif && Store.JENIS_DOKUMEN.length) U.jenisAktif = Store.JENIS_DOKUMEN[0].key; // default: folder paling atas aktif
+    $$("#step-2-wrapper .jenis-grp[data-jenis]").forEach((g) => g.classList.toggle("j-aktif", !!U.jenisAktif && g.dataset.jenis === U.jenisAktif));
+  }
   U.aktifkanJenis = function (key) {
     U.jenisAktif = key || null;
     tandaiAktif();
@@ -393,7 +449,7 @@
   document.addEventListener("click", (ev) => {
     const up = ev.target.closest('#step-2-wrapper [data-act="upload"]');
     if (up) return U.bukaUnggah(up.dataset.jenis);
-        const ex = ev.target.closest('#step-2-wrapper [data-act="expand"]');
+    const ex = ev.target.closest('#step-2-wrapper [data-act="expand"]');
     if (ex) {
       const g = ex.closest(".jenis-grp");
       const key = g.dataset.jenis;

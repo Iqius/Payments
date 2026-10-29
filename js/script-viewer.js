@@ -233,21 +233,19 @@
   const modalDok = () => document.getElementById("filePreviewModal");
 
   function kartuDok(f) {
-    const ico = UploadApp.isPdf(f) ? '<i class="fas fa-file-pdf icon-red"></i>' : '<i class="fas fa-file-image icon-teal"></i>';
-    return `<div class="file-item-card${f.id === F.aktifId && !F.gabung ? " active-card" : ""}" data-fid="${esc(f.id)}">
-      <div class="fic-top">${ico}<div class="fic-details"><span class="fic-name">${esc(f.name)}</span><span class="fic-category">${f.tags.length ? esc(UploadApp.jenisNama(f.tags[0])) : "Belum ada jenis"}</span></div><span class="fic-size">${UploadApp.fmtSize(f.size)}</span></div>
-      ${catatanOf(f.id) ? '<div class="badge-perbaikan"><i class="fas fa-triangle-exclamation"></i> Perlu perbaikan</div>' : ""}
-    </div>`;
+    return UploadApp.barisPopup(f, "file-item-card" + (f.id === F.aktifId && !F.gabung ? " active-card" : ""), catatanOf(f.id));
   }
   function renderDok() {
     const m = modalDok();
     const files = UploadApp.files;
-    const pages = Math.max(1, Math.ceil(files.length / PAGE_DOK));
-    F.page = Math.min(Math.max(F.page, 1), pages);
+    // dikelompokkan per jenis dokumen (folder), semua file dalam satu daftar (bisa di-scroll)
+    const pages = 1;
+    F.page = 1;
     const grid = $(".file-grid-2col", m);
-    grid.innerHTML = files.length ? files.slice((F.page - 1) * PAGE_DOK, F.page * PAGE_DOK).map(kartuDok).join("") : '<div class="fc-empty">Belum ada dokumen pendukung.</div>';
-    const from = files.length ? (F.page - 1) * PAGE_DOK + 1 : 0;
-    const to = Math.min(F.page * PAGE_DOK, files.length);
+    grid.classList.add("pf-grouped");
+    grid.innerHTML = files.length ? UploadApp.htmlFolderPopup(kartuDok) : '<div class="fc-empty">Belum ada dokumen pendukung.</div>';
+    const from = files.length ? 1 : 0;
+    const to = files.length;
     const info = $(".table-footer-pagination .pagination-info", m);
     if (info) info.textContent = `Menampilkan ${from} - ${to} dari ${files.length}`;
     const pc = $(".table-footer-pagination .pagination-controls", m);
@@ -355,17 +353,6 @@
       const c = ev.target.closest(".file-item-card[data-fid]");
       if (c) pilihDok(c.dataset.fid);
     });
-    // tombol pratinjau gabungan di header popup
-    const head = $(".custom-modal-header", m);
-    if (head && !$("#vw-gabung", head)) {
-      const b = document.createElement("button");
-      b.type = "button";
-      b.id = "vw-gabung";
-      b.className = "vw-gabung-btn";
-      b.innerHTML = '<i class="fas fa-layer-group"></i> Pratinjau gabungan';
-      b.onclick = bukaGabungan;
-      $(".modal-close-btn", head).insertAdjacentElement("beforebegin", b);
-    }
   }
 
   // ---------- header, info, pembayaran ----------
