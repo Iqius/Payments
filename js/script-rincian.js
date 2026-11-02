@@ -151,6 +151,8 @@
   }
 
   // ---------- Baca daftar penerima dari modal ----------
+  // Kartu contoh di HTML dibaca sekali menjadi data (PEN), lalu daftar di modal digambar ulang dari data
+  // secara bertahap (lazy loading). Nanti PEN cukup diisi dari backend.
   function bacaPenerima() {
     PEN = $$("#modalTambahRincian .person-card").map((c, i) => {
       const tipe = /card-badan/.test(c.className) ? "badan" : /card-pegawai/.test(c.className) ? "pegawai" : /card-dewan/.test(c.className) ? "dewan" : "perorangan";
@@ -160,9 +162,7 @@
         val: d.querySelector("strong").textContent.trim(),
       }));
       c.removeAttribute("onclick");
-      c.style.cursor = "pointer";
       c.dataset.idx = i;
-      c.addEventListener("click", () => pilihPenerima(i));
       return {
         idx: i,
         tipe,
@@ -171,18 +171,60 @@
         badge: $(".pc-badge", c).textContent.trim(),
         kode: det[0]?.val || "",
         det,
+        cari: c.innerText.toLowerCase(), // teks untuk pencarian (kode, nama, KTP, NPWP, ...)
+        html: c.outerHTML, // tampilan kartu apa adanya
       };
     });
   }
 
-  function filterModalPenerima() {
-    const q = ($("#modalTambahRincian .modal-filter-bar input")?.value || "").toLowerCase().trim();
-    const t = ($("#modalTambahRincian .filter-select")?.value || "Semua").trim();
-    $$("#modalTambahRincian .person-card").forEach((c) => {
-      const okQ = !q || c.innerText.toLowerCase().includes(q);
-      const okT = t === "Semua" || $(".pc-badge", c).textContent.trim() === t;
-      c.style.display = okQ && okT ? "" : "none";
+  // kartu dari data (dipakai bila data berasal dari backend dan belum punya html)
+  const KELAS_KARTU = { badan: "card-badan", pegawai: "card-pegawai", dewan: "card-dewan", perorangan: "card-perorangan" };
+  function kartuPenerima(p) {
+    if (p.html) return p.html;
+    return `<div class="person-card ${KELAS_KARTU[p.tipe] || "card-perorangan"}" data-idx="${p.idx}">
+      <div class="pc-header"><div class="pc-title-area"><h4>${esc(p.nama)}</h4><span>${esc(p.sub)}</span></div><div class="pc-badge">${esc(p.badge)}</div></div>
+      <div class="pc-body">${p.det.map((d) => `<div class="detail-item"><span>${esc(d.label)}${d.ok === true ? ' <i class="fas fa-check-circle text-green"></i>' : d.ok === false ? ' <i class="fas fa-times-circle text-red"></i>' : ""}</span><strong>${esc(d.val)}</strong></div>`).join("")}</div>
+    </div>`;
+  }
+
+  // daftar penerima di modal: tampil 10 dulu, sisanya dimuat saat di-scroll
+  let LZ_PEN = null;
+  function pasangDaftarPenerima() {
+    const list = $("#modalTambahRincian .rincian-person-list");
+    if (!list || !window.LazyList) return;
+    const foot = $("#modalTambahRincian .modal-footer-pagination");
+    if (foot) {
+      foot.classList.add("lz-foot");
+      foot.insertAdjacentHTML("afterbegin", '<div class="lz-info" id="pen-lz-info"></div>');
+    }
+    LZ_PEN = LazyList({
+      wadah: list,
+      langkah: 10,
+      ambil: () => {
+        const q = ($("#modalTambahRincian .modal-filter-bar input")?.value || "").toLowerCase().trim();
+        const t = ($("#modalTambahRincian .filter-select")?.value || "Semua").trim();
+        return PEN.filter((p) => (!q || p.cari.includes(q)) && (t === "Semua" || p.badge === t));
+      },
+      html: (p) => kartuPenerima(p),
+      kosong: '<div class="lz-kosong">Penerima tidak ditemukan.</div>',
+      sesudah: (n, total) => {
+        const info = $("#pen-lz-info");
+        if (info) info.textContent = total ? `Menampilkan ${n} dari ${total} penerima` : "0 penerima";
+      },
     });
+    list.addEventListener("click", (ev) => {
+      const c = ev.target.closest(".person-card[data-idx]");
+      if (c) pilihPenerima(+c.dataset.idx);
+    });
+    LZ_PEN.muatUlang();
+    // modal tersembunyi saat halaman dimuat -> hitung ulang saat modal dibuka supaya area daftar terisi
+    $("#btnTambahRincian")?.addEventListener("click", () => setTimeout(() => { LZ_PEN.muatUlang(); LazyList.loading(list, 550); }, 0));
+  }
+
+  function filterModalPenerima() {
+    if (!LZ_PEN) return;
+    LZ_PEN.muatUlang();
+    LazyList.loading($("#modalTambahRincian .rincian-person-list"), 400);
   }
 
   // ---------- Tambah penerima ----------
@@ -342,7 +384,7 @@
       kw.style.flexDirection = "";
       kw.innerHTML = htmlBadan(e);
     } else {
-      kw.style.overflow = "hidden";
+      kw.style.overflow = ""; // scroll diatur CSS (.kw-list#kuitansi-list-container)
       kw.style.display = "flex";
       kw.style.flexDirection = "column";
       kw.innerHTML = htmlPerorangan(e);
@@ -375,7 +417,7 @@
       <div class="kuitansi-row-container" style="align-items:${k.open ? "flex-start" : "center"}">
         <div class="kuitansi-item${k.open ? " expanded" : ""}" data-kid="${k.id}">
           <div class="kw-header" onclick="togglekuitansi(event, this)">
-            <button type="button" class="btn-toggle-arrow"><i class="fas fa-chevron-right kw-arrow" style="${k.open ? "transform:rotate(180deg)" : ""}"></i></button>
+            <button type="button" class="btn-toggle-arrow"><i class="fas fa-chevron-right kw-arrow"></i></button>
             <div class="kw-field kw-field-no"><div class="input-container"><input type="text" data-f="no" value="${esc(k.no)}" placeholder="Masukkan nomor kuitansi..." /></div></div>
             <div class="kw-field kw-field-date"><div class="input-container"><input type="date" data-f="tgl" value="${esc(k.tgl)}" class="input-date-custom" /></div></div>
             <div class="kw-field kw-field-nominal"><div class="input-container prefix-rp"><span class="prefix">Rp.</span><input type="text" data-f="nominal" value="${fmt(k.nominal)}" class="text-right" /></div></div>
@@ -425,7 +467,7 @@
         : `<div class="sub-input-box danger"><span class="prefix text-danger">Rp.</span><input type="text" data-f="pph" value="${fmt(c.pph)}" class="sub-input-field text-right text-danger" ${ro} /></div>`;
     return `
     <div class="biaya-sub-row tipe-${tp}" data-cid="${c.id}">
-      <div class="sub-col sub-col-nama">${first ? '<span class="sub-label-head">Nama Komponen</span>' : ""}<input type="text" data-f="nama" value="${esc(c.nama)}" placeholder="Nama Komponen" class="sub-input" ${ro} /></div>
+      <div class="sub-col sub-col-nama">${first ? '<span class="sub-label-head">Nama Komponen</span>' : ""}<input type="text" data-f="nama" value="${esc(c.nama)}" placeholder="Nama Komponen" class="sub-input nama-pilihan" readonly tabindex="-1" title="Nama komponen dari daftar (pilih lewat Tambah Komponen Biaya)" /></div>
       <div class="sub-col sub-col-formula">${first ? '<span class="sub-label-head">Formula</span>' : ""}${formula}</div>
       <div class="sub-col sub-col-nominal">${first ? '<span class="sub-label-head">Nominal</span>' : ""}
         <div class="sub-input-box"><span class="prefix">Rp.</span><input type="text" data-f="nominal" value="${fmt(c.nominal)}" class="sub-input-field text-right" ${locked && !c.nominalEditable ? "readonly" : ""} /></div></div>
@@ -483,6 +525,8 @@
   const _tk = window.togglekuitansi;
   window.togglekuitansi = function (ev, headerEl) {
     _tk(ev, headerEl);
+    const ar = headerEl.querySelector(".kw-arrow");
+    if (ar) ar.style.transform = ""; // arah panah diatur CSS (.kuitansi-item.expanded .kw-arrow)
     const it = headerEl.closest(".kuitansi-item");
     const k = aktifE()?.kuitansi.find((x) => x.id === it.dataset.kid);
     if (k) k.open = it.classList.contains("expanded");
@@ -566,6 +610,7 @@
     const e = aktifE();
     const mode = modeSkema();
     setBtn($("#btnTambahRincian"), mode === "persekot");
+    setBtn($("#btnModeTabel"), mode === "persekot"); // persekot: 1 baris terkunci, tidak bisa lewat tabel / Excel
     setBtn($("#btnAddHeader"), !!(e && e.locked));
     setBtn($(".btn-trash"), !e || !!e.auto);
     // persekot: dropdown kelompok biaya tetap tampil, berisi 1 pilihan (Honor) dan terkunci
@@ -595,43 +640,19 @@
       refreshTotals();
       $(`.kuitansi-item[data-kid="${k.id}"]`)?.scrollIntoView({ block: "nearest" });
     } else {
-      // dropdown di atas hanya filter; kelompok + tipe komponen dipilih lewat pop up setelah tombol ini diklik
-      const r = await Swal.fire({
-        title: "Tambah Komponen Biaya",
-        html: `<div class="tk-pop">
-            <label class="tk-label" for="tk-kelompok">Kelompok biaya</label>
-            <select id="tk-kelompok" class="tk-select">
-              <option value="">Pilih kelompok biaya...</option>
-              ${KELOMPOK.map((g) => `<option value="${g.key}"${g.key === e.filterG ? " selected" : ""}>${esc(g.title)}</option>`).join("")}
-            </select>
-            <div class="tk-label">Jenis komponen</div>
-            <div class="tk-opts">
-              ${TIPE_KOMP.map(
-                (t, i) => `<label class="tk-opt"><input type="radio" name="tk-tipe" value="${t.key}"${i === 0 ? " checked" : ""}><span><strong>${esc(t.title)}</strong><em>${esc(t.desc)}</em></span></label>`,
-              ).join("")}
-            </div>
-          </div>`,
-        showCancelButton: true,
-        confirmButtonText: "Tambah",
-        cancelButtonText: "Batal",
-        reverseButtons: true,
-        confirmButtonColor: "#1f6fa8",
-        focusConfirm: false,
-        preConfirm: () => {
-          const g = document.getElementById("tk-kelompok").value;
-          const tp = (document.querySelector('input[name="tk-tipe"]:checked') || {}).value || "fp";
-          if (!g) {
-            Swal.showValidationMessage("Pilih kelompok biaya terlebih dahulu.");
-            return false;
-          }
-          return { g, tp };
-        },
+      // dropdown di atas hanya filter; komponen dipilih dari daftar di popup "Tambah Komponen Biaya" (script-komponen.js)
+      const dipilih = await window.KomponenModal.buka({
+        kelompok: KELOMPOK,
+        filterG: e.filterG || "",
+        sudah: e.komponen.map((c) => c.kompId).filter(Boolean),
       });
-      if (!r.isConfirmed) return;
-      const key = r.value.g;
-      if (e.filterG && e.filterG !== key) e.filterG = key; // tampilkan kelompok yang baru ditambah
-      e.komponen.push(mkKomp(key, { tipe: r.value.tp }));
-      e.openG[key] = true;
+      if (!dipilih || !dipilih.length) return;
+      dipilih.forEach((k) => {
+        // k.tipe: "fp" (PPh 21 / PPh 23 / perlu dilengkapi) atau "n" (tanpa PPh, k.g sudah = "honor")
+        e.komponen.push(mkKomp(k.g, { tipe: k.tipe, nama: k.nama, kompId: k.id }));
+        e.openG[k.g] = true;
+      });
+      if (e.filterG && !dipilih.some((k) => k.g === e.filterG)) e.filterG = ""; // tampilkan semua supaya komponen baru terlihat
       renderRight();
       refreshTotals();
     }
@@ -951,6 +972,87 @@
         jumlah: isBadan(e) ? e.kuitansi.length : e.komponen.length,
       })),
     refresh: () => { syncAuto(); renderAll(); },
+    // ---- untuk Impor Excel (script-impor-rincian.js) ----
+    TIPE_KOMP,
+    penerimaMaster: () => PEN, // daftar penerima di modal "Tambah Penerima"
+    rekTerdaftar, // rekening terdaftar (master) seorang penerima
+    modeSkema,
+    // data = [{ kode, kuitansi:[{no,tgl,nominal,ppn,jenisPpn,subs:[{kode,nama,tarif,dpp|null}]}], komponen:[{g,tipe,nama,formula,nominal,pph}] }]
+    // mode "tambah" = ditambahkan ke rincian yang ada | "ganti" = rincian lama (selain baris otomatis persekot/pj) dihapus dulu
+    terapkanImpor(data, mode) {
+      const hasil = { penerimaBaru: [], kuitansi: 0, komponen: 0, lewati: [] };
+      const lama = S.list.slice(); // penerima yang sudah ada (bisa saja tidak ada di daftar modal)
+      if (mode === "ganti") {
+        S.list = S.list.filter((e) => e.auto);
+        S.list.forEach((e) => { if (!e.locked) e.komponen = e.komponen.filter((c) => c.base); });
+      }
+      // Mode Tabel: isi tabel = seluruh komponen penerima perorangan. Penerima tetap di daftar, komponennya diganti isi tabel.
+      // Tabel komponen hanya berisi nominal -> potongan PPh & formula komponen yang sudah ada dipertahankan.
+      const simpanan = new Map(); // kode|komponen -> { pph, formula }
+      const kunciSimpan = (kode, c) => kode + "|" + (c.kompId || "nama:" + String(c.nama).trim().toLowerCase());
+      if (mode === "tabel") {
+        S.list.forEach((e) => e.komponen.forEach((c) => simpanan.set(kunciSimpan(e.p.kode, c), { pph: c.pph, formula: c.formula })));
+        S.list.forEach((e) => {
+          if (e.locked || isBadan(e)) return; // kuitansi badan usaha tidak ada di tabel -> tidak disentuh
+          e.komponen = e.komponen.filter((c) => c.base);
+        });
+      }
+      data.forEach((d) => {
+        let e = S.list.find((x) => x.p.kode === d.kode && !x.locked);
+        if (!e) {
+          const sebelum = lama.find((x) => x.p.kode === d.kode && !x.locked);
+          // penerima dari data master; kode baru dari tabel / Excel membawa datanya sendiri (d.p)
+          const p = sebelum ? sebelum.p : PEN.find((x) => x.kode === d.kode) || d.p;
+          if (!p) { hasil.lewati.push(`${d.nama || d.kode}: penerima tidak ditemukan`); return; }
+          // penerima baru hasil impor / Mode Tabel langsung memakai rekening terdaftar (master); tetap bisa diganti lewat tombol rekening.
+          // "ganti semua" mempertahankan rekening lama.
+          e = mkEntry(p, { rek: sebelum ? sebelum.rek : { sumber: "terdaftar", ...rekTerdaftar(p) } });
+          S.list.push(e);
+          if (!sebelum) hasil.penerimaBaru.push(p.nama);
+        }
+        // rekening dari tabel / Excel (BANK & NO_REKENING): sama dengan rekening terdaftar -> sumber "terdaftar", selain itu "baru"
+        if (d.rek && d.rek.bank && d.rek.noRek) {
+          const t = rekTerdaftar(e.p);
+          const digit = (v) => String(v || "").replace(/\D/g, "");
+          const sama = (r) => r && digit(r.noRek) === digit(d.rek.noRek) && String(r.bank).toLowerCase() === d.rek.bank.toLowerCase();
+          if (sama(e.rek)) { /* rekening tidak berubah: tetap seperti yang sudah dipilih */ }
+          else if (sama(t)) e.rek = { sumber: "terdaftar", ...t };
+          else e.rek = { sumber: "baru", bank: d.rek.bank, noRek: d.rek.noRek, nama: e.p.nama };
+        }
+        d.kuitansi.forEach((x) => {
+          if (e.kuitansi.some((k) => k.no.trim().toLowerCase() === x.no.trim().toLowerCase())) { hasil.lewati.push(`${e.p.nama}: kuitansi ${x.no} sudah ada`); return; }
+          const k = mkKw();
+          Object.assign(k, { no: x.no, tgl: x.tgl, nominal: x.nominal, ppn: x.ppn, jenisPpn: x.jenisPpn || "" });
+          k.subs = x.subs.length
+            ? x.subs.map((o, i) => {
+                const s = mkSub();
+                Object.assign(s, { kode: o.kode, nama: o.nama, tarif: o.tarif });
+                if (o.dpp == null && i === 0) s.dpp = Math.max(k.nominal - k.ppn, 0); // sama seperti input manual: DPP objek pertama = nominal - PPN
+                else { s.dpp = o.dpp || 0; s.dppAuto = false; }
+                s.pph = subPph(s);
+                return s;
+              })
+            : [Object.assign(mkSub(), { dpp: 0 })];
+          if (!x.subs.length) { k.subs[0].dpp = Math.max(k.nominal - k.ppn, 0); }
+          e.kuitansi.push(k);
+          hasil.kuitansi++;
+        });
+        d.komponen.forEach((x) => {
+          const lama = mode === "tabel" ? simpanan.get(kunciSimpan(e.p.kode, x)) : null;
+          const pph = x.tipe === "n" ? 0 : lama ? lama.pph : x.pph || 0;
+          const formula = x.tipe === "fp" ? (lama ? lama.formula : x.formula) || "" : "";
+          e.komponen.push(mkKomp(x.g, { tipe: x.tipe, nama: x.nama, formula, nominal: x.nominal, pph, ...(x.kompId ? { kompId: x.kompId } : {}) }));
+          e.openG[x.g] = true;
+          hasil.komponen++;
+        });
+      });
+      // kuitansi kosong bawaan "Tambah Penerima" tidak dibutuhkan bila sudah ada hasil impor
+      S.list.forEach((e) => { if (isBadan(e) && e.kuitansi.length > 1) e.kuitansi = e.kuitansi.filter((k) => k.no || k.nominal); });
+      if (!getE(S.aktif)) S.aktif = S.list[0]?.uid || null;
+      syncAuto();
+      renderAll();
+      return hasil;
+    },
   };
 
   // ==========================================================================
@@ -958,6 +1060,7 @@
   // ==========================================================================
   function init() {
     bacaPenerima();
+    pasangDaftarPenerima();
     $("#modalTambahRincian .modal-filter-bar input")?.addEventListener("input", filterModalPenerima);
     $("#modalTambahRincian .filter-select")?.addEventListener("change", filterModalPenerima);
     const fsel = $(".kw-select-kategori");

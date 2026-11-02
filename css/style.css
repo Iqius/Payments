@@ -585,9 +585,9 @@ input[type="date"].base-textbox::-webkit-calendar-picker-indicator:hover {
 }
 
 .danger-btn {
-  background-color: #dc3545 !important;
-  color: #ffffff !important;
-  border-color: #dc3545 !important;
+  background-color: #dc3545;
+  color: #ffffff;
+  border-color: #dc3545;
 }
 
 .row-checkbox:disabled {

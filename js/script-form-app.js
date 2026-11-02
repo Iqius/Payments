@@ -81,6 +81,7 @@
     const wrap = $("#step-1-wrapper");
     if (!wrap) return;
     wrap.classList.add("has-pengadaan");
+    wrap.style.overflowY = "auto"; // form pengadaan lebih panjang: step 1 bisa di-scroll (menimpa overflow:hidden bawaan HTML)
     const div = document.createElement("div");
     div.className = "pengadaan-section";
     if ((window.PENGADAAN_KIRIMAN || {}).tampil === false) div.style.display = "none";
@@ -155,20 +156,47 @@
     return flow[currentIndex] ? flow[currentIndex].targetWrapper : 0;
   }
 
+  // ---------- loading di tengah (SweetAlert) ----------
+  // Pura-pura memuat supaya perpindahan terasa jelas; nanti diganti menunggu respons backend.
+  const tunggu = (ms) => new Promise((ok) => setTimeout(ok, ms));
+  async function loadingTengah(judul, ms = 500, teks = "Mohon tunggu sebentar…") {
+    Swal.fire({ title: judul, html: teks, allowOutsideClick: false, allowEscapeKey: false, showConfirmButton: false, didOpen: () => Swal.showLoading() });
+    await tunggu(ms);
+  }
+  let pindah = false; // cegah klik ganda selama loading
+
   // ---------- navigasi ----------
   const nextOrig = window.nextStep;
-  window.nextStep = function () {
+  window.nextStep = async function () {
+    if (pindah) return;
     if (langkahAktif() === 1) {
       const err = cekLangkah1();
       if (err) return UI.toast(err, "err");
     }
     if (langkahAktif() === 4 && !RincianApp.entries().length) return UI.toast("Tambahkan minimal satu penerima pada rincian biaya.", "err");
-    nextOrig();
+    // rincian belum valid -> langsung tampilkan pesannya (tanpa loading)
+    if (langkahAktif() === 4 && typeof window.validasiRincian === "function" && window.validasiRincian()) return nextOrig();
+    pindah = true;
+    try {
+      await loadingTengah("Memuat halaman…", 500);
+      Swal.close();
+      nextOrig();
+    } finally {
+      pindah = false;
+    }
   };
   const prevOrig = window.prevStep;
-  window.prevStep = function () {
-    if (currentIndex === 0) return (location.href = "../../index.html");
-    prevOrig();
+  window.prevStep = async function () {
+    if (pindah) return;
+    pindah = true;
+    try {
+      await loadingTengah(currentIndex === 0 ? "Kembali ke daftar…" : "Memuat halaman…", 400);
+      if (currentIndex === 0) return (location.href = "../../index.html");
+      Swal.close();
+      prevOrig();
+    } finally {
+      pindah = false;
+    }
   };
   const renderOrig = window.render;
   window.render = function () {
@@ -223,22 +251,60 @@
   F.simpan = () => simpanKeStore(false);
   F.submit = () => simpanKeStore(true);
 
+  // ---------- simpan draf & submit: konfirmasi -> loading -> notifikasi di tengah ----------
+  const WARNA = { confirmButtonColor: "#1f6fa8", cancelButtonColor: "#94a3b8" };
+  const gagal = (e) => Swal.fire({ icon: "error", title: "Gagal", text: e.message, confirmButtonText: "OK", ...WARNA });
+
   window.simpanDraft = async function () {
+    const r = await Swal.fire({
+      icon: "question",
+      title: "Simpan sebagai draf?",
+      text: "Pengajuan disimpan dan bisa dilanjutkan nanti dari daftar pengajuan.",
+      showCancelButton: true,
+      confirmButtonText: "Simpan Draf",
+      cancelButtonText: "Batal",
+      reverseButtons: true,
+      ...WARNA,
+    });
+    if (!r.isConfirmed) return;
     try {
+      await loadingTengah("Menyimpan draf…", 700);
       await F.simpan();
       isiHeader();
-      UI.toast("Draf berhasil disimpan", "ok");
+      await Swal.fire({ icon: "success", title: "Draf berhasil disimpan", text: "ID Dokumen " + F._id, timer: 2000, timerProgressBar: true, confirmButtonText: "OK", ...WARNA });
     } catch (e) {
-      UI.toast(e.message, "err");
+      gagal(e);
     }
   };
   window.submitPengajuan = async function () {
+    const persekot = typeof selectedSkemaType !== "undefined" && selectedSkemaType === "persekot";
+    const r = await Swal.fire({
+      icon: "warning",
+      title: "Submit pengajuan?",
+      html: "Pastikan data sudah benar. Setelah disubmit, pengajuan <b>tidak bisa diubah</b> dan diteruskan ke verifikator.",
+      showCancelButton: true,
+      confirmButtonText: "Ya, Submit",
+      cancelButtonText: "Periksa lagi",
+      reverseButtons: true,
+      focusCancel: true,
+      ...WARNA,
+    });
+    if (!r.isConfirmed) return;
     try {
+      await loadingTengah("Mengirim pengajuan…", 900);
       const doc = await F.submit();
-      UI.toast(doc.skema === "persekot" ? "Persekot berhasil diajukan (Unrealized)" : "Pengajuan berhasil dikirim", "ok");
-      setTimeout(() => (location.href = "../../index.html"), 900);
+      await Swal.fire({
+        icon: "success",
+        title: doc.skema === "persekot" || persekot ? "Persekot berhasil diajukan" : "Pengajuan berhasil dikirim",
+        text: doc.skema === "persekot" ? "Status: Unrealized. Kembali ke daftar pengajuan…" : "Kembali ke daftar pengajuan…",
+        timer: 1800,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        allowOutsideClick: false,
+      });
+      location.href = "../../index.html";
     } catch (e) {
-      UI.toast(e.message, "err");
+      gagal(e);
     }
   };
 
@@ -293,7 +359,43 @@
   }
 
   // ---------- init (setelah prefill bawaan script-form.js) ----------
+  // ---------- Sumber Dana: lazy loading (menggantikan tombol halaman) ----------
+  // Daftar kegiatan anggaran tampil 10 dulu (itemsPerPage), saat di-scroll ke bawah 10 berikutnya dimuat.
+  // currentPage dipakai sebagai "jumlah halaman yang sudah dimuat", jadi prefill yang melompat ke halaman
+  // item tertentu (pilihAnggaranById) tetap bekerja: semua item sampai halaman itu ikut tampil.
+  function lazySumberDana() {
+    const wadah = $("#list-anggaran-container"); // elemen yang di-scroll (overflow-y: auto)
+    if (!wadah || typeof sliceAndRender !== "function") return;
+    let sibuk = false;
+    const sisa = () => currentFilteredData.length - currentPage * itemsPerPage;
+    window.sliceAndRender = function () {
+      const n = Math.min(currentFilteredData.length, currentPage * itemsPerPage);
+      renderAnggaranList(currentFilteredData.slice(0, n), currentFilteredData.length);
+      if (sisa() > 0)
+        $("#list-anggaran-container").insertAdjacentHTML("beforeend", `<div class="lz-muat"><i class="fas fa-spinner fa-spin"></i> Memuat ${Math.min(itemsPerPage, sisa())} kegiatan berikutnya…</div>`);
+      // area belum bisa di-scroll tapi masih ada sisa -> muat lagi
+      requestAnimationFrame(() => {
+        if (sisa() > 0 && wadah.clientHeight > 0 && wadah.scrollHeight <= wadah.clientHeight + 4) { currentPage++; window.sliceAndRender(); }
+      });
+    };
+    const asliFilter = window.filterAndRenderAnggaran;
+    window.filterAndRenderAnggaran = function (resetPage = true) {
+      if (resetPage) wadah.scrollTop = 0;
+      const r = asliFilter(resetPage);
+      window.LazyList && LazyList.loading(wadah, 450); // tampilan "memuat" (cari / ganti sumber anggaran)
+      return r;
+    };
+    wadah.addEventListener("scroll", () => {
+      if (sibuk || sisa() <= 0 || wadah.scrollTop + wadah.clientHeight < wadah.scrollHeight - 80) return;
+      sibuk = true;
+      setTimeout(() => { currentPage++; window.sliceAndRender(); sibuk = false; }, 120);
+    });
+    window.sliceAndRender();
+    window.LazyList && LazyList.loading(wadah, 600); // pertama kali halaman dibuka
+  }
+
   function init() {
+    lazySumberDana();
     const type = P.get("type");
     if (type === "pengadaan" && !FLOWS_CONFIG.pengadaan) FLOWS_CONFIG.pengadaan = FLOWS_CONFIG.operasional;
     if (type && FLOWS_CONFIG[type]) currentType = type;

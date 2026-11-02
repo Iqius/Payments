@@ -638,13 +638,13 @@
 }
 
 .btn-toggle.is-cek {
-  background-color: #43394d !important;
-  border-color: #43394d !important;
-  color: #ffffff !important;
+  background-color: #43394d;
+  border-color: #43394d;
+  color: #ffffff;
 }
 
 .btn-toggle.is-cek:hover {
-  background-color: #352c3e !important;
+  background-color: #352c3e;
 }
 
 .btn-static {
@@ -735,9 +735,9 @@
 }
 
 .btn-pill.is-cek {
-  background-color: var(--btn-cek-bg) !important;
-  border-color: var(--btn-cek-border) !important;
-  color: var(--btn-cek-text) !important;
+  background-color: var(--btn-cek-bg);
+  border-color: var(--btn-cek-border);
+  color: var(--btn-cek-text);
 }
 
 .btn-pill i {
@@ -882,7 +882,7 @@
 }
 
 .total-amount {
-  color: #00a86b !important;
+  color: #00a86b;
 }
 
 .app-modal-footer {

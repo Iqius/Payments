@@ -1024,8 +1024,8 @@
 .search-box-wrapper {
   width: 100%;
   margin-bottom: 14.52px;
-  flex-shrink: 0 !important;
-  display: block !important;
+  flex-shrink: 0;
+  display: block;
   position: relative;
   box-sizing: border-box;
 }
@@ -1545,8 +1545,8 @@
 }
 
 .compact-upload {
-  min-height: 106.45px !important;
-  padding: 9.68px !important;
+  min-height: 106.45px;
+  padding: 9.68px;
   margin-top: auto;
 }
 
@@ -1978,7 +1978,9 @@
 }
 .ml-10 {
   margin-left: 9.68px;
-  width: auto !important;
+}
+.form-row label.ml-10 {
+  width: auto;
 }
 
 .input-with-icon {
@@ -2444,7 +2446,7 @@
   font-weight: 400;
 }
 .kw-list#kuitansi-list-container {
-  overflow-y: auto !important;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 
@@ -2622,7 +2624,7 @@
 .kw-arrow {
   color: #64748b;
   font-size: 14.52px;
-  display: inline-block !important;
+  display: inline-block;
   transform: rotate(0deg);
   transition:
     transform 0.2s ease,
@@ -2630,8 +2632,8 @@
 }
 
 .kuitansi-item.expanded .kw-arrow {
-  color: #0b69a3 !important;
-  transform: rotate(90deg) !important;
+  color: #0b69a3;
+  transform: rotate(90deg);
 }
 
 .kw-field {
@@ -2748,9 +2750,6 @@
 }
 .text-center {
   text-align: center;
-}
-.text-danger {
-  color: #e53e3e !important;
 }
 .font-bold {
   font-weight: 600;
@@ -2981,7 +2980,7 @@
 .biaya-arrow {
   color: #64748b;
   font-size: 14.52px;
-  display: inline-block !important;
+  display: inline-block;
   transform: rotate(0deg);
   transition:
     transform 0.2s ease,
@@ -2989,8 +2988,8 @@
 }
 
 .biaya-item.expanded .biaya-arrow {
-  color: #0284c7 !important;
-  transform: rotate(90deg) !important;
+  color: #0284c7;
+  transform: rotate(90deg);
 }
 
 .biaya-detail {
@@ -3110,8 +3109,11 @@
 .text-right {
   text-align: right;
 }
-.text-danger {
-  color: #e11d48 !important;
+/* merah "Potongan PPh"; versi .danger mengalahkan warna input/span bawaan kotak input */
+.text-danger,
+.danger .text-danger,
+.danger input.text-danger {
+  color: #e11d48;
 }
 
 .kw-area-header {
@@ -3933,9 +3935,9 @@ input:checked + .slider-round:before {
 }
 
 .s3-choice-card-full.active {
-  border-color: #0284c7 !important;
-  background-color: #f0f9ff !important;
-  color: #0284c7 !important;
+  border-color: #0284c7;
+  background-color: #f0f9ff;
+  color: #0284c7;
   font-weight: 600;
 }
 
@@ -3968,9 +3970,9 @@ input:checked + .slider-round:before {
 }
 
 .s3-btn-pill-choice.active {
-  border-color: #0284c7 !important;
-  background-color: #f0f9ff !important;
-  color: #0284c7 !important;
+  border-color: #0284c7;
+  background-color: #f0f9ff;
+  color: #0284c7;
   font-weight: 700;
 }
 
@@ -4182,9 +4184,9 @@ input:checked + .slider-round:before {
 }
 
 .s3-akomodasi-card.active {
-  border-color: #ea580c !important;
-  background-color: #fff7ed !important;
-  color: #ea580c !important;
+  border-color: #ea580c;
+  background-color: #fff7ed;
+  color: #ea580c;
   font-weight: 600;
 }
 
@@ -4311,9 +4313,9 @@ input:checked + .slider-round:before {
 }
 
 .s3-choice-card-purple.active {
-  border-color: #9333ea !important;
-  background-color: #faf5ff !important;
-  color: #9333ea !important;
+  border-color: #9333ea;
+  background-color: #faf5ff;
+  color: #9333ea;
   font-weight: 600;
 }
 
@@ -4347,9 +4349,9 @@ input:checked + .slider-round:before {
 }
 
 .s3-btn-pill-purple.active {
-  border-color: #9333ea !important;
-  background-color: #faf5ff !important;
-  color: #9333ea !important;
+  border-color: #9333ea;
+  background-color: #faf5ff;
+  color: #9333ea;
   font-weight: 700;
 }
 

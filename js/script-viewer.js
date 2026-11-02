@@ -353,6 +353,17 @@
       const c = ev.target.closest(".file-item-card[data-fid]");
       if (c) pilihDok(c.dataset.fid);
     });
+    // tombol pratinjau gabungan di header popup
+    const head = $(".custom-modal-header", m);
+    if (head && !$("#vw-gabung", head)) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.id = "vw-gabung";
+      b.className = "vw-gabung-btn";
+      b.innerHTML = '<i class="fas fa-layer-group"></i> Pratinjau gabungan';
+      b.onclick = bukaGabungan;
+      $(".modal-close-btn", head).insertAdjacentElement("beforebegin", b);
+    }
   }
 
   // ---------- header, info, pembayaran ----------

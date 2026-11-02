@@ -609,6 +609,10 @@
     if (tabAwal) tabAwal.apply(this, arguments);
     const w = $("#step-5-wrapper");
     if (w) w.classList.toggle("tab-lain", tab !== "ringkasan");
+    // tab yang tampil: hapus display:block bawaan supaya tata letak flex dari CSS yang dipakai
+    document.querySelectorAll("#step-5-wrapper .s5-right-content").forEach((c) => {
+      if (c.style.display === "block") c.style.display = "";
+    });
   };
 
   window.toggleKeperluan = function () {
