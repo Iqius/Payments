@@ -291,17 +291,17 @@ function buildBadanUsahaKwList() {
 
         <!-- HEADER ROW LABEL KOLOM -->
         <div class="kw-table-columns-header">
-          <div style="width: 40px;"></div>
-          <div style="width: 220px;">No kuitansi / Invoice</div>
-          <div style="width: 100px;">Tanggal</div>
-          <div style="width: 210px;">Nominal Invoice + PPN</div>
-          <div style="width: 20px;"></div>
-          <div style="width: 150px;">PPN</div>
-          <div style="width: 130px;">Potongan PPh</div>
+          <div style="width: 2.5rem;"></div>
+          <div style="width: 13.75rem;">No kuitansi / Invoice</div>
+          <div style="width: 6.25rem;">Tanggal</div>
+          <div style="width: 13.125rem;">Nominal Invoice + PPN</div>
+          <div style="width: 1.25rem;"></div>
+          <div style="width: 9.375rem;">PPN</div>
+          <div style="width: 8.125rem;">Potongan PPh</div>
         </div>
 
-        <div class="kw-scroll-list-area" style="max-height: 380px; overflow-y: auto; overflow-x: hidden; padding-right: 6px; display: flex; flex-direction: column; gap: 8px;">
-          <div class="kuitansi-wrapper" style="display: flex; flex-direction: column; gap: 8px;">
+        <div class="kw-scroll-list-area" style="max-height: 23.75rem; overflow-y: auto; overflow-x: hidden; padding-right: 0.375rem; display: flex; flex-direction: column; gap: 0.5rem;">
+          <div class="kuitansi-wrapper" style="display: flex; flex-direction: column; gap: 0.5rem;">
             ${Array.from({ length: 10 })
               .map(
                 (_, index) => `
@@ -426,14 +426,14 @@ function buildPeroranganKwList() {
   ];
 
   return `
-        <div class="biaya-wrapper" style="display: flex; flex-direction: column; gap: 8px;">
-          <div class="biaya-global-header" style="display: flex; justify-content: flex-end; padding: 4px 8px;">
-            <div style="display: flex; gap: 12px;">
-              <div style="width: 100px; text-align: left; padding-left: 2px;">Nominal</div>
-              <div style="width: 100px; text-align: left; padding-left: 2px;">Potongan PPh</div>
+        <div class="biaya-wrapper" style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <div class="biaya-global-header" style="display: flex; justify-content: flex-end; padding: 0.25rem 0.5rem;">
+            <div style="display: flex; gap: 0.75rem;">
+              <div style="width: 6.25rem; text-align: left; padding-left: 0.125rem;">Nominal</div>
+              <div style="width: 6.25rem; text-align: left; padding-left: 0.125rem;">Potongan PPh</div>
             </div>
           </div>
-          <div class="kw-scroll-list-area" style="max-height: 240px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
+          <div class="kw-scroll-list-area" style="max-height: 15rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.5rem;">
             ${kelompokBiayaData
               .map(
                 (item) => `

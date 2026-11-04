@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Pencairan Anggaran</title>
+    <script src="js/skala-layar.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/style-popup.css">
@@ -17,15 +18,15 @@
             <h1 class="page-title">Daftar Pencairan Anggaran</h1>
             <button type="button" id="btnKembali" class="main-button secondary-btn"
                 onclick="window.location.href='pages/approval/grid-approval.html'">
-                <i style="font-size: 16px;">Menu Approval</i>
+                <i style="font-size: 1rem;">Menu Approval</i>
             </button>
                         <button type="button" id="btnMenuVerifikasi" class="main-button secondary-btn"
                 onclick="window.location.href='pages/verifikasi/grid-verifikasi.html'">
-                <i style="font-size: 16px;">Menu Verifikasi</i>
+                <i style="font-size: 1rem;">Menu Verifikasi</i>
             </button>
             <button type="button" class="btn-reset-data" onclick="resetDataDemo()" title="Kembalikan data contoh">Reset data demo</button>
             <button type="button" id="btnPencairanBaru" class="main-button primary-btn">
-                <i class="fas fa-plus" style="font-size: 16px;"></i>
+                <i class="fas fa-plus" style="font-size: 1rem;"></i>
                 <span>Pencairan Baru</span>
             </button>
         </div>
@@ -121,7 +122,7 @@
 
                 <div class="pengajuan-card" onclick="selectPengajuan('operasional')">
                     <div class="card-icon">
-                        <i class="far fa-building" style="font-size: 40px;"></i>
+                        <i class="far fa-building" style="font-size: 2.5rem;"></i>
                     </div>
                     <h3>Operasional<br>Rutin</h3>
                     <p>Pengajuan kebutuhan operasional rutin dan non-rutin untuk mendukung kegiatan organisasi, termasuk
@@ -132,7 +133,7 @@
 
                 <div class="pengajuan-card" onclick="selectPengajuan('perjalanan')">
                     <div class="card-icon">
-                        <i class="fas fa-suitcase" style="font-size: 40px;"></i>
+                        <i class="fas fa-suitcase" style="font-size: 2.5rem;"></i>
                     </div>
                     <h3>Perjalanan<br>Dinas</h3>
                     <p>Pengajuan biaya perjalanan dinas dalam negeri maupun luar negeri, termasuk transportasi,
@@ -142,7 +143,7 @@
 
                 <div class="pengajuan-card" onclick="selectPengajuan('pengadaan')">
                     <div class="card-icon">
-                        <i class="fas fa-handshake" style="font-size: 40px;"></i>
+                        <i class="fas fa-handshake" style="font-size: 2.5rem;"></i>
                     </div>
                     <h3>Pengadaan<br>Barang / Jasa</h3>
                     <p>Pengajuan pengadaan barang dan/atau jasa yang dilaksanakan melalui penyedia atau swakelola sesuai
@@ -152,7 +153,7 @@
 
                 <div class="pengajuan-card" onclick="selectPengajuan('remunerasi')">
                     <div class="card-icon">
-                        <i class="fas fa-money-check-alt" style="font-size: 40px;"></i>
+                        <i class="fas fa-money-check-alt" style="font-size: 2.5rem;"></i>
                     </div>
                     <h3>Remunerasi</h3>
                     <p>Pengajuan pembayaran yang berkaitan dengan remunerasi, honorarium, insentif, penghargaan, dan
@@ -162,7 +163,7 @@
 
                 <div class="pengajuan-card" onclick="selectPengajuan('pelatihan')">
                     <div class="card-icon">
-                        <i class="fas fa-certificate" style="font-size: 40px;"></i>
+                        <i class="fas fa-certificate" style="font-size: 2.5rem;"></i>
                     </div>
                     <h3>Pelatihan &<br>Pengembangan</h3>
                     <p>Pengajuan kegiatan pengembangan kompetensi dan pembelajaran, meliputi pelatihan, sertifikasi,

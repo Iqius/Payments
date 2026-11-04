@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Operasional Umum</title>
+    <script src="../../js/skala-layar.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/style-popup.css">
@@ -596,7 +597,7 @@
                                 <div class="s3-choice-grid-2">
                                     <button type="button" class="s3-btn-pill-green active"
                                         onclick="selectPillGreen(this)">
-                                        <i class="fas fa-check check-icon-transport" style="margin-right: 6px;"></i> Ada
+                                        <i class="fas fa-check check-icon-transport" style="margin-right: 0.375rem;"></i> Ada
                                         transport utama
                                     </button>
                                     <button type="button" class="s3-btn-pill-green" onclick="selectPillGreen(this)">
@@ -1028,7 +1029,7 @@
 
                                 <div class="header-left-slot">
                                     <div class="kw-header-wrapper"
-                                        style="display: flex; align-items: center; gap: 8px;">
+                                        style="display: flex; align-items: center; gap: 0.5rem;">
                                         <h4 id="titleBadanUsaha" class="kw-title" style="margin: 0;">Kuitansi / Invoice
                                         </h4>
                                         <div id="container-extra-badge" class="kw-total"></div>
@@ -2317,11 +2318,11 @@
                                 <table class="journal-table">
                                     <thead>
                                         <tr>
-                                            <th style="width: 50px; text-align: center;">No.</th>
+                                            <th style="width: 3.125rem; text-align: center;">No.</th>
                                             <th>Kode Akun</th>
                                             <th>Nama Akun</th>
-                                            <th class="text-right" style="width: 150px;">Debit</th>
-                                            <th class="text-right" style="width: 150px;">Kredit</th>
+                                            <th class="text-right" style="width: 9.375rem;">Debit</th>
+                                            <th class="text-right" style="width: 9.375rem;">Kredit</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -2352,7 +2353,7 @@
                                 <div class="table-footer">
                                     <span class="total-title">Total</span>
                                     <div class="total-amounts">
-                                        <span class="total-val" style="margin-right: 50px;">Rp 25.000.000</span>
+                                        <span class="total-val" style="margin-right: 3.125rem;">Rp 25.000.000</span>
                                         <span class="total-val">Rp 25.000.000</span>
                                     </div>
                                 </div>
@@ -2647,7 +2648,7 @@
                 </label>
             </div>
 
-            <div class="modal-footer" style="display: flex; justify-content: flex-end; margin-top: 25px;">
+            <div class="modal-footer" style="display: flex; justify-content: flex-end; margin-top: 1.5625rem;">
                 <button class="btn-rek-simpan" onclick="closeDocModal()">Simpan</button>
             </div>
         </div>
@@ -2976,7 +2977,7 @@
     <div id="modalRekening" class="modal-overlay hidden">
         <div class="modal-content modal-rekening-lg">
 
-            <div class="modal-header" style="margin-bottom: 10px;">
+            <div class="modal-header" style="margin-bottom: 0.625rem;">
                 <div class="header-text">
                     <h2>Rekening Tujuan Pembayaran</h2>
                     <p>Tentukan rekening pembayaran yang berlaku untuk transaksi ini.</p>
@@ -2991,7 +2992,7 @@
                     </div>
                     <div class="pc-badge" style="border: 1px solid #dcdfe6; color: #555;">Badan Usaha</div>
                 </div>
-                <div class="pc-body" style="padding:10px 0 0 0; background:transparent;">
+                <div class="pc-body" style="padding:0.625rem 0 0 0; background:transparent;">
                     <div class="detail-item"><span>Kode</span><strong>RC100000470</strong></div>
                     <div class="detail-item"><span>NPWP <i
                                 class="fas fa-check-circle text-green"></i></span><strong>12-34.39843.883023</strong>
@@ -3070,14 +3071,14 @@
                         <p class="view-sub">Pilih pihak yang telah tersimpan dalam pengajuan ini sebagai referensi
                             rekening tujuan pembayaran.</p>
 
-                        <div class="rek-form" style="margin-top: 5px;">
+                        <div class="rek-form" style="margin-top: 0.3125rem;">
                             <div class="input-with-icon full">
                                 <input type="text" class="base-textbox"
                                     value="PT Solusi Teknologi Nusantara • BTN • 0011-00-123456-7" readonly>
                                 <i class="fas fa-times end-icon clear-icon"></i>
                             </div>
 
-                            <h4 style="margin-top:5px; border-bottom:1px solid #e0e0e0; padding-bottom:5px;">Detail
+                            <h4 style="margin-top:0.3125rem; border-bottom:1px solid #e0e0e0; padding-bottom:0.3125rem;">Detail
                                 Rekening Tujuan</h4>
 
                             <div class="form-row" style="margin-top:0px;">
@@ -3376,12 +3377,12 @@
                 <div class="ppn-grid-row align-center">
                     <div class="ppn-col-label">No. Seri Faktur</div>
                     <div class="ppn-col-input-full flex-inline-gap">
-                        <input type="text" class="ppn-input-code" style="width: 50px;" value="007" maxlength="3" />
-                        <input type="text" class="ppn-input-code" style="width: 44px;" value="25" maxlength="2" />
-                        <input type="text" class="ppn-input-code" style="width: 110px;" value="1234567890"
+                        <input type="text" class="ppn-input-code" style="width: 3.125rem;" value="007" maxlength="3" />
+                        <input type="text" class="ppn-input-code" style="width: 2.75rem;" value="25" maxlength="2" />
+                        <input type="text" class="ppn-input-code" style="width: 6.875rem;" value="1234567890"
                             maxlength="10" />
                         <span class="arrow-sep">&rarr;</span>
-                        <input type="text" class="ppn-input-code" style="width: 170px;" value="12345678901234567890" />
+                        <input type="text" class="ppn-input-code" style="width: 10.625rem;" value="12345678901234567890" />
                         <span class="danger-hint">pastikan sesuai dengan faktur</span>
                     </div>
                 </div>

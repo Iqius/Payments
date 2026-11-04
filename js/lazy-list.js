@@ -51,6 +51,10 @@
       sibuk = true;
       setTimeout(() => { tambah(); sibuk = false; }, 120); // jeda kecil supaya indikator "Memuat…" terlihat
     });
+    // layar besar / ukuran jendela berubah: daftar jadi lebih tinggi dari isinya -> muat lagi tanpa perlu scroll
+    if (window.ResizeObserver) new ResizeObserver(() => {
+      if (n < data.length && n > 0 && wadah.clientHeight > 0 && wadah.scrollHeight <= wadah.clientHeight + 4) tambah();
+    }).observe(wadah);
     return { muatUlang, tampil: () => n, total: () => data.length, data: () => data };
   };
 

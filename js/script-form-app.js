@@ -374,15 +374,23 @@
       if (sisa() > 0)
         $("#list-anggaran-container").insertAdjacentHTML("beforeend", `<div class="lz-muat"><i class="fas fa-spinner fa-spin"></i> Memuat ${Math.min(itemsPerPage, sisa())} kegiatan berikutnya…</div>`);
       // area belum bisa di-scroll tapi masih ada sisa -> muat lagi
-      requestAnimationFrame(() => {
-        if (sisa() > 0 && wadah.clientHeight > 0 && wadah.scrollHeight <= wadah.clientHeight + 4) { currentPage++; window.sliceAndRender(); }
-      });
+      requestAnimationFrame(isiLayar);
     };
+    // daftar lebih tinggi dari isinya (layar besar) -> muat berikutnya tanpa perlu scroll.
+    // overlay loading (.lz-loading) tidak ikut dihitung sebagai isi.
+    function isiLayar() {
+      if (sisa() <= 0 || wadah.clientHeight <= 0) return;
+      const terakhir = [...wadah.children].filter((el) => !el.classList.contains("lz-loading")).pop();
+      const bawahIsi = terakhir ? terakhir.offsetTop + terakhir.offsetHeight - wadah.offsetTop : 0;
+      if (bawahIsi <= wadah.scrollTop + wadah.clientHeight + 4) { currentPage++; window.sliceAndRender(); }
+    }
+    if (window.ResizeObserver) new ResizeObserver(isiLayar).observe(wadah);
     const asliFilter = window.filterAndRenderAnggaran;
     window.filterAndRenderAnggaran = function (resetPage = true) {
       if (resetPage) wadah.scrollTop = 0;
       const r = asliFilter(resetPage);
       window.LazyList && LazyList.loading(wadah, 450); // tampilan "memuat" (cari / ganti sumber anggaran)
+      requestAnimationFrame(isiLayar);
       return r;
     };
     wadah.addEventListener("scroll", () => {

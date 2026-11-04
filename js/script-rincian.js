@@ -443,16 +443,16 @@
   function htmlBadan(e) {
     return `
     <div class="kw-table-columns-header">
-      <div style="width: 24px;"></div>
+      <div style="width: 1.5rem;"></div>
       <div style="flex: 1.5;">No kuitansi / Invoice</div>
-      <div style="width: 130px;">Tanggal</div>
-      <div style="width: 150px;">Nominal Invoice + PPN</div>
-      <div style="width: 20px;"></div>
-      <div style="width: 130px;">PPN</div>
-      <div style="width: 130px;">Potongan PPh</div>
+      <div style="width: 8.125rem;">Tanggal</div>
+      <div style="width: 9.375rem;">Nominal Invoice + PPN</div>
+      <div style="width: 1.25rem;"></div>
+      <div style="width: 8.125rem;">PPN</div>
+      <div style="width: 8.125rem;">Potongan PPh</div>
     </div>
-    <div class="kw-scroll-list-area" style="max-height: 420px; overflow-y: auto; overflow-x: hidden; padding-right: 6px; display: flex; flex-direction: column; gap: 8px;">
-      ${e.kuitansi.length ? e.kuitansi.map(htmlKw).join("") : '<p style="text-align:center;color:#94a3b8;padding:24px">Belum ada kuitansi. Klik "Tambah kuitansi / Invoice".</p>'}
+    <div class="kw-scroll-list-area" style="max-height: 26.25rem; overflow-y: auto; overflow-x: hidden; padding-right: 0.375rem; display: flex; flex-direction: column; gap: 0.5rem;">
+      ${e.kuitansi.length ? e.kuitansi.map(htmlKw).join("") : '<p style="text-align:center;color:#94a3b8;padding:1.5rem">Belum ada kuitansi. Klik "Tambah kuitansi / Invoice".</p>'}
     </div>`;
   }
 
@@ -481,16 +481,16 @@
     const groups = KELOMPOK.filter((g) => ((e.locked && g.key === "honor") || e.komponen.some((c) => c.g === g.key)) && (!e.filterG || g.key === e.filterG)); // kelompok muncul setelah komponen pertamanya ditambahkan; dropdown = filter
     const base = e.auto === "pj"; // nominal baris dasar pertanggungjawaban boleh diubah
     return `
-    <div class="biaya-wrapper" style="display:flex;flex-direction:column;height:100%;max-height:100%;overflow:hidden;gap:8px;">
+    <div class="biaya-wrapper" style="display:flex;flex-direction:column;height:100%;max-height:100%;overflow:hidden;gap:0.5rem;">
       <div class="biaya-global-header">
         <div style="flex:1;"></div>
-        <div style="display:flex;gap:12px;">
-          <div style="width:100px;text-align:left;padding-left:2px;">Nominal</div>
-          <div style="width:100px;text-align:left;padding-left:2px;">Potongan PPh</div>
+        <div style="display:flex;gap:0.75rem;">
+          <div style="width:6.25rem;text-align:left;padding-left:0.125rem;">Nominal</div>
+          <div style="width:6.25rem;text-align:left;padding-left:0.125rem;">Potongan PPh</div>
         </div>
       </div>
-      <div class="kw-scroll-list-area" style="flex:1;overflow-y:auto;overflow-x:hidden;padding-right:4px;display:flex;flex-direction:column;gap:8px;">
-        ${groups.length ? "" : `<div class="s5-empty" style="padding:28px 0">${e.filterG ? "Belum ada komponen pada kelompok ini." : "Belum ada komponen biaya."}<br>Klik "Tambah Komponen Biaya" untuk memilih kelompok dan menambah komponen.</div>`}
+      <div class="kw-scroll-list-area" style="flex:1;overflow-y:auto;overflow-x:hidden;padding-right:0.25rem;display:flex;flex-direction:column;gap:0.5rem;">
+        ${groups.length ? "" : `<div class="s5-empty" style="padding:1.75rem 0">${e.filterG ? "Belum ada komponen pada kelompok ini." : "Belum ada komponen biaya."}<br>Klik "Tambah Komponen Biaya" untuk memilih kelompok dan menambah komponen.</div>`}
         ${groups
           .map((g) => {
             const rows = e.komponen.filter((c) => c.g === g.key);
@@ -500,7 +500,7 @@
             return `
           <div class="biaya-item${open ? " expanded" : ""}" data-g="${g.key}">
             <div class="biaya-header" onclick="toggleBiaya(this)">
-              <div class="biaya-header-left"><i class="fas fa-chevron-right biaya-arrow"></i><span class="biaya-title">${g.title}</span>${rows.length ? `<span class="kw-badge-count" style="margin-left:8px">${rows.length}</span>` : ""}</div>
+              <div class="biaya-header-left"><i class="fas fa-chevron-right biaya-arrow"></i><span class="biaya-title">${g.title}</span>${rows.length ? `<span class="kw-badge-count" style="margin-left:0.5rem">${rows.length}</span>` : ""}</div>
               <div class="biaya-header-right">
                 <div class="biaya-field"><div class="biaya-input-box readonly"><span class="prefix">Rp.</span><input type="text" data-b="gnom" value="${fmt(sN)}" readonly class="text-right" /></div></div>
                 <div class="biaya-field"><div class="biaya-input-box danger readonly"><span class="prefix text-danger">Rp.</span><input type="text" data-b="gpph" value="${fmt(sP)}" readonly class="text-right text-danger" /></div></div>
@@ -510,7 +510,7 @@
               <div class="biaya-detail-inner">
                 <div class="branch-icon"><i class="branch-connector"></i></div>
                 <div class="biaya-detail-table">
-                  ${rows.length ? rows.map((c, i) => htmlKomp(base && c.base ? { ...c, nominalEditable: true } : c, i === 0, !!e.locked)).join("") : '<p style="color:#94a3b8;padding:8px 0">Belum ada komponen. Pilih kelompok di atas lalu klik "Tambah Komponen Biaya".</p>'}
+                  ${rows.length ? rows.map((c, i) => htmlKomp(base && c.base ? { ...c, nominalEditable: true } : c, i === 0, !!e.locked)).join("") : '<p style="color:#94a3b8;padding:0.5rem 0">Belum ada komponen. Pilih kelompok di atas lalu klik "Tambah Komponen Biaya".</p>'}
                 </div>
               </div>
             </div>

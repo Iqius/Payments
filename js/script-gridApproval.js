@@ -201,7 +201,7 @@ function renderTable() {
   if (totalItems === 0) {
     tableBody.innerHTML = `
       <tr>
-        <td colspan="${TOTAL_COLUMNS}" style="text-align: center; padding: 24px; color: #94a3b8;">
+        <td colspan="${TOTAL_COLUMNS}" style="text-align: center; padding: 1.5rem; color: #94a3b8;">
           Tidak ada data dokumen.
         </td>
       </tr>

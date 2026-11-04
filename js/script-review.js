@@ -370,10 +370,10 @@
         <div class="card-header"><h2 class="card-title">Detail Jurnal — ${esc(nodes[nodes.length - 1].t)}</h2>
           <p class="card-subtitle">VJ-${esc(id.slice(0, 6))}-${esc(id.slice(-3))} · ${esc(Store.util.fmtTglPanjang(Store.util.todayIso()))} · Normal · ${posted ? "Terposting" : "Belum terposting"} · ${lines.length} baris</p></div>
         <table class="journal-table">
-          <thead><tr><th style="width: 50px; text-align: center;">No.</th><th>Kode Akun</th><th>Nama Akun</th><th class="text-right" style="width: 150px;">Debit</th><th class="text-right" style="width: 150px;">Kredit</th></tr></thead>
+          <thead><tr><th style="width: 3.125rem; text-align: center;">No.</th><th>Kode Akun</th><th>Nama Akun</th><th class="text-right" style="width: 9.375rem;">Debit</th><th class="text-right" style="width: 9.375rem;">Kredit</th></tr></thead>
           <tbody>${lines.length ? lines.map((l, i) => `<tr><td style="text-align: center;">${i + 1}</td><td>${esc(l.kode)}</td><td>${esc(l.nama)}</td><td class="text-right${l.d ? "" : " dash-symbol"}">${l.d ? rpK(l.d) : "—"}</td><td class="text-right${l.k ? "" : " dash-symbol"}">${l.k ? rpK(l.k) : "—"}</td></tr>`).join("") : '<tr><td colspan="5" class="s5-empty">Belum ada data jurnal.</td></tr>'}</tbody>
         </table>
-        <div class="table-footer"><span class="total-title">Total</span><div class="total-amounts"><span class="total-val" style="margin-right: 50px;">${rpK(sumD)}</span><span class="total-val">${rpK(sumK)}</span></div></div>
+        <div class="table-footer"><span class="total-title">Total</span><div class="total-amounts"><span class="total-val" style="margin-right: 3.125rem;">${rpK(sumD)}</span><span class="total-val">${rpK(sumK)}</span></div></div>
       </div>`;
   }
 

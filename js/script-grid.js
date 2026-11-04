@@ -119,8 +119,8 @@ function updateButtonAndCheckAllState() {
     btnAction.classList.toggle("danger-btn", hasSelection);
     btnAction.classList.toggle("primary-btn", !hasSelection);
     btnAction.innerHTML = hasSelection
-      ? `<i class="fas fa-times" style="font-size: 16px;"></i><span>Hapus (${checkedCount})</span>`
-      : `<i class="fas fa-plus" style="font-size: 16px;"></i><span>Pencairan Baru</span>`;
+      ? `<i class="fas fa-times" style="font-size: 1rem;"></i><span>Hapus (${checkedCount})</span>`
+      : `<i class="fas fa-plus" style="font-size: 1rem;"></i><span>Pencairan Baru</span>`;
   }
 
   if (checkAll) {
@@ -261,7 +261,7 @@ function renderTable() {
 
   if (totalItems === 0) {
     tableBody.innerHTML = `
-      <tr><td colspan="${TOTAL_COLUMNS}" style="text-align: center; padding: 24px; color: #94a3b8;">Tidak ada data dokumen.</td></tr>`;
+      <tr><td colspan="${TOTAL_COLUMNS}" style="text-align: center; padding: 1.5rem; color: #94a3b8;">Tidak ada data dokumen.</td></tr>`;
     updateButtonAndCheckAllState();
     return;
   }

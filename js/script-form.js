@@ -227,15 +227,15 @@ function switchStep3Tab(type, el) {
 
   <!-- HEADER ROW LABEL KOLOM -->
 <div class="kw-table-columns-header" >
-  <div style="width: 24px;"></div>
+  <div style="width: 1.5rem;"></div>
   <div style="flex: 1.5;">No kuitansi / Invoice</div>
-  <div style="width: 130px;">Tanggal</div>
-  <div style="width: 150px;">Nominal Invoice + PPN</div>
-  <div style="width: 20px;"></div>
-  <div style="width: 130px;">PPN</div>
-  <div style="width: 130px;">Potongan PPh</div>
+  <div style="width: 8.125rem;">Tanggal</div>
+  <div style="width: 9.375rem;">Nominal Invoice + PPN</div>
+  <div style="width: 1.25rem;"></div>
+  <div style="width: 8.125rem;">PPN</div>
+  <div style="width: 8.125rem;">Potongan PPh</div>
 </div>
-<div class="kw-scroll-list-area" style="max-height: 420px; overflow-y: auto; overflow-x: hidden; padding-right: 6px; display: flex; flex-direction: column; gap: 8px;">
+<div class="kw-scroll-list-area" style="max-height: 26.25rem; overflow-y: auto; overflow-x: hidden; padding-right: 0.375rem; display: flex; flex-direction: column; gap: 0.5rem;">
   <!-- Container kuitansi (HTML ASLI DIBIARKAN) -->
   <div class="kuitansi-wrapper">
     
@@ -1825,18 +1825,18 @@ function switchStep3Tab(type, el) {
 
     // Render HTML: Header di luar area scroll
     kwList.innerHTML = `    
-        <div class="biaya-wrapper" style="display: flex; flex-direction: column; height: 100%; max-height: 100%; overflow: hidden; gap: 8px;">
+        <div class="biaya-wrapper" style="display: flex; flex-direction: column; height: 100%; max-height: 100%; overflow: hidden; gap: 0.5rem;">
             <!-- 1. HEADER TETAP DI LUAR (TIDAK AKAN TERTEMBUS KARENA BUKAN AREA SCROLL) -->
             <div class="biaya-global-header" >
                 <div style="flex: 1;"></div>
-                <div style="display: flex; gap: 12px;">
-                    <div style="width: 100px; text-align: left; padding-left: 2px;">Nominal</div>
-                    <div style="width: 100px; text-align: left; padding-left: 2px;">Potongan PPh</div>
+                <div style="display: flex; gap: 0.75rem;">
+                    <div style="width: 6.25rem; text-align: left; padding-left: 0.125rem;">Nominal</div>
+                    <div style="width: 6.25rem; text-align: left; padding-left: 0.125rem;">Potongan PPh</div>
                 </div>
             </div>
             
             <!-- 2. HANYA AREA INI YANG MENJADI SCROLL (TIDAK AKAN LEWAT KE ATAS HEADER) -->
-            <div class="kw-scroll-list-area" style="flex: 1; overflow-y: auto; overflow-x: hidden; padding-right: 4px; display: flex; flex-direction: column; gap: 8px;">
+            <div class="kw-scroll-list-area" style="flex: 1; overflow-y: auto; overflow-x: hidden; padding-right: 0.25rem; display: flex; flex-direction: column; gap: 0.5rem;">
                 ${kelompokBiayaData
                   .map(
                     (item) => `
@@ -2145,7 +2145,7 @@ function selectPillGreen(element) {
   // 4. Sisipkan icon centang di awal teks tombol yang baru diklik
   element.insertAdjacentHTML(
     "afterbegin",
-    '<i class="fas fa-check check-icon-transport" style="margin-right: 6px;"></i>',
+    '<i class="fas fa-check check-icon-transport" style="margin-right: 0.375rem;"></i>',
   );
 }
 
@@ -2273,7 +2273,7 @@ function selectPillOptionS3(buttonEl) {
   // 3. Sisipkan icon centang di tombol yang aktif
   buttonEl.insertAdjacentHTML(
     "afterbegin",
-    '<i class="fas fa-check" style="margin-right: 6px;"></i>',
+    '<i class="fas fa-check" style="margin-right: 0.375rem;"></i>',
   );
 }
 
@@ -2298,7 +2298,7 @@ function selectCardOptionS3(cardEl) {
   if (titleEl && !titleEl.querySelector(".check-icon")) {
     titleEl.insertAdjacentHTML(
       "afterbegin",
-      '<i class="fas fa-check check-icon" style="margin-right: 6px;"></i>',
+      '<i class="fas fa-check check-icon" style="margin-right: 0.375rem;"></i>',
     );
   }
 }
@@ -2333,7 +2333,7 @@ function selectPillPurple(buttonEl) {
   // 3. Sisipkan ikon centang ungu di awal teks tombol yang baru diklik
   buttonEl.insertAdjacentHTML(
     "afterbegin",
-    '<i class="fas fa-check" style="margin-right: 6px;"></i>',
+    '<i class="fas fa-check" style="margin-right: 0.375rem;"></i>',
   );
 }
 
@@ -2641,7 +2641,7 @@ function renderAnggaranList(data, totalItems) {
 
   if (data.length === 0) {
     container.innerHTML = `
-      <div style="text-align: center; padding: 24px; color: #94a3b8; font-size: 14px;">
+      <div style="text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.875rem;">
         Kegiatan anggaran tidak ditemukan.
       </div>`;
     renderPagination(0);

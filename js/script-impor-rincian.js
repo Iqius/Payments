@@ -544,7 +544,7 @@
     const r = await Swal.fire({
       title: "Pratinjau Impor Excel",
       html: htmlPratinjau(h),
-      width: "min(1210px, 94vw)",
+      width: "min(75.625rem, 94vw)",
       customClass: { popup: "ix-swal" },
       showCancelButton: true,
       showDenyButton: !kosongSemua,

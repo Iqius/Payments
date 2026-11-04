@@ -169,7 +169,7 @@
     await Swal.fire({
       title: f.name,
       html: '<div id="swal-pv" class="swal-pv"></div>',
-      width: "min(900px, 92vw)",
+      width: "min(56.25rem, 92vw)",
       showConfirmButton: false,
       showCloseButton: true,
       didOpen: () => isiFile(f, document.getElementById("swal-pv"), tk),
