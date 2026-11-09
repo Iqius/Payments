@@ -586,6 +586,14 @@ body.tb-buka { overflow: hidden; }
 .vw-list { overflow-y: auto; max-height: 27.2181rem; display: flex; flex-direction: column; gap: 0.7562rem; padding-right: 0.3025rem; }
 .vw-group { border: 1px solid #e1e8f0; border-radius: 0.605rem; background: #fff; overflow: hidden; }
 .vw-ghead { display: flex; justify-content: space-between; padding: 0.605rem 0.9075rem; background: var(--primer-muda); font-size: 0.9075rem; color: var(--teks); }
+/* kelompok biaya bisa dibuka / ditutup */
+summary.vw-ghead { cursor: pointer; list-style: none; align-items: center; user-select: none; }
+summary.vw-ghead::-webkit-details-marker { display: none; }
+summary.vw-ghead:hover { filter: brightness(0.97); }
+.vw-ghead > span { display: flex; align-items: center; gap: 0.605rem; }
+.vw-ghead small { font-size: 0.7562rem; color: var(--teks-3); background: #fff; border-radius: 62.5rem; padding: 0.1rem 0.5294rem; }
+.vw-panah { font-size: 0.7562rem; color: var(--teks-3); transform: rotate(-90deg); transition: transform 0.15s; }
+details.vw-group[open] .vw-panah { transform: none; }
 .vw-row { display: grid; grid-template-columns: 2.2fr 1.2fr 1.2fr 1.2fr; gap: 0.605rem; padding: 0.5294rem 0.9075rem; font-size: 0.9075rem; border-top: 1px solid #f1f5f9; align-items: center; }
 .vw-row .r { text-align: right; white-space: nowrap; }
 .vw-row .pph { color: var(--merah-tua); }

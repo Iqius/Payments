@@ -114,13 +114,14 @@
     const keys = Object.keys(grup);
     if (!keys.length) return '<div class="vw-kosong">Belum ada komponen biaya.</div>';
     return keys
-      .map((g) => {
+      .map((g, i) => {
         const sub = grup[g].reduce((t, c) => t + c.nominal, 0);
-        return `<div class="vw-group">
-          <div class="vw-ghead"><span>${esc(kelompokNama(g))}</span><b>${rp(sub)}</b></div>
+        const buka = !!filter;
+          return `<details class="vw-group"${buka ? " open" : ""}>
+          <summary class="vw-ghead"><span><i class="fas fa-chevron-down vw-panah"></i>${esc(kelompokNama(g))}<small>${grup[g].length} komponen</small></span><b>${rp(sub)}</b></summary>
           <div class="vw-row vw-th"><span>Komponen Biaya</span><span class="r">Nominal</span><span class="r">Potongan PPh</span><span class="r">Nominal Transfer</span></div>
           ${grup[g].map((c) => `<div class="vw-row"><span>${esc(c.nama || kelompokNama(c.g))}${c.formula ? `<em>${esc(c.formula)}</em>` : ""}</span><span class="r">${rp(c.nominal)}</span><span class="r pph">${rp(c.pph)}</span><span class="r">${rp(c.nominal - c.pph)}</span></div>`).join("")}
-        </div>`;
+        </details>`;
       })
       .join("");
   }
